@@ -4,11 +4,19 @@
 
 ==Application Server==
 
+   Jboss Application Server 4.2.1.GA - http://labs.jboss.com/jbossas
+
 ==Core Framework==
+
+   Jboss Seam Framework 2.0.0.CR2 (switching for lastest version) - http://labs.jboss.com/jbossseam
 
 ==Business level==
 
+  EJB3, Hibernate Persistance Provider, http://hibernate.org
+
 ==Presentation Level==
+
+  JSF RI 1.2, Richfaces 
 
 ==Other==
 
