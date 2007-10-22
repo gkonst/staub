@@ -1,20 +1,20 @@
-#summary Libraries & Tools used in our prject.
+#summary Libraries & Tools used in our project.
 
 ==Database==
 
 ==Application Server==
 
-   Jboss Application Server 4.2.1.GA - http://labs.jboss.com/jbossas
+   JBoss Application Server 4.2.1.GA - http://labs.jboss.com/jbossas
 
 ==Core Framework==
 
-   Jboss Seam Framework 2.0.0.CR2 (switching for lastest version) - http://labs.jboss.com/jbossseam
+   JBoss Seam Framework 2.0.0.CR2 (switching for lastest version) - http://labs.jboss.com/jbossseam
 
-==Business level==
+==Business Layer==
 
   EJB3, Hibernate Persistance Provider, http://hibernate.org
 
-==Presentation Level==
+==Presentation Layer==
 
   JSF RI 1.2, Richfaces 
 
