@@ -22,6 +22,8 @@
 
 ==Tools==
 
-Apache Maven 2.0.7 - http://maven.apache.org/
-IntelliJ IDEA 7.0 - http://www.jetbrains.com/idea
-Red Hat Developer Studio 1.0 - http://www.redhat.com/developers/rhds/index.html
+  Apache Maven 2.0.7 - http://maven.apache.org/
+
+  IntelliJ IDEA 7.0 - http://www.jetbrains.com/idea
+
+  Red Hat Developer Studio 1.0 - http://www.redhat.com/developers/rhds/index.html
