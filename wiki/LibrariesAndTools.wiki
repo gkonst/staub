@@ -18,7 +18,7 @@
 
 ==Presentation Level==
 
-  JSF RI 1.2, Richfaces 
+  JSF RI 1.2, Richfaces 3.1.2 - http://labs.jboss.com/jbossrichfaces/
 
 ==Other==
 
