@@ -6,11 +6,11 @@
 
 ==Application Server==
 
-   JBoss Application Server 4.2.1.GA - http://labs.jboss.com/jbossas
+   JBoss Application Server 4.2.2.GA - http://labs.jboss.com/jbossas
 
 ==Core Framework==
 
-   JBoss Seam Framework 2.0.0.CR2 (switching for latest version) - http://labs.jboss.com/jbossseam
+   JBoss Seam Framework 2.0.0.GA - http://labs.jboss.com/jbossseam
 
 ==Business Layer==
 
@@ -22,6 +22,8 @@
 
 ==Tools==
 
-  Apache Maven 2.0.7 - http://maven.apache.org/
+  Apache Maven 2.0.7 - http://maven.apache.org
+
+  Apache Ant 1.6.5 - http://ant.apache.org
 
   Red Hat Developer Studio 1.0 - http://www.redhat.com/developers/rhds/index.html
