@@ -5,13 +5,13 @@
 
 	<!-- ###################### PROPERTY DEFINITIONS ###################### -->
 
-	<!-- Source directories -->
-	<property name="jboss.home" value="D:\\java\\jboss-4.2.2.GA" />
-	<property name="debug" value="true" />
+    <property file="${basedir}/build.properties" />
+
+	<!--property name="seam.debug.lib" value="false"/-->
 
     <property name="project.name" value="staub" />
 
-
+    <!-- Source directories -->
     <property name="src.java.dir" value="src" />
 	<property name="view.dir" value="web" />
 	<property name="resources.dir" value="resources" />
@@ -22,12 +22,11 @@
 	<property name="ejb.module.classes.dir" value="{ejb.module.dir}/classes" />
 	<property name="web.module.dir" value="${project.name}WEB" />
 	<property name="web.module.src.dir" value="${web.module.dir}/src" />
-
 	<property name="web.module.web.dir" value="${web.module.dir}/web" />
 	
 	<!-- Deployment directories -->
-	<property name="deploy.dir" value="${jboss.home}/server/default/deploy" />
-	<property name="conf.dir" value="${jboss.home}/server/default/conf" />
+	<property name="deploy.dir" value="${jboss.home}/server/${jboss.profile}/deploy" />
+	<property name="conf.dir" value="${jboss.home}/server/${jboss.profile}/conf" />
 
 	<!-- Target directories -->
 	<property name="dist.dir" value="dist" />
@@ -41,9 +40,10 @@
 
 	<property name="javac.debug" value="true" />
 	<property name="javac.deprecation" value="false" />
+    <property name="javac.encoding" value="UTF8" />
 
 
-	<!-- ############## SEAM JARS AND REQUIRED DEPENDENCIES ############### -->
+    <!-- ############## SEAM JARS AND REQUIRED DEPENDENCIES ############### -->
 	<!-- 
 	  Seam is made up of a number of jars.  They are specified here, with
 	  dependencies for each one
@@ -60,6 +60,11 @@
 		<!--include name="commons-beanutils.jar" if="seam.ui.lib" unless="richfaces.lib" /-->
 	</fileset>
 
+	<!-- Seam debug, with required dependencies -->
+	<fileset id="seam.debug.jar" dir="${lib.dir}">
+		<include name="jboss-seam-debug.jar" if="seam.debug.lib" />
+	</fileset>
+
 	<!-- Dependencies for using Seam with JSF - only needed if the server 
 	     doesn't come with JSF! -->
 	<fileset id="jsf.jar" dir="${lib.dir}">
@@ -67,9 +72,18 @@
 		<include name="jsf-impl.jar" />
 		<include name="jstl.jar" />
 	</fileset>
+	
+	<!-- jboss-el -->
+	<fileset id="jboss-el.jar" dir="${lib.dir}">
+		<include name="jboss-el.jar" />
+	</fileset>
 
 	<!-- ############## OPTIONAL DEPENDENCIES FOR USING SEAM ############## -->
 	<!-- Optional UI jars -->
+	<!-- Dependencies for using Seam with facelets -->
+	<fileset id="facelets.jar" dir="${lib.dir}">
+		<include name="jsf-facelets.jar" />
+	</fileset>
 
 	<!-- Dependencies for using Seam with Richfaces -->
 	<fileset id="richfaces-api.jar" dir="${lib.dir}">
@@ -134,7 +148,6 @@
 	<!-- Property resources (e.g. themes, i8ln) get put on the classpath -->
 	<fileset id="properties" dir="${resources.dir}">
 		<exclude name="seam.properties" />
-		<exclude name="components.properties" />
 		<include name="*.properties" />
 	</fileset>
 
@@ -171,10 +184,10 @@
 	<!-- Compile the source code, directly into the jar -->
 	<target name="compile" depends="init">
             <echo>lib is ${lib.dir}</echo>
-		<javac classpathref="build.classpath" destdir="${jar.dir}" debug="${javac.debug}" deprecation="${javac.deprecation}" nowarn="on" >
+		<javac classpathref="build.classpath" destdir="${jar.dir}" debug="${javac.debug}" deprecation="${javac.deprecation}" nowarn="on" encoding="${javac.encoding}">
 			<src path="${ejb.module.src.dir}" />
 		</javac>
-		<javac classpathref="build.classpath" destdir="${war.dir}/WEB-INF/classes" debug="${javac.debug}" deprecation="${javac.deprecation}" nowarn="on" >
+		<javac classpathref="build.classpath" destdir="${war.dir}/WEB-INF/classes" debug="${javac.debug}" deprecation="${javac.deprecation}" nowarn="on" encoding="${javac.encoding}">
 			<src path="${web.module.src.dir}" />
 		</javac>
 	</target>
@@ -185,22 +198,26 @@
 			<fileset refid="jar.resources" />
 		</copy>
 	</target>
-	
-	<target name="init.war" />
 
-	<!-- Build the exploded war -->
-	<target name="war" depends="compile, init.war">
+    <!-- Covert and put properties into the classpath -->
+    <target name="convertProperties" depends="init">
+        <native2ascii src="${resources.dir}" dest="${war.dir}/WEB-INF/classes" encoding="${javac.encoding}">
+		    <exclude name="seam.properties" />
+		    <include name="*.properties" />
+        </native2ascii>
+    </target>
+
+    <!-- Build the exploded war -->
+	<target name="war" depends="compile, convertProperties">
 		<copy todir="${war.dir}">
 			<fileset refid="war.web" />
 		</copy>
 		<copy todir="${war.dir}/WEB-INF/lib">
+			<fileset refid="facelets.jar" />
 			<fileset refid="seam.ui.jar" />
+			<fileset refid="seam.debug.jar" />
 			<fileset refid="richfaces-impl.jar" />
 			<mapper type="flatten" />
-		</copy>
-		<!-- Put properties into the classpath -->
-		<copy todir="${war.dir}/WEB-INF/classes">
-			<fileset refid="properties" />
 		</copy>
 	</target>
 
@@ -241,6 +258,7 @@
 		<mkdir dir="${ear.dir}/lib" />
 		<copy todir="${ear.dir}/lib">
 			<fileset refid="richfaces-api.jar" />
+		    <fileset refid="jboss-el.jar" />
 			<mapper type="flatten" />
 		</copy>
 	</target>
@@ -273,11 +291,15 @@
 	<!-- Copy the data source to JBoss AS -->
 	<target name="datasource">
 		<fail unless="jboss.home">jboss.home not set</fail>
-		<copy todir="${deploy.dir}">
+        <fail unless="db.url">db.url not set</fail>
+        <copy todir="${deploy.dir}">
 			<fileset dir="${resources.dir}">
 				<include name="${ds.xml}" />
 			</fileset>
-		</copy>
+			<filterset>
+				<filter token="dbUrl" value="${db.url}" />
+			</filterset>
+        </copy>
 	</target>
 
 	<target name="explode" depends="jar,jboss.war,ear,datasource" description="Deploy the exploded archive">
