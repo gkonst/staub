@@ -7,7 +7,7 @@
 <datasources>
     <local-tx-datasource>
         <jndi-name>staubDS</jndi-name>
-        <connection-url>jdbc:postgresql://eppsd015:5432/staub</connection-url>
+        <connection-url>@dbUrl@</connection-url>
         <driver-class>org.postgresql.Driver</driver-class>
         <user-name>test</user-name>
         <password>test</password>
