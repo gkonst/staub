@@ -7,26 +7,50 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-      <head><title>LoginPage</title></head>
-      <body>
-        <a4j:loadBundle var="MESSAGES" basename="messages"/>
-        <f:view>
-            <h:form id="login">
-			<fieldset>
-				<div>
-					<h:outputLabel for="username">${MESSAGES['system.login.userName']}</h:outputLabel>
-					<!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
-                    <h:inputText id="username" value="#{identity.username}" style="width: 175px;" />
-					<div class="errors"><h:message for="username"/></div>
-				</div>
-				<div>
-					<h:outputLabel for="password">Password</h:outputLabel>
-					<h:inputSecret id="password" value="#{identity.password}" style="width: 175px;"/>
-				</div>
-				<div class="errors"><h:messages globalOnly="true"/></div>
-				<div class="buttonBox"><h:commandButton id="login" action="#{identity.login}" value="Account Login"/></div>
-			</fieldset>
-            </h:form>
-         </f:view>
-      </body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>#{messages['system.login.title']}</title>
+        <a4j:loadStyle src="../css/style.css"/>
+    </head>
+    <body id="pgHome">
+    <f:view>
+      <div id="document">
+        <div id="header">
+            <div id="title">Header</div>
+        </div>
+	    <div id="container">
+		    <div id="sidebar">
+                <h:form id="login">
+                    <fieldset>
+                        <div>
+                            <h:outputLabel for="username">#{messages['system.login.username']}</h:outputLabel>
+                            <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
+                            <h:inputText id="username" value="#{identity.username}" style="width: 175px;"/>
+                            <div class="errors"><h:message for="username"/></div>
+                        </div>
+                        <div>
+                            <h:outputLabel for="password">#{messages['system.login.password']}</h:outputLabel>
+                            <h:inputSecret id="password" value="#{identity.password}" style="width: 175px;"/>
+                        </div>
+                        <div class="errors"><h:messages globalOnly="true"/></div>
+                        <div class="buttonBox"><h:commandButton id="login" action="#{identity.login}" value="#{messages['system.login.enter']}"/></div>
+                    </fieldset>
+                </h:form>
+            </div>
+            <div id="content">
+                <div class="section">
+
+                    <h1>About this application</h1>
+
+                    <p>
+                       Text
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <div id="footer">Footer</div>
+      </div>
+     </f:view>
+    </body>
 </html>
