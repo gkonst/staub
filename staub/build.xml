@@ -7,7 +7,7 @@
 
     <property file="${basedir}/build.properties" />
 
-	<!--property name="seam.debug.lib" value="false"/-->
+	<property name="seam.debug.lib" value="true"/>
 
     <property name="project.name" value="staub" />
 
@@ -30,7 +30,7 @@
 
 	<!-- Target directories -->
 	<property name="dist.dir" value="dist" />
-	<property name="exploded-archives.dir" value="exploded-archives" />
+	<property name="exploded-archives.dir" value="${basedir}/exploded-archives" />
 	<property name="ear.dir" value="${exploded-archives.dir}/${project.name}.ear" />
 	<property name="jar.dir" value="${exploded-archives.dir}/${project.name}.jar" />
 	<property name="war.dir" value="${exploded-archives.dir}/${project.name}.war" />
@@ -164,7 +164,10 @@
 			<include name="*.jar" />
 			<exclude name="jboss-seam-*.jar" />
 		</fileset>
-	</path>
+        <fileset dir="${jar.dir}">
+			<include name="*.class" />
+        </fileset>
+    </path>
 	
 	<!-- ##################### BUILD TARGETS (COMMON) ##################### -->
 	<!-- 
