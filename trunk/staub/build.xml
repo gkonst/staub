@@ -120,7 +120,8 @@
 
 	<!-- resources to go in the jar  -->
 	<fileset id="jar.resources" dir="${resources.dir}">
-		<include name="seam.properties" />
+        <include name="import.sql" />
+        <include name="seam.properties" />
 		<include name="META-INF/persistence.xml" />
 		<include name="META-INF/ejb-jar.xml" />
 		<include name="META-INF/orm.xml" />
