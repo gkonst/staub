@@ -33,7 +33,7 @@ public class LoginBean implements Login {
     public boolean authenticate() {
         logger.debug("--> Authentinicating user(username=#{identity.username}), password=#{identity.password}");
         user = userDAO.findUserByUserNameAndPassword(Identity.instance().getUsername(), Identity.instance().getPassword());
-        logger.debug("<-- Authentinicating ok(result=#{user != null}).");
+        logger.debug("<-- Authentinicating ok(result=" + (user != null) + ").");
         return user != null;
     }
 }
