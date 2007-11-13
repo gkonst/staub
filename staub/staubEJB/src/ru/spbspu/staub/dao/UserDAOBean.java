@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Name("userDAO")
 @AutoCreate
 @Stateless
-public class UserDAOBean implements UserDAO {
+public class UserDAOBean extends GenericDAOBean<User, String> implements UserDAO {
 
     @PersistenceContext
     private EntityManager em;
