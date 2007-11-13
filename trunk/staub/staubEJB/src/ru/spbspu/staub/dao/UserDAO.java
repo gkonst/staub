@@ -10,6 +10,6 @@ import javax.ejb.Local;
  * @author Konstantin Grigoriev
  */
 @Local
-public interface UserDAO {
+public interface UserDAO extends GenericDAO<User, String> {
     User findUserByUserNameAndPassword(String username, String password);
 }
