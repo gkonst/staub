@@ -32,7 +32,7 @@
 	<property name="dist.dir" value="dist" />
 	<property name="exploded-archives.dir" value="${basedir}/exploded-archives" />
 	<property name="ear.dir" value="${exploded-archives.dir}/${project.name}.ear" />
-	<property name="jar.dir" value="${exploded-archives.dir}/${project.name}.jar" />
+	<property name="jar.dir" value="${exploded-archives.dir}/${project.name}.jar/" />
 	<property name="war.dir" value="${exploded-archives.dir}/${project.name}.war" />
 	<property name="ear.deploy.dir" value="${deploy.dir}/${project.name}.ear" />
 	<property name="jar.deploy.dir" value="${ear.deploy.dir}/${project.name}.jar" />
@@ -166,7 +166,7 @@
 			<exclude name="jboss-seam-*.jar" />
 		</fileset>
         <fileset dir="${jar.dir}">
-			<include name="*.class" />
+			<include name="**/*.class" />
         </fileset>
     </path>
 	
@@ -187,13 +187,14 @@
 	    
 	<!-- Compile the source code, directly into the jar -->
 	<target name="compile" depends="init">
-            <echo>lib is ${lib.dir}</echo>
-		<javac classpathref="build.classpath" destdir="${jar.dir}" debug="${javac.debug}" deprecation="${javac.deprecation}" nowarn="on" encoding="${javac.encoding}">
+        <echo>lib is ${lib.dir}</echo>
+        <javac classpathref="build.classpath" destdir="${jar.dir}" debug="${javac.debug}" deprecation="${javac.deprecation}" nowarn="on" encoding="${javac.encoding}">
 			<src path="${ejb.module.src.dir}" />
 		</javac>
 		<javac classpathref="build.classpath" destdir="${war.dir}/WEB-INF/classes" debug="${javac.debug}" deprecation="${javac.deprecation}" nowarn="on" encoding="${javac.encoding}">
 			<src path="${web.module.src.dir}" />
-		</javac>
+            <classpath path="${jar.dir}" />
+        </javac>
 	</target>
 
 	<!-- Build the exploded jar -->
@@ -206,7 +207,7 @@
     <!-- Covert and put properties into the classpath -->
     <target name="convertProperties" depends="init">
         <native2ascii src="${resources.dir}" dest="${war.dir}/WEB-INF/classes" encoding="${javac.encoding}">
-		    <exclude name="seam.properties" />
+		    <!--exclude name="seam.properties" /-->
 		    <include name="*.properties" />
         </native2ascii>
     </target>
@@ -216,7 +217,7 @@
 		<copy todir="${war.dir}">
 			<fileset refid="war.web" />
 		</copy>
-		<copy todir="${war.dir}/WEB-INF/lib">
+        <copy todir="${war.dir}/WEB-INF/lib">
 			<fileset refid="facelets.jar" />
 			<fileset refid="seam.ui.jar" />
 			<fileset refid="seam.debug.jar" />
