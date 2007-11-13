@@ -18,6 +18,6 @@
 
     <transaction:ejb-transaction/>
 
-    <security:identity authenticate-method="#{login.authenticate}"/>
+    <security:identity authenticate-method="#{loginBean.authenticate}"/>
 
 </components>
