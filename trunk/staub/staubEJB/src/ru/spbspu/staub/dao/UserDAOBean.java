@@ -1,5 +1,7 @@
 package ru.spbspu.staub.dao;
 
+import org.jboss.seam.annotations.AutoCreate;
+import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.User;
 
 import javax.ejb.Stateless;
@@ -12,7 +14,9 @@ import javax.persistence.PersistenceContext;
  *
  * @author Konstantin Grigoriev
  */
-@Stateless(name = "userDAO")
+@Name("userDAO")
+@AutoCreate
+@Stateless
 public class UserDAOBean implements UserDAO {
 
     @PersistenceContext
