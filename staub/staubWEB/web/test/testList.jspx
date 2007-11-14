@@ -1,0 +1,49 @@
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Test List</title>
+        <a4j:loadStyle src="../css/style.css"/>
+    </head>
+    <body id="pgHome">
+    <f:view>
+      <div id="document">
+        <div id="header">
+            <div id="title">Test List</div>
+            <div id="status">
+                <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
+                Welcome #{identity.username}
+                |<s:link id="logout" action="#{identity.logout}" value="Logout"/>
+            </div>
+        </div>
+	    <div id="container">
+		    <div id="sidebar">
+
+            </div>
+            <div id="content">
+                <div class="section">
+                    <!--@elvariable id="testListBean" type="ru.spbspu.staub.bean.TestListBean"-->
+                    <h:outputText value="No tests Found" rendered="#{testListBean.dataModel == null or testListBean.dataModel.rowCount == 0}"/>
+                    <h:dataTable id="tests" value="#{testListBean.dataModel}" var="test" rendered="#{testListBean.dataModel.rowCount > 0}">
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            <s:link view="/test/testDetail.seam" value="#{test.name}">
+                                <f:param name="modelId" value="#{test.id}" />
+                            </s:link>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </div>
+        </div>
+        <div id="footer">Footer</div>
+      </div>
+     </f:view>
+    </body>
+</html>
