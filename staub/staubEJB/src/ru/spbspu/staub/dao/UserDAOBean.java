@@ -19,13 +19,10 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class UserDAOBean extends GenericDAOBean<User, String> implements UserDAO {
 
-    @PersistenceContext
-    private EntityManager em;
-
     public User findUserByUserNameAndPassword(String username, String password) {
         User user = null;
         try {
-            user = (User)em.createQuery("select u from User u where u.username=:username and u.password=:password")
+            user = (User)getEntityManager().createQuery("select u from User u where u.username=:username and u.password=:password")
                     .setParameter("username", username).setParameter("password", password).getSingleResult();
         } catch (NoResultException ex) {
             return user;
