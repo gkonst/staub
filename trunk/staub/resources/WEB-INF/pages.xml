@@ -6,13 +6,18 @@
                  login-view-id="/system/loginPage.jspx">
 
     <page view-id="/system/loginPage.jspx">
-    
         <navigation>
             <rule if="#{identity.loggedIn}">
                 <redirect view-id="/test/testList.jspx"/>
             </rule>
         </navigation>
-        
+    </page>
+
+    <page view-id="/test/testList.jspx" 
+          login-required="true">
+    </page>
+    <page view-id="/test/testDetail.jspx" 
+          login-required="true">
     </page>
 
     <page view-id="*">
