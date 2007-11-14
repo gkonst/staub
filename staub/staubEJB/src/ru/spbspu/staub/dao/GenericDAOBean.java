@@ -11,10 +11,11 @@ import java.util.List;
  * Uses traditional 1:1 appraoch for Entity:DAO design.
  * @author Konstantin Grigoriev
  */
-public class GenericDAOBean<T, ID extends Serializable> implements GenericDAO<T, ID>{
+public abstract class GenericDAOBean<T, ID extends Serializable> implements GenericDAO<T, ID>{
 
     private Class<T> entityClass;
 
+    @PersistenceContext
     private EntityManager em;
 
     @SuppressWarnings("unchecked")
@@ -67,7 +68,7 @@ public class GenericDAOBean<T, ID extends Serializable> implements GenericDAO<T,
         getEntityManager().clear();
     }
 
-    @PersistenceContext
+
     public void setEntityManager(EntityManager em) {
         this.em = em;
     }
