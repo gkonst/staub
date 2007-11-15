@@ -9,19 +9,19 @@
         <h1>Radio button example</h1>
 
         <p>
-            <input type="radio" name="radio1" />
+            <input type="radio" name="radio1" class="radio"/>
             Answer1
         </p>
         <p>
-            <input type="radio" name="radio1" />
+            <input type="radio" name="radio1" class="radio"/>
             Answer2
         </p>
         <p>
-            <input type="radio" name="radio1" />
+            <input type="radio" name="radio1" class="radio"/>
             Answer3
         </p>
         <p>
-            <input type="radio" name="radio1" />
+            <input type="radio" name="radio1" class="radio"/>
             Answer4
         </p>
 
