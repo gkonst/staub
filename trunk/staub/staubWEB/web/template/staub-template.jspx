@@ -13,21 +13,21 @@
         </ui:define>
 
         <ui:define name="title">
-            Title nor defined!
+            #{messages['page.title']}
         </ui:define>
 
         <ui:define name="headerTitle">
-            Header title not defined!
+            #{messages['page.header.title']}
         </ui:define>
 
          <ui:define name="headerStatus">
             <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
-            Welcome #{identity.username}
+            #{messages['page.header.status.welcome']}&#160;<u>#{identity.username}</u>
             |<s:link id="logout" action="#{identity.logout}" value="Logout"/>
         </ui:define>
 
         <ui:define name="footer">
-            Footer not defined!
+            #{messages['page.footer']}
         </ui:define>
 
     </ui:composition>
