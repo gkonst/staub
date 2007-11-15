@@ -8,8 +8,6 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
     <ui:composition template="../template/staub-template.jspx">
-        <ui:define name="title">Test List</ui:define>
-        <ui:define name="headerTitle">Test List</ui:define>
         <ui:define name="content">
             <div class="section">
                 <!--@elvariable id="testListBean" type="ru.spbspu.staub.bean.TestListBean"-->

@@ -8,8 +8,11 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
     <ui:composition template="../template/staub-template.jspx">
-        <ui:define name="title">Test Detail</ui:define>
         <ui:define name="headerTitle">Test Detail</ui:define>
-        <ui:define name="content">TODO</ui:define>
+        <ui:define name="content">
+            <h:form>
+                <a4j:include viewId="/task/startTask.jspx"/>
+            </h:form>
+        </ui:define>
     </ui:composition>
 </html>
