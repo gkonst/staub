@@ -5,5 +5,27 @@
               version="1.2">
     <application>
         <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
-    </application>  
+    </application>
+
+    <navigation-rule>
+       <from-view-id>/task/startTask.jspx</from-view-id>
+        <navigation-case>
+          <from-outcome>next</from-outcome>
+          <to-view-id>/task/radioTask.jspx</to-view-id>
+        </navigation-case>
+     </navigation-rule>
+    <navigation-rule>
+       <from-view-id>/task/radioTask.jspx</from-view-id>
+        <navigation-case>
+          <from-outcome>end</from-outcome>
+          <to-view-id>/task/endTask.jspx</to-view-id>
+        </navigation-case>
+     </navigation-rule>
+    <navigation-rule>
+       <from-view-id>/task/radioTask.jspx</from-view-id>
+        <navigation-case>
+          <from-outcome>prev</from-outcome>
+          <to-view-id>/task/startTask.jspx</to-view-id>
+        </navigation-case>
+     </navigation-rule>
 </faces-config>
