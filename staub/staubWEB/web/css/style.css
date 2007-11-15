@@ -53,6 +53,7 @@ fieldset {
 	background: #fff url(../images/bg.gif) 0 0 repeat-y;
 	float: left;
 	border-bottom: 1px solid #C3BBB6;
+    /*height:100%;*/
 }
 #header {
 	float: left;
@@ -82,7 +83,8 @@ fieldset {
 }
 #footer {
 	clear: both;
-	margin-top: 40px;
+    /*position: absolute;*/
+    /*bottom: 0;*/
 	float: left;
 	padding: 20px;
 	border-top: 1px solid #C3BBB6;
@@ -91,7 +93,7 @@ fieldset {
 	text-align: right;
 }
 /* General */
-input[type="submit"], input[type="button"] {
+.button {
 	font-weight: bold;
 	color: #fff;
 	border: 1px solid #5D1414;
@@ -99,11 +101,15 @@ input[type="submit"], input[type="button"] {
 	background: #fff url(../images/btn.bg.gif) 0 0 repeat-x;
 	border-style: none;
 }
+input[type="radio"] {
+    border: 0 none;
+}
 
 /* Header */
 #title {
 	float: left;
-	padding: 1px 0 6px 15px;
+	padding: 14px 10px 10px;
+    font-weight: bold;
 }
 #status {
 	color: #C7B299;
