@@ -7,35 +7,9 @@
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>Test List</title>
-        <a4j:loadStyle src="../css/style.css"/>
-    </head>
-    <body id="pgHome">
-    <f:view>
-      <div id="document">
-        <div id="header">
-            <!--@elvariable id="testMainBean" type="ru.spbspu.staub.bean.TestDetailBean"-->
-            <div id="title">#{testMainBean.model.name}</div>
-            <div id="status">
-                <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
-                Welcome #{identity.username}
-                |<s:link id="logout" action="#{identity.logout}" value="Logout"/>
-            </div>
-        </div>
-	    <div id="container">
-		    <div id="sidebar">
-
-            </div>
-            <div id="content">
-                <div class="section">
-
-                </div>
-            </div>
-        </div>
-        <div id="footer">Footer</div>
-      </div>
-     </f:view>
-    </body>
+    <ui:composition template="../template/staub-template.jspx">
+        <ui:define name="title">Test Detail</ui:define>
+        <ui:define name="headerTitle">Test Detail</ui:define>
+        <ui:define name="content">TODO</ui:define>
+    </ui:composition>
 </html>

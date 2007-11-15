@@ -5,51 +5,29 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>#{messages['system.login.title']}</title>
-        <a4j:loadStyle src="../css/style.css"/>
-    </head>
-    <body id="pgHome">
-    <f:view>
-      <div id="document">
-        <div id="header">
-            <div id="title">Header</div>
-        </div>
-	    <div id="container">
-		    <div id="sidebar">
-                <h:form id="login">
-                    <fieldset>
-                        <div>
-                            <h:outputLabel for="username">#{messages['system.login.username']}</h:outputLabel>
-                            <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
-                            <h:inputText id="username" value="#{identity.username}" style="width: 175px;"/>
-                            <div class="errors"><h:message for="username"/></div>
-                        </div>
-                        <div>
-                            <h:outputLabel for="password">#{messages['system.login.password']}</h:outputLabel>
-                            <h:inputSecret id="password" value="#{identity.password}" style="width: 175px;"/>
-                        </div>
-                        <div class="errors"><h:messages globalOnly="true"/></div>
-                        <div class="buttonBox"><h:commandButton id="login" action="#{identity.login}" value="#{messages['system.login.enter']}"/></div>
-                    </fieldset>
-                </h:form>
-            </div>
-            <div id="content">
-                <div class="section">
-
-                    <h1>About this application</h1>
-
-                    <p>
-                       Text
-                    </p>
-
-                </div>
-            </div>
-        </div>
-        <div id="footer">Footer</div>
-      </div>
-     </f:view>
-    </body>
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+    <ui:composition template="../template/staub-template.jspx">
+        <ui:define name="title">#{messages['system.login.title']}</ui:define>
+        <ui:define name="headerTitle">Header</ui:define>
+        <ui:define name="headerStatus" />
+        <ui:define name="sidebar">
+            <h:form id="login">
+                <fieldset>
+                    <div>
+                        <h:outputLabel for="username">#{messages['system.login.username']}</h:outputLabel>
+                        <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
+                        <h:inputText id="username" value="#{identity.username}" style="width: 175px;"/>
+                        <div class="errors"><h:message for="username"/></div>
+                    </div>
+                    <div>
+                        <h:outputLabel for="password">#{messages['system.login.password']}</h:outputLabel>
+                        <h:inputSecret id="password" value="#{identity.password}" style="width: 175px;"/>
+                    </div>
+                    <div class="errors"><h:messages globalOnly="true"/></div>
+                    <div class="buttonBox"><h:commandButton id="login" action="#{identity.login}" value="#{messages['system.login.enter']}"/></div>
+                </fieldset>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>
