@@ -8,8 +8,6 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
     <ui:composition template="../template/staub-template.jspx">
-        <ui:define name="title">#{messages['system.login.title']}</ui:define>
-        <ui:define name="headerTitle">Header</ui:define>
         <ui:define name="headerStatus" />
         <ui:define name="sidebar">
             <h:form id="login">
@@ -25,7 +23,7 @@
                         <h:inputSecret id="password" value="#{identity.password}" style="width: 175px;"/>
                     </div>
                     <div class="errors"><h:messages globalOnly="true"/></div>
-                    <div class="buttonBox"><h:commandButton id="login" action="#{identity.login}" value="#{messages['system.login.enter']}"/></div>
+                    <div class="buttonBox"><h:commandButton id="login" action="#{identity.login}" value="#{messages['system.login.enter']}" styleClass="button"/></div>
                 </fieldset>
             </h:form>
         </ui:define>
