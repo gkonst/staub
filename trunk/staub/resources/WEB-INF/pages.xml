@@ -20,12 +20,18 @@
           login-required="true">
     </page>
 
+    <!--<page view-id="/task/startTask.jspx">-->
+        <!--<navigation>-->
+            <!--<rule if-outcome="next">-->
+                <!--<redirect view-id="/task/radioTask.jspx" />-->
+            <!--</rule>-->
+        <!--</navigation>-->
+    <!--</page>-->
+
     <page view-id="*">
-    
         <navigation from-action="#{identity.logout}">
             <redirect view-id="/system/loginPage.jspx"/>
         </navigation>
-        
     </page>
     
     <exception class="org.jboss.seam.security.NotLoggedInException">
