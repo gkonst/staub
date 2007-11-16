@@ -6,37 +6,31 @@
      xmlns:a4j="http://richfaces.org/a4j"
      xmlns:rich="http://richfaces.org/rich">
     <div class="section">
-        <!--@elvariable id="testDetailBean" type="ru.spbspu.staub.bean.TestDetailBean"-->
-        <h1>Radio and Text example</h1>
+        <h1>Image and Checkbox example</h1>
         <br/>
-        <p>AAAAAAAAAAA</p>
-        <p>BBBBBBB</p>
-        <p>CCCCCCCCCC</p>
-        <p>DDDDDDDDDDD</p>
-        <p>EEEEEEEEEEE</p>
-    </div>
-    <rich:panel styleClass="section">
-
+        <p><img src="../images/image.jpg" alt="Task Image"/></p>
+        <p>VVVVVVVVVVVVVVVVVVVV</p>
         <p>
-            <input type="radio" name="radio1" class="radio"/>
+            <input type="checkbox" class="checkbox"/>
             Answer1
         </p>
         <p>
-            <input type="radio" name="radio1" class="radio"/>
+            <input type="checkbox" class="checkbox"/>
             Answer2
         </p>
         <p>
-            <input type="radio" name="radio1" class="radio"/>
+            <input type="checkbox" class="checkbox"/>
             Answer3
         </p>
         <p>
-            <input type="radio" name="radio1" class="radio"/>
+            <input type="checkbox" class="checkbox"/>
             Answer4
         </p>
 
-
-    </rich:panel>
+    </div>
     <div class="section">
+        <a4j:commandButton action="prev" value="Previous" styleClass="button"/>
+        &#160;
         <a4j:commandButton action="next" value="Next" styleClass="button"/>
         &#160;
         <a4j:commandButton action="end" value="End Test" styleClass="button"/>
