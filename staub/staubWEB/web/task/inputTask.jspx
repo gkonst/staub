@@ -7,7 +7,7 @@
      xmlns:rich="http://richfaces.org/rich">
     <div class="section">
         <!--@elvariable id="testDetailBean" type="ru.spbspu.staub.bean.TestDetailBean"-->
-        <h1>Radio and Text example</h1>
+        <h1>Input and Text example</h1>
         <br/>
         <p>AAAAAAAAAAA</p>
         <p>BBBBBBB</p>
@@ -15,29 +15,14 @@
         <p>DDDDDDDDDDD</p>
         <p>EEEEEEEEEEE</p>
     </div>
-    <rich:panel styleClass="section">
-
-        <p>
-            <input type="radio" name="radio1" class="radio"/>
-            Answer1
-        </p>
-        <p>
-            <input type="radio" name="radio1" class="radio"/>
-            Answer2
-        </p>
-        <p>
-            <input type="radio" name="radio1" class="radio"/>
-            Answer3
-        </p>
-        <p>
-            <input type="radio" name="radio1" class="radio"/>
-            Answer4
-        </p>
-
-
-    </rich:panel>
     <div class="section">
-        <a4j:commandButton action="next" value="Next" styleClass="button"/>
+        <p>
+            <h:outputLabel for="answer">Answer</h:outputLabel>&#160;&#160;
+            <h:inputText id="answer" value="" />
+        </p>
+    </div>
+    <div class="section">
+        <a4j:commandButton action="prev" value="Previous" styleClass="button"/>
         &#160;
         <a4j:commandButton action="end" value="End Test" styleClass="button"/>
     </div>
