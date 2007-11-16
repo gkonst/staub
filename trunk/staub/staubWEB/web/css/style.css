@@ -86,11 +86,12 @@ fieldset {
     /*position: absolute;*/
     /*bottom: 0;*/
 	float: left;
-	padding: 20px;
+	padding: 10px 20px 10px 20px;
 	border-top: 1px solid #C3BBB6;
 	background-color: #fff;
 	width: 718px;
 	text-align: right;
+    vertical-align:bottom;
 }
 /* General */
 .button {
@@ -102,6 +103,10 @@ fieldset {
 	border-style: none;
 }
 .radio {
+    border: 0 none;
+    border-style: none;
+}
+.checkbox {
     border: 0 none;
     border-style: none;
 }
