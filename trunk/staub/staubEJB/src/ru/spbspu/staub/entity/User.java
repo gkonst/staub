@@ -1,17 +1,36 @@
 package ru.spbspu.staub.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * The <code>User</code> class represents the User entity.
+ *
+ * @author Alexander V. Elagin
+ */
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User implements Serializable {
-    private String username;
-    private String password;
+    private static final long serialVersionUID = 4840352094869214259L;
+
+    private Integer id;
 
     @Id
+    @SequenceGenerator(name = "UserIdGenerator", sequenceName = "seq_user", allocationSize = 1)
+    @GeneratedValue(generator = "UserIdGenerator", strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false, length = 10)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    private String username;
+
+    @Basic
+    @Column(name = "username", nullable = false, length = 64)
     public String getUsername() {
         return username;
     }
@@ -20,6 +39,10 @@ public class User implements Serializable {
         this.username = username;
     }
 
+    private String password;
+
+    @Basic
+    @Column(name = "password", nullable = false, length = 64)
     public String getPassword() {
         return password;
     }
@@ -28,8 +51,21 @@ public class User implements Serializable {
         this.password = password;
     }
 
-   @Override
-   public String toString() {
-      return "User(" + username + ")";
-   }
+    @Override
+    public boolean equals(Object otherObject) {
+        if (this == otherObject) {
+            return true;
+        }
+        if (!(otherObject instanceof User)) {
+            return false;
+        }
+
+        User other = (User) otherObject;
+
+        return id.equals(other.id);
+    }
+
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
