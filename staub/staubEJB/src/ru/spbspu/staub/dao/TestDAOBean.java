@@ -14,5 +14,5 @@ import javax.ejb.Stateless;
 @Name("testDAO")
 @AutoCreate
 @Stateless
-public class TestDAOBean extends GenericDAOBean<Test, Long> implements TestDAO {
+public class TestDAOBean extends GenericDAOBean<Test, Integer> implements TestDAO {
 }
