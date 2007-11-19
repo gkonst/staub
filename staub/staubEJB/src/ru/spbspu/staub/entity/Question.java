@@ -2,23 +2,22 @@ package ru.spbspu.staub.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 /**
- * The <code>Test</code> class represents the Test entity.
+ * The <code>Question</code> class represents the Question entity.
  *
  * @author Alexander V. Elagin
  */
 @Entity
-@Table(name = "test", schema = "staub")
-public class Test implements Serializable {
-    private static final long serialVersionUID = -4826754008513352835L;
-    
+@Table(name = "question", schema = "staub")
+public class Question implements Serializable {
+    private static final long serialVersionUID = 8070548991033139442L;
+
     private Integer id;
 
     @Id
-    @SequenceGenerator(name = "TestIdGenerator", sequenceName = "seq_test", allocationSize = 1)
-    @GeneratedValue(generator = "TestIdGenerator", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "QuestionIdGenerator", sequenceName = "seq_question", allocationSize = 1)
+    @GeneratedValue(generator = "QuestionIdGenerator", strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, length = 10)
     public Integer getId() {
         return id;
@@ -52,15 +51,28 @@ public class Test implements Serializable {
         this.description = description;
     }
 
-    private List<Question> questions;
+    private String definition;
 
-    @OneToMany(mappedBy = "test")
-    public List<Question> getQuestions() {
-        return questions;
+    @Lob
+    @Column(name = "definition", nullable = false)
+    public String getDefinition() {
+        return definition;
     }
 
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
+    public void setDefinition(String definition) {
+        this.definition = definition;
+    }
+
+    private Test test;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_test", referencedColumnName = "id", nullable = false)
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
     }
 
     @Override
@@ -68,11 +80,11 @@ public class Test implements Serializable {
         if (this == otherObject) {
             return true;
         }
-        if (!(otherObject instanceof Test)) {
+        if (!(otherObject instanceof Question)) {
             return false;
         }
 
-        Test other = (Test) otherObject;
+        Question other = (Question) otherObject;
 
         return id.equals(other.id);
 
