@@ -10,5 +10,5 @@ import javax.ejb.Local;
  * @author Konstantin Grigoriev
  */
 @Local
-public interface TestDAO extends GenericDAO<Test, Long> {
+public interface TestDAO extends GenericDAO<Test, Integer> {
 }
