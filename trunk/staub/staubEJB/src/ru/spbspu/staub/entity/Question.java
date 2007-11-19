@@ -41,6 +41,7 @@ public class Question implements Serializable {
 
     private String description;
 
+    @Basic
     @Lob
     @Column(name = "description")
     public String getDescription() {
@@ -53,6 +54,7 @@ public class Question implements Serializable {
 
     private String definition;
 
+    @Basic
     @Lob
     @Column(name = "definition", nullable = false)
     public String getDefinition() {

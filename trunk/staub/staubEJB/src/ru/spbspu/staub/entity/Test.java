@@ -42,6 +42,7 @@ public class Test implements Serializable {
 
     private String description;
 
+    @Basic
     @Lob
     @Column(name = "description")
     public String getDescription() {
