@@ -10,7 +10,7 @@ import java.util.List;
  * @author Alexander V. Elagin
  */
 @Entity
-@Table(name = "test", schema = "staub")
+@Table(name = "test")
 public class Test implements Serializable {
     private static final long serialVersionUID = -4826754008513352835L;
     
