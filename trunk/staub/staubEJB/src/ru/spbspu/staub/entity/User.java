@@ -65,6 +65,7 @@ public class User implements Serializable {
         return id.equals(other.id);
     }
 
+    @Override    
     public int hashCode() {
         return id.hashCode();
     }
