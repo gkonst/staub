@@ -16,7 +16,7 @@ public class TestDetailBean extends GenericDetailBean<Test> {
     @In
     private TestDAO testDAO;
 
-    protected void fillModel(Long modelId) {
+    protected void fillModel(Integer modelId) {
         setModel(testDAO.findById(modelId, false));
     }
 }
