@@ -13,11 +13,11 @@ import java.io.Serializable;
 public abstract class GenericDetailBean<T> extends GenericBean {
 
     @RequestParameter
-    private Long modelId;
+    private Integer modelId;
 
     private T model;
 
-    protected abstract void fillModel(Long modelId);
+    protected abstract void fillModel(Integer modelId);
 
     @Create
     public void initDetailBean() {
