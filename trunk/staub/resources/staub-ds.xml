@@ -9,8 +9,8 @@
         <jndi-name>staubDS</jndi-name>
         <connection-url>@dbUrl@</connection-url>
         <driver-class>org.postgresql.Driver</driver-class>
-        <user-name>staub</user-name>
-        <password>staub</password>
+        <user-name>@dbUser@</user-name>
+        <password>@dbPassword@</password>
     </local-tx-datasource>
 </datasources>
 
