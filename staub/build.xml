@@ -303,7 +303,9 @@
 			</fileset>
 			<filterset>
 				<filter token="dbUrl" value="${db.url}" />
-			</filterset>
+                <filter token="dbUser" value="${db.user}" />
+                <filter token="dbPassword" value="${db.password}" />
+            </filterset>
         </copy>
 	</target>
 
