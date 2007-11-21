@@ -15,7 +15,7 @@
         <p>DDDDDDDDDDD</p>
         <p>EEEEEEEEEEE</p>
     </div>
-    <rich:panel styleClass="section">
+    <div class="section">
 
         <p>
             <input type="radio" name="radio1" class="radio"/>
@@ -35,7 +35,7 @@
         </p>
 
 
-    </rich:panel>
+    </div>
     <div class="section">
         <a4j:commandButton action="next" value="Next" styleClass="button"/>
         &#160;
