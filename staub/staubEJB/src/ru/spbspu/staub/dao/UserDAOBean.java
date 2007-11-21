@@ -5,12 +5,10 @@ import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.User;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 
 /**
- * TODO add descritpion
+ * Stateless EJB DAO for manipulations with <code>User</code> entity. 
  *
  * @author Konstantin Grigoriev
  */

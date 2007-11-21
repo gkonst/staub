@@ -5,7 +5,7 @@ import ru.spbspu.staub.entity.Test;
 import javax.ejb.Local;
 
 /**
- * TODO add descritpion
+ * Local Interface for <code>TestDAOBean</code> Stateless EJB.
  *
  * @author Konstantin Grigoriev
  */

@@ -1,13 +1,13 @@
 package ru.spbspu.staub.dao;
 
-import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.AutoCreate;
+import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.Test;
 
 import javax.ejb.Stateless;
 
 /**
- * TODO add descritpion
+ * Stateless EJB DAO for manipulations with <code>Test</code> entity. 
  *
  * @author Konstantin Grigoriev
  */
