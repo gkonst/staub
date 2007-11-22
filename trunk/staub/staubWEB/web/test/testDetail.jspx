@@ -5,14 +5,23 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
     <ui:composition template="../template/staub-template.jspx">
-        <ui:define name="headerTitle">Test Detail</ui:define>
+        <ui:define name="headerTitle">#{messages['page.header.title']}</ui:define>
         <ui:define name="content">
-            <h:form>
-                <a4j:include viewId="/task/startTask.jspx"/>
-            </h:form>
+
+                <div class="section">
+                        Welcome to test #{testDetailBean.model.name}!
+                        <br/>  
+                        #{testDetailBean.model.description}                        
+                </div>
+                <div class="section">
+                    <s:button view="/question/questionDetail.seam" value="Next" styleClass="button" propagation="begin">
+                        <f:param name="modelId" value="#{testDetailBean.model.id}"/>
+                    </s:button>
+                </div>
         </ui:define>
     </ui:composition>
 </html>
