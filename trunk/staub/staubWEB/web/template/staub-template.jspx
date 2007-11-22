@@ -23,7 +23,7 @@
          <ui:define name="headerStatus">
             <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
             #{messages['page.header.status.welcome']}&#160;<u>#{identity.username}</u>
-            |<s:link id="logout" action="#{identity.logout}" value="Logout"/>
+            |<s:link id="logout" action="#{identity.logout}" value="#{messages['system.login.exit']}"/>
         </ui:define>
 
         <ui:define name="footer">
