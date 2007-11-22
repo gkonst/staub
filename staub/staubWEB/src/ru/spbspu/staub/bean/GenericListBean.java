@@ -19,9 +19,9 @@ public abstract class GenericListBean<T> extends GenericBean {
 
     @Create
     public void initList() {
-        logger.debug("--> Constructing list bean...");
+        logger.debug(">>> Constructing list bean...");
         dataModel = DataModels.instance().getDataModel(getResultList());
-        logger.debug("<-- Constructing list bean...Ok");
+        logger.debug("<<< Constructing list bean...Ok");
     }
 
     public DataModel getDataModel() {
