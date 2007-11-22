@@ -21,9 +21,9 @@ public class LoginBean extends GenericBean {
     private UserDAO userDAO;
 
     public boolean authenticate() {
-        logger.debug("--> Authentinicating user(username=#{identity.username}), password=#{identity.password}");
+        logger.debug(">>> Authentinicating user(username=#{identity.username}), password=#{identity.password}");
         User user = userDAO.findUserByUserNameAndPassword(Identity.instance().getUsername(), Identity.instance().getPassword());
-        logger.debug("<-- Authentinicating ok(result=" + (user != null) + ").");
+        logger.debug("<<< Authentinicating ok(result=" + (user != null) + ").");
         return user != null;
     }
 }
