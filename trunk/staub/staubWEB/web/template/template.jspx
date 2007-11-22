@@ -25,6 +25,9 @@
                     <ui:insert name="content"/>
                 </div>
             </div>
+            <div id="empty">
+            &nbsp;
+            </div>
             <div id="footer"><ui:insert name="footer"/></div>
         </div>
     </f:view>
