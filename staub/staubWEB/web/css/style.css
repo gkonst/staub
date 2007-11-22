@@ -15,7 +15,6 @@ body {
 	font-size: small;
 	line-height: 1.25em;
 	color: #362F2D;
-	position: relative;
 	width: 760px;
 	height: 100%;
 	margin-left: auto;
@@ -27,7 +26,7 @@ body {
 }
 input {
 	border: 1px solid #C3BBB6;
-	padding: 4px;
+	padding: 2px;
 	margin: 5px 0;
 	background: #fff url(../images/input.bg.gif) 0 0 repeat-x;
 }
@@ -52,8 +51,11 @@ fieldset {
 	padding: 0 1px;
 	background: #fff url(../images/bg.gif) 0 0 repeat-y;
 	float: left;
-	border-bottom: 1px solid #C3BBB6;
-    /*height:100%;*/
+    position:relative;
+    min-height:100%;
+}
+*html #document {
+    height:100%;
 }
 #header {
 	float: left;
@@ -70,35 +72,42 @@ fieldset {
 #sidebar {
 	float: left;
 	width: 190px;
-	margin-top: 75px;
+	/*margin-top: 75px;*/
 	padding: 20px 10px 0 10px;
 	background: url(../images/sdb.bg.gif) 0 0 no-repeat;
 }
 #content {
 	float: left;
 	width: 548px;
-	margin-top: 75px;
+	/*margin-top: 75px;*/
 	padding-top: 5px;
 	background: #fff url(../images/cnt.bg.gif) 0 0 repeat-x;
 }
+#empty, #footer {
+    height: 2.5em;
+    padding: 10px 10px 0px 10px;
+}
+#empty {
+    clear: both;
+}
 #footer {
 	clear: both;
-    /*position: absolute;*/
-    /*bottom: 0;*/
+    position: absolute;
+    bottom: 0;
 	float: left;
-	padding: 10px 20px 10px 20px;
+	padding: 10px 10px 0px 10px;
 	border-top: 1px solid #C3BBB6;
 	background-color: #fff;
-	width: 718px;
+	width: 738px;
 	text-align: right;
     vertical-align:bottom;
 }
 /* General */
 .button {
-	font-weight: bold;
+	/*font-weight: bold;*/
 	color: #fff;
 	border: 1px solid #5D1414;
-	height: 26px;
+	height: 21px;
 	background: #fff url(../images/btn.bg.gif) 0 0 repeat-x;
 	border-style: none;
 }
@@ -203,7 +212,7 @@ fieldset {
 }
 #content table thead th {
 	border-left: 1px solid #D2C9C4;
-	background: #fff url(../images/th.bg.gif) 0 100% repeat-x;	
+	background: #fff url(../images/th.bg.gif) 0 100% repeat-x;
 	border-bottom: 1px solid #D2C9C4;
 	padding: 6px;
 	text-align: left;
