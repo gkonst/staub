@@ -1,5 +1,9 @@
 package ru.spbspu.staub.dao;
 
+import org.jboss.seam.annotations.Logger;
+import org.jboss.seam.log.Log;
+
+import javax.ejb.Remove;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
@@ -18,6 +22,9 @@ public abstract class GenericDAOBean<T, ID extends Serializable> implements Gene
     @PersistenceContext
     private EntityManager em;
 
+    @Logger
+    protected Log logger;
+
     @SuppressWarnings("unchecked")
     public GenericDAOBean() {
         this.entityClass = (Class<T>) ((ParameterizedType) getClass()
@@ -28,6 +35,7 @@ public abstract class GenericDAOBean<T, ID extends Serializable> implements Gene
      * {@inheritDoc}
      */
     public T findById(ID id, boolean lock) {
+        logger.debug(">>> Find by id (entity=#0, id=#1)...", entityClass.getName(), id);
         T entity;
         if (lock) {
             entity = getEntityManager().find(getEntityClass(), id);
@@ -35,6 +43,7 @@ public abstract class GenericDAOBean<T, ID extends Serializable> implements Gene
         } else {
             entity = getEntityManager().find(getEntityClass(), id);
         }
+        logger.debug("<<< Find by id...Ok(#0 found)", entity);
         return entity;
     }
 
@@ -43,21 +52,29 @@ public abstract class GenericDAOBean<T, ID extends Serializable> implements Gene
      */
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
-        return getEntityManager().createQuery("from " + getEntityClass().getName() ).getResultList();
+        logger.debug(">>> Finding all(entity=#0)...", entityClass.getName());
+        List<T> result = getEntityManager().createQuery("from " + getEntityClass().getName() ).getResultList();
+        logger.debug("<<< Finding all...Ok(#0 found)", result.size());
+        return result;
     }
 
     /**
      * {@inheritDoc}
      */
     public T makePersistent(T entity) {
-        return getEntityManager().merge(entity);
+        logger.debug(">>> Making persistent(entity=#0)...", entityClass.getName());
+        entity = getEntityManager().merge(entity);
+        logger.debug("<<< Making persistent...Ok");
+        return entity;
     }
 
     /**
      * {@inheritDoc}
      */
     public void makeTransient(T entity) {
+        logger.debug(">>> Making transient(entity=#0)...", entityClass.getName());
         getEntityManager().remove(entity);
+        logger.debug("<<< Making transient...Ok");
     }
 
     public void flush() {
@@ -86,4 +103,7 @@ public abstract class GenericDAOBean<T, ID extends Serializable> implements Gene
     public void setEntityClass(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
+
+    @Remove
+    public void destroy() {}
 }
