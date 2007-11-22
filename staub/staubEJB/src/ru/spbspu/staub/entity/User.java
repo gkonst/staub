@@ -69,4 +69,16 @@ public class User implements Serializable {
     public int hashCode() {
         return id.hashCode();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("User");
+        sb.append("{id=").append(id);
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append('}');
+
+        return sb.toString();
+    }
 }

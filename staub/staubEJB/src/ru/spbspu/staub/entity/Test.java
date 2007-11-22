@@ -10,10 +10,10 @@ import java.util.List;
  * @author Alexander V. Elagin
  */
 @Entity
-@Table(name = "test")
+@Table(name = "test", schema = "staub")
 public class Test implements Serializable {
     private static final long serialVersionUID = -4826754008513352835L;
-    
+
     private Integer id;
 
     @Id
@@ -64,6 +64,42 @@ public class Test implements Serializable {
         this.questions = questions;
     }
 
+    private Integer timeLimit;
+
+    @Basic
+    @Column(name = "time_limit", length = 10)
+    public Integer getTimeLimit() {
+        return timeLimit;
+    }
+
+    public void setTimeLimit(Integer timeLimit) {
+        this.timeLimit = timeLimit;
+    }
+
+    private Integer passScore;
+
+    @Basic
+    @Column(name = "pass_score", length = 10)
+    public Integer getPassScore() {
+        return passScore;
+    }
+
+    public void setPassScore(Integer passScore) {
+        this.passScore = passScore;
+    }
+
+    private Integer questionsCount;
+
+    @Basic
+    @Column(name = "questions_count", length = 10)
+    public Integer getQuestionsCount() {
+        return questionsCount;
+    }
+
+    public void setQuestionsCount(Integer questionsCount) {
+        this.questionsCount = questionsCount;
+    }
+
     @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {
@@ -76,11 +112,26 @@ public class Test implements Serializable {
         Test other = (Test) otherObject;
 
         return id.equals(other.id);
-
     }
 
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Test");
+        sb.append("{id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", description='").append(description).append('\'');
+//        sb.append(", questions=").append(questions);
+        sb.append(", timeLimit=").append(timeLimit);
+        sb.append(", passScore=").append(passScore);
+        sb.append(", questionsCount=").append(questionsCount);
+        sb.append('}');
+
+        return sb.toString();
     }
 }

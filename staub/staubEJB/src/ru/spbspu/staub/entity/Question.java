@@ -39,19 +39,6 @@ public class Question implements Serializable {
         this.name = name;
     }
 
-    private String description;
-
-    @Basic
-    @Lob
-    @Column(name = "description")
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     private String definition;
 
     @Basic
@@ -89,11 +76,23 @@ public class Question implements Serializable {
         Question other = (Question) otherObject;
 
         return id.equals(other.id);
-
     }
 
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Question");
+        sb.append("{id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", definition='").append(definition).append('\'');
+        sb.append(", test=").append(test);
+        sb.append('}');
+
+        return sb.toString();
     }
 }
