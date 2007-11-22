@@ -1,0 +1,28 @@
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+    <ui:composition template="../template/staub-template.jspx">
+        <ui:define name="headerTitle">Test Detail</ui:define>
+        <ui:define name="content">
+            <h:form>
+                <a4j:outputPanel id="questionContentPanel" styleClass="section">
+                    Question name : #{questionDetailBean.currentQuestion.name}
+                </a4j:outputPanel>
+                <a4j:outputPanel id="questionButtonPanel" styleClass="section">
+                    <a4j:commandButton id="nextQuestionButton"
+                                       action="#{questionDetailBean.nextQuestion}"
+                                       value="Next"
+                                       styleClass="button"
+                                       rendered="#{questionDetailBean.hasNextQuestion}"
+                                       reRender="questionButtonPanel, questionContentPanel"/>
+                </a4j:outputPanel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
