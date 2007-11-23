@@ -8,21 +8,30 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
     <ui:composition template="../template/staub-template.jspx">
-        <ui:define name="headerTitle">Test Detail</ui:define>
-        <ui:define name="content">
-            <h:form>
-                <a4j:outputPanel id="questionContentPanel" styleClass="section">
-                    Question name : #{questionDetailBean.currentQuestion.name}
-                </a4j:outputPanel>
-                <a4j:outputPanel id="questionButtonPanel" styleClass="section">
-                    <a4j:commandButton id="nextQuestionButton"
-                                       action="#{questionDetailBean.nextQuestion}"
-                                       value="Next"
-                                       styleClass="button"
-                                       rendered="#{questionDetailBean.hasNextQuestion}"
-                                       reRender="questionButtonPanel, questionContentPanel"/>
-                </a4j:outputPanel>
-            </h:form>
+        <ui:define name="contentTitle">
+            #{questionDetailBean.currentQuestion.name}
+        </ui:define>
+        <ui:define name="contentMain">
+            
+        </ui:define>
+        <ui:define name="contentButtons">
+            <a4j:commandButton id="prevQuestionButton"
+                               action="#{questionDetailBean.previousQuestion}"
+                               value="#{messages['question.detail.previousQuestion']}"
+                               styleClass="button"
+                               disabled="#{!questionDetailBean.hasPreviousQuestion}"
+                               reRender="content"/>
+            <a4j:commandButton id="nextQuestionButton"
+                               action="#{questionDetailBean.nextQuestion}"
+                               value="#{messages['question.detail.nextQuestion']}"
+                               styleClass="button"
+                               disabled="#{!questionDetailBean.hasNextQuestion}"
+                               reRender="content"/>            
+            <a4j:commandButton id="endTestButton"
+                               value="#{messages['question.detail.endTest']}"
+                               styleClass="button"
+                               disabled="true"
+                               reRender="content"/>
         </ui:define>
     </ui:composition>
 </html>
