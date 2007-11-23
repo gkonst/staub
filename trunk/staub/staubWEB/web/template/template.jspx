@@ -3,6 +3,8 @@
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -14,16 +16,29 @@
     <f:view>
         <div id="document">
             <div id="header">
-                <div id="title"><ui:insert name="headerTitle"/></div>
-                <div id="status"><ui:insert name="headerStatus"/></div>
+                <div id="headerTitle"><ui:insert name="headerTitle"/></div>
+                <div id="headerStatus"><ui:insert name="headerStatus"/></div>
             </div>
             <div id="container">
                 <div id="sidebar">
                     <ui:insert name="sidebar"/>
                 </div>
-                <div id="content">
-                    <ui:insert name="content"/>
-                </div>
+                <a4j:outputPanel id="content" layout="block">
+                    <div id="contentTitle">
+                        <h4><ui:insert name="contentTitle"/></h4>
+                    </div>
+                    <div id="contentMessage">
+                        <ui:insert name="contentMessage"/>
+                    </div>
+                    <h:form>
+                        <div id="contentMain">
+                            <ui:insert name="contentMain"/>
+                        </div>
+                        <div id="contentButtons">
+                            <ui:insert name="contentButtons"/>
+                        </div>
+                    </h:form>
+                </a4j:outputPanel>
             </div>
             <div id="empty">
             &nbsp;
