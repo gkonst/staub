@@ -8,16 +8,25 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
     <ui:composition template="../template/staub-template.jspx">
-        <ui:define name="content">
+        <ui:define name="contentTitle">
+            #{messages['test.list.title']}
+        </ui:define>
+        <ui:define name="contentMain">
             <div class="section">
-                <!--@elvariable id="testListBean" type="ru.spbspu.staub.bean.TestListBean"-->
-                <h:outputText value="No tests Found" rendered="#{testListBean.dataModel == null or testListBean.dataModel.rowCount == 0}"/>
-                <h:dataTable id="tests" value="#{testListBean.dataModel}" var="test" rendered="#{testListBean.dataModel.rowCount > 0}">
+                <h:outputText value="#{messages['common.list.noDataFound']}" rendered="#{testListBean.dataModel == null or testListBean.dataModel.rowCount == 0}"/>
+                <h:dataTable id="testList"
+                             value="#{testListBean.dataModel}"
+                             var="test"
+                             rendered="#{testListBean.dataModel.rowCount > 0}">
                     <h:column>
-                        <f:facet name="header">Name</f:facet>
+                        <f:facet name="header">#{messages['test.list.name']}</f:facet>
                         <s:link view="/test/testDetail.seam" value="#{test.name}">
                             <f:param name="modelId" value="#{test.id}" />
                         </s:link>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{messages['test.list.questionsCount']}</f:facet>
+                        #{test.questionsCount}
                     </h:column>
                 </h:dataTable>
             </div>
