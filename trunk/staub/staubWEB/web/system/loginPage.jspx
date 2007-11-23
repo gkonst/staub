@@ -9,21 +9,30 @@
       xmlns:s="http://jboss.com/products/seam/taglib">
     <ui:composition template="../template/staub-template.jspx">
         <ui:define name="headerStatus" />
+        <ui:define name="contentMessage" />
         <ui:define name="sidebar">
             <h:form id="login">
                 <fieldset>
                     <div>
-                        <h:outputLabel for="username">#{messages['system.login.username']}</h:outputLabel>
+                        <h:outputLabel for="username">
+                            #{messages['system.login.username']}
+                        </h:outputLabel>
                         <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
                         <h:inputText id="username" value="#{identity.username}" style="width: 175px;"/>
                         <div class="errors"><h:message for="username"/></div>
                     </div>
                     <div>
-                        <h:outputLabel for="password">#{messages['system.login.password']}</h:outputLabel>
+                        <h:outputLabel for="password">
+                            #{messages['system.login.password']}
+                        </h:outputLabel>
                         <h:inputSecret id="password" value="#{identity.password}" style="width: 175px;"/>
                     </div>
-                    <div class="errors"><h:messages globalOnly="true"/></div>
-                    <div class="buttonBox"><h:commandButton id="login" action="#{identity.login}" value="#{messages['system.login.enter']}" styleClass="button"/></div>
+                    <div align="center">
+                        <ui:include src="../controls/genericMessageControl.jspx"/>
+                    </div>
+                    <div class="buttonBox">
+                        <h:commandButton id="login" action="#{identity.login}" value="#{messages['system.login.enter']}" styleClass="button"/>
+                    </div>
                 </fieldset>
             </h:form>
         </ui:define>

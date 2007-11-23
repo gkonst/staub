@@ -9,19 +9,18 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
     <ui:composition template="../template/staub-template.jspx">
-        <ui:define name="headerTitle">#{messages['page.header.title']}</ui:define>
-        <ui:define name="content">
+        <ui:define name="contentTitle">
+            #{testDetailBean.model.name}
+        </ui:define>
+        <ui:define name="contentMain">
+                    #{testDetailBean.model.description}
 
-                <div class="section">
-                        Welcome to test #{testDetailBean.model.name}!
-                        <br/>  
-                        #{testDetailBean.model.description}                        
-                </div>
-                <div class="section">
-                    <s:button view="/question/questionDetail.seam" value="Next" styleClass="button" propagation="begin">
-                        <f:param name="modelId" value="#{testDetailBean.model.id}"/>
-                    </s:button>
-                </div>
+        </ui:define>
+        <ui:define name="contentButtons">
+            <s:button view="/test/testList.seam" value="#{messages['test.detail.back']}" styleClass="button" />
+            <s:button view="/question/questionDetail.seam" value="#{messages['test.detail.startTest']}" styleClass="button" propagation="begin">
+                <f:param name="modelId" value="#{testDetailBean.model.id}"/>
+            </s:button>
         </ui:define>
     </ui:composition>
 </html>
