@@ -13,8 +13,40 @@
             #{testDetailBean.model.name}
         </ui:define>
         <ui:define name="contentMain">
-                    #{testDetailBean.model.description}
-
+            <table id="detailTable">
+                <tr>
+                    <td align="right">
+                        <strong>#{messages['test.detail.description']}</strong>
+                    </td>
+                    <td>
+                        #{testDetailBean.model.description}
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <strong>#{messages['test.detail.timeLimit']}</strong>
+                    </td>
+                    <td>
+                        #{testDetailBean.model.timeLimit}
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <strong>#{messages['test.detail.passScore']}</strong>
+                    </td>
+                    <td>
+                        #{testDetailBean.model.passScore}
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <strong>#{messages['test.detail.questionsCount']}</strong>
+                    </td>
+                    <td>
+                        #{testDetailBean.model.questionsCount}
+                    </td>
+                </tr>
+            </table>
         </ui:define>
         <ui:define name="contentButtons">
             <s:button view="/test/testList.seam" value="#{messages['test.detail.back']}" styleClass="button" />
