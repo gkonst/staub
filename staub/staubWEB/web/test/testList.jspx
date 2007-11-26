@@ -17,7 +17,8 @@
                 <h:dataTable id="testList"
                              value="#{testListBean.dataModel}"
                              var="test"
-                             rendered="#{testListBean.dataModel.rowCount > 0}">
+                             rendered="#{testListBean.dataModel.rowCount > 0}"
+                             styleClass="dataTable">
                     <h:column>
                         <f:facet name="header">#{messages['test.list.name']}</f:facet>
                         <s:link view="/test/testDetail.seam" value="#{test.name}">

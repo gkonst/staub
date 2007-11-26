@@ -1,4 +1,4 @@
-body, div, span, dd, dt, dl, img, ul, ol, li, p, h1, h2, h3, h4, h5, form, hr, fieldset {
+* {
 	margin: 0;
 	padding: 0;
 }
@@ -106,10 +106,10 @@ fieldset {
 .button {
 	color: #fff;
 	border: 1px solid #5D1414;
-	height: 21px;
 	background: #fff url(../images/hdr.bg.gif) 0 0 repeat-x;
 	border-style: none;
-    margin: 0 5px 0 5px;
+    margin: 0 1em 1em 1em;
+    padding: 0.1em;
 }
 .radio {
     border: 0 none;
@@ -171,41 +171,41 @@ fieldset {
     vertical-align: middle;
 }
 #contentButtons {
-	padding: 15px 15px 0 15px;    
+	padding: 15px 15px 0 15px;
 }
 #contentMessage {
     padding: 0 15px 0 15px;
 }
-.message {
-    border: 1px solid #D2C9C4;
-    border-collapse: collapse;
-    border-spacing: 0;
-    /*background-color: #eff5f8;*/
-    background: #fff url(../images/th.bg.gif) 0 100% repeat-x;
-}
-.message td {
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 3px;
-    padding-top: 3px;
-}
-.messageSpacer {
-    height: 5px;
-}
+    .message {
+        border: 1px solid #D2C9C4;
+        border-collapse: collapse;
+        border-spacing: 0;
+        background-color: #F5F3F1;
+        /*background: #fff url(../images/th.bg.gif) 0 100% repeat-x;*/
+    }
+        .message td {
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 3px;
+            padding-top: 3px;
+        }
+        .messageSpacer {
+            height: 5px;
+        }
 #contentMain {
     padding: 15px 15px 0 15px;
 }
-#contentMain table {
+#contentMain .dataTable {
 	width: 100%;
 	border: 1px solid #D2C9C4;
 	border-collapse: collapse;
 }
-#contentMain table caption {
+#contentMain .dataTable caption {
 	padding-bottom: 6px;
 	text-align: left;
 	font-weight: bold;
 }
-#contentMain table thead th {
+#contentMain .dataTable thead th {
 	border-left: 1px solid #D2C9C4;
 	background: #fff url(../images/th.bg.gif) 0 100% repeat-x;
 	border-bottom: 1px solid #D2C9C4;
@@ -213,7 +213,7 @@ fieldset {
 	text-align: left;
 	font-size: small;
 }
-#contentMain table tbody td {
+#contentMain .dataTable tbody td {
 	border-left: 1px solid #E4DBD5;
 	padding: 4px;
 	border-bottom: 1px solid #D2C9C4;
@@ -229,11 +229,32 @@ fieldset {
 	float: left;
 	width: 66%;
 }
-#contentMain table.radio {
+#contentMain .dataTable.radio {
 	border: 0px;
 }
-#contentMain table.radio tbody tr td {
+#contentMain .dataTable.radio tbody tr td {
 	border: 0px;
 	border-left: 0px;
 	border-bottom: 0px;
+}
+#detailTable {
+    /*border: 1px solid #97ACB9;*/
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #D2C9C4;
+    background-color: #F5F3F1;
+}
+    #detailTable td {
+        padding: 7px;
+    }
+#questionPanel {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #D2C9C4;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: block;
+    height: 300px;
+    padding: 1em;
 }
