@@ -1,0 +1,40 @@
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+    <ui:composition template="../template/staub-template.jspx">
+        <ui:define name="headerStatus" />
+        <ui:define name="contentMessage" />
+        <ui:define name="sidebar">
+            <h:form id="login">
+                <fieldset>
+                    <div>
+                        <h:outputLabel for="username">
+                            #{messages['system.login.username']}
+                        </h:outputLabel>
+                        <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
+                        <h:inputText id="username" value="#{identity.username}" style="width: 175px;"/>
+                        <div class="errors"><h:message for="username"/></div>
+                    </div>
+                    <div>
+                        <h:outputLabel for="password">
+                            #{messages['system.login.password']}
+                        </h:outputLabel>
+                        <h:inputSecret id="password" value="#{identity.password}" style="width: 175px;"/>
+                    </div>
+                    <div align="center">
+                        <ui:include src="../controls/genericMessageControl.jspx"/>
+                    </div>
+                    <div class="buttonBox">
+                        <h:commandButton id="login" action="#{identity.login}" value="#{messages['system.login.enter']}" styleClass="button"/>
+                    </div>
+                </fieldset>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

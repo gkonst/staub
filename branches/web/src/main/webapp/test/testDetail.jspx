@@ -1,0 +1,59 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+<ui:composition template="../template/staub-template.jspx">
+    <ui:define name="contentTitle">
+        #{testDetailBean.model.name}
+    </ui:define>
+    <ui:define name="contentMain">
+        <table class="detailTable">
+            <tr>
+                <td align="right">
+                    <strong>#{messages['test.detail.description']}</strong>
+                </td>
+                <td>
+                    #{testDetailBean.model.description}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <strong>#{messages['test.detail.timeLimit']}</strong>
+                </td>
+                <td>
+                    #{testDetailBean.model.timeLimit}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <strong>#{messages['test.detail.passScore']}</strong>
+                </td>
+                <td>
+                    #{testDetailBean.model.passScore}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <strong>#{messages['test.detail.questionsCount']}</strong>
+                </td>
+                <td>
+                    #{testDetailBean.model.questionsCount}
+                </td>
+            </tr>
+        </table>
+    </ui:define>
+    <ui:define name="contentButtons">
+        <s:button view="/test/testList.seam" value="#{messages['test.detail.back']}" styleClass="button"/>
+        <s:button view="/question/questionDetail.seam" value="#{messages['test.detail.startTest']}" styleClass="button"
+                  propagation="begin">
+            <f:param name="modelId" value="#{testDetailBean.model.id}"/>
+        </s:button>
+    </ui:define>
+</ui:composition>
+</html>

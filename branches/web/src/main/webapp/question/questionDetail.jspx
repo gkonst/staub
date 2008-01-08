@@ -1,0 +1,38 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+<ui:composition template="../template/staub-template.jspx">
+    <ui:define name="contentTitle">
+        #{questionDetailBean.currentQuestion.name}
+    </ui:define>
+    <ui:define name="contentMain">
+        <ui:include src="../controls/questionDefinitionControl.jspx" />
+        <ui:include src="../controls/questionAnswerControl.jspx" />
+    </ui:define>
+    <ui:define name="contentButtons">
+        <a4j:commandButton id="prevQuestionButton"
+                           action="#{questionDetailBean.previousQuestion}"
+                           value="#{messages['question.detail.previousQuestion']}"
+                           styleClass="button"
+                           disabled="#{!questionDetailBean.hasPreviousQuestion}"
+                           reRender="content"/>
+        <a4j:commandButton id="nextQuestionButton"
+                           action="#{questionDetailBean.nextQuestion}"
+                           value="#{messages['question.detail.nextQuestion']}"
+                           styleClass="button"
+                           disabled="#{!questionDetailBean.hasNextQuestion}"
+                           reRender="content"/>
+        <a4j:commandButton id="endTestButton"
+                           value="#{messages['question.detail.endTest']}"
+                           styleClass="button"
+                           disabled="true"
+                           reRender="content"/>
+    </ui:define>
+</ui:composition>
+</html>
