@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:s="http://jboss.com/products/seam/taglib"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="template.jspx">
+
+        <ui:define name="script">
+            <a4j:loadScript src="../script/commonUtil.js"/>
+            <ui:insert name="pageScript"/>
+        </ui:define>
+
+        <ui:define name="style">
+            <a4j:loadStyle src="../css/style.css" />
+        </ui:define>
+
+        <ui:define name="title">
+            #{messages['page.title']}
+        </ui:define>
+
+        <ui:define name="headerTitle">
+            #{messages['page.header.title']}
+        </ui:define>
+
+         <ui:define name="headerStatus">
+            <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
+            #{messages['page.header.status.user']}&#160;<u>#{identity.username}</u>
+            |<s:link id="logout" action="#{identity.logout}" value="#{messages['system.login.exit']}"/>
+        </ui:define>
+
+        <ui:define name="contentMessage">
+            <ui:include src="../controls/genericMessageControl.jspx"/>
+        </ui:define>
+
+        <ui:define name="footer">
+            #{messages['page.footer']}
+        </ui:define>
+
+    </ui:composition>
+
+</html>
