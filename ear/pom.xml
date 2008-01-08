@@ -46,6 +46,36 @@
                     </modules>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jboss-maven-plugin</artifactId>
+                <configuration>
+                    <jbossHome>${jboss.home}</jbossHome>
+                    <port>8080</port>
+                    <serverName>my</serverName>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <configuration>
+
+                    <!-- Container configuration -->
+                    <container>
+                        <containerId>jboss4x</containerId>
+                        <home>${jboss.home}</home>
+                    </container>
+
+                    <configuration>
+                        <type>existing</type>
+                        <home>${jboss.home}/server/my</home>
+                        <properties>
+                            <cargo.jboss.configuration>my</cargo.jboss.configuration>
+                        </properties>
+                    </configuration>
+
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
