@@ -1,0 +1,2 @@
+DROP SCHEMA staub CASCADE;
+DROP USER staub;
