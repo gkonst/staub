@@ -51,12 +51,23 @@
             <id>codehaus-repo</id>
             <url>http://repository.codehaus.org/</url>
         </pluginRepository>
+        <pluginRepository>
+            <id>apache.org</id>
+            <name>Maven Plugin Snapshots</name>
+            <url>http://people.apache.org/repo/m2-snapshot-repository</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
     </pluginRepositories>
 
     <properties>
         <seam.version>2.0.0.GA</seam.version>
         <debug>true</debug>
-        <jndi-pattern>staub-ear-1.0-SNAPSHOT/#{ejbName}/local</jndi-pattern>
+        <jndi-pattern>staub-ear-${project.version}/#{ejbName}/local</jndi-pattern>
         <jboss.home>/home/kostya/java/jboss-4.2.2.GA</jboss.home>
         <db.updateDisabled>false</db.updateDisabled>
         <db.url.host>localhost</db.url.host>
