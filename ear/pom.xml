@@ -13,14 +13,25 @@
     <version>${pom.parent.version}</version>
     <description>none</description>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <targetPath>../${project.build.finalName}</targetPath>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ear-plugin</artifactId>
+                <version>2.3.2-SNAPSHOT</version>
                 <configuration>
                     <jboss>
                         <version>4.2</version>
                         <loader-repository>seam.jboss.org:loader=staub</loader-repository>
+                        <data-sources>
+                            <data-source>staub-ds.xml</data-source>
+                        </data-sources>
                     </jboss>
 
                     <displayName>staub</displayName>
