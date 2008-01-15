@@ -7,10 +7,10 @@
 <datasources>
     <local-tx-datasource>
         <jndi-name>staubDS</jndi-name>
-        <connection-url>@dbUrl@</connection-url>
+        <connection-url>jdbc:postgresql://${db.url.host}:${db.url.port}/${db.url.name}</connection-url>
         <driver-class>org.postgresql.Driver</driver-class>
-        <user-name>@dbUser@</user-name>
-        <password>@dbPassword@</password>
+        <user-name>${db.staub.username}</user-name>
+        <password>${db.staub.password}</password>
     </local-tx-datasource>
 </datasources>
 
