@@ -17,7 +17,6 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
-                <targetPath>../${project.build.finalName}</targetPath>
             </resource>
         </resources>
         <plugins>
@@ -26,6 +25,7 @@
                 <artifactId>maven-ear-plugin</artifactId>
                 <version>2.3.2-SNAPSHOT</version>
                 <configuration>
+                    <earSourceDirectory>${project.build.outputDirectory}</earSourceDirectory>
                     <jboss>
                         <version>4.2</version>
                         <loader-repository>seam.jboss.org:loader=staub</loader-repository>
@@ -45,6 +45,7 @@
                             <groupId>ru.spbspu.staub</groupId>
                             <artifactId>staub-web</artifactId>
                             <contextRoot>/staub</contextRoot>
+                            <unpack>${jboss.deploy.exploded}</unpack>
                         </webModule>
                         <ejbModule>
                             <groupId>org.jboss.seam</groupId>
@@ -53,6 +54,7 @@
                         <ejbModule>
                             <groupId>ru.spbspu.staub</groupId>
                             <artifactId>staub-ejb</artifactId>
+                            <unpack>${jboss.deploy.exploded}</unpack>
                         </ejbModule>
                     </modules>
                 </configuration>
@@ -63,7 +65,7 @@
                 <configuration>
                     <jbossHome>${jboss.home}</jbossHome>
                     <port>8080</port>
-                    <serverName>my</serverName>
+                    <serverName>${jboss.server}</serverName>
                 </configuration>
             </plugin>
             <plugin>
@@ -79,9 +81,9 @@
 
                     <configuration>
                         <type>existing</type>
-                        <home>${jboss.home}/server/my</home>
+                        <home>${jboss.home}/server/${jboss.server}</home>
                         <properties>
-                            <cargo.jboss.configuration>my</cargo.jboss.configuration>
+                            <cargo.jboss.configuration>${jboss.server}</cargo.jboss.configuration>
                         </properties>
                     </configuration>
 
@@ -157,4 +159,29 @@
         </dependency>
 
     </dependencies>
+    <profiles>
+        <profile>
+            <id>jboss-deploy-exploded</id>
+            <activation>
+                <property>
+                    <name>jboss.deploy.exploded</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-ear-plugin</artifactId>
+                        <configuration>
+                            <!-- ugly hack for hot deployment-->
+                            <workDirectory>
+                                ${jboss.home}/server/${jboss.server}/deploy/${project.build.finalName}.${project.packaging}
+                            </workDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
