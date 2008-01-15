@@ -59,7 +59,7 @@
         <jndi-pattern>staub-ear-1.0-SNAPSHOT/#{ejbName}/local</jndi-pattern>
         <jboss.home>/home/kostya/java/jboss-4.2.2.GA</jboss.home>
         <db.updateDisabled>false</db.updateDisabled>
-        <db.url.host>eppsd015</db.url.host>
+        <db.url.host>localhost</db.url.host>
         <db.url.port>5432</db.url.port>
         <db.url.name.maintenance>postgres</db.url.name.maintenance>
         <db.url.name>staubdb</db.url.name>
