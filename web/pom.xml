@@ -32,6 +32,15 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>${project.build.sourceDirectory}</outputDirectory>
+                    <packageName>ru.spbspu.staub.model.question</packageName>
+                    <clearOutputDir>false</clearOutputDir>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
@@ -50,13 +59,13 @@
         <dependency>
             <groupId>org.jboss.seam</groupId>
             <artifactId>jboss-seam</artifactId>
-            <version>2.0.0.GA</version>
+            <version>${seam.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.seam</groupId>
             <artifactId>jboss-seam-ui</artifactId>
-            <version>2.0.0.GA</version>
+            <version>${seam.version}</version>
             <scope>runtime</scope>
             <exclusions>
                 <exclusion>
@@ -72,7 +81,7 @@
         <dependency>
             <groupId>org.jboss.seam</groupId>
             <artifactId>jboss-seam-debug</artifactId>
-            <version>2.0.0.GA</version>
+            <version>${seam.version}</version>
             <scope>runtime</scope>
             <exclusions>
                 <exclusion>
@@ -81,6 +90,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- Hardcoded versions -->
         <dependency>
             <groupId>javax.faces</groupId>
             <artifactId>jsf-api</artifactId>
@@ -131,7 +141,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <!-- Bad dependency for web-layer -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -144,12 +154,26 @@
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+
+
         <dependency>
             <groupId>ru.spbspu.staub</groupId>
             <artifactId>staub-ejb</artifactId>
             <version>${pom.parent.version}</version>
             <type>ejb</type>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- JAXB: May be provided -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.0.3</version>
         </dependency>
     </dependencies>
 </project>
