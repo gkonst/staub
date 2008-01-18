@@ -8,43 +8,7 @@
 
 <ui:composition>
     <div id="questionDefinitionPanel" class="questionDefinitionPanel">
-        Attribute
-        An attribute is a parameter to an element declared in the DTD. An attribute’s type and value
-        range, including a possible default value, are defined in the DTD.
-        DTD
-        A DTD, or document type definition, is a collection of XML markup declarations that, as a
-        collection, defines the legal structure, elements, and attributes that are available for use in a
-        document that complies to the DTD.
-        Document
-        A document is a stream of data that, after being combined with any other streams it
-        references, is structured such that it holds information contained within elements that are
-        organized as defined in the associated DTD. See Document Conformance [p.9] for more
-        information.
-        Element
-        An element is a document structuring unit declared in the DTD. The element’s content
-        model is defined in the DTD, and additional semantics may be defined in the prose
-        description of the element.
-        Facilities
-        Facilities are elements, attributes, and the semantics associated with those elements and
-        attributes.
-        Implementation
-        See User Agent.
-        Parsing
-        Parsing is the act whereby a document is scanned, and the information contained within the
-        document is filtered into the context of the elements in which the information is structured.
-        Rendering
-        Rendering is the act whereby the information in a document is presented. This presentation
-        is done in the form most appropriate to the environment (e.g. aurally, visually, in print).
-        User Agent
-        A user agent is a system that processes XHTML documents in accordance with this
-        specification. See User Agent Conformance [p.11] for more information.
-        Validation
-        Validation is a process whereby documents are verified against the associated DTD,
-        ensuring that the structure, use of elements, and use of attributes are consistent with the
-        definitions in the DTD.
-        Well-formed
-        A document is well-formed when it is structured according to the rules defined in Section 2.1
-        of the XML 1.0 Recommendation [XML [p.32] ].
+        #{questionDetailBean.questionDefinition.description}
     </div>
     <div id="questionDefinitionButtons" class="questionDefinitionButtons">
         <span id="questionDefinitionPanelSwitcher"
