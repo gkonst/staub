@@ -41,4 +41,4 @@ INSERT INTO question (id,
      VALUES (nextval('seq_question'), 
              currval('seq_test'),
              'Question #2',
-             '<?xml version="1.0" encoding="UTF-8"?><ques:question xmlns:ques="http://staub.spbspu.ru/Question"><ques:description>How many days are in February? (Choose multiple.)</ques:description><ques:multiple-choice><ques:answer correct="string">28</ques:answer><ques:answer correct="string">29</ques:answer><ques:answer>30</ques:answer><ques:answer>31</ques:answer></ques:multiple-choice></ques:question>');
+             '<?xml version="1.0" encoding="UTF-8"?><ques:question xmlns:ques="http://staub.spbspu.ru/Question"><ques:description>How many days are in February? (Choose multiple.)</ques:description><ques:multiple-choice><ques:answer correct="true">28</ques:answer><ques:answer correct="true">29</ques:answer><ques:answer>30</ques:answer><ques:answer>31</ques:answer></ques:multiple-choice></ques:question>');
