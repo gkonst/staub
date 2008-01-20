@@ -8,7 +8,7 @@
 
 <ui:composition>
     <div id="questionDefinitionPanel" class="questionDefinitionPanel">
-        #{questionDetailBean.questionDefinition.description}
+        #{questionDetailBean.currentQuestion.description}
     </div>
     <div id="questionDefinitionButtons" class="questionDefinitionButtons">
         <span id="questionDefinitionPanelSwitcher"
