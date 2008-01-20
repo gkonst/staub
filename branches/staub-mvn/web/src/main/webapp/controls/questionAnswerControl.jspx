@@ -9,14 +9,14 @@
 
 <ui:composition>
     <div id="questionAnswerPanel" class="questionAnswerPanel">
-        <a4j:outputPanel id="multipleChoice" rendered="#{questionDetailBean.questionDefinition.multipleChoice != null}">
-            <h:selectManyCheckbox layout="pageDirection" value="#{questionDetailBean.answerMultipleChoice}">
-                <f:selectItems value="#{questionDetailBean.answerChoiceItems}"/>
+        <a4j:outputPanel id="multipleChoice" rendered="#{questionDetailBean.answer.multipleChoice}">
+            <h:selectManyCheckbox layout="pageDirection" value="#{questionDetailBean.answer.userAnswer}">
+                <f:selectItems value="#{questionDetailBean.answer.answerItems}"/>
             </h:selectManyCheckbox>
         </a4j:outputPanel>
-        <a4j:outputPanel id="singleChoice" rendered="#{questionDetailBean.questionDefinition.singleChoice != null}">
-            <h:selectOneRadio layout="pageDirection">
-                <f:selectItems value="#{questionDetailBean.answerChoiceItems}"/>
+        <a4j:outputPanel id="singleChoice" rendered="#{questionDetailBean.answer.singleChoice}">
+            <h:selectOneRadio layout="pageDirection" value="#{questionDetailBean.answer.userAnswer}">
+                <f:selectItems value="#{questionDetailBean.answer.answerItems}"/>
             </h:selectOneRadio>
         </a4j:outputPanel>
     </div>
