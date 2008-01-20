@@ -5,9 +5,10 @@ import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.Question;
 
 import javax.ejb.Stateless;
+import java.util.List;
 
 /**
- * Stateless EJB DAO for manipulations with <code>Question</code> entity. 
+ * Stateless EJB DAO for manipulations with <code>Question</code> entity.
  *
  * @author Konstantin Grigoriev
  */
@@ -15,4 +16,7 @@ import javax.ejb.Stateless;
 @AutoCreate
 @Stateless
 public class QuestionDAOBean extends GenericDAOBean<Question, Integer> implements QuestionDAO {
+    public List<Integer> findIdsByTestId(Integer testId) {
+        return getEntityManager().createQuery("from " + Question.class.getName() + " q where q.test.id = :testId").setParameter("testId", testId).getResultList();
+    }
 }
