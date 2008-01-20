@@ -5,11 +5,13 @@ import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.faces.Renderer;
 import org.jboss.seam.log.Log;
 
+import java.io.Serializable;
+
 /**
  * Generic webbean implementation used in presentation layer.
  * @author Konstantin Grigoriev
  */
-public abstract class GenericBean {
+public abstract class GenericBean implements Serializable {
     @Logger
     protected Log logger;
 
