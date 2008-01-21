@@ -6,11 +6,11 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
-import ru.spbspu.staub.dao.TestDAO;
 import ru.spbspu.staub.dao.QuestionDAO;
-import ru.spbspu.staub.entity.Test;
-import ru.spbspu.staub.model.QuestionWrapper;
 import ru.spbspu.staub.model.AnswerWrapper;
+import ru.spbspu.staub.model.QuestionWrapper;
+
+import java.util.List;
 
 
 /**
@@ -26,12 +26,9 @@ public class QuestionDetailBean extends GenericBean {
     private Integer modelId;
 
     @In
-    private TestDAO testDAO;
-
-    @In
     private QuestionDAO questionDAO;
 
-    private Test test;
+    private List<Integer> questionIds;
     private QuestionWrapper currentQuestion;
     private int questionIndex = 0;
 
@@ -40,21 +37,20 @@ public class QuestionDetailBean extends GenericBean {
     @Create
     public void startTest() {
         logger.debug(">>> Starting test(#0)...", modelId);
-        test = testDAO.findById(modelId, true);
-        questionDAO.findIdsByTestId(test.getId());
-        currentQuestion = new QuestionWrapper(test.getQuestions().get(questionIndex));
+        questionIds = questionDAO.findIdsByTestId(modelId);
+        currentQuestion = new QuestionWrapper(questionDAO.findById(questionIds.get(questionIndex), false));
         answer = AnswerWrapper.getAnswer(currentQuestion.getDefinition());
         logger.debug("<<< Starting test...Ok");
     }
 
     public void previousQuestion() {
-        currentQuestion = new QuestionWrapper(test.getQuestions().get(--questionIndex));
+        currentQuestion = new QuestionWrapper(questionDAO.findById(questionIds.get(--questionIndex), false));
         answer = AnswerWrapper.getAnswer(currentQuestion.getDefinition());
     }
 
     public void nextQuestion() {
         saveAnswer();
-        currentQuestion = new QuestionWrapper(test.getQuestions().get(++questionIndex));
+        currentQuestion = new QuestionWrapper(questionDAO.findById(questionIds.get(++questionIndex), false));
         answer = AnswerWrapper.getAnswer(currentQuestion.getDefinition());
     }
 
@@ -69,15 +65,7 @@ public class QuestionDetailBean extends GenericBean {
     }
 
     public boolean isHasNextQuestion() {
-        return (questionIndex + 1) < test.getQuestions().size();
-    }
-
-    public Test getTest() {
-        return test;
-    }
-
-    public void setTest(Test test) {
-        this.test = test;
+        return (questionIndex + 1) < questionIds.size();
     }
 
     public QuestionWrapper getCurrentQuestion() {
