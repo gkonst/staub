@@ -17,6 +17,6 @@ import java.util.List;
 @Stateless
 public class QuestionDAOBean extends GenericDAOBean<Question, Integer> implements QuestionDAO {
     public List<Integer> findIdsByTestId(Integer testId) {
-        return getEntityManager().createQuery("from " + Question.class.getName() + " q where q.test.id = :testId").setParameter("testId", testId).getResultList();
+        return getEntityManager().createQuery("select q.id from " + Question.class.getName() + " q where q.test.id = :testId").setParameter("testId", testId).getResultList();
     }
 }
