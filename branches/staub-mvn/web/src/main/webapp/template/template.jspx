@@ -20,9 +20,9 @@
                 <div id="headerStatus"><ui:insert name="headerStatus"/></div>
             </div>
             <div id="container">
-                <div id="sidebar">
+                <a4j:outputPanel id="sidebar">
                     <ui:insert name="sidebar"/>
-                </div>
+                </a4j:outputPanel>
                 <a4j:outputPanel id="content" layout="block">
                     <div id="contentTitle">
                         <h4><ui:insert name="contentTitle"/></h4>
