@@ -23,4 +23,8 @@ public class TestDetailBean extends GenericDetailBean<Test> {
     protected void fillModel(Integer modelId) {
         setModel(testDAO.findById(modelId, false));
     }
+
+    public String startTest() {
+        return "questionDetail";
+    }
 }
