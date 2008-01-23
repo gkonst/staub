@@ -2,8 +2,7 @@
 <pages xmlns="http://jboss.com/products/seam/pages"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.0.xsd"
-
-                 login-view-id="/system/loginPage.jspx">
+       login-view-id="/system/loginPage.jspx">
 
     <page view-id="/system/loginPage.jspx">
         <navigation>
@@ -13,10 +12,18 @@
         </navigation>
     </page>
 
-    <page view-id="/test/testList.jspx" 
+    <page view-id="/test/testList.jspx"
           login-required="true">
     </page>
-    <page view-id="/test/testDetail.jspx" 
+    <page view-id="/test/testDetail.jspx"
+          login-required="true">
+        <navigation>
+            <rule if-outcome="questionDetail">
+                <render view-id="/question/questionDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/question/questionDetail.jspx"
           login-required="true">
     </page>
 
@@ -25,7 +32,7 @@
             <redirect view-id="/system/loginPage.jspx"/>
         </navigation>
     </page>
-    
+
     <exception class="org.jboss.seam.security.NotLoggedInException">
         <redirect view-id="/system/loginPage.jspx">
             <message severity="warn">#{messages[system.login.unauthorizedError]}</message>
