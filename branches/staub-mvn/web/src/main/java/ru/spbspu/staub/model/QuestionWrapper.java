@@ -1,18 +1,16 @@
 package ru.spbspu.staub.model;
 
-import ru.spbspu.staub.model.question.QuestionType;
+import org.jboss.seam.log.Log;
+import org.jboss.seam.log.Logging;
 import ru.spbspu.staub.entity.Question;
+import ru.spbspu.staub.model.question.QuestionType;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import java.io.StringReader;
-
-import org.jboss.seam.log.Log;
-import org.jboss.seam.log.Logging;
-import org.jboss.seam.annotations.Logger;
 
 /**
  * Wrapper encapsulates
@@ -26,7 +24,7 @@ public class QuestionWrapper {
     private String name;
     private String description;
     private QuestionType definition;
-    private int timeLimit;
+    private int timeLimit = 120;
 
     public QuestionWrapper(Question question) {
         wrap(question);
