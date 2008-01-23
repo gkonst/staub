@@ -50,8 +50,7 @@
     </ui:define>
     <ui:define name="contentButtons">
         <s:button view="/test/testList.seam" value="#{messages['test.detail.back']}" styleClass="button"/>
-        <s:button view="/question/questionDetail.seam" value="#{messages['test.detail.startTest']}" styleClass="button"
-                  propagation="begin">
+        <s:button action="#{testDetailBean.startTest}" value="#{messages['test.detail.startTest']}" styleClass="button">
             <f:param name="modelId" value="#{testDetailBean.model.id}"/>
         </s:button>
     </ui:define>
