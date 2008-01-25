@@ -2,6 +2,7 @@ CREATE TABLE question (
     id integer NOT NULL,
     fk_test integer NOT NULL,
     name character varying(128),
+    time_limit integer,
     definition text NOT NULL
 );
 
