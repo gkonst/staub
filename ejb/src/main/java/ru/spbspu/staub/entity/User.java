@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Alexander V. Elagin
  */
 @Entity
-@Table(name = "\"user\"", schema = "staub")
+@Table(name = "user", schema = "staub")
 public class User implements Serializable {
     private static final long serialVersionUID = 4840352094869214259L;
 
