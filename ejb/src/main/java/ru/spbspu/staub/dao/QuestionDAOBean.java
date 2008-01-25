@@ -16,7 +16,8 @@ import java.util.List;
 @AutoCreate
 @Stateless
 public class QuestionDAOBean extends GenericDAOBean<Question, Integer> implements QuestionDAO {
+    @SuppressWarnings("unchecked")
     public List<Integer> findIdsByTestId(Integer testId) {
-        return getEntityManager().createQuery("select q.id from " + Question.class.getName() + " q where q.test.id = :testId").setParameter("testId", testId).getResultList();
+        return getEntityManager().createQuery("select q.id from Question q where q.test.id = :testId").setParameter("testId", testId).getResultList();
     }
 }
