@@ -2,6 +2,7 @@ package ru.spbspu.staub.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * The <code>Question</code> class represents the Question entity.
@@ -76,6 +77,54 @@ public class Question implements Serializable {
         this.test = test;
     }
 
+    private Date created;
+
+    @Basic
+    @Column(name = "created")
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    private String createdBy;
+
+    @Basic
+    @Column(name = "created_by", length = 64)
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    private Date modified;
+
+    @Basic
+    @Column(name = "modified")
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    private String modifiedBy;
+
+    @Basic
+    @Column(name = "modified_by", length = 64)
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
     @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {
@@ -103,7 +152,11 @@ public class Question implements Serializable {
         sb.append(", name='").append(name).append('\'');
         sb.append(", timeLimit=").append(timeLimit);
         sb.append(", definition='").append(definition).append('\'');
-        sb.append(", test=").append(test);
+//        sb.append(", test=").append(test);
+        sb.append(", created=").append(created);
+        sb.append(", createdBy='").append(createdBy).append('\'');
+        sb.append(", modified=").append(modified);
+        sb.append(", modifiedBy='").append(modifiedBy).append('\'');
         sb.append('}');
 
         return sb.toString();

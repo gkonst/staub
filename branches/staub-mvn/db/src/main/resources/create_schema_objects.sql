@@ -3,7 +3,11 @@ CREATE TABLE question (
     fk_test integer NOT NULL,
     name character varying(128),
     time_limit integer,
-    definition text NOT NULL
+    definition text NOT NULL,
+    created date,
+    created_by character varying(64),
+    modified date,
+    modified_by character varying(64)
 );
 
 CREATE TABLE test (
@@ -13,6 +17,10 @@ CREATE TABLE test (
     time_limit integer,
     pass_score integer,
     questions_count integer,
+    created date,
+    created_by character varying(64),
+    modified date,
+    modified_by character varying(64),
     CONSTRAINT chk_pass_score CHECK (((pass_score > 0) AND (pass_score <= 100))),
     CONSTRAINT chk_questions_count CHECK ((questions_count > 0)),
     CONSTRAINT chk_time_limit CHECK ((time_limit > 0))
