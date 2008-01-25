@@ -39,6 +39,18 @@ public class Question implements Serializable {
         this.name = name;
     }
 
+    private Integer timeLimit;
+
+    @Basic
+    @Column(name = "time_limit", length = 10)
+    public Integer getTimeLimit() {
+        return timeLimit;
+    }
+
+    public void setTimeLimit(Integer timeLimit) {
+        this.timeLimit = timeLimit;
+    }
+
     private String definition;
 
     @Basic
@@ -89,6 +101,7 @@ public class Question implements Serializable {
         sb.append("Question");
         sb.append("{id=").append(id);
         sb.append(", name='").append(name).append('\'');
+        sb.append(", timeLimit=").append(timeLimit);
         sb.append(", definition='").append(definition).append('\'');
         sb.append(", test=").append(test);
         sb.append('}');
