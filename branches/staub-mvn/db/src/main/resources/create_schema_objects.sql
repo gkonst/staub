@@ -15,8 +15,6 @@ CREATE TABLE question_trace (
     id integer NOT NULL,
     fk_test_trace integer NOT NULL,
     fk_question integer NOT NULL,
-    fk_user integer NOT NULL,
-    session_id character varying(64) NOT NULL,
     started date NOT NULL,
     finished date,
     answer text NOT NULL
@@ -112,9 +110,6 @@ ALTER TABLE ONLY question_trace
 ALTER TABLE ONLY question_trace
     ADD CONSTRAINT fk_test_trace FOREIGN KEY (fk_test_trace) REFERENCES test_trace(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY question_trace
-    ADD CONSTRAINT fk_user FOREIGN KEY (fk_user) REFERENCES "user"(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
 ALTER TABLE ONLY test_trace
     ADD CONSTRAINT fk_test FOREIGN KEY (fk_test) REFERENCES test(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
@@ -127,8 +122,6 @@ CREATE INDEX fki_question__test ON question USING btree (fk_test);
 CREATE INDEX fki_question_trace__question ON question_trace USING btree (fk_question);
 
 CREATE INDEX fki_question_trace__test_trace ON question_trace USING btree (fk_test_trace);
-
-CREATE INDEX fki_question_trace__user ON question_trace USING btree (fk_user);
 
 CREATE INDEX fki_test_trace__test ON test_trace USING btree (fk_test);
 

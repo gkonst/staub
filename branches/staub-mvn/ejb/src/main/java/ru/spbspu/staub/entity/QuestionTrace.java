@@ -28,18 +28,6 @@ public class QuestionTrace implements Serializable {
         this.id = id;
     }
 
-    private String sessionId;
-
-    @Basic
-    @Column(name = "session_id", nullable = false, length = 64)
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
     private Date started;
 
     @Basic
@@ -99,18 +87,6 @@ public class QuestionTrace implements Serializable {
 
     public void setTestTrace(TestTrace testTrace) {
         this.testTrace = testTrace;
-    }
-
-    private User user;
-
-    @OneToOne
-    @JoinColumn(name = "fk_user", referencedColumnName = "id", nullable = false)
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override
