@@ -12,10 +12,11 @@
         <a4j:loadScript src="../script/timer.js"/>
     </ui:define>
     <ui:define name="sidebar">
+        <input type="text" id="timerDebug"/>
         <a4j:outputPanel id="timerPanel">
             Time - <span id="timerField"/>
             <script type="text/javascript">
-                new Timer({timeToCount : '#{questionDetailBean.currentQuestion.timeLimit}',
+                Timer.init({timeToCount : '#{questionDetailBean.currentQuestion.timeLimit}',
                     currentTime : '#{questionDetailBean.currentTime}',
                     timerFieldId : 'timerField'});
             </script>
@@ -25,7 +26,7 @@
             #{questionDetailBean.currentTime}
         </a4j:outputPanel>
         <h:form>
-            <a4j:poll action="#{questionDetailBean.refreshTimer}" reRender="timerPanel" interval="10000"/>
+            <a4j:poll action="#{questionDetailBean.refreshTimer}" reRender="timerPanel" interval="10000" enabled="true"/>
         </h:form>
     </ui:define>
     <ui:define name="contentTitle">
