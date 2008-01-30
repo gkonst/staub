@@ -21,10 +21,19 @@
             <rule if-outcome="questionDetail">
                 <render view-id="/question/questionDetail.jspx"/>
             </rule>
+            <rule if-outcome="testPrepare">
+                <render view-id="/test/testPrepare.jspx"/>
+            </rule>
         </navigation>
     </page>
     <page view-id="/question/questionDetail.jspx"
           login-required="true">
+    </page>
+
+    <page view-id="/test/testPrepare.jspx">
+        <navigation>
+            <render view-id="/question/questionDetail.jspx"/>
+        </navigation>
     </page>
 
     <page view-id="*">

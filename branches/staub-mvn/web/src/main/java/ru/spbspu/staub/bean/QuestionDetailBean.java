@@ -1,9 +1,7 @@
 package ru.spbspu.staub.bean;
 
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Conversational;
-import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -32,6 +30,9 @@ public class QuestionDetailBean extends GenericBean {
     @In
     private QuestionDAO questionDAO;
 
+    @In(required = true)
+    private Integer testId;
+
     private List<Integer> questionIds;
     private QuestionWrapper currentQuestion;
     private int questionIndex = 0;
@@ -40,8 +41,6 @@ public class QuestionDetailBean extends GenericBean {
 
     private AnswerWrapper answer;
 
-    @Begin
-    @Create
     public String initTest() {
         logger.debug(">>> Init test(#0)...", modelId);
         questionIds = questionDAO.findIdsByTestId(modelId);
