@@ -1,9 +1,9 @@
 package ru.spbspu.staub.bean;
 
-import org.jboss.seam.annotations.Create;
-import org.jboss.seam.faces.DataModels;
+import org.jboss.seam.annotations.Factory;
+import org.jboss.seam.annotations.datamodel.DataModel;
+import org.jboss.seam.annotations.datamodel.DataModelSelection;
 
-import javax.faces.model.DataModel;
 import java.util.List;
 
 /**
@@ -13,22 +13,26 @@ import java.util.List;
  */
 public abstract class GenericListBean<T> extends GenericBean {
 
-    private DataModel dataModel;
+    @DataModel
+    private List<T> dataModel;
+
+    @DataModelSelection
+    private T selected;
 
     protected abstract List<T> getResultList();
 
-    @Create
-    public void initList() {
+    @Factory("dataModel")
+    public void fillList() {
         logger.debug(">>> Constructing list bean...");
-        dataModel = DataModels.instance().getDataModel(getResultList());
+        dataModel = getResultList();
         logger.debug("<<< Constructing list bean...Ok");
     }
 
-    public DataModel getDataModel() {
-        return dataModel;
+    public T getSelected() {
+        return selected;
     }
 
-    public void setDataModel(DataModel dataModel) {
-        this.dataModel = dataModel;
+    public void setSelected(T selected) {
+        this.selected = selected;
     }
 }
