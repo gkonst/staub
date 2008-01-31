@@ -13,16 +13,14 @@ import java.util.ArrayList;
  * @author Konstantin Grigoriev
  */
 public class MultipleChoiceAnswerWrapper extends AnswerWrapper {
-    private ChoiceType answerDefinition;
     private List<SelectItem> answerItems = null;
     private List<String> userAnswer = null;
 
     public MultipleChoiceAnswerWrapper(ChoiceType answerDefinition) {
-        this.answerDefinition = answerDefinition;
         answerItems = new ArrayList<SelectItem>();
         userAnswer = new ArrayList<String>();
         for (AnswerType choice : answerDefinition.getAnswer()) {
-            answerItems.add(new SelectItem(choice.getValue(), choice.getValue()));
+            answerItems.add(new SelectItem(choice.getId(), choice.getValue()));
         }
     }
 
