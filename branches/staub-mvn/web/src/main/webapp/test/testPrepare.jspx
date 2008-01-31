@@ -10,16 +10,13 @@
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="../template/staub-template.jspx">
     <ui:define name="contentTitle">
-        подготвка...
+        подготовка...
     </ui:define>
     <ui:define name="contentMain">
-
+        Вы уверены?
     </ui:define>
     <ui:define name="contentButtons">
-        #{testId}
-        <h:commandLink action="#{questionDetailBean.initTest}" value="#{messages['test.detail.startTest']}" styleClass="button">
-            <f:param name="modelId" value="#{testId}"/>
-        </h:commandLink>
+        <h:commandLink action="#{questionDetailBean.initTest}" value="#{messages['test.detail.startTest']}" styleClass="button"/>
     </ui:define>
 </ui:composition>
 </html>
