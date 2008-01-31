@@ -28,6 +28,11 @@
     </page>
     <page view-id="/question/questionDetail.jspx"
           login-required="true">
+        <navigation>
+            <rule if-outcome="testEnd">
+                <render view-id="/test/testEnd.jspx"/>
+            </rule>
+        </navigation>
     </page>
 
     <page view-id="/test/testPrepare.jspx">
