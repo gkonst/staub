@@ -1,6 +1,6 @@
 package ru.spbspu.staub.bean;
 
-import static org.jboss.seam.ScopeType.EVENT;
+import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author Konstantin Grigoriev
  */
 @Name("testListBean")
-@Scope(EVENT)
+@Scope(SESSION)
 public class TestListBean extends GenericListBean<Test> {
 
     @In TestDAO testDAO;
