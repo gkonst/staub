@@ -13,15 +13,13 @@ import java.util.ArrayList;
  * @author Konstantin Grigoriev
  */
 public class SingleChoiceAnswerWrapper extends AnswerWrapper {
-    private ChoiceType answerDefinition;
     private List<SelectItem> answerItems = null;
     private String userAnswer;
 
     public SingleChoiceAnswerWrapper(ChoiceType answerDefinition) {
-        this.answerDefinition = answerDefinition;
         answerItems = new ArrayList<SelectItem>();
         for (AnswerType choice : answerDefinition.getAnswer()) {
-            answerItems.add(new SelectItem(choice.getValue(), choice.getValue()));
+            answerItems.add(new SelectItem(choice.getId(), choice.getValue()));
         }
     }
 
