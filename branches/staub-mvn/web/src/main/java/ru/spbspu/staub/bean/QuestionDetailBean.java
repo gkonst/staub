@@ -2,10 +2,10 @@ package ru.spbspu.staub.bean;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Conversational;
+import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.web.RequestParameter;
 import ru.spbspu.staub.dao.QuestionDAO;
 import ru.spbspu.staub.model.AnswerWrapper;
 import ru.spbspu.staub.model.QuestionWrapper;
@@ -24,9 +24,6 @@ import java.util.List;
 @Conversational
 public class QuestionDetailBean extends GenericBean {
 
-    @RequestParameter
-    private Integer modelId;
-
     @In
     private QuestionDAO questionDAO;
 
@@ -42,11 +39,11 @@ public class QuestionDetailBean extends GenericBean {
     private AnswerWrapper answer;
 
     public String initTest() {
-        logger.debug(">>> Init test(#0)...", modelId);
-        questionIds = questionDAO.findIdsByTestId(modelId);
+        logger.debug(">>> Init test(#0)...", testId);
+        questionIds = questionDAO.findIdsByTestId(testId);
         currentQuestion = new QuestionWrapper(questionDAO.findById(questionIds.get(questionIndex), false));
         answer = AnswerWrapper.getAnswer(currentQuestion.getDefinition());  
-        logger.debug(" currentTime : " + currentTime);
+        logger.debug(" currentTime : #0", currentTime);
         if(currentTime == -1) {
             resetTimer();
         } else {
@@ -54,6 +51,13 @@ public class QuestionDetailBean extends GenericBean {
         }
         logger.debug("<<< Init test...Ok");
         return "questionDetail";
+    }
+
+    @End
+    public String endTest() {
+        logger.debug(">>> End test...");
+        logger.debug(">>> End test...Ok");
+        return "testEnd";
     }
 
     public String previousQuestion() {
@@ -68,9 +72,13 @@ public class QuestionDetailBean extends GenericBean {
     public String nextQuestion() {
         logger.debug(">>> Next question...");
         saveAnswer();
-        currentQuestion = new QuestionWrapper(questionDAO.findById(questionIds.get(++questionIndex), false));
-        answer = AnswerWrapper.getAnswer(currentQuestion.getDefinition());
-        resetTimer();
+        questionIndex++;
+        logger.debug(" question index : #0", questionIndex);
+        if(questionIndex < questionIds.size()) {
+            currentQuestion = new QuestionWrapper(questionDAO.findById(questionIds.get(questionIndex), false));
+            answer = AnswerWrapper.getAnswer(currentQuestion.getDefinition());
+            resetTimer();
+        }
         logger.debug(">>> Next question...Ok");
         return null;
     }
@@ -100,7 +108,7 @@ public class QuestionDetailBean extends GenericBean {
     }
 
     public boolean isHasNextQuestion() {
-        return (questionIndex + 1) < questionIds.size();
+        return questionIndex < questionIds.size();
     }
 
     public QuestionWrapper getCurrentQuestion() {
