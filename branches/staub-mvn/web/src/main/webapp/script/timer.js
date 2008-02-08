@@ -2,12 +2,17 @@ if (typeof Timer == 'undefined') {
   Timer = {};
 }
 Timer.init = function(objArgs) {
-    clearTimeout(Timer.t);
+    Timer.destroy();
     Timer.timeToCount = objArgs.timeToCount;
     Timer.currentTime = objArgs.currentTime;
     Timer.timerFieldId = objArgs.timerFieldId;
     Timer.tickTock();
 };
+Timer.destroy = function() {
+    if(typeof Timer.t != 'undefined') {
+        clearTimeout(Timer.t);
+    }
+}
 Timer.tickTock = function() {
         
         var timerField = document.getElementById(Timer.timerFieldId);
