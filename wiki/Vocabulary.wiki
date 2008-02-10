@@ -1,13 +1,27 @@
-#summary Словарь терминов.
+#summary Словарь терминов
 
-= Introduction =
+----
+_Вариант теста_
 
-Add your content here.
+----
+_Тест_
 
+----
+_Пользователь_
 
-= Details =
+----
+_Админ_
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+----
+_Рейтинг_
+
+----
+_Вопрос_
+
+----
+_Режим обработки теста_
+
+----
+_Режим формирования варианта теста_
+
+----
