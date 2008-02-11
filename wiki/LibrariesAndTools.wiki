@@ -26,4 +26,6 @@
 
   Apache Ant 1.6.5 - http://ant.apache.org
 
-  Red Hat Developer Studio 1.0 - http://www.redhat.com/developers/rhds/index.html
+  Intellij Idea 7
+
+  Sparx Enterprise Architect 7.0.818
