@@ -6,7 +6,16 @@
     <packaging>pom</packaging>
     <name>Staub Application</name>
     <version>1.0-SNAPSHOT</version>
-    <description>none</description>
+    <url>http://code.google.com/p/staub</url>
+    <description>Knowledge control test system</description>
+    <licenses>
+        <license>
+            <name>GPL 3</name>
+            <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+            <comments>GNU General Public License v3</comments>
+            <distribution>manual</distribution>
+        </license>
+    </licenses>
     <build>
         <pluginManagement>
             <plugins>
@@ -63,6 +72,33 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
+    <issueManagement>
+        <system>Google Code Issues</system>
+        <url>http://code.google.com/p/staub/issues/list</url>
+    </issueManagement>
+    <developers>
+        <developer>
+            <id>Konstantin_Grigoriev</id>
+            <name>Konstantin Grigoriev</name>
+            <email>Konstantin.V.Grigoriev@gmail.com</email>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>+3</timezone>
+        </developer>
+        <developer>
+            <id>Alexander_Elagin</id>
+            <name>Alexander Elagin</name>
+            <email>Alexander.Elagin@gmail.com</email>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>+3</timezone>
+        </developer>
+    </developers>
 
     <properties>
         <!-- Libraries versions -->
