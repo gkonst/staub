@@ -21,5 +21,6 @@
             </xs:choice>
         </xs:sequence>
         <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+        <xs:attribute name="validate" type="xs:boolean" use="optional" default="false"/>
     </xs:complexType>
 </xs:schema>
