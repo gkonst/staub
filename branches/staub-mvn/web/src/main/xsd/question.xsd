@@ -8,7 +8,7 @@
                 <xs:element name="single-choice" type="q:choice-type">
                     <xs:key name="key-single-choice">
                         <xs:selector xpath="q:answer"/>
-                        <xs:field xpath="@correct"/>
+                        <xs:field xpath="@id"/>
                     </xs:key>
                     <xs:unique name="unique-correct-answer">
                         <xs:selector xpath="q:answer"/>
@@ -18,7 +18,7 @@
                 <xs:element name="multiple-choice" type="q:choice-type">
                     <xs:key name="key-multiple-choice">
                         <xs:selector xpath="q:answer"/>
-                        <xs:field xpath="@correct"/>
+                        <xs:field xpath="@id"/>
                     </xs:key>
                 </xs:element>
             </xs:choice>
