@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:q="http://staub.spbspu.ru/QuestionsGroups" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://staub.spbspu.ru/QuestionsGroups" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="groups" type="q:groups-type">
+        <xs:key name="key-group-id">
+            <xs:selector xpath="q:group"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+    </xs:element>
+    <xs:complexType name="groups-type">
+        <xs:sequence>
+            <xs:element name="group" type="q:group-type" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="group-type">
+        <xs:sequence>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element name="description" type="xs:string" minOccurs="0"/>
+        <xs:choice>
+            <xs:element name="select-all"/>
+            <xs:element name="select-num" type="xs:positiveInteger"/>
+        </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+    </xs:complexType>
+</xs:schema>
