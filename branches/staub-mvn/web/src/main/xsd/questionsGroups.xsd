@@ -13,12 +13,12 @@
     </xs:complexType>
     <xs:complexType name="group-type">
         <xs:sequence>
-        <xs:element name="name" type="xs:string"/>
-        <xs:element name="description" type="xs:string" minOccurs="0"/>
-        <xs:choice>
-            <xs:element name="select-all"/>
-            <xs:element name="select-num" type="xs:positiveInteger"/>
-        </xs:choice>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:choice>
+                <xs:element name="select-all"/>
+                <xs:element name="select-num" type="xs:positiveInteger"/>
+            </xs:choice>
         </xs:sequence>
         <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
     </xs:complexType>
