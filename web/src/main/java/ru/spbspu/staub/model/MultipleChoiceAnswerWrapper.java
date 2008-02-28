@@ -1,11 +1,9 @@
 package ru.spbspu.staub.model;
 
 import ru.spbspu.staub.model.question.ChoiceType;
-import ru.spbspu.staub.model.question.AnswerType;
 
-import javax.faces.model.SelectItem;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO add descritpion
@@ -13,22 +11,19 @@ import java.util.ArrayList;
  * @author Konstantin Grigoriev
  */
 public class MultipleChoiceAnswerWrapper extends AnswerWrapper {
-    private List<SelectItem> answerItems = null;
+    private List answerItems = null;
     private List<String> userAnswer = null;
 
     public MultipleChoiceAnswerWrapper(ChoiceType answerDefinition) {
-        answerItems = new ArrayList<SelectItem>();
+        answerItems = answerDefinition.getAnswer();
         userAnswer = new ArrayList<String>();
-        for (AnswerType choice : answerDefinition.getAnswer()) {
-            answerItems.add(new SelectItem(choice.getId(), choice.getValue()));
-        }
     }
 
-    public List<SelectItem> getAnswerItems() {
+    public List getAnswerItems() {
         return answerItems;
     }
 
-    public void setAnswerItems(List<SelectItem> answerItems) {
+    public void setAnswerItems(List answerItems) {
         this.answerItems = answerItems;
     }
 
