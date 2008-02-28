@@ -5,18 +5,19 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:s="http://jboss.com/products/seam/taglib">
 
 <ui:composition>
     <div id="questionAnswerPanel" class="questionAnswerPanel">
         <a4j:outputPanel id="multipleChoice" rendered="#{questionDetailBean.answer.multipleChoice}">
             <h:selectManyCheckbox layout="pageDirection" value="#{questionDetailBean.answer.userAnswer}">
-                <f:selectItems value="#{questionDetailBean.answer.answerItems}"/>
+                <s:selectItems value="#{questionDetailBean.answer.answerItems}" var="answer" label="#{answer.value}"/>>
             </h:selectManyCheckbox>
         </a4j:outputPanel>
         <a4j:outputPanel id="singleChoice" rendered="#{questionDetailBean.answer.singleChoice}">
             <h:selectOneRadio layout="pageDirection" value="#{questionDetailBean.answer.userAnswer}">
-                <f:selectItems value="#{questionDetailBean.answer.answerItems}"/>
+                <s:selectItems value="#{questionDetailBean.answer.answerItems}" var="answer" label="#{answer.value}"/>
             </h:selectOneRadio>
         </a4j:outputPanel>
     </div>
