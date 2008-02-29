@@ -12,7 +12,7 @@
     <div id="questionAnswerPanel" class="questionAnswerPanel">
         <a4j:outputPanel id="multipleChoice" rendered="#{questionDetailBean.answer.multipleChoice}">
             <h:selectManyCheckbox layout="pageDirection" value="#{questionDetailBean.answer.userAnswer}">
-                <s:selectItems value="#{questionDetailBean.answer.answerItems}" var="answer" label="#{answer.value}"/>>
+                <s:selectItems value="#{questionDetailBean.answer.answerItems}" var="answer" label="#{answer.value}"/>
             </h:selectManyCheckbox>
         </a4j:outputPanel>
         <a4j:outputPanel id="singleChoice" rendered="#{questionDetailBean.answer.singleChoice}">
