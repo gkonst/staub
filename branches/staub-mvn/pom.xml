@@ -104,20 +104,6 @@
         <!-- Libraries versions -->
         <seam.version>2.0.0.GA</seam.version>
         <!-- Seam properties -->
-        <debug>true</debug>
         <jndi-pattern>staub-ear-${project.version}/#{ejbName}/local</jndi-pattern>
-        <!-- JBoss properties -->
-        <jboss.home>/home/kostya/java/jboss-4.2.2.GA</jboss.home>
-        <jboss.server>my</jboss.server>
-        <!-- Database properties -->
-        <db.url.host>localhost</db.url.host>
-        <db.url.port>5432</db.url.port>
-        <db.url.name.maintenance>postgres</db.url.name.maintenance>
-        <db.url.name>staubdb</db.url.name>
-        <db.staub.username>staub</db.staub.username>
-        <db.staub.password>staub</db.staub.password>
-        <!-- Lifecycle properties -->
-        <!--  Update Database or not -->
-        <db.updateDisabled>true</db.updateDisabled>
     </properties>
 </project>
