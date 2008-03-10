@@ -2,8 +2,8 @@ package ru.spbspu.staub.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 /**
  * The <code>Test</code> class represents the Test entity.
@@ -54,17 +54,6 @@ public class Test implements Serializable {
         this.description = description;
     }
 
-    private List<Question> questions;
-
-    @OneToMany(mappedBy = "test")
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
     private Integer timeLimit;
 
     @Basic
@@ -99,6 +88,30 @@ public class Test implements Serializable {
 
     public void setQuestionsCount(Integer questionsCount) {
         this.questionsCount = questionsCount;
+    }
+
+    private String selectorType;
+
+    @Basic
+    @Column(name = "selector_type", length = 3)
+    public String getSelectorType() {
+        return selectorType;
+    }
+
+    public void setSelectorType(String selectorType) {
+        this.selectorType = selectorType;
+    }
+
+    private Integer selectorCount;
+
+    @Basic
+    @Column(name = "selector_count", length = 10)
+    public Integer getSelectorCount() {
+        return selectorCount;
+    }
+
+    public void setSelectorCount(Integer selectorCount) {
+        this.selectorCount = selectorCount;
     }
 
     private Date created;
@@ -147,6 +160,20 @@ public class Test implements Serializable {
 
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
+    }
+
+    private List<Question> questions;
+
+    @ManyToMany
+    @JoinTable(name = "test_question",
+            joinColumns = @JoinColumn(name = "fk_test", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "fk_question", referencedColumnName = "id"))
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 
     @Override

@@ -1,2 +1,2 @@
 DROP DATABASE ${db.url.name};
-DROP USER staub;
+DROP USER ${db.staub.username};
