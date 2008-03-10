@@ -28,6 +28,42 @@ public class Question implements Serializable {
         this.id = id;
     }
 
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_category", referencedColumnName = "id", nullable = false)
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    private Difficulty difficulty;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_difficulty", referencedColumnName = "id", nullable = false)
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    private Discipline discipline;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_discipline", referencedColumnName = "id", nullable = false)
+    public Discipline getDiscipline() {
+        return discipline;
+    }
+
+    public void setDiscipline(Discipline discipline) {
+        this.discipline = discipline;
+    }
+
     private String name;
 
     @Basic
@@ -63,18 +99,6 @@ public class Question implements Serializable {
 
     public void setDefinition(String definition) {
         this.definition = definition;
-    }
-
-    private Test test;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_test", referencedColumnName = "id", nullable = false)
-    public Test getTest() {
-        return test;
-    }
-
-    public void setTest(Test test) {
-        this.test = test;
     }
 
     private Date created;
@@ -152,7 +176,6 @@ public class Question implements Serializable {
         sb.append(", name='").append(name).append('\'');
         sb.append(", timeLimit=").append(timeLimit);
         sb.append(", definition='").append(definition).append('\'');
-//        sb.append(", test=").append(test);
         sb.append(", created=").append(created);
         sb.append(", createdBy='").append(createdBy).append('\'');
         sb.append(", modified=").append(modified);
