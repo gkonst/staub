@@ -15,4 +15,19 @@ import javax.ejb.Stateless;
 @AutoCreate
 @Stateless
 public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer> implements TestTraceService {
+    /**
+     * {@inheritDoc}
+     */
+    public TestTrace findTestTrace(Integer testId, String sessionId, String username) {
+        // TODO implement
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public TestTrace startTest(TestTrace testTrace) {
+        // TODO implement
+        return null;
+    }
 }
