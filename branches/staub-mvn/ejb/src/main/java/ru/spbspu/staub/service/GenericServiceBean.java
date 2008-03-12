@@ -34,15 +34,9 @@ public abstract class GenericServiceBean<T, ID extends Serializable> implements 
     /**
      * {@inheritDoc}
      */
-    public T findById(ID id, boolean lock) {
+    public T findById(ID id) {
         logger.debug(">>> Find by id (entity=#0, id=#1)...", entityClass.getName(), id);
-        T entity;
-        if (lock) {
-            entity = getEntityManager().find(getEntityClass(), id);
-            em.lock(entity, javax.persistence.LockModeType.WRITE);
-        } else {
-            entity = getEntityManager().find(getEntityClass(), id);
-        }
+        T entity = getEntityManager().find(getEntityClass(), id);
         logger.debug("<<< Find by id...Ok(#0 found)", entity);
         return entity;
     }
