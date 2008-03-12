@@ -1,8 +1,8 @@
 package ru.spbspu.staub.model;
 
+import ru.spbspu.staub.entity.QuestionTrace;
+import ru.spbspu.staub.model.question.AnswerType;
 import ru.spbspu.staub.model.question.ChoiceType;
-
-import java.util.List;
 
 /**
  * TODO add descritpion
@@ -10,26 +10,35 @@ import java.util.List;
  * @author Konstantin Grigoriev
  */
 public class SingleChoiceAnswerWrapper extends AnswerWrapper {
-    private List answerItems = null;
-    private String userAnswer;
+    private ChoiceType answerDefinition;
+    private AnswerType userAnswer;
+    private QuestionTrace questionTrace;
 
-    public SingleChoiceAnswerWrapper(ChoiceType answerDefinition) {
-        answerItems = answerDefinition.getAnswer();
+    public SingleChoiceAnswerWrapper(ChoiceType answerDefinition, QuestionTrace questionTrace) {
+        this.answerDefinition = answerDefinition;
+        this.questionTrace = questionTrace;
     }
 
-    public List getAnswerItems() {
-        return answerItems;
+    public QuestionTrace unwrap() {
+        // TODO implement method
+        // fills answer field in trace
+        // fills finished field in trace
+        return questionTrace;
     }
 
-    public void setAnswerItems(List answerItems) {
-        this.answerItems = answerItems;
-    }
-
-    public String getUserAnswer() {
+    public AnswerType getUserAnswer() {
         return userAnswer;
     }
 
-    public void setUserAnswer(String userAnswer) {
+    public void setUserAnswer(AnswerType userAnswer) {
         this.userAnswer = userAnswer;
+    }
+
+    public ChoiceType getAnswerDefinition() {
+        return answerDefinition;
+    }
+
+    public void setAnswerDefinition(ChoiceType answerDefinition) {
+        this.answerDefinition = answerDefinition;
     }
 }

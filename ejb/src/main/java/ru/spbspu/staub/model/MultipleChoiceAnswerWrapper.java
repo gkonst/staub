@@ -1,5 +1,7 @@
 package ru.spbspu.staub.model;
 
+import ru.spbspu.staub.entity.QuestionTrace;
+import ru.spbspu.staub.model.question.AnswerType;
 import ru.spbspu.staub.model.question.ChoiceType;
 
 import java.util.ArrayList;
@@ -11,27 +13,36 @@ import java.util.List;
  * @author Konstantin Grigoriev
  */
 public class MultipleChoiceAnswerWrapper extends AnswerWrapper {
-    private List answerItems = null;
-    private List<String> userAnswer = null;
+    private List<AnswerType> userAnswer;
+    private ChoiceType answerDefinition;
+    private QuestionTrace questionTrace;
 
-    public MultipleChoiceAnswerWrapper(ChoiceType answerDefinition) {
-        answerItems = answerDefinition.getAnswer();
-        userAnswer = new ArrayList<String>();
+    public MultipleChoiceAnswerWrapper(ChoiceType answerDefinition, QuestionTrace questionTrace) {
+        userAnswer = new ArrayList<AnswerType>();
+        this.answerDefinition = answerDefinition;
+        this.questionTrace = questionTrace;
     }
 
-    public List getAnswerItems() {
-        return answerItems;
+    public QuestionTrace unwrap() {
+        // TODO implement method
+        // fills answer field in trace
+        // fills finished field in trace
+        return questionTrace;
     }
 
-    public void setAnswerItems(List answerItems) {
-        this.answerItems = answerItems;
+    public ChoiceType getAnswerDefinition() {
+        return answerDefinition;
     }
 
-    public List<String> getUserAnswer() {
+    public void setAnswerDefinition(ChoiceType answerDefinition) {
+        this.answerDefinition = answerDefinition;
+    }
+
+    public List<AnswerType> getUserAnswer() {
         return userAnswer;
     }
 
-    public void setUserAnswer(List<String> userAnswer) {
+    public void setUserAnswer(List<AnswerType> userAnswer) {
         this.userAnswer = userAnswer;
     }
 }
