@@ -1,4 +1,4 @@
-package ru.spbspu.staub.dao;
+package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
@@ -8,14 +8,14 @@ import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 
 /**
- * Stateless EJB DAO for manipulations with <code>User</code> entity. 
+ * Stateless EJB Service for manipulations with <code>User</code> entity.
  *
  * @author Konstantin Grigoriev
  */
-@Name("userDAO")
+@Name("userService")
 @AutoCreate
 @Stateless
-public class UserDAOBean extends GenericDAOBean<User, String> implements UserDAO {
+public class UserServiceBean extends GenericServiceBean<User, String> implements UserService {
 
     public User findUserByUserNameAndPassword(String username, String password) {
         User user = null;

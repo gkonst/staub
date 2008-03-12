@@ -1,14 +1,14 @@
-package ru.spbspu.staub.dao;
+package ru.spbspu.staub.service;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * Base interface for dao interfaces,
+ * Base interface for service interfaces,
  * defines basic operations with entity.
  * @author Konstantin Grigoriev
  */
-public interface GenericDAO<T, ID extends Serializable> {
+public interface GenericService<T, ID extends Serializable> {
     /**
      * Fetches entity by specific id.
      * @param id id to fetch

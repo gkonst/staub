@@ -4,8 +4,8 @@ import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import ru.spbspu.staub.dao.TestDAO;
 import ru.spbspu.staub.entity.Test;
+import ru.spbspu.staub.service.TestService;
 
 import java.util.List;
 
@@ -18,9 +18,10 @@ import java.util.List;
 @Scope(SESSION)
 public class TestListBean extends GenericListBean<Test> {
 
-    @In TestDAO testDAO;
+    @In
+    TestService testService;
 
     protected List<Test> getResultList() {
-        return testDAO.findAll();
+        return testService.findAll();
     }
 }
