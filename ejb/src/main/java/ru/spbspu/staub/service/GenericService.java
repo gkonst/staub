@@ -12,10 +12,9 @@ public interface GenericService<T, ID extends Serializable> {
     /**
      * Fetches entity by specific id.
      * @param id id to fetch
-     * @param lock need to get lock or not
      * @return fetched entity
      */
-    T findById(ID id, boolean lock);
+    T findById(ID id);
 
     /**
      * Fetches all entities.
