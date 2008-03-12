@@ -2,11 +2,14 @@ package ru.spbspu.staub.service;
 
 import ru.spbspu.staub.entity.TestTrace;
 
+import javax.ejb.Local;
+
 /**
  * Local Interface for <code>TestTraceServiceBean</code> Stateless EJB.
  *
  * @author Konstantin Grigoriev
  */
+@Local
 public interface TestTraceService extends GenericService<TestTrace, Integer> {
     /**
      * Checks is <code>TestTrace</code> already presents for
