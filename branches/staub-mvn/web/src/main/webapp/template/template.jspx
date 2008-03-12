@@ -30,7 +30,7 @@
                     <div id="contentMessage">
                         <ui:insert name="contentMessage"/>
                     </div>
-                    <h:form>
+                    <h:form id="contentForm">
                         <div id="contentMain">
                             <ui:insert name="contentMain"/>
                         </div>
