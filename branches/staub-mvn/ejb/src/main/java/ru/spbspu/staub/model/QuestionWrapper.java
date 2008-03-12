@@ -24,7 +24,7 @@ public class QuestionWrapper {
     private String name;
     private String description;
     private QuestionType definition;
-    private int timeLimit = 120;
+    private Integer timeLimit = 120;
 
     public QuestionWrapper(Question question) {
         wrap(question);
@@ -32,6 +32,7 @@ public class QuestionWrapper {
 
     private void wrap(Question question) {
         this.name = question.getName();
+        this.timeLimit = question.getTimeLimit();
         this.definition = parseDefinitionXML(question.getDefinition());
         this.description = this.definition.getDescription();
     }
@@ -62,11 +63,11 @@ public class QuestionWrapper {
         this.name = name;
     }
 
-    public int getTimeLimit() {
+    public Integer getTimeLimit() {
         return timeLimit;
     }
 
-    public void setTimeLimit(int timeLimit) {
+    public void setTimeLimit(Integer timeLimit) {
         this.timeLimit = timeLimit;
     }
 
