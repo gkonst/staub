@@ -89,7 +89,7 @@ INSERT INTO question (id,
              'Question #2',
              '<?xml version="1.0" encoding="UTF-8"?><ques:question xmlns:ques="http://staub.spbspu.ru/Question"><ques:description>How many days are in February? (Choose multiple.)</ques:description><ques:multiple-choice><ques:answer id="1" correct="true">28</ques:answer><ques:answer id="2" correct="true">29</ques:answer><ques:answer id="3">30</ques:answer><ques:answer id="4">31</ques:answer></ques:multiple-choice></ques:question>',
              current_date,
-             'Generation Script'););
+             'Generation Script');
 
 INSERT INTO test_question (fk_test,
                            fk_question)
