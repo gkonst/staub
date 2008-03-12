@@ -16,7 +16,7 @@
         Вы уверены?
     </ui:define>
     <ui:define name="contentButtons">
-        <h:commandLink action="questionDetail" value="#{messages['test.detail.startTest']}" styleClass="button"/>
+        <h:commandLink action="#{testDetailBean.startTest}" value="#{messages['test.detail.startTest']}" styleClass="button"/>
     </ui:define>
 </ui:composition>
 </html>
