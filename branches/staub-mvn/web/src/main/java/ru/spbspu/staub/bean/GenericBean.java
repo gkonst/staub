@@ -4,7 +4,10 @@ import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.faces.Renderer;
 import org.jboss.seam.log.Log;
+import org.jboss.seam.security.Identity;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 
 /**
@@ -29,5 +32,13 @@ public abstract class GenericBean implements Serializable {
 
     protected String render(String path) {
         return Renderer.instance().render(path);
+    }
+
+    protected String getSessionId() {
+        return ((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false)).getId();
+    }
+
+    protected String getCurrentUser() {
+        return Identity.instance().getUsername();
     }
 }
