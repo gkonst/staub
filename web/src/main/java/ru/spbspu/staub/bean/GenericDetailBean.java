@@ -1,6 +1,5 @@
 package ru.spbspu.staub.bean;
 
-import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.web.RequestParameter;
 
 /**
@@ -17,7 +16,6 @@ public abstract class GenericDetailBean<T> extends GenericBean {
 
     protected abstract void fillModel(Integer modelId);
 
-    @Create
     public void initDetailBean() {
         logger.debug(">>> Initializating detail bean...id : #0", modelId);
         fillModel(modelId);
