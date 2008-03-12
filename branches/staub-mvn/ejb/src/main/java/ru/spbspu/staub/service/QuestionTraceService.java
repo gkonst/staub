@@ -12,5 +12,24 @@ import java.util.List;
  */
 @Local
 public interface QuestionTraceService extends GenericService<QuestionTrace, Integer> {
+    /**
+     * Fetches <code>List</code> of <code>QuestionTrace</code> identifiers
+     * for specific testTraceId.
+     * @param testTraceId <code>TestTrace</code> identifier
+     * @return fetched list
+     */
     List<Integer> findIdsByTestTraceId(Integer testTraceId);
+
+    /**
+     * Saves anwered question.
+     * @param questionTrace question to save
+     */
+    void saveAnswer(QuestionTrace questionTrace);
+
+    /**
+     * Chcecks group for propriety.
+     * @param questionTrace ???
+     * @return true or not
+     */
+    boolean checkGroup(QuestionTrace questionTrace);
 }

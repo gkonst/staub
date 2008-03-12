@@ -20,4 +20,14 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
     public List<Integer> findIdsByTestTraceId(Integer testTraceId) {
         return getEntityManager().createQuery("select qt.id from QuestionTrace qt where qt.testTrace.id = :testTraceId").setParameter("testTraceId", testTraceId).getResultList();
     }
+
+    public void saveAnswer(QuestionTrace questionTrace) {
+        // TODO implement method
+
+    }
+
+    public boolean checkGroup(QuestionTrace questionTrace) {
+        // TODO implement method
+        return false;
+    }
 }
