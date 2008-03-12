@@ -66,7 +66,10 @@ public class QuestionDetailBean extends GenericBean {
 
     public String nextQuestion() {
         logger.debug(">>> Next question...");
-        saveAnswer();
+        questionTraceService.saveAnswer(answer.unwrap());
+        if(!questionTraceService.checkGroup(answer.unwrap())) {
+            // test ended because of group test failed
+        }
         questionIndex++;
         logger.debug(" question index : #0", questionIndex);
         if (questionIndex < questionIds.size()) {
@@ -86,12 +89,6 @@ public class QuestionDetailBean extends GenericBean {
     private void resetTimer() {
         currentTime = currentQuestion.getTimeLimit();
         startTime = new Date().getTime();
-    }
-
-    private void saveAnswer() {
-        logger.debug(" >>> Saving answers...");
-        //questionTraceService.saveAnswer(answer.unwrap());
-        logger.debug(" <<< Saving answers...Ok");
     }
 
     public void refreshTimer() {
