@@ -5,6 +5,7 @@ import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.QuestionTrace;
 
 import javax.ejb.Stateless;
+import java.util.List;
 
 /**
  * Stateless EJB Service for manipulations with <code>QuestionTrace</code> entity.
@@ -15,4 +16,8 @@ import javax.ejb.Stateless;
 @AutoCreate
 @Stateless
 public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, Integer> implements QuestionTraceService {
+    @SuppressWarnings("unchecked")
+    public List<Integer> findIdsByTestTraceId(Integer testTraceId) {
+        return getEntityManager().createQuery("select qt.id from QuestionTrace qt where qt.testTrace.id = :testTraceId").setParameter("testTraceId", testTraceId).getResultList();
+    }
 }
