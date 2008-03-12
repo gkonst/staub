@@ -5,8 +5,8 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.security.Identity;
-import ru.spbspu.staub.dao.UserDAO;
 import ru.spbspu.staub.entity.User;
+import ru.spbspu.staub.service.UserService;
 
 /**
  * TODO add descritpion
@@ -18,11 +18,11 @@ import ru.spbspu.staub.entity.User;
 public class LoginBean extends GenericBean {
 
     @In
-    private UserDAO userDAO;
+    private UserService userService;
 
     public boolean authenticate() {
         logger.debug(">>> Authentinicating user(username=#{identity.username}), password=#{identity.password}");
-        User user = userDAO.findUserByUserNameAndPassword(Identity.instance().getUsername(), Identity.instance().getPassword());
+        User user = userService.findUserByUserNameAndPassword(Identity.instance().getUsername(), Identity.instance().getPassword());
         logger.debug("<<< Authentinicating ok(result=" + (user != null) + ").");
         return user != null;
     }

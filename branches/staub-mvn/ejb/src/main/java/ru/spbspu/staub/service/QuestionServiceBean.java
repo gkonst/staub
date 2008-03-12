@@ -1,4 +1,4 @@
-package ru.spbspu.staub.dao;
+package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
@@ -8,14 +8,14 @@ import javax.ejb.Stateless;
 import java.util.List;
 
 /**
- * Stateless EJB DAO for manipulations with <code>Question</code> entity.
+ * Stateless EJB Service for manipulations with <code>Question</code> entity.
  *
  * @author Konstantin Grigoriev
  */
-@Name("questionDAO")
+@Name("questionService")
 @AutoCreate
 @Stateless
-public class QuestionDAOBean extends GenericDAOBean<Question, Integer> implements QuestionDAO {
+public class QuestionServiceBean extends GenericServiceBean<Question, Integer> implements QuestionService {
     @SuppressWarnings("unchecked")
     public List<Integer> findIdsByTestId(Integer testId) {
         return getEntityManager().createQuery("select q.id from Question q where q.test.id = :testId").setParameter("testId", testId).getResultList();

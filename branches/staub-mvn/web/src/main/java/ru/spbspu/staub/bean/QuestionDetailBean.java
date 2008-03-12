@@ -1,14 +1,10 @@
 package ru.spbspu.staub.bean;
 
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Conversational;
-import org.jboss.seam.annotations.End;
-import org.jboss.seam.annotations.In;
-import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Scope;
-import ru.spbspu.staub.dao.QuestionDAO;
+import org.jboss.seam.annotations.*;
 import ru.spbspu.staub.model.AnswerWrapper;
 import ru.spbspu.staub.model.QuestionWrapper;
+import ru.spbspu.staub.service.QuestionService;
 
 import java.util.Date;
 import java.util.List;
@@ -25,7 +21,7 @@ import java.util.List;
 public class QuestionDetailBean extends GenericBean {
 
     @In
-    private QuestionDAO questionDAO;
+    private QuestionService questionService;
 
     @In(required = true)
     private Integer testId;
@@ -40,8 +36,8 @@ public class QuestionDetailBean extends GenericBean {
 
     public String initTest() {
         logger.debug(">>> Init test(#0)...", testId);
-        questionIds = questionDAO.findIdsByTestId(testId);
-        currentQuestion = new QuestionWrapper(questionDAO.findById(questionIds.get(questionIndex), false));
+        questionIds = questionService.findIdsByTestId(testId);
+        currentQuestion = new QuestionWrapper(questionService.findById(questionIds.get(questionIndex), false));
         answer = AnswerWrapper.getAnswer(currentQuestion.getDefinition());  
         logger.debug(" currentTime : #0", currentTime);
         if(currentTime == -1) {
@@ -62,7 +58,7 @@ public class QuestionDetailBean extends GenericBean {
 
     public String previousQuestion() {
         logger.debug(">>> Previous question...");
-        currentQuestion = new QuestionWrapper(questionDAO.findById(questionIds.get(--questionIndex), false));
+        currentQuestion = new QuestionWrapper(questionService.findById(questionIds.get(--questionIndex), false));
         answer = AnswerWrapper.getAnswer(currentQuestion.getDefinition());
         resetTimer();
         logger.debug(">>> Previous question...Ok");
@@ -75,7 +71,7 @@ public class QuestionDetailBean extends GenericBean {
         questionIndex++;
         logger.debug(" question index : #0", questionIndex);
         if(questionIndex < questionIds.size()) {
-            currentQuestion = new QuestionWrapper(questionDAO.findById(questionIds.get(questionIndex), false));
+            currentQuestion = new QuestionWrapper(questionService.findById(questionIds.get(questionIndex), false));
             answer = AnswerWrapper.getAnswer(currentQuestion.getDefinition());
             resetTimer();
         }

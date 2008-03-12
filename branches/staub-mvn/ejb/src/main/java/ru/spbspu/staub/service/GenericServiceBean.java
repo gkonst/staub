@@ -1,4 +1,4 @@
-package ru.spbspu.staub.dao;
+package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.log.Log;
@@ -15,7 +15,7 @@ import java.util.List;
  * Uses traditional 1:1 appraoch for Entity:DAO design.
  * @author Konstantin Grigoriev
  */
-public abstract class GenericDAOBean<T, ID extends Serializable> implements GenericDAO<T, ID>{
+public abstract class GenericServiceBean<T, ID extends Serializable> implements GenericService<T, ID> {
 
     private Class<T> entityClass;
 
@@ -26,7 +26,7 @@ public abstract class GenericDAOBean<T, ID extends Serializable> implements Gene
     protected Log logger;
 
     @SuppressWarnings("unchecked")
-    public GenericDAOBean() {
+    public GenericServiceBean() {
         this.entityClass = (Class<T>) ((ParameterizedType) getClass()
                                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
@@ -92,7 +92,7 @@ public abstract class GenericDAOBean<T, ID extends Serializable> implements Gene
 
     protected EntityManager getEntityManager() {
         if (em == null)
-            throw new IllegalStateException("EntityManager has not been set on DAO before usage");
+            throw new IllegalStateException("EntityManager has not been set on Service before usage");
         return em;
     }
 

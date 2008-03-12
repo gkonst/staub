@@ -1,4 +1,4 @@
-package ru.spbspu.staub.dao;
+package ru.spbspu.staub.service;
 
 import ru.spbspu.staub.entity.Question;
 
@@ -6,11 +6,11 @@ import javax.ejb.Local;
 import java.util.List;
 
 /**
- * Local Interface for <code>QuestionDAOBean</code> Stateless EJB. 
+ * Local Interface for <code>QuestionServiceBean</code> Stateless EJB.
  *
  * @author Konstantin Grigoriev
  */
 @Local
-public interface QuestionDAO extends GenericDAO<Question, Integer> {
+public interface QuestionService extends GenericService<Question, Integer> {
     List<Integer> findIdsByTestId(Integer testId);
 }
