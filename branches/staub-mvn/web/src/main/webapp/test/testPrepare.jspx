@@ -9,14 +9,20 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="../template/staub-template.jspx">
+    <ui:define name="pageScript">
+        <script type="text/javascript">
+                setTimeout("document.getElementById('contentForm:startTestButton').click();", 3000);
+        </script>
+    </ui:define>
     <ui:define name="contentTitle">
         подготовка...
     </ui:define>
     <ui:define name="contentMain">
-        Вы уверены?
+        формирование теста....
     </ui:define>
     <ui:define name="contentButtons">
-        <h:commandLink action="#{testDetailBean.startTest}" value="#{messages['test.detail.startTest']}" styleClass="button"/>
+        <h:commandButton id="startTestButton" action="#{testDetailBean.startTest}"
+                         style="display:none;"/>
     </ui:define>
 </ui:composition>
 </html>
