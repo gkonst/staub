@@ -16,7 +16,8 @@
           login-required="true">
     </page>
     <page view-id="/test/testDetail.jspx"
-          login-required="true">
+          login-required="true"
+          action="#{testDetailBean.initDetailBean}">
         <navigation>
             <rule if-outcome="testPrepare">
                 <render view-id="/test/testPrepare.jspx"/>
