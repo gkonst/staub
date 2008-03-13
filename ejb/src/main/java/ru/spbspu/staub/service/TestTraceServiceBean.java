@@ -2,9 +2,10 @@ package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
-import ru.spbspu.staub.entity.TestTrace;
+import ru.spbspu.staub.entity.*;
 
 import javax.ejb.Stateless;
+import java.util.Date;
 
 /**
  * Stateless EJB Service for manipulations with <code>TestTrace</code> entity.
@@ -18,9 +19,24 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     /**
      * {@inheritDoc}
      */
-    public TestTrace findTestTrace(Integer testId, String sessionId, String username) {
+    public TestTrace findTestTrace(Test test, String sessionId, User user) {
         // TODO implement
-        return null;
+        // --> mock start
+        TestTrace testTrace = new TestTrace();
+        testTrace.setTest(test);
+        testTrace.setUser(user);
+        testTrace.setSessionId(sessionId);
+        testTrace.setStarted(new Date());
+        testTrace = makePersistent(testTrace);
+        test = getEntityManager().find(Test.class, test.getId());
+        for(Question question : test.getQuestions()) {
+            QuestionTrace questionTrace = new QuestionTrace();
+            questionTrace.setQuestion(question);
+            questionTrace.setTestTrace(testTrace);
+            getEntityManager().merge(questionTrace);
+        }
+        // <-- mock end
+        return testTrace;
     }
 
     /**
@@ -28,6 +44,6 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
      */
     public TestTrace startTest(TestTrace testTrace) {
         // TODO implement
-        return null;
+        return testTrace;
     }
 }
