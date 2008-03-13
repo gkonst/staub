@@ -31,7 +31,7 @@ public class QuestionTrace implements Serializable {
     private Date started;
 
     @Basic
-    @Column(name = "started", nullable = false)
+    @Column(name = "started")
     public Date getStarted() {
         return started;
     }
@@ -56,7 +56,7 @@ public class QuestionTrace implements Serializable {
 
     @Basic
     @Lob
-    @Column(name = "answer", nullable = false)
+    @Column(name = "answer")
     public String getAnswer() {
         return answer;
     }
