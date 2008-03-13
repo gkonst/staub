@@ -8,6 +8,7 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.entity.TestTrace;
+import ru.spbspu.staub.entity.User;
 import ru.spbspu.staub.service.TestService;
 import ru.spbspu.staub.service.TestTraceService;
 
@@ -26,6 +27,9 @@ public class TestDetailBean extends GenericDetailBean<Test> {
     @In
     private TestTraceService testTraceService;
 
+    @In
+    private User user;
+
     @Out(required = false, scope = ScopeType.CONVERSATION)
     private Integer testTraceId;
 
@@ -37,10 +41,13 @@ public class TestDetailBean extends GenericDetailBean<Test> {
     }
 
     public String prepareTest() {
-        testTrace = testTraceService.findTestTrace(getModel().getId(), getSessionId(), getCurrentUser());
+        testTrace = testTraceService.findTestTrace(getModel(), getSessionId(), user);
+        testTrace = testTraceService.startTest(testTrace); // may be moved to startTest()
+        this.testTraceId = testTrace.getId(); // may be moved to startTest()
         return "testPrepare";
     }
 
+    // temporarily unused
     public String startTest() {
         testTrace = testTraceService.startTest(testTrace);
         this.testTraceId = testTrace.getId();
