@@ -32,7 +32,7 @@ public class Test implements Serializable {
     private String name;
 
     @Basic
-    @Column(name = "name", length = 128)
+    @Column(name = "name", length = 256)
     public String getName() {
         return name;
     }

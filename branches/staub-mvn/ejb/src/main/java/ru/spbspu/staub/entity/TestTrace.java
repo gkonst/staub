@@ -31,7 +31,7 @@ public class TestTrace implements Serializable {
     private String sessionId;
 
     @Basic
-    @Column(name = "session_id", nullable = false, length = 64)
+    @Column(name = "session_id", length = 64)
     public String getSessionId() {
         return sessionId;
     }
@@ -43,7 +43,7 @@ public class TestTrace implements Serializable {
     private Date started;
 
     @Basic
-    @Column(name = "started", nullable = false)
+    @Column(name = "started")
     public Date getStarted() {
         return started;
     }
