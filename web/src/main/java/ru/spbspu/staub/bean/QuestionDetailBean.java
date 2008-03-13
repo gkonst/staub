@@ -38,7 +38,9 @@ public class QuestionDetailBean extends GenericBean {
     public String initTest() {
         logger.debug(">>> Init test(#0)...", testTraceId);
         questionIds = questionTraceService.findIdsByTestTraceId(testTraceId);
+        // check for zero count questions
         fillModel(questionIds.get(questionIndex));
+        logger.debug(" currentQuestion : #0", currentQuestion);
         logger.debug(" currentTime : #0", currentTime);
         if (currentTime == -1) {
             resetTimer();
@@ -75,6 +77,9 @@ public class QuestionDetailBean extends GenericBean {
         if (questionIndex < questionIds.size()) {
             fillModel(questionIds.get(questionIndex));
             resetTimer();
+        } else {
+            // last question
+            // end test ??
         }
         logger.debug(">>> Next question...Ok");
         return null;
@@ -87,6 +92,7 @@ public class QuestionDetailBean extends GenericBean {
     }
 
     private void resetTimer() {
+        // check time limit for nullability
         currentTime = currentQuestion.getTimeLimit();
         startTime = new Date().getTime();
     }
