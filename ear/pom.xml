@@ -82,7 +82,7 @@
                             pom.build.finalName=${pom.build.finalName}
                             deploy.dir=${deploy.dir}
                         </echo>
-                        <delete dir="${deploy.dir}"/>
+                        <delete dir="${deploy.dir}" failonerror="false"/>
                         <copy todir="${deploy.dir}">
                             <fileset dir="${project.build.directory}/${project.build.finalName}"/>
                         </copy>
