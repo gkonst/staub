@@ -76,7 +76,7 @@ CREATE TABLE test_trace (
     id INTEGER NOT NULL,
     fk_test INTEGER NOT NULL,
     fk_user INTEGER NOT NULL,
-    session_id CHARACTER VARYING(64) NOT NULL,
+    session_id CHARACTER VARYING(64),
     started DATE,
     finished DATE,
     CONSTRAINT pk_test_trace PRIMARY KEY (id),

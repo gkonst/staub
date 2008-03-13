@@ -79,7 +79,7 @@ public class QuestionTrace implements Serializable {
 
     private TestTrace testTrace;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fk_test_trace", referencedColumnName = "id", nullable = false)
     public TestTrace getTestTrace() {
         return testTrace;
