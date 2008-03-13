@@ -10,19 +10,13 @@
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="../template/staub-template.jspx">
     <ui:define name="pageScript">
-        <script type="text/javascript">
-                setTimeout("document.getElementById('contentForm:startTestButton').click();", 3000);
-        </script>
+        <meta http-equiv="Refresh" content="1;URL='../question/questionDetail.seam?cid=#{conversation.id}'" />
     </ui:define>
     <ui:define name="contentTitle">
         подготовка...
     </ui:define>
     <ui:define name="contentMain">
         формирование теста....
-    </ui:define>
-    <ui:define name="contentButtons">
-        <h:commandButton id="startTestButton" action="#{testDetailBean.startTest}"
-                         style="display:none;"/>
     </ui:define>
 </ui:composition>
 </html>
