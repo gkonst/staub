@@ -24,7 +24,7 @@ public class QuestionWrapper {
     private String name;
     private String description;
     private QuestionType definition;
-    private Integer timeLimit = 120;
+    private Integer timeLimit;
 
     public QuestionWrapper(Question question) {
         wrap(question);
@@ -53,6 +53,10 @@ public class QuestionWrapper {
             logger.error("Error during parsing question defination XML(" + definitionXML + ")", e);
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean isTimeLimitPresent() {
+        return timeLimit != null && timeLimit != 0;
     }
 
     public String getName() {
