@@ -3,9 +3,11 @@ package ru.spbspu.staub.bean;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
 import ru.spbspu.staub.entity.QuestionTrace;
+import ru.spbspu.staub.entity.TestTrace;
 import ru.spbspu.staub.model.AnswerWrapper;
 import ru.spbspu.staub.model.QuestionWrapper;
 import ru.spbspu.staub.service.QuestionTraceService;
+import ru.spbspu.staub.service.TestTraceService;
 
 import java.util.Date;
 import java.util.List;
@@ -24,8 +26,11 @@ public class QuestionDetailBean extends GenericBean {
     @In
     private QuestionTraceService questionTraceService;
 
+    @In
+    private TestTraceService testTraceService;
+
     @In(required = true)
-    private Integer testTraceId;
+    private TestTrace testTrace;
 
     private List<Integer> questionIds;
     private QuestionWrapper currentQuestion;
@@ -36,28 +41,37 @@ public class QuestionDetailBean extends GenericBean {
     private AnswerWrapper answer;
 
     public String initTest() {
-        logger.debug(">>> Init test(#0)...", testTraceId);
-        questionIds = questionTraceService.findIdsByTestTraceId(testTraceId);
-        // check for zero count questions
-        fillModel(questionIds.get(questionIndex));
-        logger.debug(" currentQuestion : #0", currentQuestion);
-        logger.debug(" currentTime : #0", currentTime);
-        if (currentTime == -1) {
-            resetTimer();
-        } else {
-            refreshTimer();
+        logger.debug(">>> Init test(#0)...", testTrace.getId());
+        if (questionIds == null) {
+            questionIds = questionTraceService.findIdsByTestTraceId(testTrace);
+            if(questionIds == null || questionIds.size() == 0) {
+                // check for zero count questions
+                throw new IllegalStateException("Test has no questions");
+            }
+        }
+        if (questionIndex < questionIds.size()) {
+            fillModel(questionIds.get(questionIndex));
+            logger.debug(" currentQuestion : #0", currentQuestion);
+            if (currentQuestion.isTimeLimitPresent()) {
+                logger.debug(" currentTime : #0", currentTime);
+                if (currentTime == -1) {
+                    resetTimer();
+                } else {
+                    refreshTimer();
+                }
+            }
         }
         logger.debug("<<< Init test...Ok");
         return "questionDetail";
     }
 
-    @End
     public String endTest() {
         logger.debug(">>> End test...");
         logger.debug(">>> End test...Ok");
         return "testEnd";
     }
 
+    // unused
     public String previousQuestion() {
         logger.debug(">>> Previous question...");
         fillModel(questionIds.get(--questionIndex));
@@ -69,20 +83,22 @@ public class QuestionDetailBean extends GenericBean {
     public String nextQuestion() {
         logger.debug(">>> Next question...");
         questionTraceService.saveAnswer(answer.unwrap());
-        if(!questionTraceService.checkGroup(answer.unwrap())) {
+        if (!questionTraceService.checkGroup(answer.unwrap())) {
             // test ended because of group test failed
         }
         questionIndex++;
-        logger.debug(" question index : #0", questionIndex);
-        if (questionIndex < questionIds.size()) {
-            fillModel(questionIds.get(questionIndex));
-            resetTimer();
-        } else {
+        currentTime = -1;
+        if (questionIndex == questionIds.size()) {
             // last question
-            // end test ??
+            saveAndCheckTest();
         }
+        logger.debug(" question index : #0", questionIndex);
         logger.debug(">>> Next question...Ok");
         return null;
+    }
+
+    private void saveAndCheckTest() {
+        testTraceService.saveAndCheckTest(testTrace);
     }
 
     private void fillModel(Integer modelId) {
@@ -92,7 +108,6 @@ public class QuestionDetailBean extends GenericBean {
     }
 
     private void resetTimer() {
-        // check time limit for nullability
         currentTime = currentQuestion.getTimeLimit();
         startTime = new Date().getTime();
     }
