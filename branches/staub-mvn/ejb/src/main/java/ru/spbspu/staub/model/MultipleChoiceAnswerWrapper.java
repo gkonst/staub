@@ -27,6 +27,7 @@ public class MultipleChoiceAnswerWrapper extends AnswerWrapper {
         // TODO implement method
         // fills answer field in trace
         // fills finished field in trace
+        // checks answer for correctness
         return questionTrace;
     }
 
