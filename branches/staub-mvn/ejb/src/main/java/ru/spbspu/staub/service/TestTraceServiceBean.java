@@ -29,7 +29,7 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         testTrace.setStarted(new Date());
         testTrace = makePersistent(testTrace);
         test = getEntityManager().find(Test.class, test.getId());
-        for(Question question : test.getQuestions()) {
+        for (Question question : test.getQuestions()) {
             QuestionTrace questionTrace = new QuestionTrace();
             questionTrace.setQuestion(question);
             questionTrace.setTestTrace(testTrace);
@@ -44,6 +44,18 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
      */
     public TestTrace startTest(TestTrace testTrace) {
         // TODO implement
+        return testTrace;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public TestTrace saveAndCheckTest(TestTrace testTrace) {
+        // TODO implement
+        // --> mock start
+        testTrace.setFinished(new Date());
+        testTrace = makePersistent(testTrace);
+        // <-- mock end
         return testTrace;
     }
 }

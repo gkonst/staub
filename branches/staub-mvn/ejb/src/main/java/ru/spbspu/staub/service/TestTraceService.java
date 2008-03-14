@@ -31,4 +31,6 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      * @return started <code>TestTrace</code>
      */
     TestTrace startTest(TestTrace testTrace);
+
+    TestTrace saveAndCheckTest(TestTrace testTrace);
 }
