@@ -1,6 +1,7 @@
 package ru.spbspu.staub.service;
 
 import ru.spbspu.staub.entity.QuestionTrace;
+import ru.spbspu.staub.entity.TestTrace;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -14,11 +15,12 @@ import java.util.List;
 public interface QuestionTraceService extends GenericService<QuestionTrace, Integer> {
     /**
      * Fetches <code>List</code> of <code>QuestionTrace</code> identifiers
-     * for specific testTraceId.
-     * @param testTraceId <code>TestTrace</code> identifier
+     * for specific <code>TestTrace</code> instance.
+     * Fetches only unfinished question traces with specific order.
+     * @param testTrace specific <code>TestTrace</code>
      * @return fetched list
      */
-    List<Integer> findIdsByTestTraceId(Integer testTraceId);
+    List<Integer> findIdsByTestTraceId(TestTrace testTrace);
 
     /**
      * Saves anwered question.
