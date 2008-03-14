@@ -31,8 +31,6 @@ public class TestDetailBean extends GenericDetailBean<Test> {
     private User user;
 
     @Out(required = false, scope = ScopeType.CONVERSATION)
-    private Integer testTraceId;
-
     private TestTrace testTrace;
 
     @Override
@@ -43,14 +41,12 @@ public class TestDetailBean extends GenericDetailBean<Test> {
     public String prepareTest() {
         testTrace = testTraceService.findTestTrace(getModel(), getSessionId(), user);
         testTrace = testTraceService.startTest(testTrace); // may be moved to startTest()
-        this.testTraceId = testTrace.getId(); // may be moved to startTest()
         return "testPrepare";
     }
 
     // temporarily unused
     public String startTest() {
         testTrace = testTraceService.startTest(testTrace);
-        this.testTraceId = testTrace.getId();
-        return "questionDetail";    
+        return "questionDetail";
     }
 }
