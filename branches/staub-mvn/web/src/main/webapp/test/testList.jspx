@@ -21,7 +21,7 @@
                              styleClass="dataTable">
                     <h:column>
                         <f:facet name="header">#{messages['test.list.name']}</f:facet>
-                        <s:link view="/test/testDetail.seam" value="#{test.name}">
+                        <s:link view="/test/testStart.seam" value="#{test.name}">
                             <f:param name="modelId" value="#{test.id}" />
                         </s:link>
                     </h:column>
