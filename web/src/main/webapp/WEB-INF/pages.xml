@@ -15,7 +15,7 @@
     <page view-id="/test/testList.jspx"
           login-required="true">
     </page>
-    <page view-id="/test/testDetail.jspx"
+    <page view-id="/test/testStart.jspx"
           login-required="true"
           action="#{testDetailBean.initDetailBean}">
         <navigation>
