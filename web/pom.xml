@@ -108,7 +108,7 @@
         <dependency>
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-ui</artifactId>
-            <version>3.1.3.GA</version>
+            <version>${richfaces.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.richfaces.framework</groupId>
