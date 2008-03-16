@@ -4,52 +4,68 @@
        xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.0.xsd"
        login-view-id="/system/loginPage.jspx">
 
+    <!-- Common pages -->
     <page view-id="/system/loginPage.jspx">
         <navigation>
-            <rule if="#{identity.loggedIn}">
-                <redirect view-id="/test/testList.jspx"/>
+            <rule if="#{identity.loggedIn and !s:hasRole('admin')}">
+                <redirect view-id="/test/testToPassList.jspx">
+                    <param name="beanMode" value="VIEW_MODE"/>
+                </redirect>
+            </rule>
+            <rule if="#{identity.loggedIn and s:hasRole('admin')}">
+                <redirect view-id="/system/mainPage.jspx"/>
             </rule>
         </navigation>
     </page>
-
-    <page view-id="/test/testList.jspx"
-          login-required="true">
-    </page>
-    <page view-id="/test/testStart.jspx"
-          login-required="true"
-          action="#{testDetailBean.initDetailBean}">
-        <navigation>
-            <rule if-outcome="testPrepare">
-                <render view-id="/test/testPrepare.jspx"/>
-            </rule>
-        </navigation>
-    </page>
-    <page view-id="/question/questionDetail.jspx"
-          login-required="true"
-          action="#{questionDetailBean.initTest}">
-        <navigation>
-            <rule if-outcome="testEnd">
-                <render view-id="/test/testEnd.jspx"/>
-            </rule>
-        </navigation>
-    </page>
-
-    <page view-id="/test/testPrepare.jspx">
-        <navigation>
-            <render view-id="/question/questionDetail.jspx"/>
-        </navigation>
-    </page>
-
     <page view-id="*">
         <navigation from-action="#{identity.logout}">
             <redirect view-id="/system/loginPage.jspx"/>
         </navigation>
     </page>
 
+    <!-- User pages -->
+    <page view-id="/test/testToPassList.jspx"
+          login-required="true"
+          action="#{testToPassListBean.initBean}">
+    </page>
+    <page view-id="/test/testStart.jspx"
+          login-required="true"
+          action="#{testStartBean.initDetailBean}">
+        <navigation>
+            <rule if-outcome="testPrepare">
+                <render view-id="/test/testPrepare.jspx"/>
+            </rule>
+            <rule if-outcome="testListForPass">
+                <render view-id="/test/testToPassList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/question/question.jspx"
+          login-required="true"
+          action="#{questionBean.initTest}">
+        <navigation>
+            <rule if-outcome="testEnd">
+                <render view-id="/test/testEnd.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/test/testPrepare.jspx"
+          login-required="true">
+        <navigation>
+            <render view-id="/question/question.jspx"/>
+        </navigation>
+    </page>
+
+    <!-- Administrator pages -->
+    <page view-id="/question/questionList.jspx"
+          login-required="true"
+          action="#{questionListBean.initBean}">
+        <restrict>#{s:hasRole('admin')}</restrict>
+    </page>
+    <!-- Exceptions -->
     <exception class="org.jboss.seam.security.NotLoggedInException">
         <redirect view-id="/system/loginPage.jspx">
             <message severity="warn">#{messages[system.login.unauthorizedError]}</message>
         </redirect>
     </exception>
-
 </pages>
