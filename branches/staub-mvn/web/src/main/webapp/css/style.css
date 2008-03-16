@@ -286,3 +286,11 @@ fieldset {
     text-decoration: underline;
     cursor: pointer;
 }
+
+/* Style for the paging labels */
+table td.pagingContent {
+   font-size: 11px;
+   font-weight: bold;
+   padding-left: 2px;
+   padding-right: 2px;
+}
