@@ -13,60 +13,60 @@
     </ui:define>
     <ui:define name="sidebar">
         <a4j:outputPanel id="timerPanel"
-                         rendered="#{questionDetailBean.hasNextQuestion and questionDetailBean.currentQuestion.timeLimitPresent}">
+                         rendered="#{questionBean.hasNextQuestion and questionBean.currentQuestion.timeLimitPresent}">
             Time - <span id="timerField"/>
             <script type="text/javascript">
-                Timer.init({timeToCount : '#{questionDetailBean.currentQuestion.timeLimit}',
-                    currentTime : '#{questionDetailBean.currentTime}',
+                Timer.init({timeToCount : '#{questionBean.currentQuestion.timeLimit}',
+                    currentTime : '#{questionBean.currentTime}',
                     timerFieldId : 'timerField'});
             </script>
             <br/>
-            #{questionDetailBean.currentQuestion.timeLimit}
+            #{questionBean.currentQuestion.timeLimit}
             <br/>
-            #{questionDetailBean.currentTime}
+            #{questionBean.currentTime}
         </a4j:outputPanel>
 
         <h:form>
-            <a4j:poll action="#{questionDetailBean.refreshTimer}" reRender="timerPanel" interval="10000"
-                      enabled="#{questionDetailBean.hasNextQuestion and questionDetailBean.currentQuestion.timeLimitPresent}"/>
+            <a4j:poll action="#{questionBean.refreshTimer}" reRender="timerPanel" interval="10000"
+                      enabled="#{questionBean.hasNextQuestion and questionBean.currentQuestion.timeLimitPresent}"/>
         </h:form>
     </ui:define>
     <ui:define name="contentTitle">
-        #{questionDetailBean.currentQuestion.name}
+        #{questionBean.currentQuestion.name}
     </ui:define>
     <ui:define name="contentMain">
-        <a4j:outputPanel id="questionContentPanel" rendered="#{questionDetailBean.hasNextQuestion}">
+        <a4j:outputPanel id="questionContentPanel" rendered="#{questionBean.hasNextQuestion}">
             <ui:include src="../controls/questionDefinitionControl.jspx"/>
             <ui:include src="../controls/questionAnswerControl.jspx"/>
         </a4j:outputPanel>
-        <a4j:outputPanel id="noQuestionPanel" rendered="#{!questionDetailBean.hasNextQuestion}">
+        <a4j:outputPanel id="noQuestionPanel" rendered="#{!questionBean.hasNextQuestion}">
             Вопросы кончились!
             Тест завершен!
         </a4j:outputPanel>
     </ui:define>
     <ui:define name="contentButtons">
         <a4j:commandButton id="prevQuestionButton"
-                           action="#{questionDetailBean.previousQuestion}"
+                           action="#{questionBean.previousQuestion}"
                            value="#{messages['question.detail.previousQuestion']}"
                            styleClass="button"
-                           disabled="#{!questionDetailBean.hasPreviousQuestion}"
+                           disabled="#{!questionBean.hasPreviousQuestion}"
                            reRender="content, sidebar"
                            rendered="false"/>
         <a4j:commandButton id="nextQuestionButton"
-                           action="#{questionDetailBean.nextQuestion}"
+                           action="#{questionBean.nextQuestion}"
                            value="#{messages['question.detail.nextQuestion']}"
                            styleClass="button"
-                           rendered="#{questionDetailBean.hasNextQuestion}"
+                           rendered="#{questionBean.hasNextQuestion}"
                            reRender="content, sidebar"
                            onclick="Timer.destroy()"/>
         <a4j:jsFunction name="nextQuestion"
-                        action="#{questionDetailBean.nextQuestion}"
+                        action="#{questionBean.nextQuestion}"
                         reRender="content, sidebar"/>
         <s:button id="endTestButton"
-                  action="#{questionDetailBean.endTest}"
+                  action="#{questionBean.endTest}"
                   value="#{messages['question.detail.endTest']}"
                   styleClass="button"
-                  rendered="#{!questionDetailBean.hasNextQuestion}"
+                  rendered="#{!questionBean.hasNextQuestion}"
                   propagation="end"/>
     </ui:define>
 </ui:composition>
