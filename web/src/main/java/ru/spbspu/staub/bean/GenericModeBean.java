@@ -29,12 +29,14 @@ public abstract class GenericModeBean extends GenericBean {
         return beanMode;
     }
 
+    public abstract void initBean(); 
+
     /**
      * Defines bean mode for the current bean.
      *
      * @return <code>true</code> if bean mode defined, <code>false</code> - otherwise
      */
-    public boolean isBeanModeDefined() {
+    protected boolean isBeanModeDefined() {
         if (beanModeFromRequest != null) {
             logger.debug("Defining bean mode...#0", beanModeFromRequest);
             setBeanMode(beanModeFromRequest);
