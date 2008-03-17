@@ -1,10 +1,7 @@
 package ru.spbspu.staub.bean.question;
 
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Conversational;
-import org.jboss.seam.annotations.In;
-import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.*;
 import ru.spbspu.staub.bean.GenericBean;
 import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
@@ -69,6 +66,7 @@ public class QuestionBean extends GenericBean {
         return "questionDetail";
     }
 
+    @End
     public String endTest() {
         logger.debug(">>> End test...");
         logger.debug(">>> End test...Ok");
