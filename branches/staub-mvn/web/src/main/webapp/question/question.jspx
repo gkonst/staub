@@ -8,66 +8,70 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="../template/staub-template.jspx">
+    <ui:param name="pageBean" value="#{questionBean}"/>
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
     <ui:define name="pageScript">
         <a4j:loadScript src="../script/timer.js"/>
     </ui:define>
     <ui:define name="sidebar">
         <a4j:outputPanel id="timerPanel"
-                         rendered="#{questionBean.hasNextQuestion and questionBean.currentQuestion.timeLimitPresent}">
+                         rendered="#{pageBean.hasNextQuestion and pageBean.currentQuestion.timeLimitPresent}">
             Time - <span id="timerField"/>
             <script type="text/javascript">
-                Timer.init({timeToCount : '#{questionBean.currentQuestion.timeLimit}',
-                    currentTime : '#{questionBean.currentTime}',
+                Timer.init({timeToCount : '#{pageBean.currentQuestion.timeLimit}',
+                    currentTime : '#{pageBean.currentTime}',
                     timerFieldId : 'timerField'});
             </script>
             <br/>
-            #{questionBean.currentQuestion.timeLimit}
+            #{pageBean.currentQuestion.timeLimit}
             <br/>
-            #{questionBean.currentTime}
+            #{pageBean.currentTime}
         </a4j:outputPanel>
 
         <h:form>
-            <a4j:poll action="#{questionBean.refreshTimer}" reRender="timerPanel" interval="10000"
-                      enabled="#{questionBean.hasNextQuestion and questionBean.currentQuestion.timeLimitPresent}"/>
+            <a4j:poll action="#{pageBean.refreshTimer}" reRender="timerPanel" interval="10000"
+                      enabled="#{pageBean.hasNextQuestion and pageBean.currentQuestion.timeLimitPresent}"/>
         </h:form>
     </ui:define>
     <ui:define name="contentTitle">
-        #{questionBean.currentQuestion.name}
+        #{pageBean.currentQuestion.name}
     </ui:define>
-    <ui:define name="contentMain">
-        <a4j:outputPanel id="questionContentPanel" rendered="#{questionBean.hasNextQuestion}">
-            <ui:include src="../controls/questionDefinitionControl.jspx"/>
-            <ui:include src="../controls/questionAnswerControl.jspx"/>
-        </a4j:outputPanel>
-        <a4j:outputPanel id="noQuestionPanel" rendered="#{!questionBean.hasNextQuestion}">
-            Вопросы кончились!
-            Тест завершен!
-        </a4j:outputPanel>
-    </ui:define>
-    <ui:define name="contentButtons">
-        <a4j:commandButton id="prevQuestionButton"
-                           action="#{questionBean.previousQuestion}"
-                           value="#{messages['question.detail.previousQuestion']}"
-                           styleClass="button"
-                           disabled="#{!questionBean.hasPreviousQuestion}"
-                           reRender="content, sidebar"
-                           rendered="false"/>
-        <a4j:commandButton id="nextQuestionButton"
-                           action="#{questionBean.nextQuestion}"
-                           value="#{messages['question.detail.nextQuestion']}"
-                           styleClass="button"
-                           rendered="#{questionBean.hasNextQuestion}"
-                           reRender="content, sidebar"
-                           onclick="Timer.destroy()"/>
-        <a4j:jsFunction name="nextQuestion"
-                        action="#{questionBean.nextQuestion}"
-                        reRender="content, sidebar"/>
-        <s:button id="endTestButton"
-                  action="#{questionBean.endTest}"
-                  value="#{messages['question.detail.endTest']}"
-                  styleClass="button"
-                  rendered="#{!questionBean.hasNextQuestion}"
-                  propagation="end"/>
+    <ui:define name="contentBody">
+        <a4j:form id="questionForm">
+            <a4j:outputPanel id="questionContentPanel" rendered="#{pageBean.hasNextQuestion}">
+                <ui:include src="../controls/questionDefinitionControl.jspx"/>
+                <ui:include src="../controls/questionAnswerControl.jspx"/>
+            </a4j:outputPanel>
+            <a4j:outputPanel id="noQuestionPanel" rendered="#{!pageBean.hasNextQuestion}">
+                Вопросы кончились!
+                Тест завершен!
+            </a4j:outputPanel>
+            <br/>
+            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+                <a4j:commandButton id="prevQuestionButton"
+                                   action="#{pageBean.previousQuestion}"
+                                   value="#{messages['question.detail.previousQuestion']}"
+                                   styleClass="button"
+                                   disabled="#{!pageBean.hasPreviousQuestion}"
+                                   reRender="content, sidebar"
+                                   rendered="false"/>
+                <a4j:commandButton id="nextQuestionButton"
+                                   action="#{pageBean.nextQuestion}"
+                                   value="#{messages['question.detail.nextQuestion']}"
+                                   styleClass="button"
+                                   rendered="#{pageBean.hasNextQuestion}"
+                                   reRender="content, sidebar"
+                                   onclick="Timer.destroy()"/>
+                <a4j:jsFunction name="nextQuestion"
+                                action="#{pageBean.nextQuestion}"
+                                reRender="content, sidebar"/>
+                <s:button id="endTestButton"
+                          action="#{questionBean.endTest}"
+                          value="#{messages['question.detail.endTest']}"
+                          styleClass="button"
+                          rendered="#{!pageBean.hasNextQuestion}"/>
+            </a4j:outputPanel>
+        </a4j:form>
     </ui:define>
 </ui:composition>
 </html>
