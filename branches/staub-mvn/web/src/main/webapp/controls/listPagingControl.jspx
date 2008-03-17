@@ -27,59 +27,11 @@
                     </td>
                     <td width="5" />
                     <td>
-                        <h:panelGroup id="#{pagerAlign}_goToPageGroup" rendered="#{pageBean.pageQuantity &gt; 1}">
-                            <table border="0" cellspacing="0" cellpadding="0">
-                            <tr>
-                                <td>
-                                    <h:outputText id="#{pagerAlign}_delimiter" value="|" />
-                                </td>
-                                <td width="5" />
-                                <td nowrap="nowrap">
-                                    <div id="#{pagerAlign}_changePagesOff" style="display:block;">
-                                        <h:outputLink id="#{pagerAlign}_gotoLink" value="javascript:void(0)"
-                                            onclick="showHideDIVById('#{pagerAlign}_changePagesOn');showHideDIVById('#{pagerAlign}_changePagesOff');">
-                                            <h:outputText id="#{pagerAlign}_gotoLinkText" value="#{messages['common.list.paging.goto']}" />
-                                        </h:outputLink>
-                                    </div>
-                                    <div id="#{pagerAlign}_changePagesOn" style="display:none;">
-                                        <h:form id="#{pagerAlign}_listPagingGoForm">
-                                            <table border="0" cellspacing="0" cellpadding="0" width="100%">
-                                            <tr>
-                                                <td>
-                                                    #{messages['common.list.paging.gotoPage']}
-                                                </td>
-                                                <td width="5" />
-                                                <td>
-                                                    <h:inputText id="#{pagerAlign}_inputQuantity" value="#{pageBean.currentPage}" size="2"
-                                                        onkeypress="if (event.keyCode == 13) { if (changePagesSettings(this.id, '#{pagerAlign}')) #{pagerAlign}_doExactPage(); return false; }" />
-                                                </td>
-                                                <td width="5" />
-                                                <td>
-                                                    <a4j:commandButton id="#{pagerAlign}_changePageButton" action="#{pageBean.doExactPage}"
-                                                            onclick="if (!(changePagesSettings(this.id, '#{pagerAlign}'))) return false;"
-                                                            reRender="#{bodyPanelId}" type="submit"
-                                                            image="/images/paging/icon_page_go.gif" />
-                                                    <h:inputHidden id="#{pagerAlign}_totalQuantity" value="#{pageBean.pageQuantity}" />
-                                                    <a4j:jsFunction id="#{pagerAlign}_doExactPage" name="#{pagerAlign}_doExactPage" limitToList="true"
-                                                        reRender="#{bodyPanelId}" requestDelay="1" action="#{pageBean.doExactPage}">
-                                                    </a4j:jsFunction>
-                                                </td>
-                                            </tr>
-                                            </table>
-                                        </h:form>
-                                    </div>
-                                </td>
-                                <td width="10" />
-                            </tr>
-                            </table>
-                        </h:panelGroup>
-                    </td>
-                    <td>
                         <h:form id="#{pagerAlign}_listPagingStepForm">
                             <table border="0" cellspacing="0" cellpadding="0" width="100%">
                             <tr>
                                 <td>
-                                    <a4j:commandLink id="#{pagerAlign}_firstPageLink" action="#{pageBean.doFirstPage}" rendered="#{pageBean.currentPage &gt; 1}" reRender="#{bodyPanelId}">
+                                    <a4j:commandLink id="#{pagerAlign}_firstPageLink" action="#{pageBean.doFirstPage}" rendered="#{pageBean.currentPage &gt; 1}" reRender="contentBody">
                                         <h:graphicImage id="#{pagerAlign}_firstPageLinkImg" url="/images/paging/icon_page_first.gif" height="17" width="18" />
                                     </a4j:commandLink>
                                     <h:graphicImage id="#{pagerAlign}_firstPageImg" rendered="#{pageBean.currentPage &lt;= 1}"
@@ -87,7 +39,7 @@
                                 </td>
                                 <td width="5" />
                                 <td>
-                                    <a4j:commandLink id="#{pagerAlign}_prevPageLink" action="#{pageBean.doPrevPage}" rendered="#{pageBean.currentPage &gt; 1}" reRender="#{bodyPanelId}">
+                                    <a4j:commandLink id="#{pagerAlign}_prevPageLink" action="#{pageBean.doPrevPage}" rendered="#{pageBean.currentPage &gt; 1}" reRender="contentBody">
                                         <h:graphicImage id="#{pagerAlign}_prevPageLinkImg" url="/images/paging/icon_page_previous.gif" height="17" width="18" />
                                     </a4j:commandLink>
                                     <h:graphicImage id="#{pagerAlign}_prevPageImg" rendered="#{pageBean.currentPage &lt;= 1}"
@@ -95,7 +47,7 @@
                                 </td>
                                 <td width="5" />
                                 <td>
-                                    <a4j:commandLink id="#{pagerAlign}_nextPageLink" action="#{pageBean.doNextPage}" rendered="#{pageBean.currentPage &lt; pageBean.pageQuantity}" reRender="#{bodyPanelId}">
+                                    <a4j:commandLink id="#{pagerAlign}_nextPageLink" action="#{pageBean.doNextPage}" rendered="#{pageBean.currentPage &lt; pageBean.pageQuantity}" reRender="contentBody">
                                         <h:graphicImage id="#{pagerAlign}_nextPageLinkImg" url="/images/paging/icon_page_next.gif" height="17" width="18" />
                                     </a4j:commandLink>
                                     <h:graphicImage id="#{pagerAlign}_nextPageImg" rendered="#{pageBean.currentPage &gt;= pageBean.pageQuantity}"
@@ -103,7 +55,7 @@
                                 </td>
                                 <td width="5" />
                                 <td>
-                                    <a4j:commandLink id="#{pagerAlign}_lastPageLink" action="#{pageBean.doLastPage}" rendered="#{pageBean.currentPage &lt; pageBean.pageQuantity}" reRender="#{bodyPanelId}">
+                                    <a4j:commandLink id="#{pagerAlign}_lastPageLink" action="#{pageBean.doLastPage}" rendered="#{pageBean.currentPage &lt; pageBean.pageQuantity}" reRender="contentBody">
                                         <h:graphicImage id="#{pagerAlign}_lastPageLinkImg" url="/images/paging/icon_page_last.gif" height="17" width="18" />
                                     </a4j:commandLink>
                                     <h:graphicImage id="#{pagerAlign}_lastPageImg" rendered="#{pageBean.currentPage &gt;= pageBean.pageQuantity}"
