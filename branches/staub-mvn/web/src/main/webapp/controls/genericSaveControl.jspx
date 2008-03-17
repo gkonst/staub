@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+
+<ui:composition>
+
+    <a4j:commandButton id="saveButton" action="#{pageBean.doSave}"
+                       value="#{messages['common.detail.functions.save']}"
+                       rendered="#{pageBean.editMode or pageBean.createMode}"
+                       reRender="content"
+                       styleClass="button"/>
+
+    <s:button id="cancelButton" action="list" immediate="true"
+              value="#{messages['common.detail.functions.cancel']}"
+              rendered="#{pageBean.editMode or pageBean.createMode}"
+              styleClass="button"/>
+    <s:button id="backButton" action="list" immediate="true"
+              value="#{messages['common.detail.functions.back']}"
+              rendered="#{pageBean.viewMode}"
+              styleClass="button">
+        <f:param name="beanMode" value="REFRESH_MODE"/>
+    </s:button>
+
+</ui:composition>
+</html>
