@@ -7,7 +7,7 @@ import org.jboss.seam.annotations.web.RequestParameter;
  *
  * @author Konstantin Grigoriev
  */
-public abstract class GenericDetailBean<T> extends GenericBean {
+public abstract class GenericDetailBean<T> extends GenericModeBean {
 
     @RequestParameter
     private Integer modelId;
@@ -16,10 +16,12 @@ public abstract class GenericDetailBean<T> extends GenericBean {
 
     protected abstract void fillModel(Integer modelId);
 
-    public void initDetailBean() {
-        logger.debug(">>> Initializating detail bean...id : #0", modelId);
-        fillModel(modelId);
-        logger.debug("<<< Initializating detail bean...Ok");
+    public void initBean() {
+        if (isBeanModeDefined()) {
+            logger.debug(">>> Initializating detail bean...id : #0", modelId);
+            fillModel(modelId);
+            logger.debug("<<< Initializating detail bean...Ok");
+        }
     }
 
     public T getModel() {
