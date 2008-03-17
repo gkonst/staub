@@ -7,8 +7,9 @@
       xmlns:a4j="http://richfaces.org/a4j">
 
 <ui:composition>
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
     <div id="questionDefinitionPanel" class="questionDefinitionPanel">
-        #{questionDetailBean.currentQuestion.description}
+        #{pageBean.currentQuestion.description}
     </div>
     <div id="questionDefinitionButtons" class="questionDefinitionButtons">
         <span id="questionDefinitionPanelSwitcher"
