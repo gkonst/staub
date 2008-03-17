@@ -15,7 +15,7 @@
     <ui:define name="contentTitle">
         подготовка...
     </ui:define>
-    <ui:define name="contentMain">
+    <ui:define name="contentBody">
         формирование теста....
     </ui:define>
 </ui:composition>

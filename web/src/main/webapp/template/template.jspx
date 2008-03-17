@@ -1,50 +1,45 @@
 <!DOCTYPE html
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title><ui:insert name="title"/></title>
-        <ui:insert name="style"/>
-        <ui:insert name="script"/>
-    </head>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title><ui:insert name="title"/></title>
+    <ui:insert name="style"/>
+    <ui:insert name="script"/>
+</head>
 <body>
-    <f:view>
-        <div id="document">
-            <div id="header">
-                <div id="headerTitle"><ui:insert name="headerTitle"/></div>
-                <div id="headerStatus"><ui:insert name="headerStatus"/></div>
-            </div>
-            <div id="container">
-                <a4j:outputPanel id="sidebar">
-                    <ui:insert name="sidebar"/>
-                </a4j:outputPanel>
-                <a4j:outputPanel id="content" layout="block">
-                    <div id="contentTitle">
-                        <h4><ui:insert name="contentTitle"/></h4>
-                    </div>
-                    <div id="contentMessage">
-                        <ui:insert name="contentMessage"/>
-                    </div>
-                    <h:form id="contentForm">
-                        <div id="contentMain">
-                            <ui:insert name="contentMain"/>
-                        </div>
-                        <div id="contentButtons">
-                            <ui:insert name="contentButtons"/>
-                        </div>
-                    </h:form>
-                </a4j:outputPanel>
-            </div>
-            <div id="empty">
-            &nbsp;
-            </div>
-            <div id="footer"><ui:insert name="footer"/></div>
+<f:view>
+    <div id="document">
+        <div id="header">
+            <div id="headerTitle"><ui:insert name="headerTitle"/></div>
+            <div id="headerStatus"><ui:insert name="headerStatus"/></div>
         </div>
-    </f:view>
+        <div id="container">
+            <a4j:outputPanel id="sidebar">
+                <ui:insert name="sidebar"/>
+            </a4j:outputPanel>
+            <a4j:outputPanel id="content" layout="block">
+                <div id="contentTitle">
+                    <h4><ui:insert name="contentTitle"/></h4>
+                </div>
+                <div id="contentMessage">
+                    <ui:insert name="contentMessage"/>
+                </div>
+                <a4j:outputPanel id="contentBody" layout="block">
+                    <ui:insert name="contentBody"/>
+                </a4j:outputPanel>
+            </a4j:outputPanel>
+        </div>
+        <div id="empty">
+            &nbsp;
+        </div>
+        <div id="footer"><ui:insert name="footer"/></div>
+    </div>
+</f:view>
 </body>
 </html>

@@ -12,7 +12,7 @@
     <ui:define name="contentTitle">
         #{testStartBean.model.name}
     </ui:define>
-    <ui:define name="contentMain">
+    <ui:define name="contentBody">
         <table class="detailTable">
             <tr>
                 <td align="right">
@@ -47,12 +47,13 @@
                 </td>
             </tr>
         </table>
-    </ui:define>
-    <ui:define name="contentButtons">
-        <s:button action="testListForPass" value="#{messages['test.detail.back']}" styleClass="button"/>
-        <s:button action="#{testStartBean.prepareTest}" value="#{messages['test.detail.startTest']}" styleClass="button" propagation="begin">
-            <f:param name="modelId" value="#{testStartBean.model.id}"/>
-        </s:button>
+        <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+            <s:button action="testListForPass" value="#{messages['test.detail.back']}" styleClass="button"/>
+            <s:button action="#{testStartBean.prepareTest}" value="#{messages['test.detail.startTest']}"
+                      styleClass="button" propagation="begin">
+                <f:param name="modelId" value="#{testStartBean.model.id}"/>
+            </s:button>
+        </a4j:outputPanel>
     </ui:define>
 </ui:composition>
 </html>

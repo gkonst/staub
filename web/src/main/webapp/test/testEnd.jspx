@@ -12,10 +12,8 @@
     <ui:define name="contentTitle">
         Тест завершен.
     </ui:define>
-    <ui:define name="contentMain">
+    <ui:define name="contentBody">
         Результат.    
-    </ui:define>
-    <ui:define name="contentButtons">
     </ui:define>
 </ui:composition>
 </html>
