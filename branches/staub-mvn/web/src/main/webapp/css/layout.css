@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+*html #document {
+    height: 100%;
+}
+
+#document {
+    float: left;
+    position: relative;
+    min-height: 100%;
+    width: 100%;
+}
+
+*html #document {
+    height: 100%;
+}
+
+#header {
+    float: left;
+    width: 100%;
+    height: 3em;
+}
+
+#container {
+    float: left;
+    width: 100%;
+}
+
+#sidebar {
+    float: left;
+    width: 10em;
+}
+
+#content {
+    margin-left: 10em;
+}
+
+#empty, #footer {
+    height: 2.5em;
+    padding: 0.75em 0.75em 0 0.75em;
+}
+
+#empty {
+    clear: both;
+}
+
+#footer {
+    clear: both;
+    position: absolute;
+    bottom: 0;
+    float: left;
+    width: 100%;
+}

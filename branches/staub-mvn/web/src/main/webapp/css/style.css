@@ -1,27 +1,5 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-/* Element Defaults */
-html {
-    height: 100%;
-    background-color: #DBD4C6;
-}
-
 img {
     border: 0;
-}
-
-body {
-    font-family: tahoma, Verdana, Arial, Helvetica, sans-serif;
-    font-size: small;
-    line-height: 1.25em;
-    color: #362F2D;
-    width: 760px;
-    height: 100%;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .label {
@@ -53,67 +31,6 @@ li {
 
 fieldset {
     border: 0;
-}
-
-/* Layout */
-#document {
-    padding: 0 1px;
-    background: #fff url( ../images/bg.gif ) 0 0 repeat-y;
-    float: left;
-    position: relative;
-    min-height: 100%;
-}
-
-*html #document {
-    height: 100%;
-}
-
-#header {
-    float: left;
-    width: 758px;
-    height: 46px;
-    background: url( ../images/hdr.bg.gif ) 0 0 repeat-x;
-    color: white;
-}
-
-#container {
-    float: left;
-    width: 758px;
-
-}
-
-#sidebar {
-    float: left;
-    width: 190px;
-    padding: 20px 10px 0 10px;
-    background: url( ../images/sdb.bg.gif ) 0 0 no-repeat;
-}
-
-#content {
-    float: left;
-    width: 548px;
-    padding-top: 5px;
-    background: #fff url( ../images/cnt.bg.gif ) 0 0 repeat-x;
-}
-
-#empty, #footer {
-    height: 2.5em;
-    padding: 10px 10px 0 10px;
-}
-
-#empty {
-    clear: both;
-}
-
-#footer {
-    clear: both;
-    position: absolute;
-    bottom: 0;
-    float: left;
-    border-top: 1px solid #C3BBB6;
-    background-color: #fff;
-    width: 738px;
-    text-align: right;
 }
 
 /* General */

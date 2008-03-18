@@ -16,6 +16,7 @@
         </ui:define>
 
         <ui:define name="style">
+            <a4j:loadStyle src="/css/layout-style.css" />
             <a4j:loadStyle src="/css/style.css" />
             <a4j:loadStyle src="/css/list.css" />
         </ui:define>
