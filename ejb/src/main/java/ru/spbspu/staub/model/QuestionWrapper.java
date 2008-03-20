@@ -1,25 +1,17 @@
 package ru.spbspu.staub.model;
 
-import org.jboss.seam.log.Log;
-import org.jboss.seam.log.Logging;
 import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.model.question.QuestionType;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
-import java.io.StringReader;
+import ru.spbspu.staub.util.JAXBUtil;
 
 /**
- * Wrapper encapsulates
+ * Wrapper encapsulates basic <code>Question</code> fields
+ * with paresed xml fields.
+ * TODO may be useless
  *
  * @author Konstantin Grigoriev
  */
 public class QuestionWrapper {
-
-    private Log logger = Logging.getLog(QuestionWrapper.class);
 
     private String name;
     private String description;
@@ -33,26 +25,8 @@ public class QuestionWrapper {
     private void wrap(Question question) {
         this.name = question.getName();
         this.timeLimit = question.getTimeLimit();
-        this.definition = parseDefinitionXML(question.getDefinition());
+        this.definition = JAXBUtil.parseDefinitionXML(question.getDefinition());
         this.description = this.definition.getDescription();
-    }
-
-    private QuestionType parseDefinitionXML(String definitionXML) {
-        logger.debug(" Parsing question definition XML...");
-        try {
-            logger.debug("  XML : " + definitionXML);
-            JAXBContext jaxbContext = JAXBContext.newInstance("ru.spbspu.staub.model.question");
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            JAXBElement jaxbElement = (JAXBElement) unmarshaller.unmarshal(new StreamSource(new StringReader(definitionXML)));
-            QuestionType result = (QuestionType) jaxbElement.getValue();
-            logger.debug("  description : " + result.getDescription());
-            logger.debug("  multipleChoice : " + result.getMultipleChoice());
-            logger.debug("  singleChoice : " + result.getSingleChoice());
-            return result;
-        } catch (JAXBException e) {
-            logger.error("Error during parsing question defination XML(" + definitionXML + ")", e);
-            throw new RuntimeException(e);
-        }
     }
 
     public boolean isTimeLimitPresent() {
