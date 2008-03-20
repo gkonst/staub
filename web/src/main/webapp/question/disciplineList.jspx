@@ -8,8 +8,9 @@
       xmlns:rich="http://richfaces.org/rich"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
-<ui:composition template="../template/staub-template.jspx">
+<ui:composition template="/template/staub-template.jspx">
     <ui:param name="pageBean" value="#{disciplineListBean}"/>
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.DisciplineListBean"-->
     <ui:define name="sidebar">
         <ui:include src="/system/menuPage.jspx"/>
     </ui:define>
