@@ -10,39 +10,39 @@
 
     <ui:composition template="template.jspx">
 
-        <ui:define name="script">
-            <a4j:loadScript src="../script/commonUtil.js"/>
-            <ui:insert name="pageScript"/>
-        </ui:define>
+    <ui:define name="script">
+        <a4j:loadScript src="/script/commonUtil.js"/>
+        <ui:insert name="pageScript"/>
+    </ui:define>
 
-        <ui:define name="style">
-            <a4j:loadStyle src="/css/layout-style.css" />
-            <a4j:loadStyle src="/css/style.css" />
-            <a4j:loadStyle src="/css/list.css" />
-        </ui:define>
+    <ui:define name="style">
+        <a4j:loadStyle src="/css/layout-style.css"/>
+        <a4j:loadStyle src="/css/style.css"/>
+        <a4j:loadStyle src="/css/list.css"/>
+    </ui:define>
 
-        <ui:define name="title">
-            #{messages['page.title']}
-        </ui:define>
+    <ui:define name="title">
+        #{messages['page.title']}
+    </ui:define>
 
-        <ui:define name="headerTitle">
-            #{messages['page.header.title']}
-        </ui:define>
+    <ui:define name="headerTitle">
+        #{messages['page.header.title']}
+    </ui:define>
 
-         <ui:define name="headerStatus">
-            <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
-            #{messages['page.header.status.user']}&#160;<u>#{identity.username}</u>
-            |<s:link id="logout" action="#{identity.logout}" value="#{messages['system.login.exit']}"/>
-        </ui:define>
+    <ui:define name="headerStatus">
+        <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
+        #{messages['page.header.status.user']}&#160;<u>#{identity.username}</u>
+        |<s:link id="logout" action="#{identity.logout}" value="#{messages['system.login.exit']}"/>
+    </ui:define>
 
-        <ui:define name="contentMessage">
-            <ui:include src="../controls/genericMessageControl.jspx"/>
-        </ui:define>
+    <ui:define name="contentMessage">
+        <ui:include src="../controls/genericMessageControl.jspx"/>
+    </ui:define>
 
-        <ui:define name="footer">
-            #{messages['page.footer']}
-        </ui:define>
+    <ui:define name="footer">
+        #{messages['page.footer']}
+    </ui:define>
 
-    </ui:composition>
+</ui:composition>
 
 </html>

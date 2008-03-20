@@ -7,12 +7,12 @@
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
-    <ui:composition template="../template/staub-template.jspx">
-        <ui:define name="sidebar">
-            <ui:include src="/system/menuPage.jspx" />
-        </ui:define>
-        <ui:define name="contentBody">
-            Модуль администрирования системы.
-        </ui:define>
-    </ui:composition>
+    <ui:composition template="/template/staub-template.jspx">
+    <ui:define name="sidebar">
+        <ui:include src="/system/menuPage.jspx"/>
+    </ui:define>
+    <ui:define name="contentBody">
+        Модуль администрирования системы.
+    </ui:define>
+</ui:composition>
 </html>
