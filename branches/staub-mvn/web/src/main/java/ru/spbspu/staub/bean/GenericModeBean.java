@@ -29,7 +29,11 @@ public abstract class GenericModeBean extends GenericBean {
         return beanMode;
     }
 
-    public abstract void initBean(); 
+    /**
+     * Defines initialize action for every backing bean.
+     * E.g. all list beans must retrieve first page before first page render phase.
+     */
+    public abstract void initBean();
 
     /**
      * Defines bean mode for the current bean.

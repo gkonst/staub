@@ -77,6 +77,10 @@ public abstract class GenericListBean<T> extends GenericModeBean {
      */
     protected abstract FormTable findObjects(FormProperties formProperties);
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void initBean() {
         if (isBeanModeDefined()) {
             logger.debug("Preparing list bean...");
