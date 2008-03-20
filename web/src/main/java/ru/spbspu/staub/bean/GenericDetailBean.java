@@ -14,8 +14,19 @@ public abstract class GenericDetailBean<T> extends GenericModeBean {
 
     private T model;
 
+    /**
+     * Fills model on base of beanMode and model identifier.
+     * E.g. initializes model with new entity instance or fetches
+     * specific entity from db by model identifier.
+     *
+     * @param modelId model identifier
+     */
     protected abstract void fillModel(Integer modelId);
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void initBean() {
         if (isBeanModeDefined()) {
             logger.debug(">>> Initializating detail bean...id : #0", modelId);
