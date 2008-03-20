@@ -11,15 +11,6 @@
     <ui:composition>
         <table class="listTable">
         <tr>
-            <td valign="bottom">
-                <ui:insert name="listPageControlTop">
-                    <ui:include src="listPagingControl.jspx" >
-                        <ui:param name="pagerAlign" value="top" />
-                    </ui:include>
-                </ui:insert>
-            </td>
-        </tr>
-        <tr>
             <td valign="middle">
                 <div class="listTableContent">
                     <a4j:outputPanel id="bodyFormPanel">
