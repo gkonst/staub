@@ -21,6 +21,10 @@ public class DisciplineListBean extends GenericListBean<Discipline> {
     @In
     private DisciplineService disciplineService;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected FormTable findObjects(FormProperties formProperties) {
         return disciplineService.findAll(formProperties);
     }
