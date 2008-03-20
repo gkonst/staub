@@ -11,7 +11,7 @@ import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.QuestionService;
 
 /**
- * TODO add description
+ * Webbean for manipulating list data of <code>Question</code> entities.
  *
  * @author Konstantin Grigoriev
  */
@@ -21,7 +21,10 @@ public class QuestionListBean extends GenericListBean<Question> {
     @In
     private QuestionService questionService;
 
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected FormTable findObjects(FormProperties formProperties) {
         return questionService.findAll(formProperties);
     }
