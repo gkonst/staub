@@ -9,16 +9,18 @@ img {
 
 input {
     border: 1px solid #C3BBB6;
-    padding: 2px;
-    margin: 5px 0;
+    background: #fff url( ../images/input.bg.gif ) 0 0 repeat-x;
+}
+
+textarea {
+    border: 1px solid #C3BBB6;
     background: #fff url( ../images/input.bg.gif ) 0 0 repeat-x;
 }
 
 select {
     border: 1px solid #C3BBB6;
-    padding: 4px;
-    margin: 5px 0;
     background: #fff url( ../images/input.bg.gif ) 0 0 repeat-x;
+    width: 15em;
 }
 
 ol, ul {
@@ -26,7 +28,7 @@ ol, ul {
 }
 
 li {
-    margin: 10px 12px;
+    margin: 10px 0.5em;
 }
 
 fieldset {
@@ -46,7 +48,7 @@ fieldset {
 .radio {
     border: 0 none;
     border-style: none;
-    margin: 0 1em 0 0;
+    margin: 0.4em 0.2em 0;
 }
 
 .checkbox {
@@ -109,12 +111,12 @@ fieldset {
 
 /* Content */
 #contentTitle {
-    padding: 15px 15px 15px 15px;
+    padding: 1em 1em 0 1em;
     vertical-align: middle;
 }
 
 #contentBody {
-    padding: 15px;
+    padding: 1em;
 }
 
 .contentButtons {
@@ -151,7 +153,19 @@ fieldset {
 }
 
 .detailTable td {
-    padding: 7px;
+    padding: 0.7em 0.3em;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.innerDetailTable {
+    width: 100%;
+}
+
+.innerDetailTable td {
+    padding: 0.5em 0;
+    vertical-align: middle;
+    white-space: nowrap;
 }
 
 .questionDefinitionPanel {
@@ -164,6 +178,7 @@ fieldset {
     display: block;
     height: 300px;
     padding: 1em;
+    margin: 0.3em;
 }
 
 .expanded {

@@ -22,10 +22,6 @@ body {
     width: 100%;
 }
 
-*html #document {
-    height: 100%;
-}
-
 #header {
     float: left;
     width: 100%;
