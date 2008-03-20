@@ -61,8 +61,24 @@
           login-required="true"
           action="#{questionListBean.initBean}">
         <restrict>#{s:hasRole('admin')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/question/questionDetail.jspx"/>
+            </rule>
+        </navigation>
     </page>
-    
+    <page view-id="/question/questionDetail.jspx"
+          login-required="true"
+          action="#{questionDetailBean.initBean}">
+        <restrict>#{s:hasRole('admin')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/question/questionList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+
     <page view-id="/question/disciplineList.jspx"
           login-required="true"
           action="#{disciplineListBean.initBean}">
