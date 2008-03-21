@@ -13,3 +13,4 @@
    * !QuestionType - поля singleChoice и multipleChoice.
    * !AnswerType в двух инкарнациях - нельзя ли все таки одну заюзать?
  * Реализовать методы !TestTraceService.
+ * Подумать про апплет формул.
