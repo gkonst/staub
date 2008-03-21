@@ -4,9 +4,13 @@
 == Math ML напрямую рендеренный браузером ==
     Рендерится не во всех браузерах одинаково, проблемы в IE.
 == Генерация картинки из чего то (например того же math ml или TeX) средствами сервера. ==
+=== Плюсы ===
+=== Минусы ===
 === Варианты ===
  * [http://jeuclid.sourceforge.net/ JEuclid]
  * [http://www.sferyx.com/equationeditor/index.htm JSyndrome]
 == Встраиваемый апплет, который рендерит формулу на клиенте. ==
+=== Плюсы ===
+=== Минусы ===
 === Варианты === 
  * [http://www.atp.ruhr-uni-bochum.de/VCLab/software/HotEqn/HotEqn.html HotEqn]
