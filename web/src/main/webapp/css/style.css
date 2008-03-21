@@ -20,7 +20,7 @@ textarea {
 select {
     border: 1px solid #C3BBB6;
     background: #fff url( ../images/input.bg.gif ) 0 0 repeat-x;
-    width: 15em;
+    width: 14em;
 }
 
 ol, ul {
