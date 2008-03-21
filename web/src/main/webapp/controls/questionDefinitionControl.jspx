@@ -4,12 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:s="http://jboss.com/products/seam/taglib">
 
 <ui:composition>
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
     <div id="questionDefinitionPanel" class="questionDefinitionPanel">
-        #{pageBean.currentQuestion.description}
+        <s:formattedText value="#{pageBean.currentQuestion.description}"/>
     </div>
     <div id="questionDefinitionButtons" class="questionDefinitionButtons">
         <span id="questionDefinitionPanelSwitcher"
