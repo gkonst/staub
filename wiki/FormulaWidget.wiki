@@ -6,11 +6,13 @@
 == Генерация картинки из чего то (например того же math ml или TeX) средствами сервера. ==
 === Плюсы ===
 === Минусы ===
-=== Варианты ===
- * [http://jeuclid.sourceforge.net/ JEuclid]
- * [http://www.sferyx.com/equationeditor/index.htm JSyndrome]
 == Встраиваемый апплет, который рендерит формулу на клиенте. ==
 === Плюсы ===
 === Минусы ===
-=== Варианты === 
+= Конкретные варианты = 
  * [http://www.atp.ruhr-uni-bochum.de/VCLab/software/HotEqn/HotEqn.html HotEqn]
+ * [http://jeuclid.sourceforge.net/ JEuclid] - можно заюзать его апи в сервлете и выкидывать картинку наружу
+ * [http://www.sferyx.com/equationeditor/index.htm JSyndrome] - не понял =)
+ * [http://www.dragmath.bham.ac.uk/ DragMath]
+ * [http://www.dessci.com/en/products/webeq/ WebEQ] - навороченный и платный
+ * [http://www.exmpl.de/projects/mathml/math.html v2Math] - что то очень простое и на немецком
