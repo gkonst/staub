@@ -72,13 +72,25 @@ CREATE TABLE "user" (
     CONSTRAINT pk_user PRIMARY KEY (id)
 );
 
+CREATE TABLE assignment (
+    id INTEGER NOT NULL,
+    fk_test INTEGER NOT NULL,
+    fk_user INTEGER NOT NULL,
+    test_begin DATE,
+    test_end DATE,
+    test_started BOOLEAN,
+    CONSTRAINT pk_assignment PRIMARY KEY (id),
+    CONSTRAINT fk_test FOREIGN KEY (fk_test) REFERENCES test (id),
+    CONSTRAINT fk_user FOREIGN KEY (fk_user) REFERENCES "user" (id)
+);
+
 CREATE TABLE test_trace (
     id INTEGER NOT NULL,
     fk_test INTEGER NOT NULL,
     fk_user INTEGER NOT NULL,
     session_id CHARACTER VARYING(64),
     score INTEGER,
-    test_passed NUMERIC(1),
+    test_passed BOOLEAN,
     started DATE,
     finished DATE,
     CONSTRAINT pk_test_trace PRIMARY KEY (id),
@@ -90,7 +102,7 @@ CREATE TABLE question_trace (
     id INTEGER NOT NULL,
     fk_test_trace INTEGER NOT NULL,
     fk_question INTEGER NOT NULL,
-    correct NUMERIC(1),
+    correct BOOLEAN,
     started DATE,
     finished DATE,
     answer TEXT,
@@ -160,6 +172,12 @@ CREATE SEQUENCE seq_question_trace
     CACHE 1;
 
 CREATE SEQUENCE seq_user_history
+    INCREMENT BY 1
+    MAXVALUE 2147483647
+    MINVALUE 1
+    CACHE 1;
+    
+CREATE SEQUENCE seq_assignment
     INCREMENT BY 1
     MAXVALUE 2147483647
     MINVALUE 1
