@@ -77,7 +77,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             setQuestionDefinition(new QuestionType());
         } else {
             setModel(questionService.findById(modelId));
-            setQuestionDefinition(JAXBUtil.parseDefinitionXML(getModel().getDefinition()));
+            setQuestionDefinition(JAXBUtil.parseQuestionXML(getModel().getDefinition()));
             determineAnswerType();
             determineCorrectAnswer();
         }
@@ -124,7 +124,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     public void doSave() {
         logger.debug("Saving question...");
         resolveCorrectAnswer();
-        String questionDefinitionXML = JAXBUtil.createDefinitionXML(getQuestionDefinition());
+        String questionDefinitionXML = JAXBUtil.createQuestionXML(getQuestionDefinition());
         getModel().setDefinition(questionDefinitionXML);
         if (isCreateMode()) {
             getModel().setCreated(new Date());
