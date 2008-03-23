@@ -27,7 +27,7 @@ INSERT INTO test (id,
              5,
              50,
              2,
-             'ALL',
+             0,
              current_date,
              'Generation Script');
 
