@@ -77,6 +77,8 @@ CREATE TABLE test_trace (
     fk_test INTEGER NOT NULL,
     fk_user INTEGER NOT NULL,
     session_id CHARACTER VARYING(64),
+    score INTEGER,
+    test_passed NUMERIC(1),
     started DATE,
     finished DATE,
     CONSTRAINT pk_test_trace PRIMARY KEY (id),
@@ -98,11 +100,13 @@ CREATE TABLE question_trace (
 
 CREATE TABLE user_history (
     id INTEGER NOT NULL,
+    fk_test_trace INTEGER, -- intentionally nullable
     name CHARACTER VARYING(256),
     score INTEGER,
     test_passed NUMERIC(1),
     test_date DATE,
-    CONSTRAINT pk_user_history PRIMARY KEY (id)
+    CONSTRAINT pk_user_history PRIMARY KEY (id),
+    CONSTRAINT fk_test_trace FOREIGN KEY (fk_test_trace) REFERENCES test_trace (id)
 );
 
 -- Sequences

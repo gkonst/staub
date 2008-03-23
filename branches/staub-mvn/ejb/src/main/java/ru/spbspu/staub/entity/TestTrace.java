@@ -88,6 +88,30 @@ public class TestTrace implements Serializable {
         this.user = user;
     }
 
+    private Integer score;
+
+    @Basic
+    @Column(name = "score", length = 10)
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    private Integer testPassed;
+
+    @Basic
+    @Column(name = "test_passed", length = 1)
+    public Integer getTestPassed() {
+        return testPassed;
+    }
+
+    public void setTestPassed(Integer testPassed) {
+        this.testPassed = testPassed;
+    }
+
     @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {

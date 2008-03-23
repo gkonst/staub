@@ -17,6 +17,8 @@ public class UserHistory implements Serializable {
     private Integer id;
 
     @Id
+    @SequenceGenerator(name = "UserHistoryIdGenerator", sequenceName = "seq_user_history", allocationSize = 1)
+    @GeneratedValue(generator = "UserHistoryIdGenerator", strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, length = 10)
     public Integer getId() {
         return id;
@@ -72,6 +74,18 @@ public class UserHistory implements Serializable {
 
     public void setTestDate(Date testDate) {
         this.testDate = testDate;
+    }
+
+    private TestTrace testTrace;
+
+    @OneToOne
+    @JoinColumn(name = "fk_test_trace", referencedColumnName = "id")
+    public TestTrace getTestTrace() {
+        return testTrace;
+    }
+
+    public void setTestTrace(TestTrace testTrace) {
+        this.testTrace = testTrace;
     }
 
     @Override

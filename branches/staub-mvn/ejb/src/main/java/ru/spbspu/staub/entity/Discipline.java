@@ -16,6 +16,8 @@ public class Discipline implements Serializable {
     private Integer id;
 
     @Id
+    @SequenceGenerator(name = "DisciplineIdGenerator", sequenceName = "seq_discipline", allocationSize = 1)
+    @GeneratedValue(generator = "DisciplineIdGenerator", strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, length = 10)
     public Integer getId() {
         return id;
