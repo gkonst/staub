@@ -91,7 +91,9 @@ public abstract class GenericServiceBean<T, ID extends Serializable> implements 
         FormTable table = new FormTable();
         table.setFullCount(countQuery(queryString, queryParameters));
         Query query = getEntityManager().createQuery(queryString);
-        // TODO implement parameters setting
+        for (Map.Entry<String, Object> param : queryParameters.entrySet()) {
+            query.setParameter(param.getKey(), param.getValue());
+        }
         // TODO implement sort features
         // TODO implement search features
         wrapQueryForPaging(query, formProperties.getCurrentPage(), formProperties.getRowsOnPage());
@@ -124,7 +126,9 @@ public abstract class GenericServiceBean<T, ID extends Serializable> implements 
         logger.debug(" countQueryString : #0", countQueryString);
 
         Query countQuery = getEntityManager().createQuery(countQueryString);
-        // TODO implement parameters setting
+        for (Map.Entry<String, Object> param : queryParameters.entrySet()) {
+            countQuery.setParameter(param.getKey(), param.getValue());
+        }
         long fullCount = (Long) countQuery.getSingleResult();
 
         logger.debug("  count query...#0 rows...OK", fullCount);
