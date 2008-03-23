@@ -1,4 +1,10 @@
 -- Tables
+CREATE TABLE role (
+   id INTEGER NOT NULL,
+   description CHARACTER VARYING(256),
+   PRIMARY KEY (id)
+);
+
 CREATE TABLE discipline (
     id INTEGER NOT NULL,
     name CHARACTER VARYING(256),
@@ -27,7 +33,7 @@ CREATE TABLE question (
     fk_difficulty INTEGER NOT NULL,
     name CHARACTER VARYING(256),
     time_limit INTEGER,
-    definition TEXT NOT NULL,
+    definition TEXT,
     created DATE,
     created_by CHARACTER VARYING(64),
     modified DATE,
@@ -67,9 +73,11 @@ CREATE TABLE test_question (
 
 CREATE TABLE "user" (
     id INTEGER NOT NULL,
+    fk_role INTEGER NOT NULL,
     username CHARACTER VARYING(64) NOT NULL,
     password CHARACTER VARYING(64) NOT NULL,
-    CONSTRAINT pk_user PRIMARY KEY (id)
+    CONSTRAINT pk_user PRIMARY KEY (id),
+    CONSTRAINT fk_role FOREIGN KEY (fk_role) REFERENCES role (id)
 );
 
 CREATE TABLE assignment (

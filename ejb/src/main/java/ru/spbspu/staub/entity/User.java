@@ -51,6 +51,19 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    private RoleEnum role;
+
+    @Basic
+    @Enumerated
+    @Column(name = "fk_role", nullable = false)
+    public RoleEnum getRole() {
+        return role;
+    }
+
+    public void setRole(RoleEnum role) {
+        this.role = role;
+    }
+
     @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {
@@ -65,7 +78,7 @@ public class User implements Serializable {
         return id.equals(other.id);
     }
 
-    @Override    
+    @Override
     public int hashCode() {
         return id.hashCode();
     }

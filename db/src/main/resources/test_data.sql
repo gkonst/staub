@@ -1,14 +1,22 @@
+INSERT INTO role (id, description) VALUES (0, 'Administrator');
+INSERT INTO role (id, description) VALUES (1, 'Test Writer');
+INSERT INTO role (id, description) VALUES (2, 'User');
+
 INSERT INTO "user" (id,
+                    fk_role,
                     username,
                     password)
      VALUES (nextval('seq_user'),
+             0,
              'test',
              'test');
 
 INSERT INTO "user" (id,
+                    fk_role,
                     username,
                     password)
      VALUES (nextval('seq_user'),
+             2
              'user',
              'user');
 

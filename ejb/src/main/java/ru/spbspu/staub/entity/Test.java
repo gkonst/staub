@@ -90,16 +90,16 @@ public class Test implements Serializable {
         this.questionsCount = questionsCount;
     }
 
-    private SelectorType selectorType;
+    private SelectorEnum selectorType;
 
     @Basic
     @Enumerated
     @Column(name = "selector_type")
-    public SelectorType getSelectorType() {
+    public SelectorEnum getSelectorType() {
         return selectorType;
     }
 
-    public void setSelectorType(SelectorType selectorType) {
+    public void setSelectorType(SelectorEnum selectorType) {
         this.selectorType = selectorType;
     }
 
