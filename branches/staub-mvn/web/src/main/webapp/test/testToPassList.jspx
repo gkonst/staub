@@ -8,9 +8,11 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="../template/staub-template.jspx">
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.test.TestToPassListBean"-->
+    <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:param name="pageBean" value="#{testToPassListBean}"/>
     <ui:define name="contentTitle">
-        #{messages['test.list.title']}
+        #{messages['testToPass.list.title']}
     </ui:define>
     <ui:define name="contentBody">
         <ui:decorate template="../controls/listLayoutControl.jspx">
@@ -23,15 +25,11 @@
                              rendered="#{dataModel.rowCount > 0}"
                              styleClass="dataTable">
                     <h:column>
-                        <f:facet name="header">#{messages['test.list.name']}</f:facet>
+                        <f:facet name="header">#{messages['testToPass.list.name']}</f:facet>
                         <s:link view="/test/testStart.seam" value="#{test.name}">
                             <f:param name="modelId" value="#{test.id}"/>
                             <f:param name="beanMode" value="VIEW_MODE"/>
                         </s:link>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">#{messages['test.list.questionsCount']}</f:facet>
-                        #{test.questionsCount}
                     </h:column>
                 </h:dataTable>
             </ui:define>
