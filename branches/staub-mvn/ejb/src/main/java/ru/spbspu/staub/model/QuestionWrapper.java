@@ -25,7 +25,7 @@ public class QuestionWrapper {
     private void wrap(Question question) {
         this.name = question.getName();
         this.timeLimit = question.getTimeLimit();
-        this.definition = JAXBUtil.parseDefinitionXML(question.getDefinition());
+        this.definition = JAXBUtil.parseQuestionXML(question.getDefinition());
         this.description = this.definition.getDescription();
     }
 
