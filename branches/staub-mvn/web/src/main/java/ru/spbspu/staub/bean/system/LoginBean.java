@@ -29,12 +29,8 @@ public class LoginBean extends GenericBean {
     public boolean authenticate() {
         logger.debug(">>> Authentinicating user(username=#{identity.username}), password=#{identity.password}");
         user = userService.findUserByUserNameAndPassword(Identity.instance().getUsername(), Identity.instance().getPassword());
-        // TODO implement roles
-        // --> mock start
-        if (user != null && user.getUsername().equals("user")) {
-            Identity.instance().addRole("admin");
-        }
-        // <-- mock end
+        logger.debug(" User Role : #0", user.getRole());
+        Identity.instance().addRole(String.valueOf(user.getRole()));
         logger.debug("<<< Authentinicating ok(result=" + (user != null) + ").");
         return user != null;
     }
