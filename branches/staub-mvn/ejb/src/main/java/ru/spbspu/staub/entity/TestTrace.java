@@ -100,15 +100,15 @@ public class TestTrace implements Serializable {
         this.score = score;
     }
 
-    private Integer testPassed;
+    private Boolean testPassed;
 
     @Basic
-    @Column(name = "test_passed", length = 1)
-    public Integer getTestPassed() {
+    @Column(name = "test_passed")
+    public Boolean getTestPassed() {
         return testPassed;
     }
 
-    public void setTestPassed(Integer testPassed) {
+    public void setTestPassed(Boolean testPassed) {
         this.testPassed = testPassed;
     }
 

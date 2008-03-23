@@ -90,15 +90,16 @@ public class Test implements Serializable {
         this.questionsCount = questionsCount;
     }
 
-    private String selectorType;
+    private SelectorType selectorType;
 
     @Basic
-    @Column(name = "selector_type", length = 3)
-    public String getSelectorType() {
+    @Enumerated
+    @Column(name = "selector_type")
+    public SelectorType getSelectorType() {
         return selectorType;
     }
 
-    public void setSelectorType(String selectorType) {
+    public void setSelectorType(SelectorType selectorType) {
         this.selectorType = selectorType;
     }
 
