@@ -8,6 +8,9 @@ import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.model.list.FormProperties;
 
 import javax.ejb.Stateless;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Date;
 
 /**
  * Stateless EJB Service for manipulations with <code>Test</code> entity.
@@ -19,7 +22,9 @@ import javax.ejb.Stateless;
 @Stateless
 public class TestServiceBean extends GenericServiceBean<Test, Integer> implements TestService {
     public FormTable findAllToPassForUser(FormProperties formProperties, User user) {
-        // TODO implement method
-        return findAll(formProperties);
+        String query = "from Assignment a where a.testBegin <= :currentDate and a.testEnd > :currentDate";
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("currentDate", new Date());
+        return findAll(query, formProperties, parameters);
     }
 }
