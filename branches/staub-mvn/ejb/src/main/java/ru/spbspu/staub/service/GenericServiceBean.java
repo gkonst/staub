@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,7 +74,7 @@ public abstract class GenericServiceBean<T, ID extends Serializable> implements 
         StringBuilder queryString = new StringBuilder("select o from ");
         queryString.append(getEntityClass().getName());
         queryString.append(" o");
-        return findAll(queryString.toString(), formProperties, null);
+        return findAll(queryString.toString(), formProperties, new HashMap<String, Object>(0));
     }
 
     /**
@@ -88,6 +89,7 @@ public abstract class GenericServiceBean<T, ID extends Serializable> implements 
     protected FormTable findAll(String queryString, FormProperties formProperties, Map<String, Object> queryParameters) {
         logger.debug(">>> Finding all with paging(entity=#0)...", entityClass.getName());
         logger.debug(" query string : #0", queryString);
+        logger.debug(" query parameters : #0", queryParameters);
         FormTable table = new FormTable();
         table.setFullCount(countQuery(queryString, queryParameters));
         Query query = getEntityManager().createQuery(queryString);
