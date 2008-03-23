@@ -290,6 +290,13 @@ public abstract class GenericListBean<T> extends GenericModeBean {
         logger.debug("Refreshing CURRENT page... OK");
     }
 
+    /**
+     * Defines delete operation for current bean (optional).
+     */
+    public void doDelete() {
+        throw new UnsupportedOperationException("This operation is not supported!");
+    }
+
     public int getCurrentPage() {
         return currentPage;
     }
