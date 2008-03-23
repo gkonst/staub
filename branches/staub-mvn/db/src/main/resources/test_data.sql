@@ -48,7 +48,7 @@ INSERT INTO assignment (id,
              currval('seq_user'),
              currval('seq_test'),
              'now',
-             'tommorow');
+             'tomorrow');
 
 INSERT INTO discipline (id,
                         name,
