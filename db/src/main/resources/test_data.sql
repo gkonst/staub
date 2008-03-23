@@ -16,7 +16,7 @@ INSERT INTO "user" (id,
                     username,
                     password)
      VALUES (nextval('seq_user'),
-             2
+             2,
              'user',
              'user');
 
