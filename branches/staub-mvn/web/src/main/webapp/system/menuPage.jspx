@@ -11,12 +11,27 @@
 <ui:composition>
     <ul>
         <li>
-            <s:link value="#{messages['question.list.title']}" view="/question/questionList.seam">
+            <s:link value="#{messages['system.menu.tests']}" view="/test/testList.seam">
                 <f:param name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['discipline.list.title']}" view="/question/disciplineList.seam">
+            <s:link value="#{messages['system.menu.questions']}" view="/question/questionList.seam">
+                <f:param name="beanMode" value="VIEW_MODE"/>
+            </s:link>
+        </li>
+        <li>
+            <s:link value="#{messages['system.menu.disciplines']}" view="/question/disciplineList.seam">
+                <f:param name="beanMode" value="VIEW_MODE"/>
+            </s:link>
+        </li>
+        <li>
+            <s:link value="#{messages['system.menu.categories']}" view="/question/categoryList.seam">
+                <f:param name="beanMode" value="VIEW_MODE"/>
+            </s:link>
+        </li>
+        <li>
+            <s:link value="#{messages['system.menu.difficulties']}" view="/question/difficultyList.seam">
                 <f:param name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
