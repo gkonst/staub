@@ -42,4 +42,11 @@ public abstract class GenericDetailBean<T> extends GenericModeBean {
     public void setModel(T model) {
         this.model = model;
     }
+
+    /**
+     * Defines save operation for current bean (optional).
+     */
+    public void doSave() {
+        throw new UnsupportedOperationException("This operation is not supported!");
+    }
 }
