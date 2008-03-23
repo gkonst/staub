@@ -22,7 +22,7 @@ import java.util.Date;
 @Stateless
 public class TestServiceBean extends GenericServiceBean<Test, Integer> implements TestService {
     public FormTable findAllToPassForUser(FormProperties formProperties, User user) {
-        String query = "from Assignment a where a.user = :user and a.testBegin <= :currentDate and a.testEnd > :currentDate";
+        String query = "select a.test from Assignment a where a.user = :user and a.testBegin <= :currentDate and a.testEnd > :currentDate";
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("user", user);
         parameters.put("currentDate", new Date());
