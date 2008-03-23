@@ -92,7 +92,7 @@ public class Question implements Serializable {
 
     @Basic
     @Lob
-    @Column(name = "definition", nullable = false)
+    @Column(name = "definition")
     public String getDefinition() {
         return definition;
     }
