@@ -89,6 +89,18 @@ public class QuestionTrace implements Serializable {
         this.testTrace = testTrace;
     }
 
+    private Integer correct;
+
+    @Basic
+    @Column(name = "correct", length = 1)
+    public Integer getCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(Integer correct) {
+        this.correct = correct;
+    }
+
     @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {

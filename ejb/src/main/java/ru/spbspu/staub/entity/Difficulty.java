@@ -16,6 +16,8 @@ public class Difficulty implements Serializable {
     private Integer id;
 
     @Id
+    @SequenceGenerator(name = "DifficultyIdGenerator", sequenceName = "seq_difficulty", allocationSize = 1)
+    @GeneratedValue(generator = "DifficultyIdGenerator", strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, length = 10)
     public Integer getId() {
         return id;
