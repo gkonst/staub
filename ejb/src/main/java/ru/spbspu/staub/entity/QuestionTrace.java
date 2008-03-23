@@ -89,15 +89,15 @@ public class QuestionTrace implements Serializable {
         this.testTrace = testTrace;
     }
 
-    private Integer correct;
+    private Boolean correct;
 
     @Basic
-    @Column(name = "correct", length = 1)
-    public Integer getCorrect() {
+    @Column(name = "correct")
+    public Boolean getCorrect() {
         return correct;
     }
 
-    public void setCorrect(Integer correct) {
+    public void setCorrect(Boolean correct) {
         this.correct = correct;
     }
 
