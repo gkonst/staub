@@ -57,6 +57,30 @@
     </page>
 
     <!-- Administrator pages -->
+
+    <!-- Tests -->
+    <page view-id="/test/testList.jspx"
+          login-required="true"
+          action="#{testListBean.initBean}">
+        <restrict>#{s:hasRole('admin')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/test/testDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/test/testDetail.jspx"
+          login-required="true"
+          action="#{testDetailBean.initBean}">
+        <restrict>#{s:hasRole('admin')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/test/testList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Questions -->
     <page view-id="/question/questionList.jspx"
           login-required="true"
           action="#{questionListBean.initBean}">
@@ -78,7 +102,7 @@
         </navigation>
     </page>
 
-
+    <!-- Disciplines -->
     <page view-id="/question/disciplineList.jspx"
           login-required="true"
           action="#{disciplineListBean.initBean}">
