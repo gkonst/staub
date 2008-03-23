@@ -6,5 +6,5 @@ package ru.spbspu.staub.entity;
  * @author Alexander V. Elagin
  */
 public enum SelectorEnum {
-    ALL, COUNT
+    ALL, COUNT, DISCIPLINE_COUNT, CATEGORY_COUNT, DIFFICULTY_COUNT
 }
