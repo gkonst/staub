@@ -28,4 +28,14 @@ public class QuestionListBean extends GenericListBean<Question> {
     protected FormTable findObjects(FormProperties formProperties) {
         return questionService.findAll(formProperties);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doDelete() {
+        questionService.makeTransient(getSelected());
+        doRefresh();
+    }
+
 }

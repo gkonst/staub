@@ -26,19 +26,23 @@ public class DisciplineDetailBean extends GenericDetailBean<Discipline> {
      */
     @Override
     protected void fillModel(Integer modelId) {
-        if(isCreateMode()) {
+        if (isCreateMode()) {
             setModel(new Discipline());
         } else {
-            setModel(disciplineService.findById(modelId)); 
+            setModel(disciplineService.findById(modelId));
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void doSave() {
         logger.debug("Saving discipline...");
         setModel(disciplineService.makePersistent(getModel()));
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
-        logger.debug("Saving... OK");      
+        logger.debug("Saving... OK");
     }
 }
