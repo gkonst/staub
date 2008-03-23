@@ -29,6 +29,10 @@ public class DisciplineListBean extends GenericListBean<Discipline> {
         return disciplineService.findAll(formProperties);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void doDelete() {
         disciplineService.makeTransient(getSelected());
         doRefresh();

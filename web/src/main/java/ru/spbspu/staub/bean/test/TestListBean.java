@@ -22,7 +22,20 @@ public class TestListBean extends GenericListBean<Test> {
     @In
     private TestService testService;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected FormTable findObjects(FormProperties formProperties) {
         return testService.findAll(formProperties);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doDelete() {
+        testService.makeTransient(getSelected());
+        doRefresh();
     }
 }
