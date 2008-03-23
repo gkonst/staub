@@ -38,6 +38,17 @@ INSERT INTO test (id,
              0,
              current_date,
              'Generation Script');
+             
+INSERT INTO assignment (id,
+                        fk_user,
+                        fk_test,
+                        test_begin,
+                        test_end)
+     VALUES (nextval('seq_assignment'),
+             currval('seq_user'),
+             currval('seq_test'),
+             'now',
+             'tommorow');
 
 INSERT INTO discipline (id,
                         name,
