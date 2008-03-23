@@ -4,9 +4,16 @@ import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
+import ru.spbspu.staub.model.answer.AnswerType;
+import ru.spbspu.staub.model.answer.ElementType;
+import ru.spbspu.staub.model.question.QuestionType;
+import ru.spbspu.staub.util.JAXBUtil;
 
 import javax.ejb.Stateless;
+import java.math.BigInteger;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Stateless EJB Service for manipulations with <code>QuestionTrace</code> entity.
@@ -24,12 +31,48 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
     }
 
     public void saveAnswer(QuestionTrace questionTrace) {
-        // TODO implement method
-
+        getEntityManager().persist(questionTrace);
     }
 
     public boolean checkGroup(QuestionTrace questionTrace) {
-        // TODO implement method
-        return false;
+        QuestionType questionType = JAXBUtil.parseQuestionXML(questionTrace.getQuestion().getDefinition());
+        AnswerType answerType = JAXBUtil.parseAnswerXML(questionTrace.getAnswer());
+        boolean result = false;
+        if (questionType.getMultipleChoice() != null) {
+            result = check(questionType.getMultipleChoice().getAnswer(), answerType.getMultipleChoice().getElement());
+        } else if (questionType.getSingleChoice() != null) {
+            result = check(questionType.getSingleChoice().getAnswer(), answerType.getSingleChoice().getElement());
+        }
+        return result;
+    }
+
+    private boolean check(List<ru.spbspu.staub.model.question.AnswerType> questionAnswers,
+                          List<ElementType> userAnswers) {
+        Set<BigInteger> correctAnswers = getCorrectAnswers(questionAnswers);
+        if (userAnswers.size() == correctAnswers.size()) { // redundant check
+            for (ElementType userAnswer : userAnswers) {
+                if (!correctAnswers.contains(userAnswer.getAnswerId())) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean check(List<ru.spbspu.staub.model.question.AnswerType> questionAnswers, ElementType userAnswer) {
+        Set<BigInteger> correctAnswers = getCorrectAnswers(questionAnswers);
+        return correctAnswers.contains(userAnswer.getAnswerId());
+    }
+
+    private Set<BigInteger> getCorrectAnswers(List<ru.spbspu.staub.model.question.AnswerType> questionAnswers) {
+        Set<BigInteger> correctAnswers = new HashSet<BigInteger>();
+        for (ru.spbspu.staub.model.question.AnswerType questionAnswer : questionAnswers) {
+            if (questionAnswer.getCorrect().equals("true")) {
+                correctAnswers.add(questionAnswer.getId());
+            }
+        }
+        return correctAnswers;
     }
 }
