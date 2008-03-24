@@ -22,18 +22,82 @@
         <a4j:form id="testDetailForm">
             <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <ui:include src="/controls/genericSaveControl.jspx"/>
+                <s:button id="showQuestions"
+                          action="#{testDetailBean.showQuestions}"
+                          styleClass="button"
+                          value="Вопросы">
+                    <f:param name="beanMode" value="VIEW_MODE"/>
+                </s:button>
             </a4j:outputPanel>
-            <table class="detailTable">
-                <tr>
-                    <td align="right">
-                        <strong>#{messages['test.detail.name']}</strong>
-                    </td>
-                    <td>
-                        <h:inputText value="#{pageBean.model.name}"
-                                     disabled="#{pageBean.viewMode}"/>
-                    </td>
-                </tr>
-            </table>
+
+            <div class="detailTable">
+                <table width="100%">
+                    <tr>
+                        <td align="right">
+                            <strong>#{messages['test.detail.name']}</strong>
+                        </td>
+                        <td style="width:100%;" colspan="3">
+                            <h:inputText value="#{pageBean.model.name}"
+                                         disabled="#{pageBean.viewMode}"
+                                         style="width:100%;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>#{messages['test.detail.description']}</strong>
+                        </td>
+                        <td style="width:100%;" colspan="3">
+                            <h:inputTextarea value="#{pageBean.model.description}"
+                                             disabled="#{pageBean.viewMode}"
+                                             style="width:100%;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>#{messages['test.detail.passScore']}</strong>
+                        </td>
+                        <td>
+                            <h:inputText value="#{pageBean.model.passScore}"
+                                         disabled="#{pageBean.viewMode}"/>
+                        </td>
+                        <td align="right">
+                            <strong>#{messages['test.detail.timeLimit']}</strong>
+                        </td>
+                        <td>
+                            <h:inputText value="#{pageBean.model.timeLimit}"
+                                         disabled="#{pageBean.viewMode}"
+                                         style="width:100%;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>#{messages['test.detail.selectorType']}</strong>
+                        </td>
+                        <td>
+                            <h:selectOneMenu id="answerTypesSelect"
+                                             value="#{pageBean.model.selectorType}"
+                                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                                             disabled="#{pageBean.viewMode}">
+                                <f:selectItems value="#{pageBean.selectorTypes}"/>
+                                <a4j:support id="answerTypesSelectSupport"
+                                             event="onchange"
+                                             reRender="selectorCountPanel"/>
+                            </h:selectOneMenu>
+                        </td>
+                        <td align="right">
+                            <strong>#{messages['test.detail.selectorCount']}</strong>
+                        </td>
+                        <td>
+                            <a4j:outputPanel id="selectorCountPanel">
+                                <h:inputText value="#{pageBean.model.selectorCount}"
+                                             disabled="#{pageBean.viewMode}"
+                                             style="width:100%;"
+                                             rendered="#{!pageBean.allSelectorType}"/>
+                            </a4j:outputPanel>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </a4j:form>
     </ui:define>
 </ui:composition>
