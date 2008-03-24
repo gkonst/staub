@@ -52,9 +52,12 @@
         <strong>#{messages['question.detail.category.name']}</strong>
     </td>
     <td width="50%">
-        <select>
-            <option label="категория 1">категория 1</option>
-        </select>
+        <h:selectOneMenu value="#{pageBean.model.category}"
+                         disabled="#{pageBean.viewMode}"
+                         converter="ru.spbspu.staub.ObjectSelectConverter">
+            <s:selectItems value="#{pageBean.categoryList}" var="category"
+                           label="#{category.name}"/>
+        </h:selectOneMenu>
     </td>
 </tr>
 <tr>
@@ -62,9 +65,12 @@
         <strong>#{messages['question.detail.difficulty.name']}</strong>
     </td>
     <td width="100%" colspan="3">
-        <select>
-            <option label="сложность 1">сложность 1</option>
-        </select>
+        <h:selectOneMenu value="#{pageBean.model.difficulty}"
+                         disabled="#{pageBean.viewMode}"
+                         converter="ru.spbspu.staub.ObjectSelectConverter">
+            <s:selectItems value="#{pageBean.difficultyList}" var="difficulty"
+                           label="#{difficulty.name}"/>
+        </h:selectOneMenu>
     </td>
 </tr>
 <tr>
@@ -90,11 +96,11 @@
 </tr>
 <tr>
     <td align="left">
-        <strong>Варианты ответов</strong>
+        <strong>#{messages['question.detail.answers']}</strong>
     </td>
     <td width="50%"/>
     <td align="right">
-        <strong>Тип ответа</strong>
+        <strong>#{messages['question.detail.answerType']}</strong>
     </td>
     <td width="50%">
         <h:selectOneMenu id="answerTypesSelect"
@@ -120,6 +126,14 @@
                               disabled="#{pageBean.viewMode}">
                 <s:selectItems value="#{pageBean.questionDefinition.singleChoice.answer}" var="temp"/>
             </h:selectOneRadio>
+            <h:selectManyCheckbox id="correctAnswerMultipleChoice"
+                              layout="pageDirection"
+                              rendered="#{pageBean.questionDefinition.multipleChoice != null}"
+                              converter="ru.spbspu.staub.ObjectSelectConverter"
+                              value="#{pageBean.correctAnswer}"
+                              disabled="#{pageBean.viewMode}">
+                <s:selectItems value="#{pageBean.questionDefinition.multipleChoice.answer}" var="temp"/>
+            </h:selectManyCheckbox>          
         </a4j:outputPanel>
     </td>
     <td colspan="2">
@@ -129,6 +143,16 @@
                             value="#{pageBean.questionDefinition.singleChoice.answer}"
                             var="answer"
                             rendered="#{pageBean.questionDefinition.singleChoice != null}">
+                    <tr>
+                        <td>
+                            <h:inputText value="#{answer.value}" disabled="#{pageBean.viewMode}"/>
+                        </td>
+                    </tr>
+                </a4j:repeat>
+                <a4j:repeat id="multipleChoiceRepeat"
+                            value="#{pageBean.questionDefinition.multipleChoice.answer}"
+                            var="answer"
+                            rendered="#{pageBean.questionDefinition.multipleChoice != null}">
                     <tr>
                         <td>
                             <h:inputText value="#{answer.value}" disabled="#{pageBean.viewMode}"/>

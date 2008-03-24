@@ -10,11 +10,15 @@ import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.entity.Discipline;
 import ru.spbspu.staub.entity.Question;
+import ru.spbspu.staub.entity.Category;
+import ru.spbspu.staub.entity.Difficulty;
 import ru.spbspu.staub.model.question.AnswerType;
 import ru.spbspu.staub.model.question.ChoiceType;
 import ru.spbspu.staub.model.question.QuestionType;
 import ru.spbspu.staub.service.DisciplineService;
 import ru.spbspu.staub.service.QuestionService;
+import ru.spbspu.staub.service.CategoryService;
+import ru.spbspu.staub.service.DifficultyService;
 import ru.spbspu.staub.util.JAXBUtil;
 
 import javax.faces.model.SelectItem;
@@ -38,32 +42,27 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     @In
     private DisciplineService disciplineService;
 
+    @In
+    private CategoryService categoryService;
+
+    @In
+    private DifficultyService difficultyService;
+
     private QuestionType questionDefinition;
 
     private List<Discipline> disciplineList;
+
+    private List<Category> categoryList;
+
+    private List<Difficulty> difficultyList;
 
     private Object correctAnswer;
 
     private AnswerTypes answerType;
 
     private static enum AnswerTypes {
-
-        SINGLE_CHOICE("question.detail.answerType.singleChoice"),
-        MULTIPLE_CHOICE("question.detail.answerType.multipleChoice");
-
-        private String label;
-
-        private AnswerTypes(String label) {
-            this.label = label;
-        }
-
-        public String getLabel() {
-            return label;
-        }
-
-        public String setLabel(String label) {
-            return this.label = label;
-        }
+        SINGLE_CHOICE,
+        MULTIPLE_CHOICE
     }
 
     /**
@@ -72,6 +71,8 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     @Override
     protected void fillModel(Integer modelId) {
         fillDisciplineList();
+        fillCategoryList();
+        fillDifficultyList();
         if (isCreateMode()) {
             setModel(new Question());
             setQuestionDefinition(new QuestionType());
@@ -121,6 +122,18 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         disciplineList = disciplineService.findAll();
     }
 
+    private void fillCategoryList() {
+        categoryList = categoryService.findAll();
+    }
+
+    private void fillDifficultyList() {
+        difficultyList = difficultyService.findAll();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void doSave() {
         logger.debug("Saving question...");
         resolveCorrectAnswer();
@@ -165,7 +178,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     public List<SelectItem> getAnswerTypes() {
         List<SelectItem> result = new ArrayList<SelectItem>();
         for (AnswerTypes type : AnswerTypes.values()) {
-            result.add(new SelectItem(type, Messages.instance().get(type.getLabel())));
+            result.add(new SelectItem(type, Messages.instance().get("question.detail.answerType." + type)));
         }
         return result;
     }
@@ -177,6 +190,11 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             newAnswer.setId(new BigInteger(String.valueOf(questionDefinition.getSingleChoice().getAnswer().size() + 1)));
             logger.debug(" single choice type, id=#0, totalWas=#1", newAnswer.getId(), questionDefinition.getSingleChoice().getAnswer().size());
             questionDefinition.getSingleChoice().getAnswer().add(newAnswer);
+        } else if (questionDefinition.getMultipleChoice() != null) {
+            AnswerType newAnswer = new AnswerType();
+            newAnswer.setId(new BigInteger(String.valueOf(questionDefinition.getMultipleChoice().getAnswer().size() + 1)));
+            logger.debug(" multiple choice type, id=#0, totalWas=#1", newAnswer.getId(), questionDefinition.getMultipleChoice().getAnswer().size());
+            questionDefinition.getMultipleChoice().getAnswer().add(newAnswer);
         }
         logger.debug(">>> Adding answer...Ok");
     }
@@ -187,6 +205,10 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             int answerToRemoveId = questionDefinition.getSingleChoice().getAnswer().size() - 1;
             logger.debug(" single choice type, id=#0", answerToRemoveId);
             questionDefinition.getSingleChoice().getAnswer().remove(answerToRemoveId);
+        } else if (questionDefinition.getMultipleChoice() != null) {
+            int answerToRemoveId = questionDefinition.getMultipleChoice().getAnswer().size() - 1;
+            logger.debug(" single choice type, id=#0", answerToRemoveId);
+            questionDefinition.getMultipleChoice().getAnswer().remove(answerToRemoveId);
         }
         logger.debug(">>> Removing answer...Ok");
     }
@@ -214,6 +236,22 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     public void setDisciplineList(List<Discipline> disciplineList) {
         this.disciplineList = disciplineList;
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
+
+    public List<Difficulty> getDifficultyList() {
+        return difficultyList;
+    }
+
+    public void setDifficultyList(List<Difficulty> difficultyList) {
+        this.difficultyList = difficultyList;
     }
 
     public QuestionType getQuestionDefinition() {
