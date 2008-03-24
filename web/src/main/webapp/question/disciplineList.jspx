@@ -52,7 +52,7 @@
                                            action="#{pageBean.doDelete}"
                                            onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"
                                            title="#{messages['common.list.functions.delete']}"
-                                           image="/images/icon_delete.gif"
+                                           image="/images/buttons/icon_delete.gif"
                                            reRender="#{bodyPanelId}"/>
                     </h:column>
                 </h:dataTable>
