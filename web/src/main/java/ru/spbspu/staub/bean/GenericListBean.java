@@ -169,7 +169,7 @@ public abstract class GenericListBean<T> extends GenericModeBean {
     /**
      * Retrieves data for the first page (initialization).
      */
-    private void findFirstPageData() {
+    protected void findFirstPageData() {
         logger.debug("Retrieve first page...");
         logger.debug("  Define default rows on page...");
         rowsOnPage = DEFAULT_ROWS_ON_PAGE;
