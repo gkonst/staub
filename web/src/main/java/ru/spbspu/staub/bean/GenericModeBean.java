@@ -1,6 +1,8 @@
 package ru.spbspu.staub.bean;
 
 import org.jboss.seam.annotations.web.RequestParameter;
+import org.jboss.seam.annotations.In;
+import org.jboss.seam.ScopeType;
 
 /**
  * Generic webbean implementation, which operates with modes.
@@ -11,11 +13,20 @@ import org.jboss.seam.annotations.web.RequestParameter;
  * @see BeanMode
  */
 public abstract class GenericModeBean extends GenericBean {
+
+    protected static final String BEAN_MODE = "beanMode";
+
     /**
-     * Injected new mode from request.
+     * Injected new mode from request parameter.
      */
-    @RequestParameter("beanMode")
-    private BeanMode beanModeFromRequest;
+    @In(value = BEAN_MODE, required = false)
+    @RequestParameter(BEAN_MODE)
+    private BeanMode beanModeFromRequestParameter;
+    /**
+     * Injected new mode from request attribute.
+     */
+    @In(value = BEAN_MODE, required = false)
+    private BeanMode beanModeFromRequestAttribute;
     /**
      * Defines mode of the bean behaviour.
      */
@@ -41,15 +52,68 @@ public abstract class GenericModeBean extends GenericBean {
      * @return <code>true</code> if bean mode defined, <code>false</code> - otherwise
      */
     protected boolean isBeanModeDefined() {
-        if (beanModeFromRequest != null) {
-            logger.debug("Defining bean mode...#0", beanModeFromRequest);
-            setBeanMode(beanModeFromRequest);
+        if (beanModeFromRequestParameter != null) {
+            logger.debug("Defining bean mode from request parameter...#0", beanModeFromRequestParameter);
+            setBeanMode(beanModeFromRequestParameter);
+            logger.debug("Defining bean mode... OK");
+            return true;
+        } else if(beanModeFromRequestAttribute != null){
+            logger.debug("Defining bean mode from request attribute...#0", beanModeFromRequestAttribute);
+            setBeanMode(beanModeFromRequestAttribute);
             logger.debug("Defining bean mode... OK");
             return true;
         } else {
             logger.debug("Bean behaviour not specified -> Using old bean state!");
             return false;
         }
+    }
+
+    /**
+     * Sets view mode for the destination bean and
+     * redirects to the destination page.
+     *
+     * @param outcome string for navigation
+     * @return string for navigation
+     */
+    public String doView(String outcome) {
+        getRequest().setAttribute(BEAN_MODE, BeanMode.VIEW_MODE);
+        return outcome;
+    }
+
+    /**
+     * Sets edit mode for the destination bean and
+     * redirects to the destination page.
+     *
+     * @param outcome string for navigation
+     * @return string for navigation
+     */
+    public String doEdit(String outcome) {
+        getRequest().setAttribute(BEAN_MODE, BeanMode.EDIT_MODE);
+        return outcome;
+    }
+
+    /**
+     * Sets create mode for the destination bean and
+     * redirects to the destination page.
+     *
+     * @param outcome string for navigation
+     * @return string for navigation
+     */
+    public String doCreate(String outcome) {
+        getRequest().setAttribute(BEAN_MODE, BeanMode.CREATE_MODE);
+        return outcome;
+    }
+
+    /**
+     * Sets refresh mode for the destination bean and
+     * redirects to the destination page.
+     *
+     * @param outcome string for navigation
+     * @return string for navigation
+     */
+    public String doRefresh(String outcome) {
+        getRequest().setAttribute(BEAN_MODE, BeanMode.REFRESH_MODE);
+        return outcome;
     }
 
     /**
