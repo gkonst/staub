@@ -22,12 +22,6 @@
         <a4j:form id="testDetailForm">
             <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <ui:include src="/controls/genericSaveControl.jspx"/>
-                <s:button id="showQuestions"
-                          action="#{testDetailBean.showQuestions}"
-                          styleClass="button"
-                          value="Вопросы">
-                    <f:param name="beanMode" value="VIEW_MODE"/>
-                </s:button>
             </a4j:outputPanel>
 
             <div class="detailTable">
@@ -99,6 +93,7 @@
                 </table>
             </div>
         </a4j:form>
+        <ui:include src="/question/questionListData.jspx"/>
     </ui:define>
 </ui:composition>
 </html>
