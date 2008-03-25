@@ -16,16 +16,18 @@
                        reRender="content"
                        styleClass="button"/>
 
-    <s:button id="cancelButton" action="list" immediate="true"
-              value="#{messages['common.detail.functions.cancel']}"
-              rendered="#{pageBean.editMode or pageBean.createMode}"
-              styleClass="button"/>
-    <s:button id="backButton" action="list" immediate="true"
-              value="#{messages['common.detail.functions.back']}"
-              rendered="#{pageBean.viewMode}"
-              styleClass="button">
-        <f:param name="beanMode" value="REFRESH_MODE"/>
-    </s:button>
+    <h:commandButton id="cancelButton"
+                     action="#{pageBean.doCancel}"
+                     immediate="true"
+                     value="#{messages['common.detail.functions.cancel']}"
+                     rendered="#{pageBean.editMode or pageBean.createMode}"
+                     styleClass="button"/>
+    <h:commandButton id="backButton"
+                     action="#{pageBean.doBack}"
+                     immediate="true"
+                     value="#{messages['common.detail.functions.back']}"
+                     rendered="#{pageBean.viewMode}"
+                     styleClass="button"/>
 
 </ui:composition>
 </html>

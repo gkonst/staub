@@ -9,10 +9,8 @@
       xmlns:s="http://jboss.com/products/seam/taglib">
 
 <ui:composition>
-    <s:button action="detail"
+    <h:commandButton action="#{pageBean.doCreate}"
               value="#{messages['common.list.functions.create']}"
-              styleClass="button">
-        <f:param name="beanMode" value="CREATE_MODE"/>
-    </s:button>
+              styleClass="button"/>
 </ui:composition>
 </html>
