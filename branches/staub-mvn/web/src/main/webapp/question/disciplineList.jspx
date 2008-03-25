@@ -27,35 +27,37 @@
         </a4j:outputPanel>
         <ui:decorate template="../controls/listLayoutControl.jspx">
             <ui:define name="listPageData">
-                <h:outputText id="notFoundText"
-                              value="#{messages['common.list.noDataFound']}"
-                              rendered="#{dataModel == null or dataModel.rowCount == 0}"/>
-                <h:dataTable id="disciplineList"
-                             value="#{dataModel}"
-                             var="discipline"
-                             rendered="#{dataModel.rowCount > 0}"
-                             styleClass="dataTable"
-                             columnClasses=",,columnIcon">
-                    <h:column id="col1">
-                        <f:facet name="header">#{messages['discipline.list.code']}</f:facet>
-                        <s:link action="detail" value="#{discipline.code}">
-                            <f:param name="modelId" value="#{discipline.id}"/>
-                            <f:param name="beanMode" value="EDIT_MODE"/>
-                        </s:link>
-                    </h:column>
-                    <h:column id="col2">
-                        <f:facet name="header">#{messages['discipline.list.name']}</f:facet>
-                        #{discipline.name}
-                    </h:column>
-                    <h:column id="col3">
-                        <a4j:commandButton id="deleteButton"
-                                           action="#{pageBean.doDelete}"
-                                           onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"
-                                           title="#{messages['common.list.functions.delete']}"
-                                           image="/images/buttons/icon_delete.gif"
-                                           reRender="#{bodyPanelId}"/>
-                    </h:column>
-                </h:dataTable>
+                <a4j:form id="disciplineListForm">
+                    <h:outputText id="notFoundText"
+                                  value="#{messages['common.list.noDataFound']}"
+                                  rendered="#{dataModel == null or dataModel.rowCount == 0}"/>
+                    <h:dataTable id="disciplineList"
+                                 value="#{dataModel}"
+                                 var="discipline"
+                                 rendered="#{dataModel.rowCount > 0}"
+                                 styleClass="dataTable"
+                                 columnClasses=",,columnIcon">
+                        <h:column id="col1">
+                            <f:facet name="header">#{messages['discipline.list.code']}</f:facet>
+                            <s:link action="detail" value="#{discipline.code}">
+                                <f:param name="modelId" value="#{discipline.id}"/>
+                                <f:param name="beanMode" value="EDIT_MODE"/>
+                            </s:link>
+                        </h:column>
+                        <h:column id="col2">
+                            <f:facet name="header">#{messages['discipline.list.name']}</f:facet>
+                            #{discipline.name}
+                        </h:column>
+                        <h:column id="col3">
+                            <a4j:commandButton id="deleteButton"
+                                               action="#{pageBean.doDelete}"
+                                               onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"
+                                               title="#{messages['common.list.functions.delete']}"
+                                               image="/images/buttons/icon_delete.gif"
+                                               reRender="#{bodyPanelId}"/>
+                        </h:column>
+                    </h:dataTable>
+                </a4j:form>
             </ui:define>
         </ui:decorate>
     </ui:define>
