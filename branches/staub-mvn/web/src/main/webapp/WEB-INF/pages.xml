@@ -77,6 +77,9 @@
             <rule if-outcome="list">
                 <render view-id="/test/testList.jspx"/>
             </rule>
+            <rule if-outcome="detail">
+                <render view-id="/question/questionDetail.jspx"/>
+            </rule>
         </navigation>
     </page>
 
@@ -98,6 +101,9 @@
         <navigation>
             <rule if-outcome="list">
                 <render view-id="/question/questionList.jspx"/>
+            </rule>
+            <rule if-outcome="testDetail">
+                <render view-id="/test/testDetail.jspx"/>
             </rule>
         </navigation>
     </page>
