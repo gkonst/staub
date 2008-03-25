@@ -49,4 +49,20 @@ public abstract class GenericDetailBean<T> extends GenericModeBean {
     public void doSave() {
         throw new UnsupportedOperationException("This operation is not supported!");
     }
+
+    /**
+     * Defines cancel operation for current bean (optional).
+     * @return navigation outcome, by default 'list'
+     */
+    public String doCancel() {
+        return "list";
+    }
+
+    /**
+     * Defines back operation for current bean (optional).
+     * @return navigation outcome, by default 'list'
+     */
+    public String doBack() {
+        return doRefresh("list");
+    }
 }

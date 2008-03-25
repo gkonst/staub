@@ -297,6 +297,14 @@ public abstract class GenericListBean<T> extends GenericModeBean {
         throw new UnsupportedOperationException("This operation is not supported!");
     }
 
+    /**
+     * Defines create operation for current bean (optional).
+     * @return navigation outcome, by default 'detail'
+     */
+    public String doCreate() {
+        return doCreate("detail");
+    }
+
     public int getCurrentPage() {
         return currentPage;
     }
