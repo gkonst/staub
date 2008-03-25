@@ -8,6 +8,8 @@ import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Stateless;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Stateless EJB Service for manipulations with <code>Question</code> entity.
@@ -19,7 +21,9 @@ import javax.ejb.Stateless;
 @Stateless
 public class QuestionServiceBean extends GenericServiceBean<Question, Integer> implements QuestionService {
     public FormTable findAllForTest(FormProperties formProperties, Test test) {
-        // TODO implement method
-        return findAll(formProperties);
+        String query = "select q from Test t join t.questions q where t = :test";
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("test", test);
+        return findAll(query, formProperties, parameters);
     }
 }
