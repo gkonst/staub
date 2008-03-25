@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -8,7 +8,15 @@
       xmlns:s="http://jboss.com/products/seam/taglib"
       xmlns:rich="http://richfaces.org/rich">
 
-    <ui:composition template="template.jspx">
+<ui:composition template="template.jspx">
+
+    <ui:define name="ajaxStatus">
+        <a4j:status onstart="Richfaces.showModalPanel('ajaxLoadingModalBox')"
+                    onstop="Richfaces.hideModalPanel('ajaxLoadingModalBox')"/>
+        <rich:modalPanel id="ajaxLoadingModalBox"  zindex="2000" autosized="true">
+            <h:graphicImage url="/images/spinner.gif" />
+        </rich:modalPanel>
+    </ui:define>
 
     <ui:define name="script">
         <a4j:loadScript src="/script/commonUtil.js"/>
