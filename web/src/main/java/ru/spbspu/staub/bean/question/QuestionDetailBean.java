@@ -8,17 +8,14 @@ import org.jboss.seam.international.Messages;
 import org.jboss.seam.security.Identity;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericDetailBean;
-import ru.spbspu.staub.entity.Discipline;
-import ru.spbspu.staub.entity.Question;
-import ru.spbspu.staub.entity.Category;
-import ru.spbspu.staub.entity.Difficulty;
+import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.question.AnswerType;
 import ru.spbspu.staub.model.question.ChoiceType;
 import ru.spbspu.staub.model.question.QuestionType;
-import ru.spbspu.staub.service.DisciplineService;
-import ru.spbspu.staub.service.QuestionService;
 import ru.spbspu.staub.service.CategoryService;
 import ru.spbspu.staub.service.DifficultyService;
+import ru.spbspu.staub.service.DisciplineService;
+import ru.spbspu.staub.service.QuestionService;
 import ru.spbspu.staub.util.JAXBUtil;
 
 import javax.faces.model.SelectItem;
@@ -35,6 +32,9 @@ import java.util.List;
 @Name("questionDetailBean")
 @Scope(SESSION)
 public class QuestionDetailBean extends GenericDetailBean<Question> {
+
+    @In(required = false)
+    private Test test;
 
     @In
     private QuestionService questionService;
@@ -140,6 +140,10 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         String questionDefinitionXML = JAXBUtil.createQuestionXML(getQuestionDefinition());
         getModel().setDefinition(questionDefinitionXML);
         if (isCreateMode()) {
+            if (test != null) {
+                logger.debug(" creating question for test : #0", test);
+                // TODO add specific test setting
+            }
             getModel().setCreated(new Date());
             getModel().setCreatedBy(Identity.instance().getUsername());
         }
@@ -160,9 +164,9 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
                     type.setCorrect(String.valueOf(Boolean.TRUE));
                 }
             }
-        } else if (AnswerTypes.SINGLE_CHOICE.equals(answerType)) {
+        } else if (AnswerTypes.MULTIPLE_CHOICE.equals(answerType)) {
             List<AnswerType> result = new ArrayList<AnswerType>();
-            for (AnswerType type : questionDefinition.getSingleChoice().getAnswer()) {
+            for (AnswerType type : questionDefinition.getMultipleChoice().getAnswer()) {
                 for (AnswerType correctAnswer : (List<AnswerType>) getCorrectAnswer()) {
                     if (correctAnswer.getId().equals(type.getId())) {
                         type.setCorrect(String.valueOf(Boolean.TRUE));
