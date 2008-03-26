@@ -40,7 +40,7 @@ public class TestStartBean extends GenericDetailBean<Test> {
     }
 
     public String prepareTest() {
-        testTrace = testTraceService.findTestTrace(getModel(), getSessionId(), user);
+        testTrace = testTraceService.getTestTrace(getModel(), getSessionId(), user);
         testTrace = testTraceService.startTest(testTrace); // may be moved to startTest()
         return "testPrepare";
     }
