@@ -19,7 +19,7 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     /**
      * {@inheritDoc}
      */
-    public TestTrace findTestTrace(Test test, String sessionId, User user) {
+    public TestTrace getTestTrace(Test test, String sessionId, User user) {
         // TODO implement
         // --> mock start
         TestTrace testTrace = new TestTrace();
