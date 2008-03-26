@@ -93,7 +93,19 @@
                 </table>
             </div>
         </a4j:form>
-        <ui:include src="/question/questionListData.jspx"/>
+        <s:fragment rendered="#{!pageBean.createMode}">
+            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+                <a4j:form id="contentButtonsForm">
+                    <ui:include src="/controls/genericCreateControl.jspx"/>
+                    <ui:include src="/controls/genericRefreshControl.jspx"/>
+                    <h:commandButton id="selectQuestionButton"
+                                     action="#{pageBean.selectQuestion}"
+                                     value="Выбрать вопросы"
+                                     styleClass="button"/>
+                </a4j:form>
+            </a4j:outputPanel>
+            <ui:include src="/question/questionListData.jspx"/>
+        </s:fragment>
     </ui:define>
 </ui:composition>
 </html>

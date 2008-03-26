@@ -12,10 +12,7 @@ import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.question.AnswerType;
 import ru.spbspu.staub.model.question.ChoiceType;
 import ru.spbspu.staub.model.question.QuestionType;
-import ru.spbspu.staub.service.CategoryService;
-import ru.spbspu.staub.service.DifficultyService;
-import ru.spbspu.staub.service.DisciplineService;
-import ru.spbspu.staub.service.QuestionService;
+import ru.spbspu.staub.service.*;
 import ru.spbspu.staub.util.JAXBUtil;
 
 import javax.faces.model.SelectItem;
@@ -47,6 +44,9 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     @In
     private DifficultyService difficultyService;
+
+    @In
+    private TestService testService;
 
     private QuestionType questionDefinition;
 
@@ -140,10 +140,6 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         String questionDefinitionXML = JAXBUtil.createQuestionXML(getQuestionDefinition());
         getModel().setDefinition(questionDefinitionXML);
         if (isCreateMode()) {
-            if (test != null) {
-                logger.debug(" creating question for test : #0", test);
-                // TODO add specific test setting
-            }
             getModel().setCreated(new Date());
             getModel().setCreatedBy(Identity.instance().getUsername());
         }
@@ -151,6 +147,13 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         getModel().setModifiedBy(Identity.instance().getUsername());
         logger.debug(" question : #0", getModel());
         setModel(questionService.makePersistent(getModel()));
+        if (isCreateMode() && test != null) {
+            logger.debug(" creating question for test : #0", test);
+            // TODO add specific test setting
+            test = testService.findById(test.getId());
+            test.getQuestions().add(getModel());
+            testService.makePersistent(test);
+        }
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
