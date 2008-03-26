@@ -107,6 +107,10 @@ public class TestDetailBean extends GenericListBean<Question> {
         logger.debug("Saving... OK");
     }
 
+    public String selectQuestion(){
+        return doView("questionSelectList");
+    }
+
     public Test getModel() {
         return model;
     }

@@ -9,12 +9,6 @@
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition>
 <!--@elvariable id="messages" type="java.util.Map"-->
-    <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
-        <a4j:form id="contentButtonsForm">
-            <ui:include src="/controls/genericCreateControl.jspx"/>
-            <ui:include src="/controls/genericRefreshControl.jspx"/>
-        </a4j:form>
-    </a4j:outputPanel>
     <ui:decorate template="../controls/listLayoutControl.jspx">
         <ui:define name="listPageData">
             <h:outputText value="#{messages['common.list.noDataFound']}"
