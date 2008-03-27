@@ -5,7 +5,6 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.international.Messages;
-import org.jboss.seam.security.Identity;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.entity.*;
@@ -18,7 +17,6 @@ import ru.spbspu.staub.util.JAXBUtil;
 import javax.faces.model.SelectItem;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +30,9 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     @In(required = false)
     private Test test;
+
+    @In
+    private User user;
 
     @In
     private QuestionService questionService;
@@ -139,20 +140,9 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         resolveCorrectAnswer();
         String questionDefinitionXML = JAXBUtil.createQuestionXML(getQuestionDefinition());
         getModel().setDefinition(questionDefinitionXML);
-        if (isCreateMode()) {
-            getModel().setCreated(new Date());
-            getModel().setCreatedBy(Identity.instance().getUsername());
-        }
-        getModel().setModified(new Date());
-        getModel().setModifiedBy(Identity.instance().getUsername());
-        logger.debug(" question : #0", getModel());
-        setModel(questionService.makePersistent(getModel()));
-        if (isCreateMode() && test != null) {
-            logger.debug(" creating question for test : #0", test);
-            // TODO add specific test setting
-            test = testService.findById(test.getId());
-            test.getQuestions().add(getModel());
-            testService.makePersistent(test);
+        questionService.saveQuestion(getModel(), user);
+        if(test != null) {
+            test = testService.addQuestionToTest(test, getModel(), user);
         }
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
