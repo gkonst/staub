@@ -44,4 +44,14 @@ public interface TestService extends GenericService<Test, Integer> {
      * @return updates test instance
      */
     Test addQuestionsToTest(Test test, List<Integer> questionsIds, User user);
+
+    /**
+     * Saves test (updates or inserts).
+     * Also updates neede audit fields(created, createdBy, etc.)
+     *
+     * @param test test to save
+     * @param user current user, author of this modifications
+     * @return updated test
+     */
+    Test saveTest(Test test, User user);
 }
