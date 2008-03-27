@@ -8,13 +8,15 @@ import org.jboss.seam.faces.DataModels;
 import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.entity.Test;
+import ru.spbspu.staub.entity.User;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.QuestionService;
+import ru.spbspu.staub.service.TestService;
 
 import javax.faces.model.DataModel;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Webbean for manipulating list data of <code>Question</code> entities.
@@ -29,10 +31,16 @@ public class QuestionSelectListBean extends GenericListBean<Question> {
     private DataModel selectedQuestions = DataModels.instance().getDataModel(new ArrayList<Object[]>());
 
     @In
+    private User user;
+
+    @In
     private Test test;
 
     @In
     private QuestionService questionService;
+
+    @In
+    private TestService testService;
 
     /**
      * {@inheritDoc}
@@ -62,7 +70,11 @@ public class QuestionSelectListBean extends GenericListBean<Question> {
 
     public void doSave() {
         logger.debug(">>> Saving added questions for test(#0)...", test);
-        
+        List<Integer> questionsIds = new ArrayList<Integer>();
+        for(Object[] selectedQuestion : getWrappedData()) {
+            questionsIds.add((Integer)selectedQuestion[0]);
+        }
+        test = testService.addQuestionsToTest(test, questionsIds, user);
         logger.debug(">>> Saving added questions...Ok");
     }
 
