@@ -34,13 +34,27 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         return findAll(query, formProperties, parameters);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Test addQuestionToTest(Test test, Question question, User user) {
         // TODO implement method
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Test addQuestionsToTest(Test test, List<Integer> questionsIds, User user) {
         // TODO implement method
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Test saveTest(Test test, User user) {
+        // TODO implement method
+        return test;
     }
 }
