@@ -15,18 +15,58 @@
         <ui:include src="/system/menuPage.jspx"/>
     </ui:define>
     <ui:define name="contentTitle">
-        Добавление существующих вопросов в тест
+        #{messages['question.select.list.title']}
     </ui:define>
     <ui:define name="contentBody">
         <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
             <a4j:form id="contentButtonsForm">
+                <ui:include src="/controls/genericSaveControl.jspx"/>
                 <ui:include src="/controls/genericRefreshControl.jspx"/>
-                <a4j:commandLink action="#{pageBean.removeAll}" reRender="selectedQuestionsPanel">
-                    Очистить
-                </a4j:commandLink>
+                <a4j:commandButton id="removeAllButton"
+                                   action="#{pageBean.removeAll}"
+                                   reRender="selectedQuestionsPanel"
+                                   value="#{messages['common.detail.functions.clear']}"
+                                   styleClass="button"
+                                   rendered="#{pageBean.editMode}"/>
             </a4j:form>
         </a4j:outputPanel>
-        Все вопросы
+        #{messages['question.select.list.selectedQuestions']}
+        <br/>
+        <a4j:form id="selectedQuestionsForm">
+            <a4j:outputPanel id="selectedQuestionsPanel" style="height:100px; width:98%; overflow:auto;" layout="block"
+                             styleClass="listTableContent">
+                <h:outputText id="noSelectedQuestionsLabel"
+                              value="#{messages['question.select.list.noSelectedQuestions']}"
+                              rendered="#{pageBean.selectedQuestions == null or pageBean.selectedQuestions.rowCount == 0}"/>
+                <h:dataTable id="selectedQuestions"
+                             value="#{pageBean.selectedQuestions}"
+                             var="selectedQuestion"
+                             rendered="#{pageBean.selectedQuestions.rowCount > 0}"
+                             styleClass="dataTable">
+                    <h:column>
+                        <a4j:commandButton id="removeQuestionButton"
+                                           action="#{pageBean.removeQuestion}"
+                                           reRender="selectedQuestionsPanel"
+                                           image="/images/icons/icon_delete.gif"
+                                           rendered="#{pageBean.editMode}"/>
+                        <h:graphicImage id="addQuestionImageDisabled"
+                                        url="/images/icons/icon_delete_disable.gif"
+                                        rendered="#{!pageBean.editMode}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{messages['question.select.list.selectedQuestions.id']}</f:facet>
+                        #{selectedQuestion[0]}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{messages['question.select.list.selectedQuestions.name']}</f:facet>
+                        #{selectedQuestion[1]}
+                    </h:column>
+                </h:dataTable>
+            </a4j:outputPanel>
+        </a4j:form>
+        <br/>
+        <br/>
+        #{messages['question.select.list.allQuestions']}
         <a4j:form>
             <ui:decorate template="../controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">
@@ -38,9 +78,14 @@
                                  rendered="#{dataModel.rowCount > 0}"
                                  styleClass="dataTable">
                         <h:column>
-                            <a4j:commandLink action="#{pageBean.addQuestion}" reRender="selectedQuestionsPanel">
-                                добавить
-                            </a4j:commandLink>
+                            <a4j:commandButton id="addQuestionButton"
+                                               action="#{pageBean.addQuestion}"
+                                               reRender="selectedQuestionsPanel"
+                                               image="/images/icons/icon_add.gif"
+                                               rendered="#{pageBean.editMode}"/>
+                            <h:graphicImage id="addQuestionImageDisabled"
+                                            url="/images/icons/icon_add_disable.gif"
+                                            rendered="#{!pageBean.editMode}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">#{messages['question.list.name']}</f:facet>
@@ -49,33 +94,6 @@
                     </h:dataTable>
                 </ui:define>
             </ui:decorate>
-        </a4j:form>
-        Выбранные вопросы
-        <br/>
-        <a4j:form>
-        <a4j:outputPanel id="selectedQuestionsPanel">
-            <h:outputText value="Не один вопрос не выбран"
-                          rendered="#{pageBean.selectedQuestions == null or pageBean.selectedQuestions.rowCount == 0}"/>
-            <h:dataTable id="selectedQuestions"
-                         value="#{pageBean.selectedQuestions}"
-                         var="selectedQuestion"
-                         rendered="#{pageBean.selectedQuestions.rowCount > 0}"
-                         styleClass="dataTable">
-                <h:column>
-                    <a4j:commandLink action="#{pageBean.removeQuestion}" reRender="selectedQuestionsPanel">
-                        удалить
-                    </a4j:commandLink>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Идентификатор</f:facet>
-                    #{selectedQuestion[0]}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Название</f:facet>
-                    #{selectedQuestion[1]}
-                </h:column>
-            </h:dataTable>
-        </a4j:outputPanel>
         </a4j:form>
     </ui:define>
 </ui:composition>
