@@ -18,19 +18,19 @@ div.listTableContent {
     padding-bottom: 15px;
 }
 
-table .dataTable {
+.dataTable {
     width: 100%;
     border: 1px solid #D2C9C4;
     border-collapse: collapse;
 }
 
-table .dataTable caption {
+.dataTable caption {
     padding-bottom: 6px;
     text-align: left;
     font-weight: bold;
 }
 
-table .dataTable thead th {
+.dataTable thead th {
     border-left: 1px solid #D2C9C4;
     background: #fff url( ../images/th.bg.gif ) 0 100% repeat-x;
     border-bottom: 1px solid #D2C9C4;
@@ -39,18 +39,18 @@ table .dataTable thead th {
     font-size: small;
 }
 
-table .dataTable tbody td {
+.dataTable tbody td {
     border-left: 1px solid #E4DBD5;
     padding: 4px;
     border-bottom: 1px solid #D2C9C4;
     font-size: small;
 }
 
-table .dataTable td.columnIcon {
+.dataTable td.columnIcon {
     width: 15px;
 }
 
-table .dataTable input {
+.dataTable input {
     border: 0 none;
     border-style: none;
     margin: 0;
