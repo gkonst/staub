@@ -31,7 +31,8 @@
                             <strong>#{messages['test.detail.name']}</strong>
                         </td>
                         <td style="width:100%;" colspan="3">
-                            <h:inputText value="#{pageBean.model.name}"
+                            <h:inputText id="testNameInput"
+                                         value="#{pageBean.model.name}"
                                          disabled="#{pageBean.viewMode}"
                                          style="width:100%;"/>
                         </td>
@@ -41,7 +42,8 @@
                             <strong>#{messages['test.detail.description']}</strong>
                         </td>
                         <td style="width:100%;" colspan="3">
-                            <h:inputTextarea value="#{pageBean.model.description}"
+                            <h:inputTextarea id="testDescTextarea"
+                                             value="#{pageBean.model.description}"
                                              disabled="#{pageBean.viewMode}"
                                              style="width:100%;"/>
                         </td>
@@ -51,14 +53,16 @@
                             <strong>#{messages['test.detail.passScore']}</strong>
                         </td>
                         <td>
-                            <h:inputText value="#{pageBean.model.passScore}"
+                            <h:inputText id="passScoreInput"
+                                         value="#{pageBean.model.passScore}"
                                          disabled="#{pageBean.viewMode}"/>
                         </td>
                         <td align="right">
                             <strong>#{messages['test.detail.timeLimit']}</strong>
                         </td>
                         <td>
-                            <h:inputText value="#{pageBean.model.timeLimit}"
+                            <h:inputText id="timeLimitInput"
+                                         value="#{pageBean.model.timeLimit}"
                                          disabled="#{pageBean.viewMode}"
                                          style="width:100%;"/>
                         </td>
@@ -72,7 +76,7 @@
                                              value="#{pageBean.model.selectorType}"
                                              converter="ru.spbspu.staub.ObjectSelectConverter"
                                              disabled="#{pageBean.viewMode}">
-                                <f:selectItems value="#{pageBean.selectorTypes}"/>
+                                <f:selectItems id="answerTypesSelectItems" value="#{pageBean.selectorTypes}"/>
                                 <a4j:support id="answerTypesSelectSupport"
                                              event="onchange"
                                              reRender="selectorCountPanel"/>
@@ -83,9 +87,10 @@
                         </td>
                         <td>
                             <a4j:outputPanel id="selectorCountPanel">
-                                <h:inputText value="#{pageBean.model.selectorCount}"
+                                <h:inputText id="selectorCountInput"
+                                             value="#{pageBean.model.selectorCount}"
                                              disabled="#{pageBean.viewMode}"
-                                             style="width:100%;"
+                                             style="width:130px;"
                                              rendered="#{!pageBean.allSelectorType}"/>
                             </a4j:outputPanel>
                         </td>
@@ -93,14 +98,14 @@
                 </table>
             </div>
         </a4j:form>
-        <s:fragment rendered="#{!pageBean.createMode}">
+        <s:fragment id="questionsListFragment" rendered="#{!pageBean.createMode}">
             <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <a4j:form id="contentButtonsForm">
                     <ui:include src="/controls/genericCreateControl.jspx"/>
                     <ui:include src="/controls/genericRefreshControl.jspx"/>
                     <h:commandButton id="selectQuestionButton"
                                      action="#{pageBean.selectQuestion}"
-                                     value="Выбрать вопросы"
+                                     value="#{messages['test.detail.selectQuestion']}"
                                      styleClass="button"/>
                 </a4j:form>
             </a4j:outputPanel>
