@@ -12,6 +12,7 @@ import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.entity.SelectorEnum;
 import ru.spbspu.staub.entity.Test;
+import ru.spbspu.staub.entity.User;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.QuestionService;
@@ -37,6 +38,9 @@ public class TestDetailBean extends GenericListBean<Question> {
 
     @Out(value = "test", required = false)
     private Test model;
+
+    @In
+    private User user;
 
     @In
     private TestService testService;
@@ -100,7 +104,7 @@ public class TestDetailBean extends GenericListBean<Question> {
 
     public void doSave() {
         logger.debug("Saving test...");
-        setModel(testService.makePersistent(getModel()));
+        setModel(testService.saveTest(getModel(), user));
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
@@ -108,7 +112,7 @@ public class TestDetailBean extends GenericListBean<Question> {
     }
 
     public String selectQuestion(){
-        return doView("questionSelectList");
+        return doEdit("questionSelectList");
     }
 
     public Test getModel() {
