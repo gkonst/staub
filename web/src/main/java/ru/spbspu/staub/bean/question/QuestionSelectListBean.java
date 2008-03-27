@@ -6,6 +6,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.faces.DataModels;
 import ru.spbspu.staub.bean.GenericListBean;
+import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.entity.User;
@@ -46,6 +47,30 @@ public class QuestionSelectListBean extends GenericListBean<Question> {
      * {@inheritDoc}
      */
     @Override
+    public void initBean() {
+        if (isBeanModeDefined()) {
+            logger.debug("Preparing list bean...");
+            selectedQuestions = DataModels.instance().getDataModel(new ArrayList<Object[]>());
+            switch (getBeanMode()) {
+                case VIEW_MODE:     // using fall through switch behaviour
+                case EDIT_MODE:
+                case CREATE_MODE:
+                    findFirstPageData();
+                    break;
+                case REFRESH_MODE:
+                    doRefresh();
+                    break;
+                default:
+                    logger.debug("  Unknown bean mode -> skipping");
+            }
+            logger.debug("Preparing list bean... OK");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected FormTable findObjects(FormProperties formProperties) {
         return questionService.findAll(formProperties);
     }
@@ -71,10 +96,13 @@ public class QuestionSelectListBean extends GenericListBean<Question> {
     public void doSave() {
         logger.debug(">>> Saving added questions for test(#0)...", test);
         List<Integer> questionsIds = new ArrayList<Integer>();
-        for(Object[] selectedQuestion : getWrappedData()) {
-            questionsIds.add((Integer)selectedQuestion[0]);
+        for (Object[] selectedQuestion : getWrappedData()) {
+            questionsIds.add((Integer) selectedQuestion[0]);
         }
         test = testService.addQuestionsToTest(test, questionsIds, user);
+        logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
+        setBeanMode(BeanMode.VIEW_MODE);
+        addFacesMessageFromResourceBundle("common.messages.saveSuccess");
         logger.debug(">>> Saving added questions...Ok");
     }
 
