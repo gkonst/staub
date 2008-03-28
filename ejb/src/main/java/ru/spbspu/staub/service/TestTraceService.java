@@ -17,20 +17,27 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      * Checks is <code>TestTrace</code> already presents for
      * this user and this sessionId, if not generates it with <code>QuestionTrace</code> entites.
      *
-     * @param test specific <code>Test</code> instance
+     * @param test      specific <code>Test</code> instance
      * @param sessionId <code>HttpSession</code> identifier
-     * @param user current user
+     * @param user      current user
      * @return created or found <code>TestTrace</code>
      */
     TestTrace getTestTrace(Test test, String sessionId, User user);
 
     /**
-     * Starts test (fill started field).
+     * Starts test (fills started field).
      *
      * @param testTrace <code>TestTrace</code> to start
      * @return started <code>TestTrace</code>
      */
     TestTrace startTest(TestTrace testTrace);
 
-    TestTrace saveAndCheckTest(TestTrace testTrace);
+    /**
+     * Ends test (fills finished field).
+     * Forms <code>UserHistory</code>, etc.
+     *
+     * @param testTrace ended test trace
+     * @return updated instance
+     */
+    TestTrace endTest(TestTrace testTrace);
 }

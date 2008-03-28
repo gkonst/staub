@@ -92,15 +92,11 @@ public class QuestionBean extends GenericBean {
         currentTime = -1;
         if (questionIndex == questionIds.size()) {
             // last question
-            saveAndCheckTest();
+            testTrace = testTraceService.endTest(testTrace);
         }
         logger.debug(" question index : #0", questionIndex);
         logger.debug(">>> Next question...Ok");
         return null;
-    }
-
-    private void saveAndCheckTest() {
-        testTraceService.saveAndCheckTest(testTrace);
     }
 
     private void fillModel(Integer modelId) {
