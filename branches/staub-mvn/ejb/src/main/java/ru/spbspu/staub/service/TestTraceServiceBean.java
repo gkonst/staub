@@ -50,11 +50,11 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     /**
      * {@inheritDoc}
      */
-    public TestTrace saveAndCheckTest(TestTrace testTrace) {
+    public TestTrace endTest(TestTrace testTrace) {
         // TODO implement
         // --> mock start
         testTrace.setFinished(new Date());
-        testTrace = makePersistent(testTrace);
+        testTrace = getEntityManager().merge(testTrace);
         // <-- mock end
         return testTrace;
     }
