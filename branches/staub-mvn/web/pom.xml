@@ -57,7 +57,6 @@
             <groupId>org.jboss.seam</groupId>
             <artifactId>jboss-seam-ui</artifactId>
             <version>${seam.version}</version>
-            <scope>runtime</scope>
             <exclusions>
                 <exclusion>
                     <groupId>commons-beanutils</groupId>
@@ -131,6 +130,12 @@
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.framework</groupId>
+            <artifactId>richfaces-api</artifactId>
+            <version>${richfaces.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!-- Bad dependency for web-layer -->
         <dependency>
