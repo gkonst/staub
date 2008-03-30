@@ -10,12 +10,13 @@
 <ui:composition template="../template/staub-template.jspx">
     <ui:param name="pageBean" value="#{questionBean}"/>
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
+    <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:define name="pageScript">
         <a4j:loadScript src="../script/timer.js"/>
     </ui:define>
     <ui:define name="sidebar">
         <a4j:outputPanel id="timerPanel"
-                         rendered="#{pageBean.hasNextQuestion and pageBean.currentQuestion.timeLimitPresent}">
+                         rendered="#{pageBean.hasNextQuestion and pageBean.timeLimitPresent}">
             Time - <span id="timerField"/>
             <script type="text/javascript">
                 Timer.init({timeToCount : '#{pageBean.currentQuestion.timeLimit}',
@@ -30,7 +31,7 @@
 
         <h:form>
             <a4j:poll action="#{pageBean.refreshTimer}" reRender="timerPanel" interval="10000"
-                      enabled="#{pageBean.hasNextQuestion and pageBean.currentQuestion.timeLimitPresent}"/>
+                      enabled="#{pageBean.hasNextQuestion and pageBean.timeLimitPresent}"/>
         </h:form>
     </ui:define>
     <ui:define name="contentTitle">
