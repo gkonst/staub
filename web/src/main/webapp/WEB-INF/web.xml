@@ -52,4 +52,10 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.seam</url-pattern>
     </servlet-mapping>
+
+    <env-entry>
+        <env-entry-name>resource-directory</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>/home/kostya/temp/resource</env-entry-value>
+    </env-entry>
 </web-app>
