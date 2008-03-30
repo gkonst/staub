@@ -3,7 +3,6 @@ package ru.spbspu.staub.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * The <code>Test</code> class represents the Test entity.
@@ -162,7 +161,8 @@ public class Test implements Serializable {
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
     }
-
+    
+/*
     private List<Question> questions;
 
     @ManyToMany
@@ -175,6 +175,19 @@ public class Test implements Serializable {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+*/
+
+    private Boolean checkAfterEachPart;
+
+    @Basic
+    @Column(name = "check_after_each_part")
+    public Boolean getCheckAfterEachPart() {
+        return checkAfterEachPart;
+    }
+
+    public void setCheckAfterEachPart(Boolean checkAfterEachPart) {
+        this.checkAfterEachPart = checkAfterEachPart;
     }
 
     @Override

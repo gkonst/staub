@@ -1,8 +1,12 @@
 package ru.spbspu.staub.entity;
 
+import ru.spbspu.staub.model.question.QuestionType;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+
+import org.hibernate.annotations.Type;
 
 /**
  * The <code>Question</code> class represents the Question entity.
@@ -88,6 +92,7 @@ public class Question implements Serializable {
         this.timeLimit = timeLimit;
     }
 
+/*
     private String definition;
 
     @Basic
@@ -99,6 +104,19 @@ public class Question implements Serializable {
 
     public void setDefinition(String definition) {
         this.definition = definition;
+    }
+*/
+
+    private QuestionType question;
+
+    @Column(name = "definition")
+    @Type(type = "ru.spbspu.staub.entity.QuestionXmlType")
+    public QuestionType getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(QuestionType question) {
+        this.question = question;
     }
 
     private Date created;
@@ -175,7 +193,7 @@ public class Question implements Serializable {
         sb.append("{id=").append(id);
         sb.append(", name='").append(name).append('\'');
         sb.append(", timeLimit=").append(timeLimit);
-        sb.append(", definition='").append(definition).append('\'');
+//        sb.append(", definition='").append(definition).append('\'');
         sb.append(", created=").append(created);
         sb.append(", createdBy='").append(createdBy).append('\'');
         sb.append(", modified=").append(modified);

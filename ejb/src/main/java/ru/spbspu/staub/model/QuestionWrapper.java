@@ -2,7 +2,6 @@ package ru.spbspu.staub.model;
 
 import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.model.question.QuestionType;
-import ru.spbspu.staub.util.JAXBUtil;
 
 /**
  * Wrapper encapsulates basic <code>Question</code> fields
@@ -25,7 +24,7 @@ public class QuestionWrapper {
     private void wrap(Question question) {
         this.name = question.getName();
         this.timeLimit = question.getTimeLimit();
-        this.definition = JAXBUtil.parseQuestionXML(question.getDefinition());
+        this.definition = question.getQuestion();
         this.description = this.definition.getDescription();
     }
 

@@ -12,7 +12,6 @@ import ru.spbspu.staub.model.question.AnswerType;
 import ru.spbspu.staub.model.question.ChoiceType;
 import ru.spbspu.staub.model.question.QuestionType;
 import ru.spbspu.staub.service.*;
-import ru.spbspu.staub.util.JAXBUtil;
 
 import javax.faces.model.SelectItem;
 import java.math.BigInteger;
@@ -27,6 +26,7 @@ import java.util.List;
 @Name("questionDetailBean")
 @Scope(SESSION)
 public class QuestionDetailBean extends GenericDetailBean<Question> {
+    private static final long serialVersionUID = -458598915895087232L;
 
     @In(required = false)
     private Test test;
@@ -58,7 +58,6 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     private List<Difficulty> difficultyList;
 
     private Object correctAnswer;
-
     private AnswerTypes answerType;
 
     private static enum AnswerTypes {
@@ -79,7 +78,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             setQuestionDefinition(new QuestionType());
         } else {
             setModel(questionService.findById(modelId));
-            setQuestionDefinition(JAXBUtil.parseQuestionXML(getModel().getDefinition()));
+            setQuestionDefinition(getModel().getQuestion());
             determineAnswerType();
             determineCorrectAnswer();
         }
@@ -138,8 +137,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     public void doSave() {
         logger.debug("Saving question...");
         resolveCorrectAnswer();
-        String questionDefinitionXML = JAXBUtil.createQuestionXML(getQuestionDefinition());
-        getModel().setDefinition(questionDefinitionXML);
+        getModel().setQuestion(getQuestionDefinition());
         questionService.saveQuestion(getModel(), user);
         if(test != null) {
             test = testService.addQuestionToTest(test, getModel(), user);
