@@ -5,6 +5,9 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.international.Messages;
+import org.jboss.seam.ui.graphicImage.GraphicImageStore;
+import org.jboss.seam.ui.graphicImage.Image;
+import org.richfaces.event.UploadEvent;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.entity.*;
@@ -12,11 +15,13 @@ import ru.spbspu.staub.model.question.AnswerType;
 import ru.spbspu.staub.model.question.ChoiceType;
 import ru.spbspu.staub.model.question.QuestionType;
 import ru.spbspu.staub.service.*;
+import ru.spbspu.staub.util.ImageResource;
 
 import javax.faces.model.SelectItem;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
 /**
  * Webbean for manipulating detail data of <code>Question</code> entity.
@@ -64,6 +69,8 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         SINGLE_CHOICE,
         MULTIPLE_CHOICE
     }
+
+    private String imageFileName;
 
     /**
      * {@inheritDoc}
@@ -139,7 +146,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         resolveCorrectAnswer();
         getModel().setQuestion(getQuestionDefinition());
         questionService.saveQuestion(getModel(), user);
-        if(test != null) {
+        if (test != null) {
             test = testService.addQuestionToTest(test, getModel(), user);
         }
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
@@ -191,7 +198,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             logger.debug(" multiple choice type, id=#0, totalWas=#1", newAnswer.getId(), questionDefinition.getMultipleChoice().getAnswer().size());
             questionDefinition.getMultipleChoice().getAnswer().add(newAnswer);
         }
-        logger.debug(">>> Adding answer...Ok");
+        logger.debug("<<< Adding answer...Ok");
     }
 
     public void removeAnswer() {
@@ -205,7 +212,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             logger.debug(" single choice type, id=#0", answerToRemoveId);
             questionDefinition.getMultipleChoice().getAnswer().remove(answerToRemoveId);
         }
-        logger.debug(">>> Removing answer...Ok");
+        logger.debug("<<< Removing answer...Ok");
     }
 
     public void changeAnswerType() {
@@ -222,7 +229,33 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             throw new IllegalArgumentException("Unrecognized answer type");
         }
         logger.debug(" new answer type=#0, correct answer type=#1", answerType, correctAnswer.getClass().getName());
-        logger.debug(">>> Changing answer type...Ok");
+        logger.debug("<<< Changing answer type...Ok");
+    }
+
+    public void fileUploadListener(UploadEvent event) {
+        logger.debug(">>> Uploading image...");
+        logger.debug(" fileName : #0", event.getUploadItem().getFileName());
+        logger.debug(" filePath : #0", event.getUploadItem().getFile().getAbsolutePath());
+        byte[] buf;
+        try {
+            FileInputStream fi = new FileInputStream(event.getUploadItem().getFile());
+            buf = new byte[fi.available()];
+            fi.read(buf);
+
+            File file = new File(ImageResource.getResourceDirectory() + File.separator + event.getUploadItem().getFileName());
+            file.createNewFile();
+            FileOutputStream fo = new FileOutputStream(file);
+            fo.write(buf);
+            fo.flush();
+            fo.close();
+
+            imageFileName = "<img src=\"/staub/seam/resource/loadImage/" + event.getUploadItem().getFileName() + "\"/>";
+        } catch (FileNotFoundException e) {
+            logger.error("", e);
+        } catch (IOException e) {
+            logger.error("", e);
+        }
+        logger.debug("<<< Uploading image...Ok");
     }
 
     public List<Discipline> getDisciplineList() {
@@ -271,5 +304,13 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     public void setAnswerType(AnswerTypes answerType) {
         this.answerType = answerType;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 }
