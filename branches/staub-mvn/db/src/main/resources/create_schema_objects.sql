@@ -53,6 +53,7 @@ CREATE TABLE test (
     questions_count INTEGER,
 	selector_type INTEGER,
     selector_count INTEGER,
+    check_after_each_part BOOLEAN,
     created DATE,
     created_by CHARACTER VARYING(64),
     modified DATE,
@@ -114,6 +115,7 @@ CREATE TABLE question_trace (
     started DATE,
     finished DATE,
     answer TEXT,
+    part INTEGER,
     CONSTRAINT pk_question_trace PRIMARY KEY (id),
     CONSTRAINT fk_test_trace FOREIGN KEY (fk_test_trace) REFERENCES test_trace (id),
     CONSTRAINT fk_question FOREIGN KEY (fk_question) REFERENCES question (id)

@@ -7,7 +7,6 @@ import ru.spbspu.staub.entity.TestTrace;
 import ru.spbspu.staub.model.answer.AnswerType;
 import ru.spbspu.staub.model.answer.ElementType;
 import ru.spbspu.staub.model.question.QuestionType;
-import ru.spbspu.staub.util.JAXBUtil;
 
 import javax.ejb.Stateless;
 import java.math.BigInteger;
@@ -35,8 +34,8 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
     }
 
     public boolean checkGroup(QuestionTrace questionTrace) {
-        QuestionType questionType = JAXBUtil.parseQuestionXML(questionTrace.getQuestion().getDefinition());
-        AnswerType answerType = JAXBUtil.parseAnswerXML(questionTrace.getAnswer());
+        QuestionType questionType = questionTrace.getQuestion().getQuestion();
+        AnswerType answerType = questionTrace.getAnswer();
         boolean result = false;
         if (questionType.getMultipleChoice() != null) {
             result = check(questionType.getMultipleChoice().getAnswer(), answerType.getMultipleChoice().getElement());

@@ -1,8 +1,12 @@
 package ru.spbspu.staub.entity;
 
+import ru.spbspu.staub.model.answer.AnswerType;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.io.Serializable;
+
+import org.hibernate.annotations.Type;
 
 /**
  * The <code>QuestionTrace</code> class represents QuestionTrace entity.
@@ -51,7 +55,7 @@ public class QuestionTrace implements Serializable {
     public void setFinished(Date finished) {
         this.finished = finished;
     }
-
+/*
     private String answer;
 
     @Basic
@@ -62,6 +66,18 @@ public class QuestionTrace implements Serializable {
     }
 
     public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+*/
+    private AnswerType answer;
+
+    @Type(type = "ru.spbspu.staub.entity.AnswerXmlType")
+    @Column(name = "answer")
+    public AnswerType getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(AnswerType answer) {
         this.answer = answer;
     }
 
@@ -99,6 +115,18 @@ public class QuestionTrace implements Serializable {
 
     public void setCorrect(Boolean correct) {
         this.correct = correct;
+    }
+
+    private Integer part;
+
+    @Basic
+    @Column(name = "part")
+    public Integer getPart() {
+        return part;
+    }
+
+    public void setPart(Integer part) {
+        this.part = part;
     }
 
     @Override

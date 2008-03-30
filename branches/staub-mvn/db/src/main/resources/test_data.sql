@@ -27,6 +27,7 @@ INSERT INTO test (id,
                   pass_score,
                   questions_count,
                   selector_type,
+                  check_after_each_part,
                   created,
                   created_by)
      VALUES (nextval('seq_test'),
@@ -36,6 +37,7 @@ INSERT INTO test (id,
              50,
              2,
              0,
+             false,
              current_date,
              'Generation Script');
              
