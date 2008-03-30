@@ -5,8 +5,8 @@ import org.jboss.seam.annotations.*;
 import ru.spbspu.staub.bean.GenericBean;
 import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
+import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.model.AnswerWrapper;
-import ru.spbspu.staub.model.QuestionWrapper;
 import ru.spbspu.staub.service.QuestionTraceService;
 import ru.spbspu.staub.service.TestTraceService;
 
@@ -34,7 +34,7 @@ public class QuestionBean extends GenericBean {
     private TestTrace testTrace;
 
     private List<Integer> questionIds;
-    private QuestionWrapper currentQuestion;
+    private Question currentQuestion;
     private int questionIndex = 0;
     private int currentTime = -1;
     private long startTime;
@@ -45,7 +45,7 @@ public class QuestionBean extends GenericBean {
         logger.debug(">>> Init test(#0)...", testTrace.getId());
         if (questionIds == null) {
             questionIds = questionTraceService.findIdsByTestTraceId(testTrace);
-            if(questionIds == null || questionIds.size() == 0) {
+            if (questionIds == null || questionIds.size() == 0) {
                 // check for zero count questions
                 throw new IllegalStateException("Test has no questions");
             }
@@ -53,7 +53,7 @@ public class QuestionBean extends GenericBean {
         if (questionIndex < questionIds.size()) {
             fillModel(questionIds.get(questionIndex));
             logger.debug(" currentQuestion : #0", currentQuestion);
-            if (currentQuestion.isTimeLimitPresent()) {
+            if (isTimeLimitPresent()) {
                 logger.debug(" currentTime : #0", currentTime);
                 if (currentTime == -1) {
                     resetTimer();
@@ -101,8 +101,8 @@ public class QuestionBean extends GenericBean {
 
     private void fillModel(Integer modelId) {
         QuestionTrace questionTrace = questionTraceService.findById(modelId);
-        currentQuestion = new QuestionWrapper(questionTrace.getQuestion());
-        answer = AnswerWrapper.getAnswer(currentQuestion.getDefinition(), questionTrace);
+        currentQuestion = questionTrace.getQuestion();
+        answer = AnswerWrapper.getAnswer(currentQuestion.getQuestion(), questionTrace);
     }
 
     private void resetTimer() {
@@ -127,11 +127,15 @@ public class QuestionBean extends GenericBean {
         return questionIndex < questionIds.size();
     }
 
-    public QuestionWrapper getCurrentQuestion() {
+    public boolean isTimeLimitPresent() {
+        return getCurrentQuestion().getTimeLimit() != null && getCurrentQuestion().getTimeLimit() != 0;
+    }
+
+    public Question getCurrentQuestion() {
         return currentQuestion;
     }
 
-    public void setCurrentQuestion(QuestionWrapper currentQuestion) {
+    public void setCurrentQuestion(Question currentQuestion) {
         this.currentQuestion = currentQuestion;
     }
 
