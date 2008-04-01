@@ -10,12 +10,13 @@ import org.jboss.seam.servlet.ContextualHttpServletRequest;
 import org.jboss.seam.web.AbstractResource;
 
 import javax.activation.MimetypesFileTypeMap;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -76,7 +77,9 @@ public class ImageResource extends AbstractResource {
 
     public static String getResourceDirectory() {
         try {
-            return String.valueOf(new InitialContext().lookup(RESOURCE_DIR_ENV));
+            Context iniCtx = new InitialContext();
+            Context compEnv = (Context) iniCtx.lookup("java:comp/env");
+            return String.valueOf(compEnv.lookup(RESOURCE_DIR_ENV));
         } catch (NamingException e) {
             throw new IllegalArgumentException(e);
         }
