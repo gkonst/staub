@@ -241,8 +241,9 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             FileInputStream fi = new FileInputStream(event.getUploadItem().getFile());
             buf = new byte[fi.available()];
             fi.read(buf);
-
-            File file = new File(ImageResource.getResourceDirectory() + File.separator + event.getUploadItem().getFileName());
+            String newFileName = ImageResource.getResourceDirectory() + File.separator + event.getUploadItem().getFileName();
+            logger.debug(" newFileName : #0", newFileName);
+            File file = new File(newFileName);
             file.createNewFile();
             FileOutputStream fo = new FileOutputStream(file);
             fo.write(buf);
