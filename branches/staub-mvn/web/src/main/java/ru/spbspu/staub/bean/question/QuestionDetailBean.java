@@ -5,8 +5,6 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.international.Messages;
-import org.jboss.seam.ui.graphicImage.GraphicImageStore;
-import org.jboss.seam.ui.graphicImage.Image;
 import org.richfaces.event.UploadEvent;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericDetailBean;
@@ -70,7 +68,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         MULTIPLE_CHOICE
     }
 
-    private String imageFileName;
+    private String imageTag;
 
     /**
      * {@inheritDoc}
@@ -235,22 +233,27 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     public void fileUploadListener(UploadEvent event) {
         logger.debug(">>> Uploading image...");
         logger.debug(" fileName : #0", event.getUploadItem().getFileName());
-        logger.debug(" filePath : #0", event.getUploadItem().getFile().getAbsolutePath());
         byte[] buf;
         try {
+            String fileName = event.getUploadItem().getFileName();
+            String filePath = ImageResource.getResourceDirectory() + File.separator + fileName;
+            logger.debug(" filePath : #0", filePath);
             FileInputStream fi = new FileInputStream(event.getUploadItem().getFile());
             buf = new byte[fi.available()];
             fi.read(buf);
-            String newFileName = ImageResource.getResourceDirectory() + File.separator + event.getUploadItem().getFileName();
-            logger.debug(" newFileName : #0", newFileName);
-            File file = new File(newFileName);
+            File file = new File(filePath);
             file.createNewFile();
             FileOutputStream fo = new FileOutputStream(file);
             fo.write(buf);
             fo.flush();
             fo.close();
-
-            imageFileName = "<img src=\"/staub/seam/resource/loadImage/" + event.getUploadItem().getFileName() + "\"/>";
+            StringBuilder imageTag = new StringBuilder();
+            imageTag.append("<img src=\"");
+            imageTag.append(getRequest().getContextPath());
+            imageTag.append("/seam/resource");
+            imageTag.append(ImageResource.RESOURCE_PATH);
+            imageTag.append(fileName);
+            imageTag.append("\"/>");
         } catch (FileNotFoundException e) {
             logger.error("", e);
         } catch (IOException e) {
@@ -307,11 +310,11 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         this.answerType = answerType;
     }
 
-    public String getImageFileName() {
-        return imageFileName;
+    public String getImageTag() {
+        return imageTag;
     }
 
-    public void setImageFileName(String imageFileName) {
-        this.imageFileName = imageFileName;
+    public void setImageTag(String imageTag) {
+        this.imageTag = imageTag;
     }
 }
