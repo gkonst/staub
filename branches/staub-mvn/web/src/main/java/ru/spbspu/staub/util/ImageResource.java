@@ -32,7 +32,7 @@ import java.io.IOException;
 @BypassInterceptors
 public class ImageResource extends AbstractResource {
 
-    private static final String RESOURCE_PATH = "/loadImage";
+    public static final String RESOURCE_PATH = "/loadImage";
 
     private static final String RESOURCE_DIR_ENV = "resource-directory";
 
