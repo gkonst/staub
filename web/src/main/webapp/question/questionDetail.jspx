@@ -13,7 +13,7 @@
     <script type="text/javascript">
         function updateFieldAfterImageUpload() {
             var oldValue = document.getElementById("questionDetailForm:questionDefinitionTextarea").value;
-            var imagePath = document.getElementById("imageFileNameInput").value;
+            var imagePath = document.getElementById("imageTagInput").value;
             document.getElementById("questionDetailForm:questionDefinitionTextarea").value = oldValue + imagePath;
         }
     </script>
@@ -204,7 +204,7 @@
     <f:facet name="header">
         Вставить изображение
     </f:facet>
-    <h:inputHidden id="imageFileNameInput" value="#{pageBean.imageFileName}"/>
+    <h:inputHidden id="imageTagInput" value="#{pageBean.imageTag}"/>
     <h:form enctype="multipart/form-data">
 
             <rich:fileUpload fileUploadListener="#{questionDetailBean.fileUploadListener}">
