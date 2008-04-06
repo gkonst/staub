@@ -18,8 +18,8 @@
         #{messages['question.select.list.title']}
     </ui:define>
     <ui:define name="contentBody">
-        <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
-            <a4j:form id="contentButtonsForm">
+        <a4j:form id="questionSelectListForm">
+            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <ui:include src="/controls/genericSaveControl.jspx"/>
                 <ui:include src="/controls/genericRefreshControl.jspx"/>
                 <a4j:commandButton id="removeAllButton"
@@ -28,11 +28,17 @@
                                    value="#{messages['common.detail.functions.clear']}"
                                    styleClass="button"
                                    rendered="#{pageBean.editMode}"/>
-            </a4j:form>
-        </a4j:outputPanel>
-        #{messages['question.select.list.selectedQuestions']}
-        <br/>
-        <a4j:form id="selectedQuestionsForm">
+                <a4j:commandButton id="addSelectedButton"
+                                   action="#{pageBean.addSelected}"
+                                   reRender="selectedQuestionsPanel"
+                                   value="#{messages['common.list.functions.addSelected']}"
+                                   styleClass="button"
+                                   rendered="#{pageBean.editMode}"/>
+            </a4j:outputPanel>
+            <br/>
+            #{messages['question.select.list.selectedQuestions']}
+            <br/>
+
             <a4j:outputPanel id="selectedQuestionsPanel" style="height:100px; width:98%; overflow:auto;" layout="block"
                              styleClass="listTableContent">
                 <h:outputText id="noSelectedQuestionsLabel"
@@ -63,11 +69,9 @@
                     </h:column>
                 </h:dataTable>
             </a4j:outputPanel>
-        </a4j:form>
-        <br/>
-        <br/>
-        #{messages['question.select.list.allQuestions']}
-        <a4j:form>
+            <br/>
+            <br/>
+            #{messages['question.select.list.allQuestions']}
             <ui:decorate template="../controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">
                     <h:outputText value="#{messages['common.list.noDataFound']}"
@@ -77,6 +81,11 @@
                                  var="question"
                                  rendered="#{dataModel.rowCount > 0}"
                                  styleClass="dataTable">
+                        <h:column>
+                            <h:selectBooleanCheckbox id="selectedCheckbox"
+                                                     value="#{pageBean.selectedMap[question]}"
+                                                     disabled="#{!pageBean.editMode}"/>
+                        </h:column>
                         <h:column>
                             <a4j:commandButton id="addQuestionButton"
                                                action="#{pageBean.addQuestion}"

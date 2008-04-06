@@ -19,47 +19,44 @@
         #{messages['discipline.list.title']}
     </ui:define>
     <ui:define name="contentBody">
-        <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
-            <a4j:form id="contentButtonsForm">
+        <a4j:form id="contentButtonsForm">
+            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <ui:include src="/controls/genericCreateControl.jspx"/>
                 <ui:include src="/controls/genericRefreshControl.jspx"/>
-            </a4j:form>
-        </a4j:outputPanel>
-        <ui:decorate template="../controls/listLayoutControl.jspx">
-            <ui:define name="listPageData">
-                <a4j:form id="disciplineListForm">
+            </a4j:outputPanel>
+            <ui:decorate template="../controls/listLayoutControl.jspx">
+                <ui:define name="listPageData">
                     <h:outputText id="notFoundText"
                                   value="#{messages['common.list.noDataFound']}"
                                   rendered="#{dataModel == null or dataModel.rowCount == 0}"/>
-                    <h:dataTable id="disciplineList"
-                                 value="#{dataModel}"
-                                 var="discipline"
-                                 rendered="#{dataModel.rowCount > 0}"
-                                 styleClass="dataTable"
-                                 columnClasses=",,columnIcon">
-                        <h:column id="col1">
+                    <rich:dataTable id="disciplineList"
+                                    value="#{dataModel}"
+                                    var="discipline"
+                                    rendered="#{dataModel.rowCount > 0}"
+                                    styleClass="dataTable">
+                        <rich:column id="col1">
                             <f:facet name="header">#{messages['discipline.list.code']}</f:facet>
                             <s:link action="detail" value="#{discipline.code}">
                                 <f:param name="modelId" value="#{discipline.id}"/>
                                 <f:param name="beanMode" value="EDIT_MODE"/>
                             </s:link>
-                        </h:column>
-                        <h:column id="col2">
+                        </rich:column>
+                        <rich:column id="col2">
                             <f:facet name="header">#{messages['discipline.list.name']}</f:facet>
                             #{discipline.name}
-                        </h:column>
-                        <h:column id="col3">
+                        </rich:column>
+                        <rich:column id="col3" styleClass="columnIcon">
                             <a4j:commandButton id="deleteButton"
                                                action="#{pageBean.doDelete}"
                                                onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"
                                                title="#{messages['common.list.functions.delete']}"
                                                image="/images/icons/icon_delete.gif"
                                                reRender="#{bodyPanelId}"/>
-                        </h:column>
-                    </h:dataTable>
-                </a4j:form>
-            </ui:define>
-        </ui:decorate>
+                        </rich:column>
+                    </rich:dataTable>
+                </ui:define>
+            </ui:decorate>
+        </a4j:form>
     </ui:define>
 </ui:composition>
 </html>
