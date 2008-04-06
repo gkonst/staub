@@ -33,27 +33,23 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     }
 
     public Test addQuestionToTest(Test test, Question question, User user) {
-        // TODO: Find out whether Test and Question should be persisted here.
         test.setModifiedBy(user.getUsername());
         test.setModified(new Date());
-        makePersistent(test);
 
         createTestQuestion(test, question.getId());
 
-        return test;
+        return makePersistent(test);
     }
 
     public Test addQuestionsToTest(Test test, List<Integer> questionsIds, User user) {
-        // TODO: Find out whether Test should be persisted here.
         test.setModifiedBy(user.getUsername());
         test.setModified(new Date());
-        makePersistent(test);
 
         for (Integer questionId : questionsIds) {
             createTestQuestion(test, questionId);
         }
 
-        return test;
+        return makePersistent(test);
     }
 
     public Test saveTest(Test test, User user) {
@@ -68,6 +64,8 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     }
 
     private void createTestQuestion(Test test, Integer questionId) {
+        test.setQuestionsCount(test.getQuestionsCount() + 1);
+
         TestQuestion tq = new TestQuestion();
         tq.setFkTest(test.getId());
         tq.setFkQuestion(questionId);
