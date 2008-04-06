@@ -67,6 +67,11 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         return makePersistent(test);
     }
 
+    public void assignTest(Integer testId, List<Integer> usersIds) {
+        // TODO implement method
+
+    }
+
     private void createTestQuestion(Test test, Integer questionId) {
         TestQuestion tq = new TestQuestion();
         tq.setFkTest(test.getId());

@@ -54,4 +54,12 @@ public interface TestService extends GenericService<Test, Integer> {
      * @return updated test
      */
     Test saveTest(Test test, User user);
+
+    /**
+     * Assigns users for specific test.
+     *
+     * @param testId   specific test identifier
+     * @param usersIds list or users identifiers
+     */
+    void assignTest(Integer testId, List<Integer> usersIds);
 }
