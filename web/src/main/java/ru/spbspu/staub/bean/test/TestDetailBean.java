@@ -1,13 +1,12 @@
 package ru.spbspu.staub.bean.test;
 
+import org.jboss.seam.ScopeType;
 import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
-import org.jboss.seam.international.Messages;
-import org.jboss.seam.ScopeType;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.Question;
@@ -18,12 +17,6 @@ import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.QuestionService;
 import ru.spbspu.staub.service.TestService;
-
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Webbean for manipulating detail data of <code>Test</code> entity.
@@ -87,16 +80,16 @@ public class TestDetailBean extends GenericListBean<Question> {
         return questionService.findAllForTest(formProperties, getModel());
     }
 
-    public List<SelectItem> getSelectorTypes() {
-        List<SelectItem> result = new ArrayList<SelectItem>();
-        for (SelectorEnum type : SelectorEnum.values()) {
-            result.add(new SelectItem(type, Messages.instance().get("test.detail.selectorType." + type)));
-        }
-        return result;
+    public SelectorEnum[] getSelectorTypes() {
+        return SelectorEnum.values();
     }
 
-    public boolean isAllSelectorType() {
-        return SelectorEnum.ALL.equals(getModel().getSelectorType());
+    public boolean isSelectorCountAvailable() {
+        return getModel().getSelectorType() != null && !SelectorEnum.ALL.equals(getModel().getSelectorType());
+    }
+
+    public boolean isCheckAfterEachPartAvailable() {
+        return getModel().getSelectorType() != null && !SelectorEnum.ALL.equals(getModel().getSelectorType()) && !SelectorEnum.COUNT.equals(getModel().getSelectorType());
     }
 
     public String doCreate() {
