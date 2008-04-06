@@ -1,6 +1,5 @@
 package ru.spbspu.staub.model;
 
-import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.model.question.AnswerType;
 import ru.spbspu.staub.model.question.ChoiceType;
 
@@ -15,20 +14,10 @@ import java.util.List;
 public class MultipleChoiceAnswerWrapper extends AnswerWrapper {
     private List<AnswerType> userAnswer;
     private ChoiceType answerDefinition;
-    private QuestionTrace questionTrace;
 
-    public MultipleChoiceAnswerWrapper(ChoiceType answerDefinition, QuestionTrace questionTrace) {
+    public MultipleChoiceAnswerWrapper(ChoiceType answerDefinition) {
         userAnswer = new ArrayList<AnswerType>();
         this.answerDefinition = answerDefinition;
-        this.questionTrace = questionTrace;
-    }
-
-    public QuestionTrace unwrap() {
-        // TODO implement method
-        // fills answer field in trace
-        // fills finished field in trace
-        // checks answer for correctness
-        return questionTrace;
     }
 
     public ChoiceType getAnswerDefinition() {

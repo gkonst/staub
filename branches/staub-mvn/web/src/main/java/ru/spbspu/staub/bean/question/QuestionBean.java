@@ -3,9 +3,9 @@ package ru.spbspu.staub.bean.question;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.*;
 import ru.spbspu.staub.bean.GenericBean;
+import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
-import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.model.AnswerWrapper;
 import ru.spbspu.staub.service.QuestionTraceService;
 import ru.spbspu.staub.service.TestTraceService;
@@ -34,12 +34,14 @@ public class QuestionBean extends GenericBean {
     private TestTrace testTrace;
 
     private List<Integer> questionIds;
-    private Question currentQuestion;
+    private QuestionTrace currentQuestion;
     private int questionIndex = 0;
     private int currentTime = -1;
     private long startTime;
 
     private AnswerWrapper answer;
+
+    private Integer previousPart;
 
     public String initTest() {
         logger.debug(">>> Init test(#0)...", testTrace.getId());
@@ -51,7 +53,9 @@ public class QuestionBean extends GenericBean {
             }
         }
         if (questionIndex < questionIds.size()) {
+
             fillModel(questionIds.get(questionIndex));
+
             logger.debug(" currentQuestion : #0", currentQuestion);
             if (isTimeLimitPresent()) {
                 logger.debug(" currentTime : #0", currentTime);
@@ -61,6 +65,23 @@ public class QuestionBean extends GenericBean {
                     refreshTimer();
                 }
             }
+            //TODO really saves answer
+            questionTraceService.saveAnswer(currentQuestion);
+            if (testTrace.getTest().getCheckAfterEachPart()) {
+                if(previousPart != null && !previousPart.equals(currentQuestion.getPart())) {
+                    logger.debug(" part changed(#0->#1) -> checking", previousPart, currentQuestion.getPart());
+                    if(!testTraceService.checkPart(testTrace, previousPart)) {
+                        logger.debug(" part checking failed -> test ended");
+                        //TODO check part failed
+                    }
+                }
+            }
+            previousPart = currentQuestion.getPart();
+        } else {
+            // last question
+            logger.debug(" no questions -> test ended");
+            testTraceService.checkPart(testTrace, previousPart);
+            testTrace = testTraceService.endTest(testTrace);
         }
         logger.debug("<<< Init test...Ok");
         return "questionDetail";
@@ -84,29 +105,20 @@ public class QuestionBean extends GenericBean {
 
     public String nextQuestion() {
         logger.debug(">>> Next question...");
-        questionTraceService.saveAnswer(answer.unwrap());
-        if (!questionTraceService.checkPart(answer.unwrap())) {
-            // test ended because of group test failed
-        }
         questionIndex++;
         currentTime = -1;
-        if (questionIndex == questionIds.size()) {
-            // last question
-            testTrace = testTraceService.endTest(testTrace);
-        }
         logger.debug(" question index : #0", questionIndex);
         logger.debug(">>> Next question...Ok");
         return null;
     }
 
     private void fillModel(Integer modelId) {
-        QuestionTrace questionTrace = questionTraceService.findById(modelId);
-        currentQuestion = questionTrace.getQuestion();
-        answer = AnswerWrapper.getAnswer(currentQuestion.getQuestion(), questionTrace);
+        currentQuestion = questionTraceService.findById(modelId);
+        answer = AnswerWrapper.getAnswer(currentQuestion.getQuestion().getQuestion());
     }
 
     private void resetTimer() {
-        currentTime = currentQuestion.getTimeLimit();
+        currentTime = getCurrentQuestion().getTimeLimit();
         startTime = new Date().getTime();
     }
 
@@ -114,8 +126,8 @@ public class QuestionBean extends GenericBean {
         logger.debug(">>> Refreshing timer...");
         long newTime = (new Date().getTime() - startTime) / 1000;
         logger.debug(" time elapsed : " + newTime);
-        logger.debug(" time remaining : " + (currentQuestion.getTimeLimit() - (int) newTime));
-        this.currentTime = currentQuestion.getTimeLimit() - (int) newTime;
+        logger.debug(" time remaining : " + (getCurrentQuestion().getTimeLimit() - (int) newTime));
+        this.currentTime = getCurrentQuestion().getTimeLimit() - (int) newTime;
         logger.debug(">>> Refreshing timer...Ok");
     }
 
@@ -132,11 +144,7 @@ public class QuestionBean extends GenericBean {
     }
 
     public Question getCurrentQuestion() {
-        return currentQuestion;
-    }
-
-    public void setCurrentQuestion(Question currentQuestion) {
-        this.currentQuestion = currentQuestion;
+        return currentQuestion.getQuestion();
     }
 
     public AnswerWrapper getAnswer() {
