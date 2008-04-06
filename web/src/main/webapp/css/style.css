@@ -199,3 +199,8 @@ table td.pagingContent {
     padding-left: 2px;
     padding-right: 2px;
 }
+
+.required {
+    background-color: #FFFACD;
+}
+
