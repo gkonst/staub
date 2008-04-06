@@ -1,15 +1,14 @@
 package ru.spbspu.staub.bean;
 
-import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.datamodel.DataModel;
-import org.jboss.seam.annotations.datamodel.DataModelSelection;
+import org.jboss.seam.faces.DataModels;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
+import javax.faces.model.DataModel;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 /**
  * TODO add descritpion
@@ -20,11 +19,7 @@ public abstract class GenericListBean<T> extends GenericModeBean {
 
     private Map<Object, Boolean> selectedMap;
 
-    @DataModel(scope = ScopeType.PAGE)
-    private List<T> dataModel;
-
-    @DataModelSelection
-    private T selected;
+    private DataModel dataModel;
 
     private static enum PageDirection {
         NEXT_PAGE,
@@ -221,15 +216,15 @@ public abstract class GenericListBean<T> extends GenericModeBean {
         logger.debug("  Defining list of objects for display...");
         if (formTable.getRows() != null) {
             logger.debug("    Getting objects from form table");
-            dataModel = formTable.getRows();
+            dataModel = DataModels.instance().getDataModel(formTable.getRows());
         } else {
             logger.debug("    Creating new objects list");
-            dataModel = new ArrayList<T>();
+            dataModel = DataModels.instance().getDataModel(new ArrayList<T>());
         }
 
         logger.debug("  Defining number of rows on current page...");
-        if (dataModel.size() < rowsOnPage) {
-            rowsOnCurrentPage = dataModel.size();
+        if (dataModel.getRowCount() < rowsOnPage) {
+            rowsOnCurrentPage = dataModel.getRowCount();
         } else {
             rowsOnCurrentPage = rowsOnPage;
         }
@@ -311,11 +306,12 @@ public abstract class GenericListBean<T> extends GenericModeBean {
         return doCreate("detail");
     }
 
-    protected List<Object> getSelectedItems() {
-        List<Object> result = new ArrayList<Object>();
+    @SuppressWarnings("unchecked")
+    protected <S> List<S> getSelectedItems() {
+        List<S> result = new ArrayList<S>();
         for (Map.Entry<Object, Boolean> entry : getSelectedMap().entrySet()) {
             if (entry.getValue()) {
-                result.add(entry.getKey());
+                result.add((S) entry.getKey());
             }
         }
         return result;
@@ -362,11 +358,7 @@ public abstract class GenericListBean<T> extends GenericModeBean {
     }
 
     public T getSelected() {
-        return selected;
-    }
-
-    public void setSelected(T selected) {
-        this.selected = selected;
+        return (T)dataModel.getRowData();
     }
 
     public Map<Object, Boolean> getSelectedMap() {
@@ -375,5 +367,13 @@ public abstract class GenericListBean<T> extends GenericModeBean {
 
     public void setSelectedMap(Map<Object, Boolean> selectedMap) {
         this.selectedMap = selectedMap;
+    }
+
+    public DataModel getDataModel() {
+        return dataModel;
+    }
+
+    public void setDataModel(DataModel dataModel) {
+        this.dataModel = dataModel;
     }
 }
