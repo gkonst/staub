@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:q="http://staub.spbspu.ru/Question" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://staub.spbspu.ru/Question" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:q="http://staub.spbspu.ru/Question"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           targetNamespace="http://staub.spbspu.ru/Question"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           jaxb:version="2.0">
+   <xs:annotation>
+        <xs:appinfo>
+            <jaxb:globalBindings>
+                <jaxb:serializable uid="-1"/>
+            </jaxb:globalBindings>
+        </xs:appinfo>
+    </xs:annotation>
     <xs:element name="question" type="q:question-type"/>
     <xs:complexType name="question-type">
         <xs:sequence>
