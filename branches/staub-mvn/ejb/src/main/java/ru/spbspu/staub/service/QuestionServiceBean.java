@@ -25,6 +25,7 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
      * {@inheritDoc}
      */
     public FormTable findAllForTest(FormProperties formProperties, Test test) {
+        // TODO select is broken, fix
         String query = "select q from Test t join t.questions q where t = :test";
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("test", test);
