@@ -1,6 +1,5 @@
 package ru.spbspu.staub.model;
 
-import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.model.question.QuestionType;
 
 /**
@@ -9,17 +8,15 @@ import ru.spbspu.staub.model.question.QuestionType;
  * @author Konstantin Grigoriev
  */
 public abstract class AnswerWrapper {
-    public static AnswerWrapper getAnswer(QuestionType definition, QuestionTrace questionTrace) {
+    public static AnswerWrapper getAnswer(QuestionType definition) {
         if (definition.getSingleChoice() != null) {
-            return new SingleChoiceAnswerWrapper(definition.getSingleChoice(), questionTrace);
+            return new SingleChoiceAnswerWrapper(definition.getSingleChoice());
         } else if (definition.getMultipleChoice() != null) {
-            return new MultipleChoiceAnswerWrapper(definition.getMultipleChoice(), questionTrace);
+            return new MultipleChoiceAnswerWrapper(definition.getMultipleChoice());
         } else {
             return null;
         }
     }
-
-    public abstract QuestionTrace unwrap();
 
     public boolean isSingleChoice() {
         return this instanceof SingleChoiceAnswerWrapper;

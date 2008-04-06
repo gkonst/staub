@@ -9,8 +9,9 @@
 
 <ui:composition>
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
+    <!--@elvariable id="questionDefinition" type="ru.spbspu.staub.model.question.QuestionType"-->
     <div id="questionDefinitionPanel" class="questionDefinitionPanel">
-        <s:formattedText value="#{pageBean.currentQuestion.description}"/>
+        <s:formattedText value="#{questionDefinition.description}"/>
     </div>
     <div id="questionDefinitionButtons" class="questionDefinitionButtons">
         <span id="questionDefinitionPanelSwitcher"
