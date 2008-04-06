@@ -7,7 +7,8 @@
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:rich="http://richfaces.org/rich"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:s="http://jboss.com/products/seam/taglib">
+      xmlns:s="http://jboss.com/products/seam/taglib"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <ui:composition template="/template/staub-template.jspx">
 <ui:define name="pageScript">
     <script type="text/javascript">
@@ -40,7 +41,8 @@
         <strong>#{messages['question.detail.name']}</strong>
     </td>
     <td width="100%" colspan="3">
-        <h:inputText value="#{pageBean.model.name }"
+        <h:inputText id="nameInput"
+                     value="#{pageBean.model.name }"
                      disabled="#{pageBean.viewMode}"
                      style="width:100%"/>
     </td>
@@ -50,22 +52,36 @@
         <strong>#{messages['question.detail.discipline.name']}</strong>
     </td>
     <td width="50%">
-        <h:selectOneMenu value="#{pageBean.model.discipline}"
+        <h:selectOneMenu id="disciplineSelect"
+                         value="#{pageBean.model.discipline}"
                          disabled="#{pageBean.viewMode}"
-                         converter="ru.spbspu.staub.ObjectSelectConverter">
-            <s:selectItems value="#{pageBean.disciplineList}" var="discipline"
-                           label="#{discipline.name}"/>
+                         converter="ru.spbspu.staub.ObjectSelectConverter"
+                         styleClass="required"
+                         required="true"
+                         requiredMessage="#{messages['question.detail.required.discipline']}">
+            <s:selectItems id="disciplineSelectItems"
+                           value="#{pageBean.disciplineList}"
+                           var="discipline"
+                           label="#{discipline.name}"
+                           noSelectionLabel=""/>
         </h:selectOneMenu>
     </td>
     <td align="right">
         <strong>#{messages['question.detail.category.name']}</strong>
     </td>
     <td width="50%">
-        <h:selectOneMenu value="#{pageBean.model.category}"
+        <h:selectOneMenu id="categorySelect"
+                         value="#{pageBean.model.category}"
                          disabled="#{pageBean.viewMode}"
-                         converter="ru.spbspu.staub.ObjectSelectConverter">
-            <s:selectItems value="#{pageBean.categoryList}" var="category"
-                           label="#{category.name}"/>
+                         converter="ru.spbspu.staub.ObjectSelectConverter"
+                         styleClass="required"
+                         required="true"
+                         requiredMessage="#{messages['question.detail.required.category']}">
+            <s:selectItems id="categorySelectItems"
+                           value="#{pageBean.categoryList}"
+                           var="category"
+                           label="#{category.name}"
+                           noSelectionLabel=""/>
         </h:selectOneMenu>
     </td>
 </tr>
@@ -74,11 +90,18 @@
         <strong>#{messages['question.detail.difficulty.name']}</strong>
     </td>
     <td width="100%" colspan="3">
-        <h:selectOneMenu value="#{pageBean.model.difficulty}"
+        <h:selectOneMenu id="difficultySelect"
+                         value="#{pageBean.model.difficulty}"
                          disabled="#{pageBean.viewMode}"
-                         converter="ru.spbspu.staub.ObjectSelectConverter">
-            <s:selectItems value="#{pageBean.difficultyList}" var="difficulty"
-                           label="#{difficulty.name}"/>
+                         converter="ru.spbspu.staub.ObjectSelectConverter"
+                         styleClass="required"
+                         required="true"
+                         requiredMessage="#{messages['question.detail.required.difficulty']}">
+            <s:selectItems id="difficultySelectItems"
+                           value="#{pageBean.difficultyList}"
+                           var="difficulty"
+                           label="#{difficulty.name}"
+                           noSelectionLabel=""/>
         </h:selectOneMenu>
     </td>
 </tr>
@@ -108,7 +131,9 @@
                     <h:inputTextarea id="questionDefinitionTextarea"
                                      value="#{pageBean.questionDefinition.description}"
                                      disabled="#{pageBean.viewMode}"
-                                     style="width:100%; height:300px"/>
+                                     style="width:100%; height:300px"
+                                     required="true"
+                                     requiredMessage="#{messages['question.detail.required.definition']}"/>
                 </td>
             </tr>
         </table>
@@ -126,12 +151,19 @@
         <h:selectOneMenu id="answerTypesSelect"
                          value="#{pageBean.answerType}"
                          converter="ru.spbspu.staub.ObjectSelectConverter"
-                         disabled="#{pageBean.viewMode}">
-            <f:selectItems value="#{pageBean.answerTypes}"/>
+                         disabled="#{pageBean.viewMode}"
+                         styleClass="required"
+                         required="true"
+                         requiredMessage="#{messages['question.detail.required.answerType']}">
+            <s:selectItems id="answerTypesSelectItems"
+                           var="type" value="#{pageBean.answerTypes}"
+                           label="#{messages[fn:join('question.detail.answerType.', type)]}"
+                           noSelectionLabel=""/>
             <a4j:support id="answerTypesSelectSupport"
                          event="onchange"
                          action="#{pageBean.changeAnswerType}"
-                         reRender="correctAnswerPanel, answerLabelPanel"/>
+                         reRender="correctAnswerPanel, answerLabelPanel"
+                         ajaxSingle="true"/>
         </h:selectOneMenu>
     </td>
 </tr>
@@ -143,16 +175,24 @@
                               rendered="#{pageBean.questionDefinition.singleChoice != null}"
                               converter="ru.spbspu.staub.ObjectSelectConverter"
                               value="#{pageBean.correctAnswer}"
-                              disabled="#{pageBean.viewMode}">
-                <s:selectItems value="#{pageBean.questionDefinition.singleChoice.answer}" var="temp"/>
+                              disabled="#{pageBean.viewMode}"
+                              required="true"
+                              requiredMessage="#{messages['question.detail.required.correctSingleChoice']}">
+                <s:selectItems id="correctAnswerSingleChoiceItems"
+                               value="#{pageBean.questionDefinition.singleChoice.answer}"
+                               var="temp"/>
             </h:selectOneRadio>
             <h:selectManyCheckbox id="correctAnswerMultipleChoice"
                                   layout="pageDirection"
                                   rendered="#{pageBean.questionDefinition.multipleChoice != null}"
                                   converter="ru.spbspu.staub.ObjectSelectConverter"
                                   value="#{pageBean.correctAnswer}"
-                                  disabled="#{pageBean.viewMode}">
-                <s:selectItems value="#{pageBean.questionDefinition.multipleChoice.answer}" var="temp"/>
+                                  disabled="#{pageBean.viewMode}"
+                                  required="true"
+                                  requiredMessage="#{messages['question.detail.required.correctMultipleChoice']}">
+                <s:selectItems id="correctAnswerMultipleChoiceItems"
+                               value="#{pageBean.questionDefinition.multipleChoice.answer}"
+                               var="temp"/>
             </h:selectManyCheckbox>
         </a4j:outputPanel>
     </td>
@@ -165,7 +205,9 @@
                             rendered="#{pageBean.questionDefinition.singleChoice != null}">
                     <tr>
                         <td>
-                            <h:inputText value="#{answer.value}" disabled="#{pageBean.viewMode}"/>
+                            <h:inputText id="singleChoiceValueInput"
+                                         value="#{answer.value}"
+                                         disabled="#{pageBean.viewMode}"/>
                         </td>
                     </tr>
                 </a4j:repeat>
@@ -175,7 +217,9 @@
                             rendered="#{pageBean.questionDefinition.multipleChoice != null}">
                     <tr>
                         <td>
-                            <h:inputText value="#{answer.value}" disabled="#{pageBean.viewMode}"/>
+                            <h:inputText id="multipleChoiceValueInput"
+                                         value="#{answer.value}"
+                                         disabled="#{pageBean.viewMode}"/>
                         </td>
                     </tr>
                 </a4j:repeat>
@@ -188,13 +232,15 @@
                            reRender="correctAnswerPanel,answerLabelPanel"
                            styleClass="button"
                            value="+"
-                           disabled="#{pageBean.viewMode}"/>
+                           disabled="#{pageBean.viewMode}"
+                           immediate="true"/>
         <a4j:commandButton id="removeAnswerButton"
                            action="#{pageBean.removeAnswer}"
                            reRender="correctAnswerPanel,answerLabelPanel"
                            styleClass="button"
                            value="-"
-                           disabled="#{pageBean.viewMode}"/>
+                           disabled="#{pageBean.viewMode}"
+                           immediate="true"/>
     </td>
 </tr>
 </table>
@@ -207,10 +253,10 @@
     <h:inputHidden id="imageTagInput" value="#{pageBean.imageTag}"/>
     <h:form enctype="multipart/form-data">
 
-            <rich:fileUpload fileUploadListener="#{questionDetailBean.fileUploadListener}">
-                <a4j:support event="onuploadcomplete" reRender="imageUploadModalBox"
-                             oncomplete="updateFieldAfterImageUpload();Richfaces.hideModalPanel('imageUploadModalBox');"/>
-            </rich:fileUpload>
+        <rich:fileUpload fileUploadListener="#{questionDetailBean.fileUploadListener}">
+            <a4j:support event="onuploadcomplete" reRender="imageUploadModalBox"
+                         oncomplete="updateFieldAfterImageUpload();Richfaces.hideModalPanel('imageUploadModalBox');"/>
+        </rich:fileUpload>
 
         <a4j:commandButton id="cancelUploadButton"
                            styleClass="button"
@@ -222,9 +268,10 @@
     <f:facet name="header">
         Предварительный просмотр
     </f:facet>
+
     <div id="questionDefinitionPanel" class="questionDefinitionPanel">
-    <s:formattedText id="previewText"
-                  value="#{pageBean.questionDefinition.description}"/>
+        <s:formattedText id="previewText"
+                         value="#{pageBean.questionDefinition.description}"/>
     </div>
 
     <a4j:commandButton id="closePreviewButton"

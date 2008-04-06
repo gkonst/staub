@@ -4,7 +4,6 @@ import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.international.Messages;
 import org.richfaces.event.UploadEvent;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericDetailBean;
@@ -15,11 +14,10 @@ import ru.spbspu.staub.model.question.QuestionType;
 import ru.spbspu.staub.service.*;
 import ru.spbspu.staub.util.ImageResource;
 
-import javax.faces.model.SelectItem;
+import java.io.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.*;
 
 /**
  * Webbean for manipulating detail data of <code>Question</code> entity.
@@ -81,6 +79,8 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         fillDisciplineList();
         fillCategoryList();
         fillDifficultyList();
+        answerType = null;
+        correctAnswer = null;
         if (isCreateMode()) {
             setModel(new Question());
             setQuestionDefinition(new QuestionType());
@@ -102,16 +102,16 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
                     setCorrectAnswer(type);
                 }
             }
-        } else if (AnswerTypes.SINGLE_CHOICE.equals(answerType)) {
+        } else if (AnswerTypes.MULTIPLE_CHOICE.equals(answerType)) {
             List<AnswerType> result = new ArrayList<AnswerType>();
-            for (AnswerType type : questionDefinition.getSingleChoice().getAnswer()) {
+            for (AnswerType type : questionDefinition.getMultipleChoice().getAnswer()) {
                 if (Boolean.valueOf(type.getCorrect())) {
                     result.add(type);
                 }
             }
             setCorrectAnswer(result);
         } else {
-            throw new IllegalArgumentException("Unrecognized answer type");
+            throw new IllegalArgumentException("Unrecognized answer type : " + answerType);
         }
         logger.debug(" determineCorrectAnswer...Ok");
     }
@@ -203,12 +203,8 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         }
     }
 
-    public List<SelectItem> getAnswerTypes() {
-        List<SelectItem> result = new ArrayList<SelectItem>();
-        for (AnswerTypes type : AnswerTypes.values()) {
-            result.add(new SelectItem(type, Messages.instance().get("question.detail.answerType." + type)));
-        }
-        return result;
+    public AnswerTypes[] getAnswerTypes() {
+        return AnswerTypes.values();
     }
 
     public void addAnswer() {
@@ -254,6 +250,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         } else {
             throw new IllegalArgumentException("Unrecognized answer type");
         }
+        addAnswer();
         logger.debug(" new answer type=#0, correct answer type=#1", answerType, correctAnswer.getClass().getName());
         logger.debug("<<< Changing answer type...Ok");
     }
