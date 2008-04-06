@@ -3,6 +3,8 @@ package ru.spbspu.staub.service;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.User;
+import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.model.list.FormProperties;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
@@ -26,5 +28,10 @@ public class UserServiceBean extends GenericServiceBean<User, String> implements
             return user;
         }
         return user;
+    }
+
+    public FormTable findUsersForAssign(FormProperties formProperties) {
+        // TODO implement method
+        return findAll(formProperties);
     }
 }

@@ -18,11 +18,11 @@
         <ui:decorate template="../controls/listLayoutControl.jspx">
             <ui:define name="listPageData">
                 <h:outputText value="#{messages['common.list.noDataFound']}"
-                              rendered="#{dataModel == null or dataModel.rowCount == 0}"/>
+                              rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
                 <h:dataTable id="testList"
-                             value="#{dataModel}"
+                             value="#{pageBean.dataModel}"
                              var="test"
-                             rendered="#{dataModel.rowCount > 0}"
+                             rendered="#{pageBean.dataModel.rowCount > 0}"
                              styleClass="dataTable">
                     <h:column>
                         <f:facet name="header">#{messages['testToPass.list.name']}</f:facet>

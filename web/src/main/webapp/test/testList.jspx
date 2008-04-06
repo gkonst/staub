@@ -25,34 +25,33 @@
                 <ui:include src="/controls/genericRefreshControl.jspx"/>
             </a4j:form>
         </a4j:outputPanel>
-        <ui:decorate template="../controls/listLayoutControl.jspx">
-            <ui:define name="listPageData">
-                <h:outputText value="#{messages['common.list.noDataFound']}"
-                              rendered="#{dataModel == null or dataModel.rowCount == 0}"/>
-                <rich:dataTable id="testList"
-                             value="#{dataModel}"
-                             var="test"
-                             rendered="#{dataModel.rowCount > 0}"
-                             styleClass="dataTable">
-                    <rich:column styleClass="columnIcon">
-                        <a4j:htmlCommandLink id="userAssignLink"
-                                             action="userAssign">
-                            <h:graphicImage id="userAssignImage"
-                                            url="/images/icons/icon_detail_edit.gif"/>
-                            <f:param name="modelId" value="#{test.id}"/>
-                            <f:param name="beanMode" value="EDIT_MODE"/>
-                        </a4j:htmlCommandLink>
-                    </rich:column>
-                    <rich:column>
-                        <f:facet name="header">#{messages['test.list.name']}</f:facet>
-                        <s:link action="detail" value="#{test.name}">
-                            <f:param name="modelId" value="#{test.id}"/>
-                            <f:param name="beanMode" value="EDIT_MODE"/>
-                        </s:link>
-                    </rich:column>
-                </rich:dataTable>
-            </ui:define>
-        </ui:decorate>
+        <a4j:form id="testListForm">
+            <ui:decorate template="../controls/listLayoutControl.jspx">
+                <ui:define name="listPageData">
+                    <h:outputText value="#{messages['common.list.noDataFound']}"
+                                  rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
+                    <rich:dataTable id="testList"
+                                    value="#{pageBean.dataModel}"
+                                    var="test"
+                                    rendered="#{pageBean.dataModel.rowCount > 0}"
+                                    styleClass="dataTable">
+                        <rich:column styleClass="columnIcon">
+                            <a4j:htmlCommandLink id="userAssignLink"
+                                                 action="userAssign">
+                                <h:graphicImage id="userAssignImage"
+                                                url="/images/icons/icon_detail_edit.gif"/>
+                                <f:param name="testId" value="#{test.id}"/>
+                                <f:param name="beanMode" value="EDIT_MODE"/>
+                            </a4j:htmlCommandLink>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">#{messages['test.list.name']}</f:facet>
+                    #{test.name}
+                        </rich:column>
+                    </rich:dataTable>
+                </ui:define>
+            </ui:decorate>
+        </a4j:form>
     </ui:define>
 </ui:composition>
 </html>

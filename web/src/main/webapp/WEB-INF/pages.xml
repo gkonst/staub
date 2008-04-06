@@ -67,6 +67,9 @@
             <rule if-outcome="detail">
                 <render view-id="/test/testDetail.jspx"/>
             </rule>
+            <rule if-outcome="userAssign">
+                <render view-id="/user/userAssignList.jspx"/>
+            </rule>
         </navigation>
     </page>
     <page view-id="/test/testDetail.jspx"
@@ -82,6 +85,18 @@
             </rule>
             <rule if-outcome="questionSelectList">
                 <render view-id="/question/questionSelectList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Users -->
+    <page view-id="/user/userAssignList.jspx"
+          login-required="true"
+          action="#{userAssignListBean.initBean}">
+        <restrict>#{s:hasRole('ADMIN')}</restrict>
+        <navigation>
+            <rule if-outcome="testList">
+                <render view-id="/test/testList.jspx"/>
             </rule>
         </navigation>
     </page>
