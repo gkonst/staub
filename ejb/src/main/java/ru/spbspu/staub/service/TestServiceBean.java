@@ -38,6 +38,8 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
 
         createTestQuestion(test, question.getId());
 
+        test.setQuestionsCount(test.getQuestionsCount() + 1);
+
         return makePersistent(test);
     }
 
@@ -48,6 +50,8 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         for (Integer questionId : questionsIds) {
             createTestQuestion(test, questionId);
         }
+
+        test.setQuestionsCount(test.getQuestionsCount() + questionsIds.size());
 
         return makePersistent(test);
     }
@@ -64,8 +68,6 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     }
 
     private void createTestQuestion(Test test, Integer questionId) {
-        test.setQuestionsCount(test.getQuestionsCount() + 1);
-
         TestQuestion tq = new TestQuestion();
         tq.setFkTest(test.getId());
         tq.setFkQuestion(questionId);
