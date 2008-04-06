@@ -21,14 +21,14 @@ public class AnswerXmlType implements UserType, Serializable {
 
     private static final int[] SQL_TYPES = {Types.CLOB};
 
-    private static final Class RETURNED_CLAS = AnswerType.class;
+    private static final Class RETURNED_CLASS = AnswerType.class;
 
     public int[] sqlTypes() {
         return SQL_TYPES;
     }
 
     public Class returnedClass() {
-        return RETURNED_CLAS;
+        return RETURNED_CLASS;
     }
 
     public boolean equals(Object o, Object o1) throws HibernateException {
