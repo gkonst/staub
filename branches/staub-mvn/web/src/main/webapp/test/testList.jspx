@@ -46,7 +46,10 @@
                         </rich:column>
                         <rich:column>
                             <f:facet name="header">#{messages['test.list.name']}</f:facet>
-                    #{test.name}
+                            <s:link action="detail" value="#{test.name}">
+                                <f:param name="modelId" value="#{test.id}"/>
+                                <f:param name="beanMode" value="EDIT_MODE"/>
+                            </s:link>
                         </rich:column>
                     </rich:dataTable>
                 </ui:define>
