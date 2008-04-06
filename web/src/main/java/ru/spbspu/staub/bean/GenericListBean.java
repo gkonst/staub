@@ -8,6 +8,8 @@ import ru.spbspu.staub.model.list.FormTable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * TODO add descritpion
@@ -15,6 +17,8 @@ import java.util.List;
  * @author Konstantin Grigoriev
  */
 public abstract class GenericListBean<T> extends GenericModeBean {
+
+    private Map<Object, Boolean> selectedMap;
 
     @DataModel(scope = ScopeType.PAGE)
     private List<T> dataModel;
@@ -175,6 +179,7 @@ public abstract class GenericListBean<T> extends GenericModeBean {
         rowsOnPage = DEFAULT_ROWS_ON_PAGE;
         rowsOnCurrentPage = DEFAULT_ROWS_ON_PAGE;
         logger.debug("    Default rows on page : " + rowsOnPage);
+        selectedMap = new HashMap();
         initPage(PageDirection.FIRST_PAGE);
         logger.debug("Retrieve completed successfully!");
     }
@@ -299,10 +304,21 @@ public abstract class GenericListBean<T> extends GenericModeBean {
 
     /**
      * Defines create operation for current bean (optional).
+     *
      * @return navigation outcome, by default 'detail'
      */
     public String doCreate() {
         return doCreate("detail");
+    }
+
+    protected List<Object> getSelectedItems() {
+        List<Object> result = new ArrayList<Object>();
+        for (Map.Entry<Object, Boolean> entry : getSelectedMap().entrySet()) {
+            if (entry.getValue()) {
+                result.add(entry.getKey());
+            }
+        }
+        return result;
     }
 
     public int getCurrentPage() {
@@ -351,5 +367,13 @@ public abstract class GenericListBean<T> extends GenericModeBean {
 
     public void setSelected(T selected) {
         this.selected = selected;
+    }
+
+    public Map<Object, Boolean> getSelectedMap() {
+        return selectedMap;
+    }
+
+    public void setSelectedMap(Map<Object, Boolean> selectedMap) {
+        this.selectedMap = selectedMap;
     }
 }
