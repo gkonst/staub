@@ -110,7 +110,8 @@
     <properties>
         <!-- Libraries versions -->
         <seam.version>2.0.1.GA</seam.version>
-        <richfaces.version>3.2.0.CR7</richfaces.version>
+        <jsf.version>1.2_07</jsf.version>
+        <richfaces.version>3.2.0.GA</richfaces.version>
         <!-- Seam properties -->
         <jndi-pattern>staub-ear-${project.version}/#{ejbName}/local</jndi-pattern>
     </properties>
