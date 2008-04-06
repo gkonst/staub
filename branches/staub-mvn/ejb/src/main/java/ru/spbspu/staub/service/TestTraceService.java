@@ -18,16 +18,18 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      * this user and this sessionId, if not generates it with <code>QuestionTrace</code> entites.
      *
      * @param test      specific <code>Test</code> instance
-     * @param sessionId <code>HttpSession</code> identifier
      * @param user      current user
+     * @param sessionId <code>HttpSession</code> identifier
+     *
      * @return created or found <code>TestTrace</code>
      */
-    TestTrace getTestTrace(Test test, String sessionId, User user);
+    TestTrace getTestTrace(Test test, User user, String sessionId);
 
     /**
      * Starts test (fills started field).
      *
      * @param testTrace <code>TestTrace</code> to start
+     *
      * @return started <code>TestTrace</code>
      */
     TestTrace startTest(TestTrace testTrace);
@@ -37,7 +39,29 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      * Forms <code>UserHistory</code>, etc.
      *
      * @param testTrace ended test trace
+     *
      * @return updated instance
      */
     TestTrace endTest(TestTrace testTrace);
+
+    /**
+     * Validates questions from a given part.
+     *
+     * @param testTrace the <code>TestTrace</code> to process
+     * @param part      the identification number
+     *
+     * @return <code>true</code> if check succeeded; <code>false</code> otherwise
+     */
+    boolean checkPart(TestTrace testTrace, Integer part);
+
+    /**
+     * Validates the whole TestTrace. No actual validation of QuestionTrace elements is performed. Field
+     * QuestionTrace.correct is analyzed, null value is treated as false.
+     * <p>
+     * This method is called by {@link #endTest(TestTrace)}.
+     *
+     * @param testTrace the <code>TestTrace</code> to process
+     * @return the updated <code>TestTrace</code> entity
+     */
+    TestTrace checkTestTrace(TestTrace testTrace);
 }

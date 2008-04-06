@@ -17,21 +17,26 @@ public interface QuestionTraceService extends GenericService<QuestionTrace, Inte
      * Fetches <code>List</code> of <code>QuestionTrace</code> identifiers
      * for specific <code>TestTrace</code> instance.
      * Fetches only unfinished question traces with specific order.
+     *
      * @param testTrace specific <code>TestTrace</code>
+     *
      * @return fetched list
      */
     List<Integer> findIdsByTestTraceId(TestTrace testTrace);
 
     /**
      * Saves anwered question.
+     *
      * @param questionTrace question to save
      */
     void saveAnswer(QuestionTrace questionTrace);
 
     /**
-     * Chcecks group for propriety.
-     * @param questionTrace ???
-     * @return true or not
+     * Validates a single answer.
+     *
+     * @param questionTrace the trace element to process
+     *
+     * @return the updated trace element
      */
-    boolean checkGroup(QuestionTrace questionTrace);
+    QuestionTrace checkQuestion(QuestionTrace questionTrace);
 }
