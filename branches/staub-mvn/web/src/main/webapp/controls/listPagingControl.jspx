@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -7,68 +7,91 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:a4j="http://richfaces.org/a4j">
 
-    <ui:composition>
-        <table border="0" cellspacing="0" cellpadding="0" width="100%">
+<ui:composition>
+    <table border="0" cellspacing="0" cellpadding="0" width="100%">
         <tr>
             <td align="left" width="50%" class="pagingContent">
                 #{pageBean.rowsOnCurrentPage} #{messages['common.list.paging.items']} #{pageBean.rowsTotal} #{messages['common.list.paging.shown']}
             </td>
             <td align="right" width="50%">
                 <table border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td nowrap="nowrap" class="pagingContent">
-                       <h:outputText id="#{pagerAlign}_pageManyText"
-                                    value="#{messages['common.list.paging.page']} #{pageBean.currentPage}
+                    <tr>
+                        <td nowrap="nowrap" class="pagingContent">
+                            <h:outputText id="#{pagerAlign}_pageManyText"
+                                          value="#{messages['common.list.paging.page']} #{pageBean.currentPage}
                                             (#{messages['common.list.paging.of']} #{pageBean.pageQuantity})"
-                                    rendered="#{pageBean.pageQuantity &gt; 0}" />
-                       <h:outputText id="#{pagerAlign}_pageOneText"
-                                    value="#{messages['common.list.paging.page']} #{pageBean.currentPage}"
-                                    rendered="#{pageBean.pageQuantity == 0}" />
-                    </td>
-                    <td width="5" />
-                    <td>
-                        <h:form id="#{pagerAlign}_listPagingStepForm">
+                                          rendered="#{pageBean.pageQuantity &gt; 0}"/>
+                            <h:outputText id="#{pagerAlign}_pageOneText"
+                                          value="#{messages['common.list.paging.page']} #{pageBean.currentPage}"
+                                          rendered="#{pageBean.pageQuantity == 0}"/>
+                        </td>
+                        <td width="5"/>
+                        <td>
                             <table border="0" cellspacing="0" cellpadding="0" width="100%">
-                            <tr>
-                                <td>
-                                    <a4j:commandLink id="#{pagerAlign}_firstPageLink" action="#{pageBean.doFirstPage}" rendered="#{pageBean.currentPage &gt; 1}" reRender="contentBody">
-                                        <h:graphicImage id="#{pagerAlign}_firstPageLinkImg" url="/images/paging/icon_page_first.gif" height="17" width="18" />
-                                    </a4j:commandLink>
-                                    <h:graphicImage id="#{pagerAlign}_firstPageImg" rendered="#{pageBean.currentPage &lt;= 1}"
-                                            url="/images/paging/icon_page_first_disable.gif" height="17" width="18" />
-                                </td>
-                                <td width="5" />
-                                <td>
-                                    <a4j:commandLink id="#{pagerAlign}_prevPageLink" action="#{pageBean.doPrevPage}" rendered="#{pageBean.currentPage &gt; 1}" reRender="contentBody">
-                                        <h:graphicImage id="#{pagerAlign}_prevPageLinkImg" url="/images/paging/icon_page_previous.gif" height="17" width="18" />
-                                    </a4j:commandLink>
-                                    <h:graphicImage id="#{pagerAlign}_prevPageImg" rendered="#{pageBean.currentPage &lt;= 1}"
-                                            url="/images/paging/icon_page_previous_disable.gif" height="17" width="18" />
-                                </td>
-                                <td width="5" />
-                                <td>
-                                    <a4j:commandLink id="#{pagerAlign}_nextPageLink" action="#{pageBean.doNextPage}" rendered="#{pageBean.currentPage &lt; pageBean.pageQuantity}" reRender="contentBody">
-                                        <h:graphicImage id="#{pagerAlign}_nextPageLinkImg" url="/images/paging/icon_page_next.gif" height="17" width="18" />
-                                    </a4j:commandLink>
-                                    <h:graphicImage id="#{pagerAlign}_nextPageImg" rendered="#{pageBean.currentPage &gt;= pageBean.pageQuantity}"
-                                            url="/images/paging/icon_page_next_disable.gif" height="17" width="18" />
-                                </td>
-                                <td width="5" />
-                                <td>
-                                    <a4j:commandLink id="#{pagerAlign}_lastPageLink" action="#{pageBean.doLastPage}" rendered="#{pageBean.currentPage &lt; pageBean.pageQuantity}" reRender="contentBody">
-                                        <h:graphicImage id="#{pagerAlign}_lastPageLinkImg" url="/images/paging/icon_page_last.gif" height="17" width="18" />
-                                    </a4j:commandLink>
-                                    <h:graphicImage id="#{pagerAlign}_lastPageImg" rendered="#{pageBean.currentPage &gt;= pageBean.pageQuantity}"
-                                            url="/images/paging/icon_page_last_disable.gif" height="17" width="18" />
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        <a4j:commandLink id="#{pagerAlign}_firstPageLink"
+                                                         action="#{pageBean.doFirstPage}"
+                                                         rendered="#{pageBean.currentPage &gt; 1}"
+                                                         reRender="contentBody">
+                                            <h:graphicImage id="#{pagerAlign}_firstPageLinkImg"
+                                                            url="/images/paging/icon_page_first.gif" height="17"
+                                                            width="18"/>
+                                        </a4j:commandLink>
+                                        <h:graphicImage id="#{pagerAlign}_firstPageImg"
+                                                        rendered="#{pageBean.currentPage &lt;= 1}"
+                                                        url="/images/paging/icon_page_first_disable.gif" height="17"
+                                                        width="18"/>
+                                    </td>
+                                    <td width="5"/>
+                                    <td>
+                                        <a4j:commandLink id="#{pagerAlign}_prevPageLink" action="#{pageBean.doPrevPage}"
+                                                         rendered="#{pageBean.currentPage &gt; 1}"
+                                                         reRender="contentBody">
+                                            <h:graphicImage id="#{pagerAlign}_prevPageLinkImg"
+                                                            url="/images/paging/icon_page_previous.gif" height="17"
+                                                            width="18"/>
+                                        </a4j:commandLink>
+                                        <h:graphicImage id="#{pagerAlign}_prevPageImg"
+                                                        rendered="#{pageBean.currentPage &lt;= 1}"
+                                                        url="/images/paging/icon_page_previous_disable.gif" height="17"
+                                                        width="18"/>
+                                    </td>
+                                    <td width="5"/>
+                                    <td>
+                                        <a4j:commandLink id="#{pagerAlign}_nextPageLink" action="#{pageBean.doNextPage}"
+                                                         rendered="#{pageBean.currentPage &lt; pageBean.pageQuantity}"
+                                                         reRender="contentBody">
+                                            <h:graphicImage id="#{pagerAlign}_nextPageLinkImg"
+                                                            url="/images/paging/icon_page_next.gif" height="17"
+                                                            width="18"/>
+                                        </a4j:commandLink>
+                                        <h:graphicImage id="#{pagerAlign}_nextPageImg"
+                                                        rendered="#{pageBean.currentPage &gt;= pageBean.pageQuantity}"
+                                                        url="/images/paging/icon_page_next_disable.gif" height="17"
+                                                        width="18"/>
+                                    </td>
+                                    <td width="5"/>
+                                    <td>
+                                        <a4j:commandLink id="#{pagerAlign}_lastPageLink" action="#{pageBean.doLastPage}"
+                                                         rendered="#{pageBean.currentPage &lt; pageBean.pageQuantity}"
+                                                         reRender="contentBody">
+                                            <h:graphicImage id="#{pagerAlign}_lastPageLinkImg"
+                                                            url="/images/paging/icon_page_last.gif" height="17"
+                                                            width="18"/>
+                                        </a4j:commandLink>
+                                        <h:graphicImage id="#{pagerAlign}_lastPageImg"
+                                                        rendered="#{pageBean.currentPage &gt;= pageBean.pageQuantity}"
+                                                        url="/images/paging/icon_page_last_disable.gif" height="17"
+                                                        width="18"/>
+                                    </td>
+                                </tr>
                             </table>
-                        </h:form>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>
-        </table>
-    </ui:composition>
+    </table>
+</ui:composition>
 </html>

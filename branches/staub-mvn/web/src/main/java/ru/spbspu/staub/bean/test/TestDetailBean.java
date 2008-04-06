@@ -7,6 +7,7 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.international.Messages;
+import org.jboss.seam.ScopeType;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.Question;
@@ -36,7 +37,7 @@ public class TestDetailBean extends GenericListBean<Question> {
     @RequestParameter
     private Integer modelId;
 
-    @Out(value = "test", required = false)
+    @Out(value = "test", scope = ScopeType.EVENT, required = false)
     private Test model;
 
     @In
@@ -111,7 +112,25 @@ public class TestDetailBean extends GenericListBean<Question> {
         logger.debug("Saving... OK");
     }
 
-    public String selectQuestion(){
+    /**
+     * Defines cancel operation for current bean.
+     *
+     * @return navigation outcome, by default 'list'
+     */
+    public String doCancel() {
+        return "list";
+    }
+
+    /**
+     * Defines back operation for current bean.
+     *
+     * @return navigation outcome, by default 'list'
+     */
+    public String doBack() {
+        return doRefresh("list");
+    }
+
+    public String selectQuestion() {
         return doEdit("questionSelectList");
     }
 

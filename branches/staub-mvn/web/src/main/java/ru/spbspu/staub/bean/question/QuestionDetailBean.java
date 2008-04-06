@@ -31,7 +31,9 @@ import java.io.*;
 public class QuestionDetailBean extends GenericDetailBean<Question> {
     private static final long serialVersionUID = -458598915895087232L;
 
-    @In(required = false)
+    @In(value = "test", required = false)
+    private Test injectedTest;
+
     private Test test;
 
     @In
@@ -75,6 +77,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
      */
     @Override
     protected void fillModel(Integer modelId) {
+        test = injectedTest;
         fillDisciplineList();
         fillCategoryList();
         fillDifficultyList();
@@ -143,14 +146,39 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         logger.debug("Saving question...");
         resolveCorrectAnswer();
         getModel().setQuestion(getQuestionDefinition());
-        questionService.saveQuestion(getModel(), user);
-        if (test != null) {
+        setModel(questionService.saveQuestion(getModel(), user));
+        if (test != null && isCreateMode()) {
+            logger.debug(" adding question to test : #0", test);
             test = testService.addQuestionToTest(test, getModel(), user);
         }
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
         logger.debug("Saving... OK");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String doCancel() {
+        if (test != null) {
+            return "testDetail";
+        } else {
+            return super.doCancel();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String doBack() {
+        if (test != null) {
+            return doRefresh("testDetail");
+        } else {
+            return super.doBack();
+        }
     }
 
     private void resolveCorrectAnswer() {

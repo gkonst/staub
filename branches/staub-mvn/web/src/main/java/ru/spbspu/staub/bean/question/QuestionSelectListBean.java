@@ -4,7 +4,9 @@ import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.Out;
 import org.jboss.seam.faces.DataModels;
+import org.jboss.seam.ScopeType;
 import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.entity.Question;
@@ -34,7 +36,9 @@ public class QuestionSelectListBean extends GenericListBean<Question> {
     @In
     private User user;
 
-    @In
+    @In(value = "test", required = false)
+    private Test injectedTest;
+
     private Test test;
 
     @In
@@ -51,6 +55,11 @@ public class QuestionSelectListBean extends GenericListBean<Question> {
         if (isBeanModeDefined()) {
             logger.debug("Preparing list bean...");
             selectedQuestions = DataModels.instance().getDataModel(new ArrayList<Object[]>());
+            if(injectedTest == null) {
+                throw new IllegalArgumentException("Test must be injected for using this bean");
+            } else {
+                test = injectedTest;
+            }
             switch (getBeanMode()) {
                 case VIEW_MODE:     // using fall through switch behaviour
                 case EDIT_MODE:
@@ -91,6 +100,16 @@ public class QuestionSelectListBean extends GenericListBean<Question> {
         logger.debug(">>> Removing all questions...");
         getWrappedData().clear();
         logger.debug("<<< Removing all questions...Ok");
+    }
+
+    public void addSelected() {
+        logger.debug(">>> Adding selected items...#0", getSelectedItems().size());
+        for (Object item : getSelectedItems()) {
+            Question questionItem = (Question) item;
+            getWrappedData().add(new Object[]{questionItem.getId(), questionItem.getName()});
+        }
+        getSelectedMap().clear();
+        logger.debug("<<< Adding selected items...");
     }
 
     public void doSave() {

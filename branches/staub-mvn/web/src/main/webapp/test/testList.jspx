@@ -5,6 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="/template/staub-template.jspx">
@@ -28,19 +29,28 @@
             <ui:define name="listPageData">
                 <h:outputText value="#{messages['common.list.noDataFound']}"
                               rendered="#{dataModel == null or dataModel.rowCount == 0}"/>
-                <h:dataTable id="testList"
+                <rich:dataTable id="testList"
                              value="#{dataModel}"
                              var="test"
                              rendered="#{dataModel.rowCount > 0}"
                              styleClass="dataTable">
-                    <h:column>
+                    <rich:column styleClass="columnIcon">
+                        <a4j:htmlCommandLink id="userAssignLink"
+                                             action="userAssign">
+                            <h:graphicImage id="userAssignImage"
+                                            url="/images/icons/icon_detail_edit.gif"/>
+                            <f:param name="modelId" value="#{test.id}"/>
+                            <f:param name="beanMode" value="EDIT_MODE"/>
+                        </a4j:htmlCommandLink>
+                    </rich:column>
+                    <rich:column>
                         <f:facet name="header">#{messages['test.list.name']}</f:facet>
                         <s:link action="detail" value="#{test.name}">
                             <f:param name="modelId" value="#{test.id}"/>
                             <f:param name="beanMode" value="EDIT_MODE"/>
                         </s:link>
-                    </h:column>
-                </h:dataTable>
+                    </rich:column>
+                </rich:dataTable>
             </ui:define>
         </ui:decorate>
     </ui:define>
