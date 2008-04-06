@@ -11,6 +11,7 @@ import ru.spbspu.staub.model.list.FormTable;
 import javax.ejb.Stateless;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
 
 /**
  * Stateless EJB Service for manipulations with <code>Question</code> entity.
@@ -21,22 +22,21 @@ import java.util.Map;
 @AutoCreate
 @Stateless
 public class QuestionServiceBean extends GenericServiceBean<Question, Integer> implements QuestionService {
-    /**
-     * {@inheritDoc}
-     */
     public FormTable findAllForTest(FormProperties formProperties, Test test) {
-        // TODO select is broken, fix
-        String query = "select q from Test t join t.questions q where t = :test";
+        String query = "select q from Question q, TestQuestion tq, Test t where q.id = tq.fkQuestion and tq.fkTest = t.id and t = :test";
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("test", test);
         return findAll(query, formProperties, parameters);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Question saveQuestion(Question question, User user) {
-        // TODO implement method
-        return question;
+        if (question.getId() == null) {
+            question.setCreatedBy(user.getUsername());
+            question.setCreated(new Date());
+        } else {
+            question.setModifiedBy(user.getUsername());
+            question.setModified(new Date());
+        }
+        return makePersistent(question);
     }
 }

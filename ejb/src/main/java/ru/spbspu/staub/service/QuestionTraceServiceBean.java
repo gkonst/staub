@@ -4,15 +4,18 @@ import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
+import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.model.answer.AnswerType;
 import ru.spbspu.staub.model.answer.ElementType;
 import ru.spbspu.staub.model.question.QuestionType;
 
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Date;
 
 /**
  * Stateless EJB Service for manipulations with <code>QuestionTrace</code> entity.
@@ -25,15 +28,16 @@ import java.util.Set;
 public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, Integer> implements QuestionTraceService {
     @SuppressWarnings("unchecked")
     public List<Integer> findIdsByTestTraceId(TestTrace testTrace) {
-        return getEntityManager().createQuery("select qt.id from QuestionTrace qt where qt.testTrace = :testTrace and qt.finished is null")
-                .setParameter("testTrace", testTrace).getResultList();
+        Query q = getEntityManager().createQuery("select qt.id from QuestionTrace qt where qt.testTrace = :testTrace and qt.finished is null");
+        q.setParameter("testTrace", testTrace);
+        return q.getResultList();
     }
 
     public void saveAnswer(QuestionTrace questionTrace) {
-        getEntityManager().persist(questionTrace);
+        makePersistent(questionTrace);
     }
 
-    public boolean checkGroup(QuestionTrace questionTrace) {
+    public QuestionTrace checkQuestion(QuestionTrace questionTrace) {
         QuestionType questionType = questionTrace.getQuestion().getQuestion();
         AnswerType answerType = questionTrace.getAnswer();
         boolean result = false;
@@ -42,7 +46,13 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
         } else if (questionType.getSingleChoice() != null) {
             result = check(questionType.getSingleChoice().getAnswer(), answerType.getSingleChoice().getElement());
         }
-        return result;
+
+        questionTrace.setCorrect(result);
+        questionTrace.setFinished(new Date());
+
+        makePersistent(questionTrace);
+
+        return questionTrace;
     }
 
     private boolean check(List<ru.spbspu.staub.model.question.AnswerType> questionAnswers,

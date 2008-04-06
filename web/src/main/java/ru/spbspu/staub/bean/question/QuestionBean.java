@@ -85,7 +85,7 @@ public class QuestionBean extends GenericBean {
     public String nextQuestion() {
         logger.debug(">>> Next question...");
         questionTraceService.saveAnswer(answer.unwrap());
-        if (!questionTraceService.checkGroup(answer.unwrap())) {
+        if (!questionTraceService.checkPart(answer.unwrap())) {
             // test ended because of group test failed
         }
         questionIndex++;
