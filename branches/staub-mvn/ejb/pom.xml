@@ -39,7 +39,6 @@
                             <goal>xjc</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.sourceDirectory}</outputDirectory>
                             <packageName>ru.spbspu.staub.model.question</packageName>
                             <schemaFiles>question.xsd</schemaFiles>
                             <clearOutputDir>false</clearOutputDir>
@@ -52,7 +51,6 @@
                             <goal>xjc</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.sourceDirectory}</outputDirectory>
                             <packageName>ru.spbspu.staub.model.answer</packageName>
                             <schemaFiles>answer.xsd</schemaFiles>
                             <clearOutputDir>false</clearOutputDir>
