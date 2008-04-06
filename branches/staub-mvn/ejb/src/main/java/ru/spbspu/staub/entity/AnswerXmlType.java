@@ -5,11 +5,12 @@ import org.hibernate.usertype.UserType;
 import ru.spbspu.staub.model.answer.AnswerType;
 import ru.spbspu.staub.util.JAXBUtil;
 
-import java.io.Serializable;
+import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Arrays;
 
 /**
  * The <code>AnswerXmlType</code> class is the <code>UserType</code> implementation for the Answer xml handling.
@@ -32,11 +33,22 @@ public class AnswerXmlType implements UserType, Serializable {
     }
 
     public boolean equals(Object o, Object o1) throws HibernateException {
-        return (o != null) ? o.equals(o1) : (o1 == null);
+        try {
+            byte[] bytes = toByteArray((Serializable) o);
+            byte[] otherBytes = toByteArray((Serializable) o1);
+            return Arrays.equals(bytes, otherBytes);
+        } catch (IOException e) {
+            throw new HibernateException(e);
+        }
     }
 
     public int hashCode(Object o) throws HibernateException {
-        return (o != null) ? o.hashCode() : 0;
+        try {
+            byte[] bytes = toByteArray((Serializable) o);
+            return Arrays.hashCode(bytes);
+        } catch (IOException e) {
+            throw new HibernateException(e);
+        }
     }
 
     public Object nullSafeGet(ResultSet resultSet, String[] strings, Object o) throws HibernateException, SQLException {
@@ -55,22 +67,48 @@ public class AnswerXmlType implements UserType, Serializable {
     }
 
     public Object deepCopy(Object o) throws HibernateException {
-        return null;
+        try {
+            byte[] bytes = toByteArray((Serializable) o);
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+            ObjectInputStream ois = new ObjectInputStream(bais);
+
+            Object clone = ois.readObject();
+
+            ois.close();
+
+            return clone;
+        } catch (IOException e) {
+            throw new HibernateException(e);
+        } catch (ClassNotFoundException e) {
+            throw new HibernateException(e);
+        }
     }
 
     public boolean isMutable() {
-        return false;
+        return true;
     }
 
     public Serializable disassemble(Object o) throws HibernateException {
-        return null;
+        return (Serializable) o;
     }
 
     public Object assemble(Serializable serializable, Object o) throws HibernateException {
-        return null;
+        return serializable;
     }
 
     public Object replace(Object o, Object o1, Object o2) throws HibernateException {
-        return null;
+        return o1;
+    }
+
+    private byte[] toByteArray(Serializable s) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+
+        oos.writeObject(s);
+
+        oos.close();
+
+        return baos.toByteArray();
     }
 }
