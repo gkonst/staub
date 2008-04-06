@@ -69,7 +69,14 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
         Test test = testTrace.getTest();
 
-        int score = (int) correctCount * 100 / test.getQuestionsCount();
+        int questionsCount;
+        if (test.getSelectorType() == SelectorEnum.ALL) {
+            questionsCount = test.getQuestionsCount();
+        } else {
+            questionsCount = test.getSelectorCount();
+        }        
+
+        int score = (int) correctCount * 100 / questionsCount;
         testTrace.setScore(score);
         testTrace.setTestPassed(score >= test.getPassScore());
 
@@ -85,19 +92,19 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         q.setParameter("part", part);
         List<Integer> questionTraceIds = q.getResultList();
 
-        int questionsInPart = questionTraceIds.size();
-        int questionsCorrect = 0;
+        int questionsCount = questionTraceIds.size();
+        int correctCount = 0;
         for (Integer questionTraceId : questionTraceIds) {
             QuestionTrace qt = questionTraceService.findById(questionTraceId);
             qt = questionTraceService.checkQuestion(qt);
             if (qt.getCorrect()) {
-                questionsCorrect++;
+                correctCount++;
             }
         }
 
         Test test = testTrace.getTest();
 
-        return ((questionsCorrect * 100 / questionsInPart) >= test.getPassScore());
+        return ((correctCount * 100 / questionsCount) >= test.getPassScore());
     }
 
     private TestTrace createTestTrace(Test test, User user, String sessionId) {
