@@ -65,6 +65,7 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
     public TestTrace checkTestTrace(TestTrace testTrace) {
         Query q = getEntityManager().createQuery("select count(q) from QuestionTrace q where q.correct = true and q.testTrace = :testTrace");
+        q.setParameter("testTrace", testTrace);
         long correctCount = (Long) q.getSingleResult();
 
         Test test = testTrace.getTest();
