@@ -1,12 +1,12 @@
 package ru.spbspu.staub.entity;
 
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
 import ru.spbspu.staub.model.question.QuestionType;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-
-import org.hibernate.annotations.Type;
 
 /**
  * The <code>Question</code> class represents the Question entity.
@@ -15,6 +15,10 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Table(name = "question", schema = "staub")
+@org.hibernate.annotations.TypeDef(name = "question_type",
+        typeClass = ru.spbspu.staub.entity.XmlType.class,
+        parameters = {@Parameter(name = "pojoClass", value = "ru.spbspu.staub.model.question.QuestionType")}
+)
 public class Question implements Serializable {
     private static final long serialVersionUID = 8070548991033139442L;
 
@@ -92,25 +96,10 @@ public class Question implements Serializable {
         this.timeLimit = timeLimit;
     }
 
-/*
-    private String definition;
-
-    @Basic
-    @Lob
-    @Column(name = "definition")
-    public String getDefinition() {
-        return definition;
-    }
-
-    public void setDefinition(String definition) {
-        this.definition = definition;
-    }
-*/
-
     private QuestionType question;
 
     @Column(name = "definition")
-    @Type(type = "ru.spbspu.staub.entity.QuestionXmlType")
+    @Type(type = "question_type")
     public QuestionType getQuestion() {
         return question;
     }
