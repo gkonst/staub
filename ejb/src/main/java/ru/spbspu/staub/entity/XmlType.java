@@ -2,6 +2,7 @@ package ru.spbspu.staub.entity;
 
 import org.hibernate.HibernateException;
 import org.hibernate.usertype.UserType;
+import org.hibernate.usertype.ParameterizedType;
 import ru.spbspu.staub.model.question.QuestionType;
 import ru.spbspu.staub.util.JAXBUtil;
 
@@ -11,19 +12,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Arrays;
+import java.util.Properties;
+import java.text.MessageFormat;
 
 /**
- * The <code>QuestionXmlType</code> class is the <code>UserType</code> implementation for the Question definition xml
- * handling.
+ * The <code>XmlType</code> class is the <code>UserType</code> implementation for xml data handling.
  *
  * @author Alexander V. Elagin
  */
-public class QuestionXmlType implements UserType, Serializable {
+public class XmlType implements UserType, ParameterizedType, Serializable {
     private static final long serialVersionUID = 4593109763254958017L;
 
     private static final int[] SQL_TYPES = {Types.INTEGER};
 
     private static final Class RETURNED_CLASS = QuestionType.class;
+
+    private Class pojoClass;
 
     public int[] sqlTypes() {
         return SQL_TYPES;
@@ -52,17 +56,11 @@ public class QuestionXmlType implements UserType, Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public Object nullSafeGet(ResultSet resultSet, String[] strings, Object o) throws HibernateException, SQLException {
-        // TODO: Implement this method in a more appropriate way.
-        byte[] bytes = resultSet.getBytes(strings[0]);
-        if (bytes != null) {
-            String xml;
-            try {
-                xml = new String(bytes, "utf-8");
-            } catch (UnsupportedEncodingException e) {
-                throw new HibernateException(e);
-            }
-            return JAXBUtil.parseQuestionXML(xml);
+        InputStream is = resultSet.getBinaryStream(strings[0]);
+        if (is != null) {
+            return JAXBUtil.parseXml(pojoClass, is);
         } else {
             return null;
         }
@@ -70,15 +68,9 @@ public class QuestionXmlType implements UserType, Serializable {
 
     public void nullSafeSet(PreparedStatement preparedStatement, Object o, int i) throws HibernateException,
             SQLException {
-        // TODO: Implement this method in a more appropriate way.
         if (o != null) {
-            String xml = JAXBUtil.createQuestionXML((QuestionType) o);
-            try {
-                byte[] bytes = xml.getBytes("utf-8");
-                preparedStatement.setBytes(i, bytes);
-            } catch (UnsupportedEncodingException e) {
-                throw new HibernateException(e);
-            }
+            byte[] bytes = JAXBUtil.createXml(o);
+            preparedStatement.setBytes(i, bytes);
         } else {
             preparedStatement.setNull(i, SQL_TYPES[0]);
         }
@@ -117,6 +109,21 @@ public class QuestionXmlType implements UserType, Serializable {
 
     public Object replace(Object o, Object o1, Object o2) throws HibernateException {
         return o1;
+    }
+
+    public void setParameterValues(Properties properties) {
+        String pojoClassName = properties.getProperty("pojoClass");
+        
+        if (pojoClassName == null) {
+            throw  new IllegalArgumentException("Property pojoClass can not be null.");
+        }
+
+        try {
+            pojoClass = Class.forName(properties.getProperty("pojoClass"));
+        } catch (ClassNotFoundException e) {
+            String message = MessageFormat.format("Could not found class with name \"{0}\".", pojoClassName);
+            throw new IllegalArgumentException(message);
+        }
     }
 
     private byte[] toByteArray(Serializable s) throws IOException {

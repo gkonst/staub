@@ -7,6 +7,7 @@ import java.util.Date;
 import java.io.Serializable;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Parameter;
 
 /**
  * The <code>QuestionTrace</code> class represents QuestionTrace entity.
@@ -15,6 +16,10 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Table(schema = "staub", name = "question_trace")
+@org.hibernate.annotations.TypeDef(name = "answer_type",
+        typeClass = ru.spbspu.staub.entity.XmlType.class,
+        parameters = {@Parameter(name = "pojoClass", value = "ru.spbspu.staub.model.answer.AnswerType")}
+)
 public class QuestionTrace implements Serializable {
     private static final long serialVersionUID = -2332696164283250715L;
 
@@ -55,24 +60,11 @@ public class QuestionTrace implements Serializable {
     public void setFinished(Date finished) {
         this.finished = finished;
     }
-/*
-    private String answer;
 
-    @Basic
-    @Lob
-    @Column(name = "answer")
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-*/
     private AnswerType answer;
 
-    @Type(type = "ru.spbspu.staub.entity.AnswerXmlType")
     @Column(name = "answer")
+    @Type(type = "answer_type")
     public AnswerType getAnswer() {
         return answer;
     }

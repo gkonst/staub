@@ -7,128 +7,108 @@ import ru.spbspu.staub.model.question.QuestionType;
 
 import javax.xml.bind.*;
 import javax.xml.namespace.QName;
-import javax.xml.transform.stream.StreamSource;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.text.MessageFormat;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * JAXB utility class.
  * Contains methods for marshalling and marshalling objects.
  *
  * @author Konstantin Grigoriev
+ * @author Alexander V. Elagin
  */
 public final class JAXBUtil {
-    private static final String QUESTION_SCHEMA_PACKAGE = "ru.spbspu.staub.model.question";
-
-    private static final QName QUESTION_SCHEMA_QNAME = new QName("http://staub.spbspu.ru/Question", "question");
-
-    private static final String ANSWER_SCHEMA_PACKAGE = "ru.spbspu.staub.model.answer";
-
-    private static final QName ANSWER_SCHEMA_QNAME = new QName("http://staub.spbspu.ru/Answer", "answer");
+    private static final Map<Class, QName> qNameMap;
 
     private static final Log logger = Logging.getLog(JAXBUtil.class);
+
+    static {
+        HashMap<Class, QName> map = new HashMap<Class, QName>();
+        map.put(QuestionType.class, new QName("http://staub.spbspu.ru/Question", "question"));
+        map.put(AnswerType.class, new QName("http://staub.spbspu.ru/Answer", "answer"));
+        qNameMap = Collections.unmodifiableMap(map);
+    }
 
     private JAXBUtil() {
         // do nothing
     }
 
     /**
-     * Parses(unmarshalls) definition xml string to <code>QuestionType</code> object using JAXB.
+     * Unmarshalls an instance of the POJO class.
      *
-     * @param definitionXML string to parse
+     * @param pojoClass   the <code>Class</code> to unmarshall
+     * @param inputStream the xml data stream
      *
-     * @return unmarshalled object
+     * @return the unmarshalled POJO class
      */
-    public static QuestionType parseQuestionXML(String definitionXML) {
+    @SuppressWarnings("unchecked")
+    public static <T> T parseXml(Class<T> pojoClass, InputStream inputStream) {
+        if (pojoClass == null) {
+            String message = "Parameter pojoClass can not be null.";
+            throw new IllegalArgumentException(message);
+        }
+
+        if (!qNameMap.containsKey(pojoClass)) {
+            String message = MessageFormat.format("Unmarshalling an instance of the {0} class is not supported.",
+                    pojoClass.getName());
+            throw new UnsupportedOperationException(message);
+        }
+
         try {
-            logger.debug(" Parsing question definition XML...");
-            logger.debug("  XML : #0", definitionXML);
-            JAXBContext jaxbContext = JAXBContext.newInstance(QUESTION_SCHEMA_PACKAGE);
+            logger.debug(" Unmarshalling xml...");
+            logger.debug("  pojoClass : #0", pojoClass.getName());
+            JAXBContext jaxbContext = JAXBContext.newInstance(pojoClass.getPackage().getName());
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            JAXBElement jaxbElement = (JAXBElement) unmarshaller.unmarshal(new StreamSource(new StringReader(definitionXML)));
-            QuestionType result = (QuestionType) jaxbElement.getValue();
-            logger.debug("  description : #0", result.getDescription());
-            logger.debug("  multipleChoice : #0", result.getMultipleChoice());
-            logger.debug("  singleChoice : #0", result.getSingleChoice());
-            logger.debug(" Parsing question definition XML...Ok");
+            JAXBElement jaxbElement = (JAXBElement) unmarshaller.unmarshal(inputStream);
+            T result = (T) jaxbElement.getValue();
+            logger.debug("  resutl : #0", result);
+            logger.debug(" Unmarshalling xml...Ok");
             return result;
         } catch (JAXBException e) {
-            logger.error("Error during parsing question definition XML(" + definitionXML + ")", e);
+            logger.error("Could not unmarshall an xml.", e);
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * Creates(marshalls) xml string from <code>QuestionType</code> object using JAXB.
+     * Marshalls an instance of the POJO class.
      *
-     * @param questionType object to marshall
+     * @param pojo the instance to marshall
      *
-     * @return created xml string
+     * @return the marshalled xml data
      */
-    public static String createQuestionXML(QuestionType questionType) {
+    @SuppressWarnings("unchecked")
+    public static <T> byte[] createXml(T pojo) {
+        if (pojo == null) {
+            String message = "Parameter pojo can not be null.";
+            throw new IllegalArgumentException(message);
+        }
+
+        Class pojoClass = pojo.getClass();
+
+        if (!qNameMap.containsKey(pojoClass)) {
+            String message = MessageFormat.format("Marshalling an instance of the {0} class is not supported.",
+                    pojoClass.getName());
+            throw new UnsupportedOperationException(message);
+        }
+
         try {
-            logger.debug(" Creating question definition XML...");
-            JAXBContext jaxbContext = JAXBContext.newInstance(QUESTION_SCHEMA_PACKAGE);
+            logger.debug(" Marshalling xml...");
+            logger.debug("  pojoClass : #0", pojoClass.getName());
+            JAXBContext jaxbContext = JAXBContext.newInstance(pojoClass.getPackage().getName());
             Marshaller marshaller = jaxbContext.createMarshaller();
-            StringWriter out = new StringWriter();
-            JAXBElement<QuestionType> jaxbElement = new JAXBElement<QuestionType>(QUESTION_SCHEMA_QNAME, QuestionType.class, null, questionType);
-            marshaller.marshal(jaxbElement, out);
-            String result = out.toString();
-            logger.debug("  result xml : #0", result);
-            logger.debug(" Creating question definition XML...Ok");
+            JAXBElement jaxbElement = new JAXBElement(qNameMap.get(pojoClass), pojoClass, null, pojo);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            marshaller.marshal(jaxbElement, baos);
+            byte[] result = baos.toByteArray();
+            logger.debug(" Marshalling xml...Ok");
             return result;
         } catch (JAXBException e) {
-            logger.error("Error during creating question definition XML", e);
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Parses(unmarshalls) xml string to <code>AnswerType</code> object using JAXB.
-     *
-     * @param answerXml string to parse
-     *
-     * @return unmarshalled object
-     */
-    public static AnswerType parseAnswerXML(String answerXml) {
-        try {
-            logger.debug(" Parsing answer XML...");
-            logger.debug("  XML : #0", answerXml);
-            JAXBContext jaxbContext = JAXBContext.newInstance(ANSWER_SCHEMA_PACKAGE);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            JAXBElement jaxbElement = (JAXBElement) unmarshaller.unmarshal(new StreamSource(new StringReader(answerXml)));
-            AnswerType result = (AnswerType) jaxbElement.getValue();
-            logger.debug("  multipleChoice : #0", result.getMultipleChoice());
-            logger.debug("  singleChoice : #0", result.getSingleChoice());
-            logger.debug(" Parsing answer XML...Ok");
-            return result;
-        } catch (JAXBException e) {
-            logger.error("Error during parsing answer XML(" + answerXml + ")", e);
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Creates(marshalls) xml string from <code>AnswerType</code> object using JAXB.
-     *
-     * @param answerType object to marshall
-     *
-     * @return created xml string
-     */
-    public static String createAnswerXML(AnswerType answerType) {
-        try {
-            logger.debug(" Creating answer XML...");
-            JAXBContext jaxbContext = JAXBContext.newInstance(ANSWER_SCHEMA_PACKAGE);
-            Marshaller marshaller = jaxbContext.createMarshaller();
-            StringWriter out = new StringWriter();
-            JAXBElement<AnswerType> jaxbElement = new JAXBElement<AnswerType>(ANSWER_SCHEMA_QNAME, AnswerType.class, null, answerType);
-            marshaller.marshal(jaxbElement, out);
-            String result = out.toString();
-            logger.debug("  result xml : #0", result);
-            logger.debug(" Creating answer XML...Ok");
-            return result;
-        } catch (JAXBException e) {
-            logger.error("Error during creating answer XML", e);
+            logger.error("Could not marshall an xml.", e);
             throw new RuntimeException(e);
         }
     }
