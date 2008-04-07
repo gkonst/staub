@@ -20,7 +20,7 @@ import java.util.Arrays;
 public class AnswerXmlType implements UserType, Serializable {
     private static final long serialVersionUID = -3876294930149605126L;
 
-    private static final int[] SQL_TYPES = {Types.CLOB};
+    private static final int[] SQL_TYPES = {Types.INTEGER};
 
     private static final Class RETURNED_CLASS = AnswerType.class;
 
@@ -52,15 +52,32 @@ public class AnswerXmlType implements UserType, Serializable {
     }
 
     public Object nullSafeGet(ResultSet resultSet, String[] strings, Object o) throws HibernateException, SQLException {
-        String xml = resultSet.getString(strings[0]);
-        return (xml != null) ? JAXBUtil.parseAnswerXML(xml) : null;
+        // TODO: Implement this method in a more appropriate way.
+        byte[] bytes = resultSet.getBytes(strings[0]);
+        if (bytes != null) {
+            String xml;
+            try {
+                xml = new String(bytes, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                throw new HibernateException(e);
+            }
+            return JAXBUtil.parseAnswerXML(xml);
+        } else {
+            return null;
+        }
     }
 
     public void nullSafeSet(PreparedStatement preparedStatement, Object o, int i) throws HibernateException,
             SQLException {
+        // TODO: Implement this method in a more appropriate way.
         if (o != null) {
             String xml = JAXBUtil.createAnswerXML((AnswerType) o);
-            preparedStatement.setString(i, xml);
+            try {
+                byte[] bytes = xml.getBytes("utf-8");
+                preparedStatement.setBytes(i, bytes);
+            } catch (UnsupportedEncodingException e) {
+                throw new HibernateException(e);
+            }
         } else {
             preparedStatement.setNull(i, SQL_TYPES[0]);
         }
