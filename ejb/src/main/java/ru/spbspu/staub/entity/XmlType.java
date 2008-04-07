@@ -1,9 +1,8 @@
 package ru.spbspu.staub.entity;
 
 import org.hibernate.HibernateException;
-import org.hibernate.usertype.UserType;
 import org.hibernate.usertype.ParameterizedType;
-import ru.spbspu.staub.model.question.QuestionType;
+import org.hibernate.usertype.UserType;
 import ru.spbspu.staub.util.JAXBUtil;
 
 import java.io.*;
@@ -11,9 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Properties;
-import java.text.MessageFormat;
 
 /**
  * The <code>XmlType</code> class is the <code>UserType</code> implementation for xml data handling.
@@ -25,8 +24,6 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
 
     private static final int[] SQL_TYPES = {Types.INTEGER};
 
-    private static final Class RETURNED_CLASS = QuestionType.class;
-
     private Class pojoClass;
 
     public int[] sqlTypes() {
@@ -34,7 +31,7 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
     }
 
     public Class returnedClass() {
-        return RETURNED_CLASS;
+        return pojoClass;
     }
 
     public boolean equals(Object o, Object o1) throws HibernateException {
@@ -113,9 +110,9 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
 
     public void setParameterValues(Properties properties) {
         String pojoClassName = properties.getProperty("pojoClass");
-        
+
         if (pojoClassName == null) {
-            throw  new IllegalArgumentException("Property pojoClass can not be null.");
+            throw new IllegalArgumentException("Property pojoClass can not be null.");
         }
 
         try {
