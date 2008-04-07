@@ -21,7 +21,7 @@ import java.util.Arrays;
 public class QuestionXmlType implements UserType, Serializable {
     private static final long serialVersionUID = 4593109763254958017L;
 
-    private static final int[] SQL_TYPES = {Types.CLOB};
+    private static final int[] SQL_TYPES = {Types.INTEGER};
 
     private static final Class RETURNED_CLASS = QuestionType.class;
 
