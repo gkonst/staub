@@ -133,6 +133,7 @@ fieldset {
     border-collapse: collapse;
     border-spacing: 0;
     background-color: #F5F3F1; /*background: #fff url(../images/th.bg.gif) 0 100% repeat-x;*/
+    margin: 0.6em 0 0 0;
 }
 
 .message td {

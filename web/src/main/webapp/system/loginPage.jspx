@@ -19,8 +19,6 @@
                     </h:outputLabel>
                     <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
                     <h:inputText id="username" value="#{identity.username}" style="width: 9em;"/>
-
-                    <div class="errors"><h:message for="username"/></div>
                 </div>
                 <div>
                     <h:outputLabel for="password">
