@@ -17,7 +17,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -92,16 +91,6 @@ public class ImageResource extends AbstractResource {
             return String.valueOf(compEnv.lookup(RESOURCE_DIR_ENV));
         } catch (NamingException e) {
             throw new IllegalArgumentException(e);
-        }
-    }
-
-    private void closeStream(Closeable stream) {
-        if (stream != null) {
-            try {
-                stream.close();
-            } catch (IOException e) {
-                logger.error("error suring stream closing", e);
-            }
         }
     }
 }
