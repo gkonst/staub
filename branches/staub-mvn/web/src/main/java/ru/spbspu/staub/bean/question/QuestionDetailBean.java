@@ -258,20 +258,22 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     public void fileUploadListener(UploadEvent event) {
         logger.debug(">>> Uploading image...");
         logger.debug(" fileName : #0", event.getUploadItem().getFileName());
-        byte[] buf;
+        String fileName = event.getUploadItem().getFileName();
+        String filePath = ImageResource.getResourceDirectory() + File.separator + fileName;
+        logger.debug(" filePath : #0", filePath);
+        FileInputStream fi = null;
+        FileOutputStream fo = null;
         try {
-            String fileName = event.getUploadItem().getFileName();
-            String filePath = ImageResource.getResourceDirectory() + File.separator + fileName;
-            logger.debug(" filePath : #0", filePath);
-            FileInputStream fi = new FileInputStream(event.getUploadItem().getFile());
-            buf = new byte[fi.available()];
-            fi.read(buf);
             File file = new File(filePath);
             file.createNewFile();
-            FileOutputStream fo = new FileOutputStream(file);
-            fo.write(buf);
+            fi = new FileInputStream(event.getUploadItem().getFile());
+            fo = new FileOutputStream(file);            
+            byte[] buf = new byte[100];
+            int size;
+            while ((size = fi.read(buf)) > 0) {
+                fo.write(buf, 0, size);
+            }
             fo.flush();
-            fo.close();
             StringBuilder imageTag = new StringBuilder();
             imageTag.append("<img src=\"");
             imageTag.append(getRequest().getContextPath());
@@ -283,8 +285,21 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             logger.error("", e);
         } catch (IOException e) {
             logger.error("", e);
+        } finally {
+            closeStream(fi);
+            closeStream(fo);
         }
         logger.debug("<<< Uploading image...Ok");
+    }
+
+    private void closeStream(Closeable stream) {
+        if (stream != null) {
+            try {
+                stream.close();
+            } catch (IOException e) {
+                logger.error("error suring stream closing", e);
+            }
+        }
     }
 
     public List<Discipline> getDisciplineList() {
