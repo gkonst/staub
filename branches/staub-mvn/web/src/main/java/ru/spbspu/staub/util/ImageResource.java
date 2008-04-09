@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -61,15 +62,24 @@ public class ImageResource extends AbstractResource {
             // TODO may be bad
             MimetypesFileTypeMap mimeType = new MimetypesFileTypeMap();
             String contentType = mimeType.getContentType(file);
-            FileInputStream fi = new FileInputStream(file);
-            byte[] buf = new byte[fi.available()];
-            fi.read(buf);
             response.setContentType(contentType);
             response.setStatus(HttpServletResponse.SC_OK);
-            response.setContentLength(buf.length);
-            ServletOutputStream os = response.getOutputStream();
-            os.write(buf);
-            os.flush();
+            response.setContentLength((int) file.length());
+            FileInputStream fi = null;
+            try {
+                ServletOutputStream os = response.getOutputStream();
+                fi = new FileInputStream(file);
+                byte[] buf = new byte[100];
+                int size;
+                while ((size = fi.read(buf)) > 0) {
+                    os.write(buf, 0, size);
+                }
+                os.flush();
+            } finally {
+                if (fi != null) {
+                    fi.close();
+                }
+            }
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
@@ -82,6 +92,16 @@ public class ImageResource extends AbstractResource {
             return String.valueOf(compEnv.lookup(RESOURCE_DIR_ENV));
         } catch (NamingException e) {
             throw new IllegalArgumentException(e);
+        }
+    }
+
+    private void closeStream(Closeable stream) {
+        if (stream != null) {
+            try {
+                stream.close();
+            } catch (IOException e) {
+                logger.error("error suring stream closing", e);
+            }
         }
     }
 }
