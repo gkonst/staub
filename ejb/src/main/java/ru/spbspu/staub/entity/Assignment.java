@@ -1,13 +1,13 @@
 package ru.spbspu.staub.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * The <code>Assignment</code> class represents the Assignment entity.
  *
- *  @author Alexander V. Elagin
+ * @author Alexander V. Elagin
  */
 @Entity
 @Table(schema = "staub", name = "assignment")
@@ -64,28 +64,28 @@ public class Assignment implements Serializable {
         this.testStarted = testStarted;
     }
 
-    private Test test;
+    private Integer fkTest;
 
-    @OneToOne
-    @JoinColumn(name = "fk_test", referencedColumnName = "id", nullable = false)
-    public Test getTest() {
-        return test;
+    @Basic
+    @Column(name = "fk_test")
+    public Integer getFkTest() {
+        return fkTest;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setFkTest(Integer fkTest) {
+        this.fkTest = fkTest;
     }
 
-    private User user;
+    private Integer fkUser;
 
-    @OneToOne
-    @JoinColumn(name = "fk_user", referencedColumnName = "id", nullable = false)
-    public User getUser() {
-        return user;
+    @Basic
+    @Column(name = "fk_user")
+    public Integer getFkUser() {
+        return fkUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setFkUser(Integer fkUser) {
+        this.fkUser = fkUser;
     }
 
     @Override
@@ -115,8 +115,8 @@ public class Assignment implements Serializable {
         sb.append(", testBegin=").append(testBegin);
         sb.append(", testEnd=").append(testEnd);
         sb.append(", testStarted=").append(testStarted);
-        sb.append(", user=").append(user);
-        sb.append(", test=").append(test);
+        sb.append(", fkUser=").append(fkUser);
+        sb.append(", fkTest=").append(fkTest);
         sb.append('}');
 
         return sb.toString();

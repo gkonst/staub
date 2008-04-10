@@ -63,7 +63,7 @@ public class UserAssignListBean extends GenericListBean<User> {
      * {@inheritDoc}
      */
     protected FormTable findObjects(FormProperties formProperties) {
-        return userService.findUsersForAssign(formProperties);
+        return userService.findUsersToAssign(formProperties);
     }
 
     /**

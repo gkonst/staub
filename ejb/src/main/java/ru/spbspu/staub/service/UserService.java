@@ -1,8 +1,8 @@
 package ru.spbspu.staub.service;
 
 import ru.spbspu.staub.entity.User;
-import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
 
@@ -18,6 +18,7 @@ public interface UserService extends GenericService<User, String> {
      *
      * @param username specific user name
      * @param password specific user password
+     *
      * @return fetched user
      */
     User findUserByUserNameAndPassword(String username, String password);
@@ -26,7 +27,8 @@ public interface UserService extends GenericService<User, String> {
      * Fetches users available for being assigned some test.
      *
      * @param formProperties form properties
+     *
      * @return result fetch
      */
-    FormTable findUsersForAssign(FormProperties formProperties);
+    FormTable findUsersToAssign(FormProperties formProperties);
 }
