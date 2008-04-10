@@ -52,15 +52,12 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     @In
     private TestService testService;
 
-    private QuestionType questionDefinition;
-
     private List<Discipline> disciplineList;
-
     private List<Category> categoryList;
-
     private List<Difficulty> difficultyList;
 
     private Object correctAnswer;
+
     private AnswerTypes answerType;
 
     private static enum AnswerTypes {
@@ -86,7 +83,6 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             setQuestionDefinition(new QuestionType());
         } else {
             setModel(questionService.findById(modelId));
-            setQuestionDefinition(getModel().getQuestion());
             determineAnswerType();
             determineCorrectAnswer();
         }
@@ -95,7 +91,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     private void determineCorrectAnswer() {
         logger.debug(" determineCorrectAnswer...");
         if (AnswerTypes.SINGLE_CHOICE.equals(answerType)) {
-            for (AnswerType type : questionDefinition.getSingleChoice().getAnswer()) {
+            for (AnswerType type : getQuestionDefinition().getSingleChoice().getAnswer()) {
                 logger.debug("  checking answer : id=#0,value=#1,correct=#2", type.getId(), type.getValue(), type.getCorrect());
                 if (Boolean.valueOf(type.getCorrect())) {
                     logger.debug("  !found correct answer : id=#0,value=#1", type.getId(), type.getValue());
@@ -104,7 +100,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             }
         } else if (AnswerTypes.MULTIPLE_CHOICE.equals(answerType)) {
             List<AnswerType> result = new ArrayList<AnswerType>();
-            for (AnswerType type : questionDefinition.getMultipleChoice().getAnswer()) {
+            for (AnswerType type : getQuestionDefinition().getMultipleChoice().getAnswer()) {
                 if (Boolean.valueOf(type.getCorrect())) {
                     result.add(type);
                 }
@@ -117,9 +113,9 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     }
 
     private void determineAnswerType() {
-        if (questionDefinition.getSingleChoice() != null) {
+        if (getQuestionDefinition().getSingleChoice() != null) {
             setAnswerType(AnswerTypes.SINGLE_CHOICE);
-        } else if (questionDefinition.getMultipleChoice() != null) {
+        } else if (getQuestionDefinition().getMultipleChoice() != null) {
             setAnswerType(AnswerTypes.MULTIPLE_CHOICE);
         } else {
             throw new IllegalArgumentException("Unrecognized answer type");
@@ -145,7 +141,6 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     public void doSave() {
         logger.debug("Saving question...");
         resolveCorrectAnswer();
-        getModel().setQuestion(getQuestionDefinition());
         setModel(questionService.saveQuestion(getModel(), user));
         if (test != null && isCreateMode()) {
             logger.debug(" adding question to test : #0", test);
@@ -183,14 +178,14 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     private void resolveCorrectAnswer() {
         if (AnswerTypes.SINGLE_CHOICE.equals(answerType)) {
-            for (AnswerType type : questionDefinition.getSingleChoice().getAnswer()) {
+            for (AnswerType type : getQuestionDefinition().getSingleChoice().getAnswer()) {
                 if (((AnswerType) getCorrectAnswer()).getId().equals(type.getId())) {
                     type.setCorrect(String.valueOf(Boolean.TRUE));
                 }
             }
         } else if (AnswerTypes.MULTIPLE_CHOICE.equals(answerType)) {
             List<AnswerType> result = new ArrayList<AnswerType>();
-            for (AnswerType type : questionDefinition.getMultipleChoice().getAnswer()) {
+            for (AnswerType type : getQuestionDefinition().getMultipleChoice().getAnswer()) {
                 for (AnswerType correctAnswer : (List<AnswerType>) getCorrectAnswer()) {
                     if (correctAnswer.getId().equals(type.getId())) {
                         type.setCorrect(String.valueOf(Boolean.TRUE));
@@ -209,30 +204,30 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     public void addAnswer() {
         logger.debug(">>> Adding answer...");
-        if (questionDefinition.getSingleChoice() != null) {
+        if (getQuestionDefinition().getSingleChoice() != null) {
             AnswerType newAnswer = new AnswerType();
-            newAnswer.setId(new BigInteger(String.valueOf(questionDefinition.getSingleChoice().getAnswer().size() + 1)));
-            logger.debug(" single choice type, id=#0, totalWas=#1", newAnswer.getId(), questionDefinition.getSingleChoice().getAnswer().size());
-            questionDefinition.getSingleChoice().getAnswer().add(newAnswer);
-        } else if (questionDefinition.getMultipleChoice() != null) {
+            newAnswer.setId(new BigInteger(String.valueOf(getQuestionDefinition().getSingleChoice().getAnswer().size() + 1)));
+            logger.debug(" single choice type, id=#0, totalWas=#1", newAnswer.getId(), getQuestionDefinition().getSingleChoice().getAnswer().size());
+            getQuestionDefinition().getSingleChoice().getAnswer().add(newAnswer);
+        } else if (getQuestionDefinition().getMultipleChoice() != null) {
             AnswerType newAnswer = new AnswerType();
-            newAnswer.setId(new BigInteger(String.valueOf(questionDefinition.getMultipleChoice().getAnswer().size() + 1)));
-            logger.debug(" multiple choice type, id=#0, totalWas=#1", newAnswer.getId(), questionDefinition.getMultipleChoice().getAnswer().size());
-            questionDefinition.getMultipleChoice().getAnswer().add(newAnswer);
+            newAnswer.setId(new BigInteger(String.valueOf(getQuestionDefinition().getMultipleChoice().getAnswer().size() + 1)));
+            logger.debug(" multiple choice type, id=#0, totalWas=#1", newAnswer.getId(), getQuestionDefinition().getMultipleChoice().getAnswer().size());
+            getQuestionDefinition().getMultipleChoice().getAnswer().add(newAnswer);
         }
         logger.debug("<<< Adding answer...Ok");
     }
 
     public void removeAnswer() {
         logger.debug(">>> Removing answer...");
-        if (questionDefinition.getSingleChoice() != null) {
-            int answerToRemoveId = questionDefinition.getSingleChoice().getAnswer().size() - 1;
+        if (getQuestionDefinition().getSingleChoice() != null) {
+            int answerToRemoveId = getQuestionDefinition().getSingleChoice().getAnswer().size() - 1;
             logger.debug(" single choice type, id=#0", answerToRemoveId);
-            questionDefinition.getSingleChoice().getAnswer().remove(answerToRemoveId);
-        } else if (questionDefinition.getMultipleChoice() != null) {
-            int answerToRemoveId = questionDefinition.getMultipleChoice().getAnswer().size() - 1;
+            getQuestionDefinition().getSingleChoice().getAnswer().remove(answerToRemoveId);
+        } else if (getQuestionDefinition().getMultipleChoice() != null) {
+            int answerToRemoveId = getQuestionDefinition().getMultipleChoice().getAnswer().size() - 1;
             logger.debug(" single choice type, id=#0", answerToRemoveId);
-            questionDefinition.getMultipleChoice().getAnswer().remove(answerToRemoveId);
+            getQuestionDefinition().getMultipleChoice().getAnswer().remove(answerToRemoveId);
         }
         logger.debug("<<< Removing answer...Ok");
     }
@@ -240,12 +235,12 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     public void changeAnswerType() {
         logger.debug(">>> Changing answer type...#0", answerType);
         if (AnswerTypes.SINGLE_CHOICE.equals(answerType)) {
-            questionDefinition.setSingleChoice(new ChoiceType());
-            questionDefinition.setMultipleChoice(null);
+            getQuestionDefinition().setSingleChoice(new ChoiceType());
+            getQuestionDefinition().setMultipleChoice(null);
             setCorrectAnswer(new AnswerType());
         } else if (AnswerTypes.MULTIPLE_CHOICE.equals(answerType)) {
-            questionDefinition.setMultipleChoice(new ChoiceType());
-            questionDefinition.setSingleChoice(null);
+            getQuestionDefinition().setMultipleChoice(new ChoiceType());
+            getQuestionDefinition().setSingleChoice(null);
             setCorrectAnswer(new ArrayList<AnswerType>());
         } else {
             throw new IllegalArgumentException("Unrecognized answer type");
@@ -327,11 +322,11 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     }
 
     public QuestionType getQuestionDefinition() {
-        return questionDefinition;
+        return getModel().getQuestion();
     }
 
     public void setQuestionDefinition(QuestionType questionDefinition) {
-        this.questionDefinition = questionDefinition;
+        getModel().setQuestion(questionDefinition);
     }
 
     public Object getCorrectAnswer() {

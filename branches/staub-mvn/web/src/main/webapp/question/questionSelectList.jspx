@@ -30,7 +30,7 @@
                                    rendered="#{pageBean.editMode}"/>
                 <a4j:commandButton id="addSelectedButton"
                                    action="#{pageBean.addSelected}"
-                                   reRender="selectedQuestionsPanel"
+                                   reRender="selectedQuestionsPanel, questionList"
                                    value="#{messages['common.list.functions.addSelected']}"
                                    styleClass="button"
                                    rendered="#{pageBean.editMode}"/>

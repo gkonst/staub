@@ -118,7 +118,9 @@
                         <a4j:support id="previewIconSupport"
                                      event="onclick"
                                      reRender="previewModalBox"
-                                     oncomplete="Richfaces.showModalPanel('previewModalBox')"/>
+                                     oncomplete="Richfaces.showModalPanel('previewModalBox')"
+                                     process="questionDefinitionTextarea"
+                                     ajaxSingle="true"/>
                     </h:graphicImage>
                     <h:graphicImage id="imageUploadIcon"
                                     url="/images/icons/icon_add_image.gif"
