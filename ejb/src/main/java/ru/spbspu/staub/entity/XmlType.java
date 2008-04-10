@@ -88,18 +88,9 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
 
     public Object deepCopy(Object o) throws HibernateException {
         try {
-            byte[] bytes = toByteArray((Serializable) o);
-
-            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-            ObjectInputStream ois = new ObjectInputStream(bais);
-
-            Object clone = ois.readObject();
-
-            ois.close();
-
-            LOG.debug(" deepCopy(#0) : #1", o, clone);            
-
-            return clone;
+            Object result = cloneObject((Serializable) o);
+            LOG.debug(" deepCopy(#0) : #1", o, result);
+            return result;
         } catch (IOException e) {
             throw new HibernateException(e);
         } catch (ClassNotFoundException e) {
@@ -123,8 +114,15 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
     }
 
     public Object replace(Object o, Object o1, Object o2) throws HibernateException {
-        LOG.debug(" replace(#0, #1, #2) : #3", o, o1, o2, o1);
-        return o1;
+        try {
+            Object result = cloneObject((Serializable) o);
+            LOG.debug(" replace(#0, #1, #2) : #3", o, o1, o2, result);
+            return result;
+        } catch (IOException e) {
+            throw new HibernateException(e);
+        } catch (ClassNotFoundException e) {
+            throw new HibernateException(e);
+        }
     }
 
     public void setParameterValues(Properties properties) {
@@ -142,6 +140,18 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
             String message = MessageFormat.format("Could not found class with name \"{0}\".", pojoClassName);
             throw new IllegalArgumentException(message);
         }
+    }
+
+    private Serializable cloneObject(Serializable s) throws IOException, ClassNotFoundException {
+        byte[] bytes = toByteArray(s);
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        ObjectInputStream ois = new ObjectInputStream(bais);
+
+        Serializable result = (Serializable) ois.readObject();
+
+        ois.close();
+
+        return result;
     }
 
     private byte[] toByteArray(Serializable s) throws IOException {
