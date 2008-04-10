@@ -12,7 +12,7 @@ import javax.ejb.Local;
 @Local
 public interface AssignmentService extends GenericService<Assignment, Integer> {
     /**
-     * Saves or updates an assignment.
+     * Creates or updates an assignment.
      *
      * @param assignment the assignment to process
      *
