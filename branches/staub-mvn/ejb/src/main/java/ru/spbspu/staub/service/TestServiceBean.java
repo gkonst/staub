@@ -2,14 +2,12 @@ package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
-import ru.spbspu.staub.entity.Question;
-import ru.spbspu.staub.entity.Test;
-import ru.spbspu.staub.entity.TestQuestion;
-import ru.spbspu.staub.entity.User;
+import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Stateless;
+import javax.ejb.EJB;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +22,9 @@ import java.util.Map;
 @AutoCreate
 @Stateless
 public class TestServiceBean extends GenericServiceBean<Test, Integer> implements TestService {
+    @EJB
+    private  AssignmentService assignmentService;
+
     public FormTable findAllToPassForUser(FormProperties formProperties, User user) {
         String query = "select a.test from Assignment a where a.user = :user and a.testBegin <= :currentDate and a.testEnd > :currentDate";
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -67,9 +68,16 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         return makePersistent(test);
     }
 
-    public void assignTest(Integer testId, List<Integer> usersIds) {
-        // TODO implement method
+    public void assignTest(Integer testId, List<Integer> usersIds, Date begin, Date end) {
+        for (Integer userId : usersIds) {
+            Assignment assignment = new Assignment();
+            assignment.setFkTest(testId);
+            assignment.setFkUser(userId);
+            assignment.setTestBegin(begin);
+            assignment.setTestEnd(end);
 
+            assignmentService.saveAssignment(assignment);
+        }
     }
 
     private void createTestQuestion(Test test, Integer questionId) {
