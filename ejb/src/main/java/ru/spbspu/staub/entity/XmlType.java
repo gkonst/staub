@@ -22,7 +22,7 @@ import java.util.Properties;
 public class XmlType implements UserType, ParameterizedType, Serializable {
     private static final long serialVersionUID = 4593109763254958017L;
 
-    private static final int[] SQL_TYPES = {Types.INTEGER};
+    private static final int[] SQL_TYPES = {Types.OTHER};
 
     private Class pojoClass;
 
