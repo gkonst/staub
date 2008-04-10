@@ -46,6 +46,17 @@ fieldset {
     font-size: 1em;
 }
 
+.buttonImage {
+    border: 0 none;
+    border-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
 .radio {
     border: 0 none;
     border-style: none;

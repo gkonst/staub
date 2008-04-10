@@ -15,24 +15,10 @@
         <a4j:loadScript src="../script/timer.js"/>
     </ui:define>
     <ui:define name="sidebar">
-        <a4j:outputPanel id="timerPanel"
-                         rendered="#{pageBean.hasNextQuestion and pageBean.timeLimitPresent}">
-            Time - <span id="timerField"/>
-            <script type="text/javascript">
-                Timer.init({timeToCount : '#{pageBean.currentQuestion.timeLimit}',
-                    currentTime : '#{pageBean.currentTime}',
-                    timerFieldId : 'timerField'});
-            </script>
-            <br/>
-            #{pageBean.currentQuestion.timeLimit}
-            <br/>
-            #{pageBean.currentTime}
-        </a4j:outputPanel>
-
-        <h:form>
-            <a4j:poll action="#{pageBean.refreshTimer}" reRender="timerPanel" interval="10000"
-                      enabled="#{pageBean.hasNextQuestion and pageBean.timeLimitPresent}"/>
-        </h:form>
+        <s:fragment id="timerFragment"
+                    rendered="#{pageBean.hasNextQuestion and pageBean.timeLimitPresent}">
+            <ui:include src="/controls/questionTimerControl.jspx"/>
+        </s:fragment>
     </ui:define>
     <ui:define name="contentTitle">
         #{pageBean.currentQuestion.name}
