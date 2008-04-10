@@ -3,6 +3,8 @@ package ru.spbspu.staub.entity;
 import org.hibernate.HibernateException;
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
+import org.jboss.seam.log.Log;
+import org.jboss.seam.log.Logging;
 import ru.spbspu.staub.util.JAXBUtil;
 
 import java.io.*;
@@ -22,6 +24,8 @@ import java.util.Properties;
 public class XmlType implements UserType, ParameterizedType, Serializable {
     private static final long serialVersionUID = 4593109763254958017L;
 
+    private static final Log LOG = Logging.getLog(XmlType.class);
+
     private static final int[] SQL_TYPES = {Types.OTHER};
 
     private Class pojoClass;
@@ -38,7 +42,9 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
         try {
             byte[] bytes = toByteArray((Serializable) o);
             byte[] otherBytes = toByteArray((Serializable) o1);
-            return Arrays.equals(bytes, otherBytes);
+            boolean equal = Arrays.equals(bytes, otherBytes);
+            LOG.debug(" equals(#0, #1) : #2", o, o1, equal);
+            return equal;
         } catch (IOException e) {
             throw new HibernateException(e);
         }
@@ -47,7 +53,9 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
     public int hashCode(Object o) throws HibernateException {
         try {
             byte[] bytes = toByteArray((Serializable) o);
-            return Arrays.hashCode(bytes);
+            int hashCode = Arrays.hashCode(bytes);
+            LOG.debug(" hashCode(#0) : #1", o, hashCode);
+            return hashCode;
         } catch (IOException e) {
             throw new HibernateException(e);
         }
@@ -55,16 +63,21 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
 
     @SuppressWarnings("unchecked")
     public Object nullSafeGet(ResultSet resultSet, String[] strings, Object o) throws HibernateException, SQLException {
+        LOG.debug(" nullSafeGet(#0, #1, #2)", resultSet, strings, o);
         InputStream is = resultSet.getBinaryStream(strings[0]);
+        Object result;
         if (is != null) {
-            return JAXBUtil.parseXml(pojoClass, is);
+            result = JAXBUtil.parseXml(pojoClass, is);
         } else {
-            return null;
+            result = null;
         }
+        LOG.debug("  result : #0", result);
+        return result;
     }
 
     public void nullSafeSet(PreparedStatement preparedStatement, Object o, int i) throws HibernateException,
             SQLException {
+        LOG.debug(" nullSafeSet(#0, #1, #2)", preparedStatement, o, i);
         if (o != null) {
             byte[] bytes = JAXBUtil.createXml(o);
             preparedStatement.setBytes(i, bytes);
@@ -84,6 +97,8 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
 
             ois.close();
 
+            LOG.debug(" deepCopy(#0) : #1", o, clone);            
+
             return clone;
         } catch (IOException e) {
             throw new HibernateException(e);
@@ -97,18 +112,24 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
     }
 
     public Serializable disassemble(Object o) throws HibernateException {
-        return (Serializable) o;
+        Serializable result = (Serializable) o;
+        LOG.debug(" disassemble(#0) : #1", o, result);
+        return result;
     }
 
     public Object assemble(Serializable serializable, Object o) throws HibernateException {
+        LOG.debug(" assemble(#0, #1) : #2", serializable, o, serializable);
         return serializable;
     }
 
     public Object replace(Object o, Object o1, Object o2) throws HibernateException {
+        LOG.debug(" replace(#0, #1, #2) : #3", o, o1, o2, o1);
         return o1;
     }
 
     public void setParameterValues(Properties properties) {
+        LOG.debug(" setParameterValues(#0)", properties);
+
         String pojoClassName = properties.getProperty("pojoClass");
 
         if (pojoClassName == null) {

@@ -65,7 +65,7 @@ public final class JAXBUtil {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             JAXBElement jaxbElement = (JAXBElement) unmarshaller.unmarshal(inputStream);
             T result = (T) jaxbElement.getValue();
-            logger.debug("  resutl : #0", result);
+            logger.debug("  result : #0", result);
             logger.debug(" Unmarshalling xml...Ok");
             return result;
         } catch (JAXBException e) {
