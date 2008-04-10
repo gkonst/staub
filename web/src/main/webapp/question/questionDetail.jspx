@@ -114,7 +114,9 @@
                 </td>
                 <td align="right">
                     <h:graphicImage id="previewIcon"
-                                    url="/images/icons/icon_add_image.gif">
+                                    url="/images/icons/icon_preview.gif"
+                                    alt="#{messages['common.detail.functions.preview']}"
+                                    styleClass="clickable">
                         <a4j:support id="previewIconSupport"
                                      event="onclick"
                                      reRender="previewModalBox"
@@ -123,9 +125,10 @@
                                      ajaxSingle="true"/>
                     </h:graphicImage>
                     <h:graphicImage id="imageUploadIcon"
-                                    url="/images/icons/icon_add_image.gif"
+                                    url="/images/icons/icon_upload.gif"
                                     onclick="Richfaces.showModalPanel('imageUploadModalBox')"
-                                    alt="Добавить изображение"/>
+                                    alt="#{messages['common.detail.functions.uploadImage']}"
+                                    styleClass="clickable"/>
                 </td>
             </tr>
             <tr>
@@ -232,15 +235,16 @@
         <a4j:commandButton id="addAnswerButton"
                            action="#{pageBean.addAnswer}"
                            reRender="correctAnswerPanel,answerLabelPanel"
-                           styleClass="button"
-                           value="+"
+                           styleClass="buttonImage"
+                           image="/images/icons/icon_add.gif"
                            disabled="#{pageBean.viewMode}"
                            immediate="true"/>
+        <rich:separator width="2px" lineType=""/>
         <a4j:commandButton id="removeAnswerButton"
                            action="#{pageBean.removeAnswer}"
                            reRender="correctAnswerPanel,answerLabelPanel"
-                           styleClass="button"
-                           value="-"
+                           styleClass="buttonImage"
+                           image="/images/icons/icon_remove.gif"
                            disabled="#{pageBean.viewMode}"
                            immediate="true"/>
     </td>
