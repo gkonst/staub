@@ -322,11 +322,11 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     }
 
     public QuestionType getQuestionDefinition() {
-        return getModel().getQuestion();
+        return getModel().getDefinition();
     }
 
     public void setQuestionDefinition(QuestionType questionDefinition) {
-        getModel().setQuestion(questionDefinition);
+        getModel().setDefinition(questionDefinition);
     }
 
     public Object getCorrectAnswer() {

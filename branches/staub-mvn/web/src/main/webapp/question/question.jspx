@@ -27,7 +27,7 @@
         <a4j:form id="questionForm">
             <a4j:outputPanel id="questionContentPanel" rendered="#{pageBean.hasNextQuestion}">
                 <ui:include src="../controls/questionDefinitionControl.jspx">
-                    <ui:param name="questionDefinition" value="#{pageBean.currentQuestion.question}"/>
+                    <ui:param name="questionDefinition" value="#{pageBean.currentQuestion.definition}"/>
                 </ui:include>
                 <ui:include src="../controls/questionAnswerControl.jspx"/>
             </a4j:outputPanel>
