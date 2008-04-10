@@ -96,16 +96,16 @@ public class Question implements Serializable {
         this.timeLimit = timeLimit;
     }
 
-    private QuestionType question;
+    private QuestionType definition;
 
     @Column(name = "definition")
     @Type(type = "question_type")
-    public QuestionType getQuestion() {
-        return question;
+    public QuestionType getDefinition() {
+        return definition;
     }
 
-    public void setQuestion(QuestionType question) {
-        this.question = question;
+    public void setDefinition(QuestionType definition) {
+        this.definition = definition;
     }
 
     private Date created;

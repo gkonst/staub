@@ -4,7 +4,6 @@ import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
-import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.model.answer.AnswerType;
 import ru.spbspu.staub.model.answer.ElementType;
 import ru.spbspu.staub.model.question.QuestionType;
@@ -38,7 +37,7 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
     }
 
     public QuestionTrace checkQuestion(QuestionTrace questionTrace) {
-        QuestionType questionType = questionTrace.getQuestion().getQuestion();
+        QuestionType questionType = questionTrace.getQuestion().getDefinition();
         AnswerType answerType = questionTrace.getAnswer();
         boolean result = false;
         if (questionType.getMultipleChoice() != null) {

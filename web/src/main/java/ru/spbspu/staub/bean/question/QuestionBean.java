@@ -114,7 +114,7 @@ public class QuestionBean extends GenericBean {
 
     private void fillModel(Integer modelId) {
         currentQuestion = questionTraceService.findById(modelId);
-        answer = AnswerWrapper.getAnswer(currentQuestion.getQuestion().getQuestion());
+        answer = AnswerWrapper.getAnswer(currentQuestion.getQuestion().getDefinition());
     }
 
     private void resetTimer() {
