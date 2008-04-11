@@ -39,15 +39,20 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
     }
 
     public boolean equals(Object o, Object o1) throws HibernateException {
-        try {
-            byte[] bytes = toByteArray((Serializable) o);
-            byte[] otherBytes = toByteArray((Serializable) o1);
-            boolean equal = Arrays.equals(bytes, otherBytes);
-            LOG.debug(" equals(#0, #1) : #2", o, o1, equal);
-            return equal;
-        } catch (IOException e) {
-            throw new HibernateException(e);
+        boolean equal = false;
+        if (o == o1) {
+            equal = true;
+        } else if ((o != null) && (o1 != null) && (o.getClass() == o1.getClass())) {
+            try {
+                byte[] bytes = toByteArray((Serializable) o);
+                byte[] otherBytes = toByteArray((Serializable) o1);
+                equal = Arrays.equals(bytes, otherBytes);
+            } catch (IOException e) {
+                throw new HibernateException(e);
+            }
         }
+        LOG.debug(" equals(#0, #1) : #2", o, o1, equal);
+        return equal;
     }
 
     public int hashCode(Object o) throws HibernateException {
