@@ -1,6 +1,6 @@
 /* Style classes for the list table */
 table.listTable {
-    width: 100%;
+    width: 99%;
     table-layout: fixed;
 }
 div.listTableContent {

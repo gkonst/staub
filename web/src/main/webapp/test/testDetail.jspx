@@ -26,7 +26,7 @@
 </a4j:outputPanel>
 
 <div class="detailTable">
-<table width="100%">
+<table width="99%">
 <tr>
     <td align="right">
         <strong>#{messages['test.detail.name']}</strong>
@@ -35,7 +35,7 @@
         <h:inputText id="testNameInput"
                      value="#{pageBean.model.name}"
                      disabled="#{pageBean.viewMode}"
-                     style="width:100%;"/>
+                     style="width:99%;"/>
     </td>
 </tr>
 <tr>
@@ -46,7 +46,7 @@
         <h:inputTextarea id="testDescTextarea"
                          value="#{pageBean.model.description}"
                          disabled="#{pageBean.viewMode}"
-                         style="width:100%;"/>
+                         style="width:99%;"/>
     </td>
 </tr>
 <tr>
@@ -65,7 +65,7 @@
         <h:inputText id="timeLimitInput"
                      value="#{pageBean.model.timeLimit}"
                      disabled="#{pageBean.viewMode}"
-                     style="width:100%;"/>
+                     style="width:90%;"/>
     </td>
 </tr>
 <tr>
