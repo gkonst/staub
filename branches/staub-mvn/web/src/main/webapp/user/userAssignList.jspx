@@ -40,6 +40,10 @@
                                      styleClass="button"/>
                     <ui:include src="/controls/genericRefreshControl.jspx"/>
             </a4j:outputPanel>
+            <br/>
+            Начало теста <rich:calendar value="#{pageBean.testBegin}"/>  Окончание теста <rich:calendar value="#{pageBean.testEnd}"/>
+            <br/>
+            <br/>
             <ui:decorate template="../controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">
                     <h:outputText value="#{messages['common.list.noDataFound']}"

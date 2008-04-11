@@ -8,38 +8,34 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="/template/staub-template.jspx">
-    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionSelectListBean"-->
-    <!--@elvariable id="messages" type="java.util.Map"-->
-    <ui:param name="pageBean" value="#{questionSelectListBean}"/>
-    <ui:define name="sidebar">
-        <ui:include src="/system/menuPage.jspx"/>
-    </ui:define>
-    <ui:define name="contentTitle">
-        #{messages['question.select.list.title']}
-    </ui:define>
-    <ui:define name="contentBody">
-        <a4j:form id="questionSelectListForm">
-            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
-                <ui:include src="/controls/genericSaveControl.jspx"/>
-                <ui:include src="/controls/genericRefreshControl.jspx"/>
-                <a4j:commandButton id="removeAllButton"
-                                   action="#{pageBean.removeAll}"
-                                   reRender="selectedQuestionsPanel"
-                                   value="#{messages['common.detail.functions.clear']}"
-                                   styleClass="button"
-                                   rendered="#{pageBean.editMode}"/>
-                <a4j:commandButton id="addSelectedButton"
-                                   action="#{pageBean.addSelected}"
-                                   reRender="selectedQuestionsPanel, questionList"
-                                   value="#{messages['common.list.functions.addSelected']}"
-                                   styleClass="button"
-                                   rendered="#{pageBean.editMode}"/>
-            </a4j:outputPanel>
-            <br/>
-            #{messages['question.select.list.selectedQuestions']}
-            <br/>
-
-            <a4j:outputPanel id="selectedQuestionsPanel" style="height:100px; width:98%; overflow:auto;" layout="block"
+<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionSelectListBean"-->
+<!--@elvariable id="messages" type="java.util.Map"-->
+<ui:param name="pageBean" value="#{questionSelectListBean}"/>
+<ui:define name="sidebar">
+    <ui:include src="/system/menuPage.jspx"/>
+</ui:define>
+<ui:define name="contentTitle">
+    #{messages['question.select.list.title']}
+</ui:define>
+<ui:define name="contentBody">
+<a4j:form id="questionSelectListForm">
+<a4j:outputPanel id="mainContentButtons" styleClass="contentButtons">
+    <ui:include src="/controls/genericSaveControl.jspx"/>
+    <a4j:commandButton id="removeAllButton"
+                       action="#{pageBean.removeAll}"
+                       reRender="selectedQuestionsPanel"
+                       value="#{messages['common.detail.functions.clear']}"
+                       styleClass="button"
+                       rendered="#{pageBean.editMode}"/>
+</a4j:outputPanel>
+<br/>
+#{messages['question.select.list.selectedQuestions']}
+<br/>
+<table class="listTable">
+    <tr>
+        <td valign="middle">
+            <a4j:outputPanel id="selectedQuestionsPanel" style="height:100px; width:98%; overflow:auto;"
+                             layout="block"
                              styleClass="listTableContent">
                 <h:outputText id="noSelectedQuestionsLabel"
                               value="#{messages['question.select.list.noSelectedQuestions']}"
@@ -60,50 +56,65 @@
                                         rendered="#{!pageBean.editMode}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">#{messages['question.select.list.selectedQuestions.id']}</f:facet>
+                        <f:facet
+                                name="header">#{messages['question.select.list.selectedQuestions.id']}</f:facet>
                         #{selectedQuestion[0]}
                     </h:column>
                     <h:column>
-                        <f:facet name="header">#{messages['question.select.list.selectedQuestions.name']}</f:facet>
+                        <f:facet
+                                name="header">#{messages['question.select.list.selectedQuestions.name']}</f:facet>
                         #{selectedQuestion[1]}
                     </h:column>
                 </h:dataTable>
             </a4j:outputPanel>
-            <br/>
-            <br/>
-            #{messages['question.select.list.allQuestions']}
-            <ui:decorate template="../controls/listLayoutControl.jspx">
-                <ui:define name="listPageData">
-                    <h:outputText value="#{messages['common.list.noDataFound']}"
-                                  rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
-                    <h:dataTable id="questionList"
-                                 value="#{pageBean.dataModel}"
-                                 var="question"
-                                 rendered="#{pageBean.dataModel.rowCount > 0}"
-                                 styleClass="dataTable">
-                        <h:column>
-                            <h:selectBooleanCheckbox id="selectedCheckbox"
-                                                     value="#{pageBean.selectedMap[question]}"
-                                                     disabled="#{!pageBean.editMode}"/>
-                        </h:column>
-                        <h:column>
-                            <a4j:commandButton id="addQuestionButton"
-                                               action="#{pageBean.addQuestion}"
-                                               reRender="selectedQuestionsPanel"
-                                               image="/images/icons/icon_add.gif"
-                                               rendered="#{pageBean.editMode}"/>
-                            <h:graphicImage id="addQuestionImageDisabled"
-                                            url="/images/icons/icon_add_disable.gif"
-                                            rendered="#{!pageBean.editMode}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">#{messages['question.list.name']}</f:facet>
-                            #{question.name}
-                        </h:column>
-                    </h:dataTable>
-                </ui:define>
-            </ui:decorate>
-        </a4j:form>
+        </td>
+    </tr>
+</table>
+<br/>
+<a4j:outputPanel id="selectorContentButtons" styleClass="contentButtons">
+    <ui:include src="/controls/genericRefreshControl.jspx"/>
+    <a4j:commandButton id="addSelectedButton"
+                       action="#{pageBean.addSelected}"
+                       reRender="selectedQuestionsPanel, questionList"
+                       value="#{messages['common.list.functions.addSelected']}"
+                       styleClass="button"
+                       rendered="#{pageBean.editMode}"/>
+</a4j:outputPanel>
+
+<br/>
+#{messages['question.select.list.allQuestions']}
+<ui:decorate template="../controls/listLayoutControl.jspx">
+    <ui:define name="listPageData">
+        <h:outputText value="#{messages['common.list.noDataFound']}"
+                      rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
+        <h:dataTable id="questionList"
+                     value="#{pageBean.dataModel}"
+                     var="question"
+                     rendered="#{pageBean.dataModel.rowCount > 0}"
+                     styleClass="dataTable">
+            <h:column>
+                <h:selectBooleanCheckbox id="selectedCheckbox"
+                                         value="#{pageBean.selectedMap[question]}"
+                                         disabled="#{!pageBean.editMode}"/>
+            </h:column>
+            <h:column>
+                <a4j:commandButton id="addQuestionButton"
+                                   action="#{pageBean.addQuestion}"
+                                   reRender="selectedQuestionsPanel"
+                                   image="/images/icons/icon_add.gif"
+                                   rendered="#{pageBean.editMode}"/>
+                <h:graphicImage id="addQuestionImageDisabled"
+                                url="/images/icons/icon_add_disable.gif"
+                                rendered="#{!pageBean.editMode}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">#{messages['question.list.name']}</f:facet>
+                #{question.name}
+            </h:column>
+        </h:dataTable>
     </ui:define>
+</ui:decorate>
+</a4j:form>
+</ui:define>
 </ui:composition>
 </html>

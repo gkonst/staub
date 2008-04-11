@@ -18,7 +18,7 @@
         #{messages['question.list.title']}
     </ui:define>
     <ui:define name="contentBody">
-        <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+        <a4j:outputPanel id="contentButtons" styleClass="contentButtons" layout="block">
             <a4j:form id="contentButtonsForm">
                 <ui:include src="/controls/genericCreateControl.jspx"/>
                 <ui:include src="/controls/genericRefreshControl.jspx"/>
