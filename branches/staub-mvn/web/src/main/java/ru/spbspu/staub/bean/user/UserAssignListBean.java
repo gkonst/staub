@@ -1,17 +1,17 @@
 package ru.spbspu.staub.bean.user;
 
-import ru.spbspu.staub.bean.GenericListBean;
-import ru.spbspu.staub.bean.BeanMode;
-import ru.spbspu.staub.entity.User;
-import ru.spbspu.staub.model.list.FormTable;
-import ru.spbspu.staub.model.list.FormProperties;
-import ru.spbspu.staub.service.UserService;
-import ru.spbspu.staub.service.TestService;
+import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
-import static org.jboss.seam.ScopeType.SESSION;
+import ru.spbspu.staub.bean.BeanMode;
+import ru.spbspu.staub.bean.GenericListBean;
+import ru.spbspu.staub.entity.User;
+import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.service.TestService;
+import ru.spbspu.staub.service.UserService;
 
 import java.util.List;
 
@@ -72,7 +72,8 @@ public class UserAssignListBean extends GenericListBean<User> {
     public void assign() {
         logger.debug(">>> Assigning users...");
         List<Integer> usersIds = getSelectedItems();
-        testService.assignTest(testId, usersIds);
+        // TODO replace nulls
+        testService.assignTest(testId, usersIds, null, null);
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("user.assign.list.assignSuccess");
