@@ -23,9 +23,9 @@ import java.util.Date;
 @Stateless
 public class QuestionServiceBean extends GenericServiceBean<Question, Integer> implements QuestionService {
     public FormTable findAllForTest(FormProperties formProperties, Test test) {
-        String query = "select q from Question q, TestQuestion tq, Test t where q.id = tq.fkQuestion and tq.fkTest = t.id and t = :test";
+        String query = "select q from Question q, TestQuestion tq where q.id = tq.fkQuestion and tq.fkTest = :testId";
         Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("test", test);
+        parameters.put("testId", test.getId());
         return findAll(query, formProperties, parameters);
     }
 
