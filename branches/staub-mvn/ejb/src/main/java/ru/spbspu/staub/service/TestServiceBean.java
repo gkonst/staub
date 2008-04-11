@@ -26,9 +26,9 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     private  AssignmentService assignmentService;
 
     public FormTable findAllToPassForUser(FormProperties formProperties, User user) {
-        String query = "select a.test from Assignment a where a.user = :user and a.testBegin <= :currentDate and a.testEnd > :currentDate";
+        String query = "select t from Test t, Assignment a where t.id = a.fkTest and a.fkUser = :userId and a.testBegin <= :currentDate and a.testEnd > :currentDate";
         Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("user", user);
+        parameters.put("userId", user.getId());
         parameters.put("currentDate", new Date());
         return findAll(query, formProperties, parameters);
     }
