@@ -26,7 +26,7 @@ public interface QuestionTraceService extends GenericService<QuestionTrace, Inte
     List<Integer> findIdsByTestTraceId(TestTrace testTrace);
 
     /**
-     * Sets the "started" field of a trace element. 
+     * Sets the "started" field of a trace element. If the field is not <code>null</code> it is keeped unchanged.
      *
      * @param questionTrace the trace element to start
      *
