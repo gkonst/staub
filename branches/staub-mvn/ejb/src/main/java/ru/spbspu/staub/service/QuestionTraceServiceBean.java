@@ -77,7 +77,7 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
     private Set<BigInteger> getCorrectAnswers(List<ru.spbspu.staub.model.question.AnswerType> questionAnswers) {
         Set<BigInteger> correctAnswers = new HashSet<BigInteger>();
         for (ru.spbspu.staub.model.question.AnswerType questionAnswer : questionAnswers) {
-            if (questionAnswer.getCorrect().equals("true")) {
+            if ("true".equals(questionAnswer.getCorrect())) {
                 correctAnswers.add(questionAnswer.getId());
             }
         }
