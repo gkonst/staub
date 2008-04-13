@@ -7,58 +7,51 @@
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
-<ui:composition template="../template/staub-template.jspx">
+<ui:composition template="/template/staub-template.jspx">
     <ui:param name="pageBean" value="#{questionBean}"/>
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
     <!--@elvariable id="messages" type="java.util.Map"-->
-    <ui:define name="pageScript">
-        <a4j:loadScript src="../script/timer.js"/>
-    </ui:define>
     <ui:define name="sidebar">
         <s:fragment id="timerFragment"
-                    rendered="#{pageBean.hasNextQuestion and pageBean.timeLimitPresent}">
+                    rendered="#{!pageBean.finished and pageBean.timeLimitPresent}">
             <ui:include src="/controls/questionTimerControl.jspx"/>
         </s:fragment>
     </ui:define>
     <ui:define name="contentTitle">
-        #{pageBean.currentQuestion.name}
+        #{pageBean.finished ? messages['questionSolving.testFinished'] : pageBean.currentQuestion.name}
     </ui:define>
     <ui:define name="contentBody">
         <a4j:form id="questionForm">
-            <a4j:outputPanel id="questionContentPanel" rendered="#{pageBean.hasNextQuestion}">
-                <ui:include src="../controls/questionDefinitionControl.jspx">
+            <a4j:outputPanel id="questionContentPanel" rendered="#{!pageBean.finished}">
+                <ui:include src="/controls/questionDefinitionControl.jspx">
                     <ui:param name="questionDefinition" value="#{pageBean.currentQuestion.definition}"/>
                 </ui:include>
-                <ui:include src="../controls/questionAnswerControl.jspx"/>
+                <ui:include src="/controls/questionAnswerControl.jspx"/>
             </a4j:outputPanel>
-            <a4j:outputPanel id="noQuestionPanel" rendered="#{!pageBean.hasNextQuestion}">
-                Вопросы кончились!
-                Тест завершен!
+            <a4j:outputPanel id="noQuestionPanel" rendered="#{pageBean.finished}">
             </a4j:outputPanel>
             <br/>
             <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
-                <a4j:commandButton id="prevQuestionButton"
-                                   action="#{pageBean.previousQuestion}"
-                                   value="#{messages['question.detail.previousQuestion']}"
-                                   styleClass="button"
-                                   disabled="#{!pageBean.hasPreviousQuestion}"
-                                   reRender="content, sidebar"
-                                   rendered="false"/>
                 <a4j:commandButton id="nextQuestionButton"
                                    action="#{pageBean.nextQuestion}"
-                                   value="#{messages['question.detail.nextQuestion']}"
+                                   value="#{messages['questionSolving.nextQuestion']}"
                                    styleClass="button"
-                                   rendered="#{pageBean.hasNextQuestion}"
+                                   rendered="#{!pageBean.finished}"
                                    reRender="content, sidebar"
                                    onclick="Timer.destroy()"/>
-                <a4j:jsFunction name="nextQuestion"
+                <a4j:jsFunction id="nextQuestionJsFunction"
+                                name="nextQuestion"
                                 action="#{pageBean.nextQuestion}"
                                 reRender="content, sidebar"/>
                 <s:button id="endTestButton"
-                          action="#{questionBean.endTest}"
-                          value="#{messages['question.detail.endTest']}"
+                          view="/test/testEnd.seam"
+                          value="#{messages['questionSolving.showResult']}"
                           styleClass="button"
-                          rendered="#{!pageBean.hasNextQuestion}"/>
+                          rendered="#{pageBean.finished}"
+                          propagation="end">
+                    <f:param id="endTestButtonParamModelId" name="modelId" value="#{pageBean.testTrace.id}" />
+                    <f:param id="endTestButtonParamBeanMode" name="beanMode" value="VIEW_MODE"/>
+                </s:button>
             </a4j:outputPanel>
         </a4j:form>
     </ui:define>

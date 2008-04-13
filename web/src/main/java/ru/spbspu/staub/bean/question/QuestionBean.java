@@ -1,7 +1,10 @@
 package ru.spbspu.staub.bean.question;
 
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.*;
+import org.jboss.seam.annotations.Conversational;
+import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 import ru.spbspu.staub.bean.GenericBean;
 import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.entity.QuestionTrace;
@@ -43,15 +46,21 @@ public class QuestionBean extends GenericBean {
 
     private Integer previousPart;
 
+    private boolean finished = false;
+
     public String initTest() {
-        logger.debug(">>> Init test(#0)...", testTrace.getId());
+        logger.debug(">>> Init question(index=#0) in testTrace(#1)...", questionIndex, testTrace.getId());
+        logger.debug(" this bean : #0", this);
+        // fill ids
         if (questionIds == null) {
             questionIds = questionTraceService.findIdsByTestTraceId(testTrace);
             if (questionIds == null || questionIds.size() == 0) {
                 // check for zero count questions
-                throw new IllegalStateException("Test has no questions");
+                addFacesMessage("В тесте не осталось неотвеченных вопросов");
+                finished = true;
             }
         }
+
         if (questionIndex < questionIds.size()) {
 
             fillModel(questionIds.get(questionIndex));
@@ -65,33 +74,34 @@ public class QuestionBean extends GenericBean {
                     refreshTimer();
                 }
             }
-            //TODO really saves answer
-            questionTraceService.saveAnswer(currentQuestion);
+
             if (testTrace.getTest().getCheckAfterEachPart()) {
-                if(previousPart != null && !previousPart.equals(currentQuestion.getPart())) {
+                if (previousPart != null && !previousPart.equals(currentQuestion.getPart())) {
                     logger.debug(" part changed(#0->#1) -> checking", previousPart, currentQuestion.getPart());
-                    if(!testTraceService.checkPart(testTrace, previousPart)) {
+                    if (!testTraceService.checkPart(testTrace, previousPart)) {
                         logger.debug(" part checking failed -> test ended");
-                        //TODO check part failed
+                        testTrace = testTraceService.endTest(testTrace);
+                        addFacesMessage("Part validation failed");
+                        finished = true;
                     }
                 }
             }
+
+            // starting solving question
+            currentQuestion = questionTraceService.start(currentQuestion);
+
             previousPart = currentQuestion.getPart();
         } else {
             // last question
             logger.debug(" no questions -> test ended");
             testTraceService.checkPart(testTrace, previousPart);
             testTrace = testTraceService.endTest(testTrace);
-        }
-        logger.debug("<<< Init test...Ok");
-        return "questionDetail";
-    }
+            addFacesMessage("Вы ответили на все вопросы теста");
+            finished = true;
 
-    @End
-    public String endTest() {
-        logger.debug(">>> End test...");
-        logger.debug(">>> End test...Ok");
-        return "testEnd";
+        }
+        logger.debug("<<< Init question...Ok");
+        return "questionDetail";
     }
 
     // unused
@@ -105,6 +115,8 @@ public class QuestionBean extends GenericBean {
 
     public String nextQuestion() {
         logger.debug(">>> Next question...");
+        currentQuestion.setAnswer(answer.getAnswer());
+        currentQuestion = questionTraceService.saveAnswer(currentQuestion);
         questionIndex++;
         currentTime = -1;
         logger.debug(" question index : #0", questionIndex);
@@ -161,5 +173,13 @@ public class QuestionBean extends GenericBean {
 
     public void setCurrentTime(int currentTime) {
         this.currentTime = currentTime;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public TestTrace getTestTrace() {
+        return testTrace;
     }
 }

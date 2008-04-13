@@ -9,11 +9,55 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="../template/staub-template.jspx">
+    <ui:param name="pageBean" value="#{testEndBean}"/>
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.test.TestEndBean"-->
+    <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:define name="contentTitle">
-        Тест завершен.
+        Результаты теста.
     </ui:define>
     <ui:define name="contentBody">
-        Результат.    
+        <table class="detailTable">
+            <tr>
+                <td align="right">
+                    <strong>Название теста</strong>
+                </td>
+                <td>
+                    #{pageBean.model.test.name}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <strong>Дата начала теста</strong>
+                </td>
+                <td>
+                    #{pageBean.model.started}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <strong>Дата окончания теста</strong>
+                </td>
+                <td>
+                    #{pageBean.model.finished}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <strong>Кол-во баллов</strong>
+                </td>
+                <td>
+                    #{pageBean.model.score}/#{pageBean.model.test.passScore}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <strong>Результат</strong>
+                </td>
+                <td>
+                   #{pageBean.model.testPassed ? 'Сдан' : 'Не сдан'}
+                </td>
+            </tr>
+        </table>
     </ui:define>
 </ui:composition>
 </html>
