@@ -14,7 +14,7 @@
         <a4j:outputPanel id="multipleChoice" rendered="#{pageBean.answer.multipleChoice}">
             <h:selectManyCheckbox id="multipleChoiceSelect"
                                   layout="pageDirection"
-                                  value="#{pageBean.answer.userAnswer}"
+                                  value="#{pageBean.answer.userChoice}"
                                   converter="ru.spbspu.staub.ObjectSelectConverter">
                 <s:selectItems value="#{pageBean.answer.answerDefinition.answer}" var="answer"
                                label="#{answer.value}"/>
@@ -23,7 +23,7 @@
         <a4j:outputPanel id="singleChoice" rendered="#{pageBean.answer.singleChoice}">
             <h:selectOneRadio id="singleChoiceSelect"
                               layout="pageDirection"
-                              value="#{pageBean.answer.userAnswer}"
+                              value="#{pageBean.answer.userChoice}"
                               converter="ru.spbspu.staub.ObjectSelectConverter">
                 <s:selectItems value="#{pageBean.answer.answerDefinition.answer}" var="answer"
                                label="#{answer.value}"/>

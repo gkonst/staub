@@ -45,7 +45,7 @@
           action="#{questionBean.initTest}">
         <navigation>
             <rule if-outcome="testEnd">
-                <render view-id="/test/testEnd.jspx"/>
+                <redirect view-id="/test/testEnd.jspx"/>
             </rule>
         </navigation>
     </page>
@@ -54,6 +54,10 @@
         <navigation>
             <render view-id="/question/question.jspx"/>
         </navigation>
+    </page>
+    <page view-id="/test/testEnd.jspx"
+          login-required="true"
+          action="#{testEndBean.initBean}">
     </page>
 
     <!-- Administrator pages -->
