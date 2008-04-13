@@ -33,8 +33,12 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
     }
 
     public QuestionTrace start(QuestionTrace questionTrace) {
-        questionTrace.setStarted(new Date());
-        return makePersistent(questionTrace);
+        if (questionTrace.getFinished() == null) {
+            questionTrace.setStarted(new Date());
+            return makePersistent(questionTrace);
+        } else {
+            return questionTrace;
+        }
     }
 
     public QuestionTrace saveAnswer(QuestionTrace questionTrace) {
