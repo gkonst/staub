@@ -18,6 +18,8 @@ public abstract class AnswerWrapper {
         }
     }
 
+    public abstract ru.spbspu.staub.model.answer.AnswerType getAnswer();
+
     public boolean isSingleChoice() {
         return this instanceof SingleChoiceAnswerWrapper;
     }
