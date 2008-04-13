@@ -44,6 +44,7 @@ public class SingleChoiceAnswerWrapper extends AnswerWrapper {
             ElementType element = new ElementType();
             element.setAnswerId(userChoice.getId());
             singleChoice.setElement(element);
+            answer.setSingleChoice(singleChoice);
         }
         return answer;
     }
