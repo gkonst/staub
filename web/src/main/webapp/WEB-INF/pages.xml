@@ -164,4 +164,14 @@
             <message severity="warn">#{messages[system.login.unauthorizedError]}</message>
         </redirect>
     </exception>
+    <exception class="javax.faces.application.ViewExpiredException">
+        <redirect view-id="/system/loginPage.jspx">
+            <message severity="warn">#{messages[system.login.unauthorizedError]}</message>
+        </redirect>
+    </exception>
+    <exception class="org.jboss.seam.security.AuthorizationException">
+        <end-conversation/>
+        <!-- TODO May be replace with special page -->
+        <http-error error-code="403"/>
+    </exception>
 </pages>
