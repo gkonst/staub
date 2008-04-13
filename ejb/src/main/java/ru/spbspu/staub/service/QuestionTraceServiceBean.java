@@ -32,8 +32,14 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
         return q.getResultList();
     }
 
-    public void saveAnswer(QuestionTrace questionTrace) {
-        makePersistent(questionTrace);
+    public QuestionTrace start(QuestionTrace questionTrace) {
+        questionTrace.setStarted(new Date());
+        return makePersistent(questionTrace);
+    }
+
+    public QuestionTrace saveAnswer(QuestionTrace questionTrace) {
+        questionTrace.setFinished(new Date());
+        return makePersistent(questionTrace);
     }
 
     public QuestionTrace checkQuestion(QuestionTrace questionTrace) {
@@ -47,7 +53,6 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
         }
 
         questionTrace.setCorrect(result);
-        questionTrace.setFinished(new Date());
 
         makePersistent(questionTrace);
 

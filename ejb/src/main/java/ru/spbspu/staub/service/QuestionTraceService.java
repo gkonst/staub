@@ -10,6 +10,7 @@ import java.util.List;
  * Local Interface for <code>QuestionTraceServiceBean</code> Stateless EJB.
  *
  * @author Konstantin Grigoriev
+ * @author Alexander V. Elagin
  */
 @Local
 public interface QuestionTraceService extends GenericService<QuestionTrace, Integer> {
@@ -25,11 +26,22 @@ public interface QuestionTraceService extends GenericService<QuestionTrace, Inte
     List<Integer> findIdsByTestTraceId(TestTrace testTrace);
 
     /**
+     * Sets the "started" field of a trace element. 
+     *
+     * @param questionTrace the trace element to start
+     *
+     * @return the updated trace element
+     */
+    QuestionTrace start(QuestionTrace questionTrace);
+
+    /**
      * Saves anwered question.
      *
      * @param questionTrace question to save
+     *
+     * @return the updated trace element
      */
-    void saveAnswer(QuestionTrace questionTrace);
+    QuestionTrace saveAnswer(QuestionTrace questionTrace);
 
     /**
      * Validates a single answer.
