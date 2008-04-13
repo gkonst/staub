@@ -27,6 +27,9 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     @EJB
     UserHistoryService userHistoryService;
 
+    @EJB
+    AssignmentService assignmentService;
+
     @SuppressWarnings("unchecked")
     public TestTrace getTestTrace(Test test, User user, String sessionId) {
         Query q = getEntityManager().createQuery("select t from TestTrace t where t.user = :user and t.sessionId = :sessionId");
@@ -48,6 +51,11 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     }
 
     public TestTrace startTest(TestTrace testTrace) {
+        // TODO: Should this code be here?
+        Assignment assignment = assignmentService.findAssignment(testTrace.getUser(), testTrace.getTest());
+        assignment.setTestStarted(true);
+        assignmentService.saveAssignment(assignment);
+
         testTrace.setStarted(new Date());
         return makePersistent(testTrace);
     }
@@ -59,6 +67,8 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         makePersistent(testTrace);
 
         userHistoryService.populateUserHistory(testTrace);
+
+        assignmentService.removeAssignment(testTrace.getUser(), testTrace.getTest());
 
         return testTrace;
     }
