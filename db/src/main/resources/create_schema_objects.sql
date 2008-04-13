@@ -126,7 +126,7 @@ CREATE TABLE user_history (
     fk_test_trace INTEGER, -- intentionally nullable
     name CHARACTER VARYING(256),
     score INTEGER,
-    test_passed NUMERIC(1),
+    test_passed BOOLEAN,
     test_date DATE,
     CONSTRAINT pk_user_history PRIMARY KEY (id),
     CONSTRAINT fk_test_trace FOREIGN KEY (fk_test_trace) REFERENCES test_trace (id)
