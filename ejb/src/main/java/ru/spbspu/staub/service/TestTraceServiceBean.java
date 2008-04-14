@@ -3,13 +3,11 @@ package ru.spbspu.staub.service;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.*;
-import ru.spbspu.staub.interceptors.CallLogger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.interceptor.Interceptors;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +19,6 @@ import java.util.List;
  */
 @Name("testTraceService")
 @AutoCreate
-@Interceptors({CallLogger.class})
 @Stateless
 public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer> implements TestTraceService {
     @EJB

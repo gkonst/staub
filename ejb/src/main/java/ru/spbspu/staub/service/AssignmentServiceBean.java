@@ -5,12 +5,10 @@ import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.Assignment;
 import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.entity.User;
-import ru.spbspu.staub.interceptors.CallLogger;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.interceptor.Interceptors;
 
 /**
  * The <code>AssignmentServiceBean</code> is a stateless EJB service to manipulate <code>Assignment</code> entity.
@@ -19,7 +17,6 @@ import javax.interceptor.Interceptors;
  */
 @Name("assignmentService")
 @AutoCreate
-@Interceptors({CallLogger.class})
 @Stateless
 public class AssignmentServiceBean extends GenericServiceBean<Assignment, Integer> implements AssignmentService {
     public Assignment findAssignment(User user, Test test) {
