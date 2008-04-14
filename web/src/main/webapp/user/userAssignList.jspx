@@ -21,28 +21,55 @@
     <ui:define name="contentBody">
         <a4j:form id="userAssignListForm">
             <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
-                    <a4j:commandButton id="assignButton" action="#{pageBean.assign}"
-                                       value="#{messages['common.list.functions.assignSelected']}"
-                                       rendered="#{pageBean.editMode or pageBean.createMode}"
-                                       reRender="content"
-                                       styleClass="button"/>
-                    <h:commandButton id="cancelButton"
-                                     action="#{pageBean.doCancel}"
-                                     immediate="true"
-                                     value="#{messages['common.detail.functions.cancel']}"
-                                     rendered="#{pageBean.editMode or pageBean.createMode}"
-                                     styleClass="button"/>
-                    <h:commandButton id="backButton"
-                                     action="#{pageBean.doBack}"
-                                     immediate="true"
-                                     value="#{messages['common.detail.functions.back']}"
-                                     rendered="#{pageBean.viewMode}"
-                                     styleClass="button"/>
-                    <ui:include src="/controls/genericRefreshControl.jspx"/>
+                <a4j:commandButton id="assignButton" action="#{pageBean.assign}"
+                                   value="#{messages['common.list.functions.assignSelected']}"
+                                   rendered="#{pageBean.editMode or pageBean.createMode}"
+                                   reRender="content"
+                                   styleClass="button"/>
+                <h:commandButton id="cancelButton"
+                                 action="#{pageBean.doCancel}"
+                                 immediate="true"
+                                 value="#{messages['common.detail.functions.cancel']}"
+                                 rendered="#{pageBean.editMode or pageBean.createMode}"
+                                 styleClass="button"/>
+                <h:commandButton id="backButton"
+                                 action="#{pageBean.doBack}"
+                                 immediate="true"
+                                 value="#{messages['common.detail.functions.back']}"
+                                 rendered="#{pageBean.viewMode}"
+                                 styleClass="button"/>
+                <ui:include src="/controls/genericRefreshControl.jspx"/>
             </a4j:outputPanel>
             <br/>
-            Начало теста <rich:calendar value="#{pageBean.testBegin}"/>  Окончание теста <rich:calendar value="#{pageBean.testEnd}"/>
             <br/>
+            <table width="99%">
+                <tr>
+                    <td align="right">
+                        <strong>#{messages['user.assign.list.testBegin']}</strong>
+                    </td>
+                    <td>
+                        <rich:calendar id="testBeginInput"
+                                       value="#{pageBean.testBegin}"
+                                       disabled="#{!pageBean.editMode}"
+                                       datePattern="dd.MM.yy HH:mm"
+                                       required="true"
+                                       inputClass="required"
+                                       requiredMessage="#{messages['user.assign.list.testBeginRequired']}"/>
+                    </td>
+                    <td align="right">
+                        <strong>#{messages['user.assign.list.testEnd']}</strong>
+                    </td>
+                    <td>
+                        <rich:calendar id="testEndInput"
+                                       value="#{pageBean.testEnd}"
+                                       disabled="#{!pageBean.editMode}"
+                                       datePattern="dd.MM.yy HH:mm"
+                                       required="true"
+                                       requiredMessage="#{messages['user.assign.list.testEndRequired']}"
+                                       inputClass="required"/>
+                    </td>
+                </tr>
+            </table>
             <br/>
             <ui:decorate template="../controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">
