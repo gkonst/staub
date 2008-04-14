@@ -16,7 +16,8 @@ public class CallLogger {
 
     @AroundInvoke
     public Object logMethodCall(InvocationContext invocationContext) throws Exception {
-        String methodName = invocationContext.getMethod().getName();
+        String methodName = new StringBuilder().append(invocationContext.getTarget().getClass().getName()).append('.')
+                .append(invocationContext.getMethod().getName()).toString();
         LOG.debug("* Method #0 started...", methodName);
         Object[] parameters = invocationContext.getParameters();
         if (parameters != null) {
