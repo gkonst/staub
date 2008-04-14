@@ -18,12 +18,15 @@ public class CallLogger {
     public Object logMethodCall(InvocationContext invocationContext) throws Exception {
         String methodName = invocationContext.getMethod().getName();
         LOG.debug("* Method #0 started...", methodName);
-        int i = 1;
-        for (Object parameter : invocationContext.getParameters()) {
-            LOG.debug("*  Parameter #0: #1", i, parameter);
-            i++;
+        Object[] parameters = invocationContext.getParameters();
+        if (parameters != null) {
+            int i = 1;
+            for (Object parameter : parameters) {
+                LOG.debug("*  Parameter #0: #1", i, parameter);
+                i++;
+            }
         }
-        long startTime = System.currentTimeMillis( );        
+        long startTime = System.currentTimeMillis();
         try {
             Object result = invocationContext.proceed();
             LOG.debug("*  Method #0 returned: #1", methodName, result);
