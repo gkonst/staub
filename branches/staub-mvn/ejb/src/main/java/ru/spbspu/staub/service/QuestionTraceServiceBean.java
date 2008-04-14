@@ -7,9 +7,11 @@ import ru.spbspu.staub.entity.TestTrace;
 import ru.spbspu.staub.model.answer.AnswerType;
 import ru.spbspu.staub.model.answer.ElementType;
 import ru.spbspu.staub.model.question.QuestionType;
+import ru.spbspu.staub.interceptors.CallLogger;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
+import javax.interceptor.Interceptors;
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.List;
@@ -23,6 +25,7 @@ import java.util.Date;
  */
 @Name("questionTraceService")
 @AutoCreate
+@Interceptors({CallLogger.class})
 @Stateless
 public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, Integer> implements QuestionTraceService {
     @SuppressWarnings("unchecked")
