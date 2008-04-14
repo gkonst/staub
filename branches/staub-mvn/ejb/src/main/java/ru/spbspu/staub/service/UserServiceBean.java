@@ -2,18 +2,16 @@ package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
-import ru.spbspu.staub.entity.User;
 import ru.spbspu.staub.entity.RoleEnum;
-import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.entity.User;
 import ru.spbspu.staub.model.list.FormProperties;
-import ru.spbspu.staub.interceptors.CallLogger;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.interceptor.Interceptors;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Stateless EJB Service for manipulations with <code>User</code> entity.
@@ -22,7 +20,6 @@ import java.util.HashMap;
  */
 @Name("userService")
 @AutoCreate
-@Interceptors({CallLogger.class})
 @Stateless
 public class UserServiceBean extends GenericServiceBean<User, String> implements UserService {
     public User findUserByUserNameAndPassword(String username, String password) {

@@ -5,11 +5,9 @@ import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
-import ru.spbspu.staub.interceptors.CallLogger;
 
-import javax.ejb.Stateless;
 import javax.ejb.EJB;
-import javax.interceptor.Interceptors;
+import javax.ejb.Stateless;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +20,6 @@ import java.util.Map;
  */
 @Name("testService")
 @AutoCreate
-@Interceptors({CallLogger.class})
 @Stateless
 public class TestServiceBean extends GenericServiceBean<Test, Integer> implements TestService {
     @EJB

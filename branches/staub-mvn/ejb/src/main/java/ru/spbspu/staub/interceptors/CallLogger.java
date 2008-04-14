@@ -17,19 +17,23 @@ public class CallLogger {
     @AroundInvoke
     public Object logMethodCall(InvocationContext invocationContext) throws Exception {
         String methodName = invocationContext.getMethod().getName();
-        LOG.debug(" Method #0 started...", methodName);
+        LOG.debug("* Method #0 started...", methodName);
         int i = 1;
         for (Object parameter : invocationContext.getParameters()) {
-            LOG.debug("  Parameter #0: #1", i, parameter);
+            LOG.debug("*  Parameter #0: #1", i, parameter);
             i++;
         }
+        long startTime = System.currentTimeMillis( );        
         try {
-            return invocationContext.proceed();
+            Object result = invocationContext.proceed();
+            LOG.debug("*  Method #0 returned: #1", methodName, result);
+            return result;
         } catch (Exception e) {
-            LOG.debug(" Method #0 throwed an exception: #1", methodName, e.getMessage());
+            LOG.debug("*  Method #0 throwed an exception: #1", methodName, e.getMessage());
             throw e;
         } finally {
-            LOG.debug(" Method #0 finished.", methodName);
+            long executionTime = System.currentTimeMillis() - startTime;
+            LOG.debug("* Method #0 finished. Execution time: #1 ms", methodName, executionTime);
         }
     }
 }

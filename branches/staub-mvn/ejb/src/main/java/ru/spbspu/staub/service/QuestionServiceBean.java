@@ -7,13 +7,11 @@ import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.entity.User;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
-import ru.spbspu.staub.interceptors.CallLogger;
 
 import javax.ejb.Stateless;
-import javax.interceptor.Interceptors;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
 
 /**
  * Stateless EJB Service for manipulations with <code>Question</code> entity.
@@ -22,7 +20,6 @@ import java.util.Date;
  */
 @Name("questionService")
 @AutoCreate
-@Interceptors({CallLogger.class})
 @Stateless
 public class QuestionServiceBean extends GenericServiceBean<Question, Integer> implements QuestionService {
     public FormTable findAllForTest(FormProperties formProperties, Test test) {
