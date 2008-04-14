@@ -7,7 +7,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 
 /**
- * The <code>CallLogger</code> class is an interceptor class implements common call logging code.
+ * The <code>CallLogger</code> class is an interceptor class that implements common call logging code.
  *
  * @author Alexander V. Elagin
  */
