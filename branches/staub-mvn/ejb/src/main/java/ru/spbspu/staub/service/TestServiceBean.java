@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.text.MessageFormat;
 
 /**
  * Stateless EJB Service for manipulations with <code>Test</code> entity.
@@ -63,6 +64,8 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     }
 
     public Test saveTest(Test test, User user) {
+        validateTest(test);
+
         if (test.getId() == null) {
             test.setCreatedBy(user.getUsername());
             test.setCreated(new Date());
@@ -70,6 +73,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             test.setModifiedBy(user.getUsername());
             test.setModified(new Date());
         }
+
         return makePersistent(test);
     }
 
@@ -82,6 +86,26 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             assignment.setTestEnd(end);
 
             assignmentService.saveAssignment(assignment);
+        }
+    }
+
+    private void validateTest(Test test) {
+        Integer timeLimit = test.getTimeLimit();
+        if ((timeLimit != null) && (timeLimit <= 0)) {
+            String message = MessageFormat.format("Could not save Test with timeLimit={0}.", timeLimit);
+            throw new IllegalArgumentException(message);
+        }
+
+        Integer passScore = test.getPassScore();
+        if ((passScore != null) && ((passScore <= 0) || (passScore > 100))) {
+            String message = MessageFormat.format("Could not save Test with passScore={0}.", passScore);
+            throw new IllegalArgumentException(message);
+        }
+
+        Integer questionsCount = test.getQuestionsCount();
+        if ((questionsCount != null) && (questionsCount < 0)) {
+            String message = MessageFormat.format("Could not save Test with questionsCount={0}.", questionsCount);
+            throw new IllegalArgumentException(message);
         }
     }
 

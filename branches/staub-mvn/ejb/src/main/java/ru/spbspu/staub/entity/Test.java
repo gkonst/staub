@@ -68,7 +68,7 @@ public class Test implements Serializable {
     private Integer passScore;
 
     @Basic
-    @Column(name = "pass_score", length = 10)
+    @Column(name = "pass_score", length = 10, nullable = false)
     public Integer getPassScore() {
         return passScore;
     }
@@ -80,7 +80,7 @@ public class Test implements Serializable {
     private Integer questionsCount;
 
     @Basic
-    @Column(name = "questions_count", length = 10)
+    @Column(name = "questions_count", length = 10, nullable = false)
     public Integer getQuestionsCount() {
         return questionsCount;
     }
@@ -93,7 +93,7 @@ public class Test implements Serializable {
 
     @Basic
     @Enumerated
-    @Column(name = "selector_type")
+    @Column(name = "selector_type", nullable = false)
     public SelectorEnum getSelectorType() {
         return selectorType;
     }
@@ -117,7 +117,7 @@ public class Test implements Serializable {
     private Date created;
 
     @Basic
-    @Column(name = "created")
+    @Column(name = "created", nullable = false)
     public Date getCreated() {
         return created;
     }
@@ -129,7 +129,7 @@ public class Test implements Serializable {
     private String createdBy;
 
     @Basic
-    @Column(name = "created_by", length = 64)
+    @Column(name = "created_by", length = 64, nullable = false)
     public String getCreatedBy() {
         return createdBy;
     }

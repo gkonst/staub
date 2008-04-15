@@ -53,14 +53,14 @@ CREATE TABLE test (
     questions_count INTEGER,
 	selector_type INTEGER,
     selector_count INTEGER,
-    check_after_each_part BOOLEAN NOT NULL,
+    check_after_each_part BOOLEAN,
     created TIMESTAMP,
     created_by CHARACTER VARYING(64),
     modified TIMESTAMP,
     modified_by CHARACTER VARYING(64),
     CONSTRAINT pk_test PRIMARY KEY (id),
-    CONSTRAINT chk_pass_score CHECK (((pass_score > 0) AND (pass_score <= 100))),
-    CONSTRAINT chk_questions_count CHECK ((questions_count > 0)),
+    CONSTRAINT chk_pass_score CHECK (((pass_score >= 0) AND (pass_score <= 100))),
+    CONSTRAINT chk_questions_count CHECK ((questions_count >= 0)),
     CONSTRAINT chk_time_limit CHECK ((time_limit > 0))
 );
 
@@ -127,7 +127,7 @@ CREATE TABLE user_history (
     name CHARACTER VARYING(256),
     score INTEGER,
     test_passed BOOLEAN,
-    test_TIMESTAMP TIMESTAMP,
+    test_date TIMESTAMP,
     CONSTRAINT pk_user_history PRIMARY KEY (id),
     CONSTRAINT fk_test_trace FOREIGN KEY (fk_test_trace) REFERENCES test_trace (id)
 );

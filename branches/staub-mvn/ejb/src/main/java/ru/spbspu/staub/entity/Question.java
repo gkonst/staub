@@ -111,7 +111,7 @@ public class Question implements Serializable {
     private Date created;
 
     @Basic
-    @Column(name = "created")
+    @Column(name = "created", nullable = false)
     public Date getCreated() {
         return created;
     }
@@ -123,7 +123,7 @@ public class Question implements Serializable {
     private String createdBy;
 
     @Basic
-    @Column(name = "created_by", length = 64)
+    @Column(name = "created_by", length = 64, nullable = false)
     public String getCreatedBy() {
         return createdBy;
     }
