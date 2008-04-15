@@ -89,7 +89,7 @@
     <td align="right">
         <strong>#{messages['question.detail.difficulty.name']}</strong>
     </td>
-    <td width="100%" colspan="3">
+    <td width="50%">
         <h:selectOneMenu id="difficultySelect"
                          value="#{pageBean.model.difficulty}"
                          disabled="#{pageBean.viewMode}"
@@ -103,6 +103,15 @@
                            label="#{difficulty.name}"
                            noSelectionLabel=""/>
         </h:selectOneMenu>
+    </td>
+    <td align="right">
+        <strong>#{messages['question.detail.timeLimit']}</strong>
+    </td>
+    <td width="50%">
+        <h:inputText id="timeLimitInput"
+                     value="#{pageBean.model.timeLimit}"
+                     disabled="#{pageBean.viewMode}"
+                     style="width:5em;"/>
     </td>
 </tr>
 <tr>
