@@ -39,7 +39,12 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
 
         createTestQuestion(test, question.getId());
 
-        test.setQuestionsCount(test.getQuestionsCount() + 1);
+        // TODO: Consider NOT NULL constraint instead.
+        Integer count = test.getQuestionsCount();
+        if (count == null) {
+            count = 0;
+        }
+        test.setQuestionsCount(count + 1);
 
         return makePersistent(test);
     }

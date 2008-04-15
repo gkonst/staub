@@ -52,10 +52,12 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     }
 
     public TestTrace startTest(TestTrace testTrace) {
+/*
         // TODO: Should this code be here?
         Assignment assignment = assignmentService.findAssignment(testTrace.getUser(), testTrace.getTest());
         assignment.setTestStarted(true);
         assignmentService.saveAssignment(assignment);
+*/
 
         testTrace.setStarted(new Date());
         return makePersistent(testTrace);
