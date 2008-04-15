@@ -10,7 +10,7 @@
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="../template/staub-template.jspx">
     <ui:define name="pageScript">
-        <meta http-equiv="Refresh" content="1;URL='../question/question.seam?cid=#{conversation.id}'" />
+        <meta http-equiv="Refresh" content="1;URL='../question/question.seam?cid=#{conversation.id}&amp;beanMode=VIEW_MODE'" />
     </ui:define>
     <ui:define name="contentTitle">
         подготовка...

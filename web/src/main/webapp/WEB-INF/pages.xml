@@ -42,7 +42,7 @@
     </page>
     <page view-id="/question/question.jspx"
           login-required="true"
-          action="#{questionBean.initTest}">
+          action="#{questionBean.initBean}">
         <navigation>
             <rule if-outcome="testEnd">
                 <redirect view-id="/test/testEnd.jspx"/>

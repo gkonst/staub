@@ -38,18 +38,22 @@
                                    styleClass="button"
                                    rendered="#{!pageBean.finished}"
                                    reRender="content, sidebar"
-                                   onclick="Timer.destroy()"/>
+                                   onclick="Timer.destroy()">
+                    <f:param id="nextQuestionButtonParamBeanMode" name="beanMode" value="VIEW_MODE"/>
+                </a4j:commandButton>
                 <a4j:jsFunction id="nextQuestionJsFunction"
                                 name="nextQuestion"
                                 action="#{pageBean.nextQuestion}"
-                                reRender="content, sidebar"/>
+                                reRender="content, sidebar">
+                    <f:param id="nextQuestionJsFunctionParamBeanMode" name="beanMode" value="VIEW_MODE"/>
+                </a4j:jsFunction>
                 <s:button id="endTestButton"
                           view="/test/testEnd.seam"
                           value="#{messages['questionSolving.showResult']}"
                           styleClass="button"
                           rendered="#{pageBean.finished}"
                           propagation="end">
-                    <f:param id="endTestButtonParamModelId" name="modelId" value="#{pageBean.testTrace.id}" />
+                    <f:param id="endTestButtonParamModelId" name="modelId" value="#{pageBean.testTrace.id}"/>
                     <f:param id="endTestButtonParamBeanMode" name="beanMode" value="VIEW_MODE"/>
                 </s:button>
             </a4j:outputPanel>

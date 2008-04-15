@@ -5,7 +5,7 @@ import org.jboss.seam.annotations.Conversational;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import ru.spbspu.staub.bean.GenericBean;
+import ru.spbspu.staub.bean.GenericModeBean;
 import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
@@ -25,7 +25,7 @@ import java.util.List;
 @Name("questionBean")
 @Scope(ScopeType.CONVERSATION)
 @Conversational
-public class QuestionBean extends GenericBean {
+public class QuestionBean extends GenericModeBean {
 
     @In
     private QuestionTraceService questionTraceService;
@@ -40,6 +40,7 @@ public class QuestionBean extends GenericBean {
     private QuestionTrace currentQuestion;
     private int questionIndex = 0;
     private int currentTime = -1;
+    // TODO remove
     private long startTime;
 
     private AnswerWrapper answer;
@@ -48,7 +49,14 @@ public class QuestionBean extends GenericBean {
 
     private boolean finished = false;
 
+    public void initBean() {
+        if(isBeanModeDefined()) {
+            initTest();
+        }
+    }
+
     public String initTest() {
+        // TODO remove return
         logger.debug(">>> Init question(index=#0) in testTrace(#1)...", questionIndex, testTrace.getId());
         logger.debug(" this bean : #0", this);
         // fill ids
@@ -58,6 +66,8 @@ public class QuestionBean extends GenericBean {
                 // check for zero count questions
                 addFacesMessage("В тесте не осталось неотвеченных вопросов");
                 finished = true;
+                logger.debug("<<< Init question...failed");
+                return "questionDetail";
             }
         }
 
