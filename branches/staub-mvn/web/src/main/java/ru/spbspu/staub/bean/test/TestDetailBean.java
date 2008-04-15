@@ -72,6 +72,7 @@ public class TestDetailBean extends GenericListBean<Question> {
         if (isCreateMode()) {
             setModel(new Test());
             getModel().setCheckAfterEachPart(Boolean.FALSE);
+            getModel().setQuestionsCount(0);
         } else {
             setModel(testService.findById(modelId));
         }
