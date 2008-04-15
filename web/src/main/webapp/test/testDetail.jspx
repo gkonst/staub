@@ -61,11 +61,11 @@
     <td align="right">
         <strong>#{messages['test.detail.timeLimit']}</strong>
     </td>
-    <td>
+    <td width="10%">
         <h:inputText id="timeLimitInput"
                      value="#{pageBean.model.timeLimit}"
                      disabled="#{pageBean.viewMode}"
-                     style="width:90%;"/>
+                     style="width:5em;"/>
     </td>
 </tr>
 <tr>
@@ -103,7 +103,7 @@
             <h:inputText id="selectorCountInput"
                          value="#{pageBean.model.selectorCount}"
                          disabled="#{pageBean.viewMode}"
-                         style="width:130px;"
+                         style="width:5em;"
                          rendered="#{pageBean.selectorCountAvailable}"
                          styleClass="required"
                          required="true"
@@ -124,7 +124,8 @@
             <h:selectBooleanCheckbox id="checkAfterEachPartCheckbox"
                                      value="#{pageBean.model.checkAfterEachPart}"
                                      disabled="#{pageBean.viewMode}"
-                                     rendered="#{pageBean.checkAfterEachPartAvailable}"/>
+                                     rendered="#{pageBean.checkAfterEachPartAvailable}"
+                                     styleClass="checkbox"/>
         </a4j:outputPanel>
     </td>
 </tr>
