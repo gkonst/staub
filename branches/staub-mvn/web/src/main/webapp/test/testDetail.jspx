@@ -56,7 +56,10 @@
     <td>
         <h:inputText id="passScoreInput"
                      value="#{pageBean.model.passScore}"
-                     disabled="#{pageBean.viewMode}"/>
+                     disabled="#{pageBean.viewMode}"
+                     styleClass="required"
+                     required="true"
+                     requiredMessage="#{messages['test.detail.required.passScore']}"/>
     </td>
     <td align="right">
         <strong>#{messages['test.detail.timeLimit']}</strong>

@@ -44,7 +44,7 @@
     </ui:define>
 
     <ui:define name="contentMessage">
-        <ui:include src="../controls/genericMessageControl.jspx"/>
+        <ui:include src="/controls/genericMessageControl.jspx"/>
     </ui:define>
 
     <ui:define name="footer">
