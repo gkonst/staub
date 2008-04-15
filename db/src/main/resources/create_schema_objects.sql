@@ -59,9 +59,9 @@ CREATE TABLE test (
     modified TIMESTAMP,
     modified_by CHARACTER VARYING(64),
     CONSTRAINT pk_test PRIMARY KEY (id),
-    CONSTRAINT chk_pass_score CHECK (((pass_score >= 0) AND (pass_score <= 100))),
-    CONSTRAINT chk_questions_count CHECK ((questions_count >= 0)),
-    CONSTRAINT chk_time_limit CHECK ((time_limit > 0))
+    CONSTRAINT chk_pass_score CHECK ((pass_score > 0) AND (pass_score <= 100)),
+    CONSTRAINT chk_questions_count CHECK (questions_count >= 0),
+    CONSTRAINT chk_time_limit CHECK (time_limit > 0)
 );
 
 CREATE TABLE test_question (
