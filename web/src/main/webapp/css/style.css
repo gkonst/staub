@@ -63,7 +63,18 @@ fieldset {
     margin: 0.4em 0.2em 0;
 }
 
+.radio input {
+    border: 0 none;
+    border-style: none;
+    margin: 0.4em 0.2em 0;
+}
+
 .checkbox {
+    border: 0 none;
+    border-style: none;
+}
+
+.checkbox input {
     border: 0 none;
     border-style: none;
 }
