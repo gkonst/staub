@@ -181,7 +181,7 @@ public class Test implements Serializable {
     private Boolean checkAfterEachPart;
 
     @Basic
-    @Column(name = "check_after_each_part")
+    @Column(name = "check_after_each_part", nullable = false)
     public Boolean getCheckAfterEachPart() {
         return checkAfterEachPart;
     }
