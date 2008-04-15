@@ -8,20 +8,20 @@
       xmlns:s="http://jboss.com/products/seam/taglib">
 
 <ui:composition>
-    <a4j:loadScript src="../script/timer.js"/>
-    Time - <span id="timerField"/>
-    <script type="text/javascript">
-        Timer.init({timeToCount : '#{pageBean.currentQuestion.timeLimit}',
-            currentTime : '#{pageBean.currentTime}',
-            timerFieldId : 'timerField'});
-    </script>
-    <br/>
-    #{pageBean.currentQuestion.timeLimit}
-    <br/>
-    #{pageBean.currentTime}
-
+    <a4j:outputPanel id="timerPanel">
+        <a4j:loadScript src="/script/timer.js"/>
+        Время - <span id="timerField"/>
+        <script type="text/javascript">
+            Timer.init({timeToCount : '#{pageBean.currentQuestion.timeLimit}',
+                currentTime : '#{pageBean.currentTime}',
+                timerFieldId : 'timerField'});
+        </script>
+    </a4j:outputPanel>
     <h:form>
-        <a4j:poll action="#{pageBean.refreshTimer}" reRender="timerPanel" interval="10000"/>
+        <a4j:region id="timerRegion">
+            <a4j:status for="timerRegion"/>
+            <a4j:poll action="#{pageBean.refreshTimer}" reRender="timerPanel" interval="10000"/>
+        </a4j:region>
     </h:form>
 </ui:composition>
 </html>

@@ -174,7 +174,7 @@ public abstract class GenericListBean<T> extends GenericModeBean {
         rowsOnPage = DEFAULT_ROWS_ON_PAGE;
         rowsOnCurrentPage = DEFAULT_ROWS_ON_PAGE;
         logger.debug("    Default rows on page : " + rowsOnPage);
-        selectedMap = new HashMap();
+        selectedMap = new HashMap<Object, Boolean>();
         initPage(PageDirection.FIRST_PAGE);
         logger.debug("Retrieve completed successfully!");
     }

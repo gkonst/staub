@@ -12,10 +12,10 @@
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
     <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:define name="sidebar">
-        <s:fragment id="timerFragment"
-                    rendered="#{!pageBean.finished and pageBean.timeLimitPresent}">
-            <ui:include src="/controls/questionTimerControl.jspx"/>
-        </s:fragment>
+            <s:fragment id="timerFragment"
+                        rendered="#{!pageBean.finished and pageBean.timeLimitPresent}">
+                <ui:include src="/controls/questionTimerControl.jspx"/>
+            </s:fragment>
     </ui:define>
     <ui:define name="contentTitle">
         #{pageBean.finished ? messages['questionSolving.testFinished'] : pageBean.currentQuestion.name}
