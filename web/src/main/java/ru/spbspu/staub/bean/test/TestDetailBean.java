@@ -73,6 +73,7 @@ public class TestDetailBean extends GenericListBean<Question> {
             setModel(new Test());
             getModel().setCheckAfterEachPart(Boolean.FALSE);
             getModel().setQuestionsCount(0);
+            getModel().setPassScore(50);
         } else {
             setModel(testService.findById(modelId));
         }
@@ -101,8 +102,8 @@ public class TestDetailBean extends GenericListBean<Question> {
     public void doSave() {
         logger.debug("Saving test...");
         setModel(testService.saveTest(getModel(), user));
-        logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
-        setBeanMode(BeanMode.VIEW_MODE);
+        logger.debug("  Changing bean mode -> " + BeanMode.EDIT_MODE);
+        setBeanMode(BeanMode.EDIT_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
         logger.debug("Saving... OK");
     }

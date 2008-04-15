@@ -54,7 +54,7 @@
                                        datePattern="dd.MM.yy HH:mm"
                                        required="true"
                                        inputClass="required"
-                                       requiredMessage="#{messages['user.assign.list.testBeginRequired']}"/>
+                                       requiredMessage="#{messages['user.assign.list.required.testBegin']}"/>
                     </td>
                     <td align="right">
                         <strong>#{messages['user.assign.list.testEnd']}</strong>
@@ -65,7 +65,7 @@
                                        disabled="#{!pageBean.editMode}"
                                        datePattern="dd.MM.yy HH:mm"
                                        required="true"
-                                       requiredMessage="#{messages['user.assign.list.testEndRequired']}"
+                                       requiredMessage="#{messages['user.assign.list.required.testEnd']}"
                                        inputClass="required"/>
                     </td>
                 </tr>
