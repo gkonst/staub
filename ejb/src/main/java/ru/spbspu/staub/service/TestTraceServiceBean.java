@@ -33,8 +33,9 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     @SuppressWarnings("unchecked")
     public TestTrace getTestTrace(Test test, User user, String sessionId) {
 //        Query q = getEntityManager().createQuery("select t from TestTrace t where t.user = :user and t.sessionId = :sessionId and t.finished is null");
-        Query q = getEntityManager().createQuery("select t from TestTrace t where t.user = :user and t.finished is null");
+        Query q = getEntityManager().createQuery("select t from TestTrace t where t.user = :user and t.test = :test and t.finished is null");
         q.setParameter("user", user);
+        q.setParameter("test", test);
 //        q.setParameter("sessionId", sessionId);
 
         TestTrace testTrace = null;
