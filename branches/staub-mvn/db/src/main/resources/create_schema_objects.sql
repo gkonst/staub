@@ -53,7 +53,7 @@ CREATE TABLE test (
     questions_count INTEGER,
 	selector_type INTEGER,
     selector_count INTEGER,
-    check_after_each_part BOOLEAN,
+    check_after_each_part BOOLEAN NOT NULL,
     created DATE,
     created_by CHARACTER VARYING(64),
     modified DATE,
