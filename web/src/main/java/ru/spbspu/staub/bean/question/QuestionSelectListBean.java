@@ -4,11 +4,9 @@ import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.Out;
 import org.jboss.seam.faces.DataModels;
-import org.jboss.seam.ScopeType;
-import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.bean.BeanMode;
+import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.entity.User;
@@ -140,7 +138,7 @@ public class QuestionSelectListBean extends GenericListBean<Question> {
      * @return navigation outcome
      */
     public String doBack() {
-        return doRefresh("testDetail");
+        return doEdit("testDetail");
     }
 
     @SuppressWarnings("unchecked")
