@@ -182,7 +182,8 @@
                               value="#{pageBean.correctAnswer}"
                               disabled="#{pageBean.viewMode}"
                               required="true"
-                              requiredMessage="#{messages['question.detail.required.correctSingleChoice']}">
+                              requiredMessage="#{messages['question.detail.required.correctSingleChoice']}"
+                              styleClass="radio">
                 <s:selectItems id="correctAnswerSingleChoiceItems"
                                value="#{pageBean.questionDefinition.singleChoice.answer}"
                                var="temp"/>
@@ -194,7 +195,8 @@
                                   value="#{pageBean.correctAnswer}"
                                   disabled="#{pageBean.viewMode}"
                                   required="true"
-                                  requiredMessage="#{messages['question.detail.required.correctMultipleChoice']}">
+                                  requiredMessage="#{messages['question.detail.required.correctMultipleChoice']}"
+                                  styleClass="checkbox">
                 <s:selectItems id="correctAnswerMultipleChoiceItems"
                                value="#{pageBean.questionDefinition.multipleChoice.answer}"
                                var="temp"/>

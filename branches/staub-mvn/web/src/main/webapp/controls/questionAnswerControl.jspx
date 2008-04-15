@@ -15,7 +15,8 @@
             <h:selectManyCheckbox id="multipleChoiceSelect"
                                   layout="pageDirection"
                                   value="#{pageBean.answer.userChoice}"
-                                  converter="ru.spbspu.staub.ObjectSelectConverter">
+                                  converter="ru.spbspu.staub.ObjectSelectConverter"
+                                  styleClass="checkbox">
                 <s:selectItems value="#{pageBean.answer.answerDefinition.answer}" var="answer"
                                label="#{answer.value}"/>
             </h:selectManyCheckbox>
@@ -24,7 +25,8 @@
             <h:selectOneRadio id="singleChoiceSelect"
                               layout="pageDirection"
                               value="#{pageBean.answer.userChoice}"
-                              converter="ru.spbspu.staub.ObjectSelectConverter">
+                              converter="ru.spbspu.staub.ObjectSelectConverter"
+                              styleClass="radio">
                 <s:selectItems value="#{pageBean.answer.answerDefinition.answer}" var="answer"
                                label="#{answer.value}"/>
             </h:selectOneRadio>
