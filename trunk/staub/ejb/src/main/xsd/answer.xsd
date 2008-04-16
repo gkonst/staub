@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:a="http://staub.spbspu.ru/Answer"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           targetNamespace="http://staub.spbspu.ru/Answer"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           jaxb:version="2.0">
+    <xs:element name="answer" type="a:answer-type"/>
+    <xs:annotation>
+        <xs:appinfo>
+            <jaxb:globalBindings>
+                <jaxb:serializable uid="-1"/>
+            </jaxb:globalBindings>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:complexType name="answer-type">
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="single-choice">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="element" type="a:element-type"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="multiple-choice">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="element" type="a:element-type" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:unique name="unique-answer-id">
+                        <xs:selector xpath="a:element"/>
+                        <xs:field xpath="@answer-id"/>
+                    </xs:unique>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="element-type">
+        <xs:attribute name="answer-id" type="xs:positiveInteger" use="required"/>
+    </xs:complexType>
+</xs:schema>

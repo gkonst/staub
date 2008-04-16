@@ -1,0 +1,63 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+<ui:composition template="/template/staub-template.jspx">
+    <ui:param name="pageBean" value="#{questionBean}"/>
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
+    <!--@elvariable id="messages" type="java.util.Map"-->
+    <ui:define name="sidebar">
+            <s:fragment id="timerFragment"
+                        rendered="#{!pageBean.finished and pageBean.timeLimitPresent}">
+                <ui:include src="/controls/questionTimerControl.jspx"/>
+            </s:fragment>
+    </ui:define>
+    <ui:define name="contentTitle">
+        #{pageBean.finished ? messages['questionSolving.testFinished'] : pageBean.currentQuestion.name}
+    </ui:define>
+    <ui:define name="contentBody">
+        <a4j:form id="questionForm">
+            <a4j:outputPanel id="questionContentPanel" rendered="#{!pageBean.finished}">
+                <ui:include src="/controls/questionDefinitionControl.jspx">
+                    <ui:param name="questionDefinition" value="#{pageBean.currentQuestion.definition}"/>
+                </ui:include>
+                <ui:include src="/controls/questionAnswerControl.jspx"/>
+            </a4j:outputPanel>
+            <a4j:outputPanel id="noQuestionPanel" rendered="#{pageBean.finished}">
+            </a4j:outputPanel>
+            <br/>
+            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+                <a4j:commandButton id="nextQuestionButton"
+                                   action="#{pageBean.nextQuestion}"
+                                   value="#{messages['questionSolving.nextQuestion']}"
+                                   styleClass="button"
+                                   rendered="#{!pageBean.finished}"
+                                   reRender="content, sidebar"
+                                   onclick="Timer.destroy()">
+                    <f:param id="nextQuestionButtonParamBeanMode" name="beanMode" value="VIEW_MODE"/>
+                </a4j:commandButton>
+                <a4j:jsFunction id="nextQuestionJsFunction"
+                                name="nextQuestion"
+                                action="#{pageBean.nextQuestion}"
+                                reRender="content, sidebar">
+                    <f:param id="nextQuestionJsFunctionParamBeanMode" name="beanMode" value="VIEW_MODE"/>
+                </a4j:jsFunction>
+                <s:button id="endTestButton"
+                          view="/test/testEnd.seam"
+                          value="#{messages['questionSolving.showResult']}"
+                          styleClass="button"
+                          rendered="#{pageBean.finished}"
+                          propagation="end">
+                    <f:param id="endTestButtonParamModelId" name="modelId" value="#{pageBean.testTrace.id}"/>
+                    <f:param id="endTestButtonParamBeanMode" name="beanMode" value="VIEW_MODE"/>
+                </s:button>
+            </a4j:outputPanel>
+        </a4j:form>
+    </ui:define>
+</ui:composition>
+</html>

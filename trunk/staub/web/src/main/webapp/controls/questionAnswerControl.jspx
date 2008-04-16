@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+
+<ui:composition>
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
+    <div id="questionAnswerPanel" class="questionAnswerPanel">
+        <a4j:outputPanel id="multipleChoice" rendered="#{pageBean.answer.multipleChoice}">
+            <h:selectManyCheckbox id="multipleChoiceSelect"
+                                  layout="pageDirection"
+                                  value="#{pageBean.answer.userChoice}"
+                                  converter="ru.spbspu.staub.ObjectSelectConverter"
+                                  styleClass="checkbox">
+                <s:selectItems value="#{pageBean.answer.answerDefinition.answer}" var="answer"
+                               label="#{answer.value}"/>
+            </h:selectManyCheckbox>
+        </a4j:outputPanel>
+        <a4j:outputPanel id="singleChoice" rendered="#{pageBean.answer.singleChoice}">
+            <h:selectOneRadio id="singleChoiceSelect"
+                              layout="pageDirection"
+                              value="#{pageBean.answer.userChoice}"
+                              converter="ru.spbspu.staub.ObjectSelectConverter"
+                              styleClass="radio">
+                <s:selectItems value="#{pageBean.answer.answerDefinition.answer}" var="answer"
+                               label="#{answer.value}"/>
+            </h:selectOneRadio>
+        </a4j:outputPanel>
+    </div>
+</ui:composition>
+</html>

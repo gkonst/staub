@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages xmlns="http://jboss.com/products/seam/pages"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.0.xsd"
+       login-view-id="/system/loginPage.jspx">
+
+    <!-- Common pages -->
+    <page view-id="/system/loginPage.jspx">
+        <navigation>
+            <rule if="#{identity.loggedIn and !s:hasRole('ADMIN')}">
+                <redirect view-id="/test/testToPassList.jspx">
+                    <param name="beanMode" value="VIEW_MODE"/>
+                </redirect>
+            </rule>
+            <rule if="#{identity.loggedIn and s:hasRole('ADMIN')}">
+                <redirect view-id="/system/mainPage.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="*">
+        <navigation from-action="#{identity.logout}">
+            <redirect view-id="/system/loginPage.jspx"/>
+        </navigation>
+    </page>
+
+    <!-- User pages -->
+    <page view-id="/test/testToPassList.jspx"
+          login-required="true"
+          action="#{testToPassListBean.initBean}">
+    </page>
+    <page view-id="/test/testStart.jspx"
+          login-required="true"
+          action="#{testStartBean.initBean}">
+        <navigation>
+            <rule if-outcome="testPrepare">
+                <render view-id="/test/testPrepare.jspx"/>
+            </rule>
+            <rule if-outcome="testListForPass">
+                <render view-id="/test/testToPassList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/question/question.jspx"
+          login-required="true"
+          action="#{questionBean.initBean}">
+        <navigation>
+            <rule if-outcome="testEnd">
+                <redirect view-id="/test/testEnd.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/test/testPrepare.jspx"
+          login-required="true">
+        <navigation>
+            <render view-id="/question/question.jspx"/>
+        </navigation>
+    </page>
+    <page view-id="/test/testEnd.jspx"
+          login-required="true"
+          action="#{testEndBean.initBean}">
+    </page>
+
+    <!-- Administrator pages -->
+
+    <!-- Tests -->
+    <page view-id="/test/testList.jspx"
+          login-required="true"
+          action="#{testListBean.initBean}">
+        <restrict>#{s:hasRole('ADMIN')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/test/testDetail.jspx"/>
+            </rule>
+            <rule if-outcome="userAssign">
+                <render view-id="/user/userAssignList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/test/testDetail.jspx"
+          login-required="true"
+          action="#{testDetailBean.initBean}">
+        <restrict>#{s:hasRole('ADMIN')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/test/testList.jspx"/>
+            </rule>
+            <rule if-outcome="detail">
+                <render view-id="/question/questionDetail.jspx"/>
+            </rule>
+            <rule if-outcome="questionSelectList">
+                <render view-id="/question/questionSelectList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Users -->
+    <page view-id="/user/userAssignList.jspx"
+          login-required="true"
+          action="#{userAssignListBean.initBean}">
+        <restrict>#{s:hasRole('ADMIN')}</restrict>
+        <navigation>
+            <rule if-outcome="testList">
+                <render view-id="/test/testList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Questions -->
+    <page view-id="/question/questionList.jspx"
+          login-required="true"
+          action="#{questionListBean.initBean}">
+        <restrict>#{s:hasRole('ADMIN')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/question/questionDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/question/questionDetail.jspx"
+          login-required="true"
+          action="#{questionDetailBean.initBean}">
+        <restrict>#{s:hasRole('ADMIN')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/question/questionList.jspx"/>
+            </rule>
+            <rule if-outcome="testDetail">
+                <render view-id="/test/testDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/question/questionSelectList.jspx"
+          login-required="true"
+          action="#{questionSelectListBean.initBean}">
+        <restrict>#{s:hasRole('ADMIN')}</restrict>
+        <navigation>
+            <rule if-outcome="testDetail">
+                <render view-id="/test/testDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Disciplines -->
+    <page view-id="/question/disciplineList.jspx"
+          login-required="true"
+          action="#{disciplineListBean.initBean}">
+        <restrict>#{s:hasRole('ADMIN')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/question/disciplineDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/question/disciplineDetail.jspx"
+          login-required="true"
+          action="#{disciplineDetailBean.initBean}">
+        <restrict>#{s:hasRole('ADMIN')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/question/disciplineList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Exceptions -->
+    <exception class="org.jboss.seam.security.NotLoggedInException">
+        <redirect view-id="/system/loginPage.jspx">
+            <message severity="warn">#{messages[system.login.unauthorizedError]}</message>
+        </redirect>
+    </exception>
+    <exception class="javax.faces.application.ViewExpiredException">
+        <redirect view-id="/system/loginPage.jspx">
+            <message severity="warn">#{messages[system.login.unauthorizedError]}</message>
+        </redirect>
+    </exception>
+    <exception class="org.jboss.seam.security.AuthorizationException">
+        <end-conversation/>
+        <!-- TODO May be replace with special page -->
+        <http-error error-code="403"/>
+    </exception>
+</pages>

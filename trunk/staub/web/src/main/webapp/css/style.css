@@ -1,0 +1,229 @@
+img {
+    border: 0;
+}
+
+.label {
+    font-weight: bold;
+    color: #5E5147;
+}
+
+input {
+    border: 1px solid #C3BBB6;
+    background: #fff url( ../images/input.bg.gif ) 0 0 repeat-x;
+}
+
+textarea {
+    border: 1px solid #C3BBB6;
+    background: #fff url( ../images/input.bg.gif ) 0 0 repeat-x;
+}
+
+select {
+    border: 1px solid #C3BBB6;
+    background: #fff url( ../images/input.bg.gif ) 0 0 repeat-x;
+    width: 14em;
+}
+
+ol, ul {
+    margin: 10px 0px 10px 6px;
+}
+
+li {
+    margin: 10px 0.5em;
+}
+
+fieldset {
+    border: 0;
+}
+
+/* General */
+.button {
+    color: #fff;
+    border: 1px solid #5D1414;
+    background: #fff url( ../images/hdr.bg.gif ) 0 0 repeat-x;
+    border-style: none;
+    margin: 1em 1em 1em 0;
+    padding: 0.1em;
+    font-size: 1em;
+}
+
+.buttonImage {
+    border: 0 none;
+    border-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.radio {
+    border: 0 none;
+    border-style: none;
+    margin: 0.4em 0.2em 0;
+}
+
+.radio input {
+    border: 0 none;
+    border-style: none;
+    margin: 0.4em 0.2em 0;
+}
+
+.checkbox {
+    border: 0 none;
+    border-style: none;
+}
+
+.checkbox input {
+    border: 0 none;
+    border-style: none;
+}
+
+/* Header */
+#headerTitle {
+    float: left;
+    padding: 14px 10px 10px;
+    font-weight: bold;
+}
+
+#headerStatus {
+    color: #C7B299;
+    float: right;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: x-small;
+    text-align: right;
+    padding-top: 14px;
+    padding-right: 15px;
+}
+
+#headerStatus a {
+    color: #C7B299;
+    text-decoration: none;
+}
+
+/* Sidebar */
+.notes {
+    text-align: center;
+    font-size: small;
+}
+
+.buttonBox {
+    text-align: center;
+    padding: 5px 0;
+    clear: both;
+}
+
+#sidebar p {
+    font-size: small;
+    color: #8B7869;
+    line-height: 150%;
+    padding-bottom: 10px;
+}
+
+#sidebar li {
+    font-size: small;
+    color: #8B7869;
+}
+
+#sidebar h1 {
+    line-height: normal;
+    font-weight: bold;
+    font-size: small;
+}
+
+/* Content */
+#contentTitle {
+    padding: 1em 1em 0 1em;
+    vertical-align: middle;
+}
+
+#contentBody {
+    padding: 1em;
+}
+
+.contentButtons {
+    padding: 15px 0 0 0;
+}
+
+#contentMessage {
+    padding: 0 15px 0 15px;
+}
+
+.message {
+    border: 1px solid #D2C9C4;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #F5F3F1; /*background: #fff url(../images/th.bg.gif) 0 100% repeat-x;*/
+    margin: 0.6em 0 0 0;
+}
+
+.message td {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+
+.messageSpacer {
+    height: 5px;
+}
+
+.detailTable {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #D2C9C4;
+    background-color: #F5F3F1;
+}
+
+.detailTable td {
+    padding: 0.7em 0.3em;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.innerDetailTable {
+    width: 100%;
+}
+
+.innerDetailTable td {
+    padding: 0.5em 0;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.questionDefinitionPanel {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #D2C9C4;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: block;
+    height: 300px;
+    padding: 1em;
+    margin: 0.3em;
+}
+
+.expanded {
+    height: 100%;
+}
+
+.questionDefinitionButtons {
+    text-align: right;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Style for the paging labels */
+table td.pagingContent {
+    font-size: 11px;
+    font-weight: bold;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.required {
+    background-color: #FFFACD;
+}
+

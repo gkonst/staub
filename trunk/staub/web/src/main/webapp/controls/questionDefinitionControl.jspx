@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+
+<ui:composition>
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
+    <!--@elvariable id="questionDefinition" type="ru.spbspu.staub.model.question.QuestionType"-->
+    <div id="questionDefinitionPanel" class="questionDefinitionPanel">
+        <s:formattedText value="#{questionDefinition.description}"/>
+    </div>
+    <div id="questionDefinitionButtons" class="questionDefinitionButtons">
+        <span id="questionDefinitionPanelSwitcher"
+              onclick="expandOrCollapseElement({elementId : 'questionDefinitionPanel',
+                                                expandedLabel : '#{messages['common.detail.expand']}',
+                                                collapsedLabel : '#{messages['common.detail.collapse']}'});">
+             #{messages['common.detail.expand']}
+        </span>
+    </div>
+</ui:composition>
+</html>
