@@ -6,5 +6,5 @@ package ru.spbspu.staub.entity;
  * @author Alexander V. Elagin
  */
 public enum RoleEnum {
-    ADMIN, TEST_WRITER, USER
+    ADMIN, TEST_WRITER/*, USER*/
 }

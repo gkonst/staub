@@ -76,16 +76,16 @@ public class Assignment implements Serializable {
         this.fkTest = fkTest;
     }
 
-    private Integer fkUser;
+    private Integer fkStudent;
 
     @Basic
-    @Column(name = "fk_user")
-    public Integer getFkUser() {
-        return fkUser;
+    @Column(name = "fk_student")
+    public Integer getFkStudent() {
+        return fkStudent;
     }
 
-    public void setFkUser(Integer fkUser) {
-        this.fkUser = fkUser;
+    public void setFkStudent(Integer fkStudent) {
+        this.fkStudent = fkStudent;
     }
 
     @Override
@@ -115,7 +115,7 @@ public class Assignment implements Serializable {
         sb.append(", testBegin=").append(testBegin);
         sb.append(", testEnd=").append(testEnd);
         sb.append(", testStarted=").append(testStarted);
-        sb.append(", fkUser=").append(fkUser);
+        sb.append(", fkStudent=").append(fkStudent);
         sb.append(", fkTest=").append(fkTest);
         sb.append('}');
 
