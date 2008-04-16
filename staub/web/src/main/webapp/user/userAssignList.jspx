@@ -1,0 +1,98 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+<ui:composition template="/template/staub-template.jspx">
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.user.UserAssignListBean"-->
+    <!--@elvariable id="messages" type="java.util.Map"-->
+    <ui:param name="pageBean" value="#{userAssignListBean}"/>
+    <ui:define name="sidebar">
+        <ui:include src="/system/menuPage.jspx"/>
+    </ui:define>
+    <ui:define name="contentTitle">
+        #{messages['user.assign.list.title']}
+    </ui:define>
+    <ui:define name="contentBody">
+        <a4j:form id="userAssignListForm">
+            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+                <a4j:commandButton id="assignButton" action="#{pageBean.assign}"
+                                   value="#{messages['common.list.functions.assignSelected']}"
+                                   rendered="#{pageBean.editMode or pageBean.createMode}"
+                                   reRender="content"
+                                   styleClass="button"/>
+                <h:commandButton id="cancelButton"
+                                 action="#{pageBean.doCancel}"
+                                 immediate="true"
+                                 value="#{messages['common.detail.functions.cancel']}"
+                                 rendered="#{pageBean.editMode or pageBean.createMode}"
+                                 styleClass="button"/>
+                <h:commandButton id="backButton"
+                                 action="#{pageBean.doBack}"
+                                 immediate="true"
+                                 value="#{messages['common.detail.functions.back']}"
+                                 rendered="#{pageBean.viewMode}"
+                                 styleClass="button"/>
+                <ui:include src="/controls/genericRefreshControl.jspx"/>
+            </a4j:outputPanel>
+            <br/>
+            <br/>
+            <table width="99%">
+                <tr>
+                    <td align="right">
+                        <strong>#{messages['user.assign.list.testBegin']}</strong>
+                    </td>
+                    <td>
+                        <rich:calendar id="testBeginInput"
+                                       value="#{pageBean.testBegin}"
+                                       disabled="#{!pageBean.editMode}"
+                                       datePattern="dd.MM.yy HH:mm"
+                                       required="true"
+                                       inputClass="required"
+                                       requiredMessage="#{messages['user.assign.list.required.testBegin']}"/>
+                    </td>
+                    <td align="right">
+                        <strong>#{messages['user.assign.list.testEnd']}</strong>
+                    </td>
+                    <td>
+                        <rich:calendar id="testEndInput"
+                                       value="#{pageBean.testEnd}"
+                                       disabled="#{!pageBean.editMode}"
+                                       datePattern="dd.MM.yy HH:mm"
+                                       required="true"
+                                       requiredMessage="#{messages['user.assign.list.required.testEnd']}"
+                                       inputClass="required"/>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <ui:decorate template="../controls/listLayoutControl.jspx">
+                <ui:define name="listPageData">
+                    <h:outputText value="#{messages['common.list.noDataFound']}"
+                                  rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
+                    <rich:dataTable id="userAssignList"
+                                    value="#{pageBean.dataModel}"
+                                    var="user"
+                                    rendered="#{pageBean.dataModel.rowCount > 0}"
+                                    styleClass="dataTable">
+                        <rich:column id="col1">
+                            <h:selectBooleanCheckbox id="selectedCheckbox"
+                                                     value="#{pageBean.selectedMap[user.id]}"
+                                                     disabled="#{!pageBean.editMode}"/>
+                        </rich:column>
+                        <rich:column id="col2">
+                            <f:facet name="header">#{messages['user.assign.list.username']}</f:facet>
+                            #{user.username}
+                        </rich:column>
+                    </rich:dataTable>
+                </ui:define>
+            </ui:decorate>
+        </a4j:form>
+    </ui:define>
+</ui:composition>
+</html>

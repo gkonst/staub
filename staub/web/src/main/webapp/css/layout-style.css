@@ -1,0 +1,51 @@
+html {
+    background-color: #DBD4C6;
+}
+
+body {
+    font-family: tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 0.6em;
+    line-height: 1.25em;
+    color: #362F2D;
+    width: 758px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#document {
+    padding: 0 1px;
+    background: #fff url( ../images/bg.gif ) 0 0 repeat-y;
+}
+
+#header {
+    width: 758px;
+    height: 46px;
+    background: url( ../images/hdr.bg.gif ) 0 0 repeat-x;
+    color: white;
+}
+
+#container {
+    width: 758px;
+}
+
+#sidebar {
+    width: 135px;
+    padding: 20px 7px 0 7px;
+    background: url( ../images/sdb.bg.gif ) 0 0 no-repeat;
+}
+
+#content {
+    padding-top: 5px;
+    background: #fff url( ../images/cnt.bg.gif ) 0 0 repeat-x;
+    margin-left: 150px;
+}
+
+#empty, #footer {
+    padding: 1em 1em 0 1em;
+}
+
+#footer {
+    border-top: 1px solid #C3BBB6;
+    background-color: #fff;
+    width: 738px;
+    text-align: right;
+}

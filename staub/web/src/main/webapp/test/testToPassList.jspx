@@ -1,0 +1,39 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+<ui:composition template="../template/staub-template.jspx">
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.test.TestToPassListBean"-->
+    <!--@elvariable id="messages" type="java.util.Map"-->
+    <ui:param name="pageBean" value="#{testToPassListBean}"/>
+    <ui:define name="contentTitle">
+        #{messages['testToPass.list.title']}
+    </ui:define>
+    <ui:define name="contentBody">
+        <ui:decorate template="../controls/listLayoutControl.jspx">
+            <ui:define name="listPageData">
+                <h:outputText value="#{messages['common.list.noDataFound']}"
+                              rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
+                <h:dataTable id="testList"
+                             value="#{pageBean.dataModel}"
+                             var="test"
+                             rendered="#{pageBean.dataModel.rowCount > 0}"
+                             styleClass="dataTable">
+                    <h:column>
+                        <f:facet name="header">#{messages['testToPass.list.name']}</f:facet>
+                        <s:link view="/test/testStart.seam" value="#{test.name}">
+                            <f:param name="modelId" value="#{test.id}"/>
+                            <f:param name="beanMode" value="VIEW_MODE"/>
+                        </s:link>
+                    </h:column>
+                </h:dataTable>
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+</ui:composition>
+</html>

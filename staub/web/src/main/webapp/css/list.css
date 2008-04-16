@@ -1,0 +1,58 @@
+/* Style classes for the list table */
+table.listTable {
+    width: 99%;
+    table-layout: fixed;
+}
+div.listTableContent {
+    width: 100%;
+    height: 100%;
+    /*overflow: auto;*/
+    display: block;
+}
+*html div.listTableContent {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    display: block;
+    overflow-y: hidden;
+    padding-bottom: 15px;
+}
+
+.dataTable {
+    width: 100%;
+    border: 1px solid #D2C9C4;
+    border-collapse: collapse;
+}
+
+.dataTable caption {
+    padding-bottom: 6px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.dataTable thead th {
+    border-left: 1px solid #D2C9C4;
+    background: #fff url( ../images/th.bg.gif ) 0 100% repeat-x;
+    border-bottom: 1px solid #D2C9C4;
+    padding: 6px;
+    text-align: left;
+    font-size: small;
+}
+
+.dataTable tbody td {
+    border-left: 1px solid #E4DBD5;
+    padding: 4px;
+    border-bottom: 1px solid #D2C9C4;
+    font-size: small;
+}
+
+.dataTable td.columnIcon {
+    width: 15px;
+}
+
+.dataTable input {
+    border: 0 none;
+    border-style: none;
+    margin: 0;
+    padding: 0;
+}
