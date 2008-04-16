@@ -77,43 +77,6 @@ public class Test implements Serializable {
         this.passScore = passScore;
     }
 
-    private Integer questionsCount;
-
-    @Basic
-    @Column(name = "questions_count", length = 10, nullable = false)
-    public Integer getQuestionsCount() {
-        return questionsCount;
-    }
-
-    public void setQuestionsCount(Integer questionsCount) {
-        this.questionsCount = questionsCount;
-    }
-
-    private SelectorEnum selectorType;
-
-    @Basic
-    @Enumerated
-    @Column(name = "selector_type", nullable = false)
-    public SelectorEnum getSelectorType() {
-        return selectorType;
-    }
-
-    public void setSelectorType(SelectorEnum selectorType) {
-        this.selectorType = selectorType;
-    }
-
-    private Integer selectorCount;
-
-    @Basic
-    @Column(name = "selector_count", length = 10)
-    public Integer getSelectorCount() {
-        return selectorCount;
-    }
-
-    public void setSelectorCount(Integer selectorCount) {
-        this.selectorCount = selectorCount;
-    }
-
     private Date created;
 
     @Basic
@@ -161,33 +124,17 @@ public class Test implements Serializable {
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
     }
-    
-/*
-    private List<Question> questions;
 
-    @ManyToMany
-    @JoinTable(name = "test_question",
-            joinColumns = @JoinColumn(name = "fk_test", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "fk_question", referencedColumnName = "id"))
-    public List<Question> getQuestions() {
-        return questions;
+    private Category category;
+
+    @OneToOne
+    @JoinColumn(name = "fk_category", referencedColumnName = "id")
+    public Category getCategory() {
+        return category;
     }
 
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-*/
-
-    private Boolean checkAfterEachPart;
-
-    @Basic
-    @Column(name = "check_after_each_part", nullable = false)
-    public Boolean getCheckAfterEachPart() {
-        return checkAfterEachPart;
-    }
-
-    public void setCheckAfterEachPart(Boolean checkAfterEachPart) {
-        this.checkAfterEachPart = checkAfterEachPart;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
@@ -216,10 +163,8 @@ public class Test implements Serializable {
         sb.append("{id=").append(id);
         sb.append(", name='").append(name).append('\'');
         sb.append(", description='").append(description).append('\'');
-//        sb.append(", questions=").append(questions);
         sb.append(", timeLimit=").append(timeLimit);
         sb.append(", passScore=").append(passScore);
-        sb.append(", questionsCount=").append(questionsCount);
         sb.append(", created=").append(created);
         sb.append(", createdBy='").append(createdBy).append('\'');
         sb.append(", modified=").append(modified);

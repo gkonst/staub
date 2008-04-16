@@ -2,6 +2,7 @@ package ru.spbspu.staub.entity;
 
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import ru.spbspu.staub.model.question.QuestionType;
 
 import javax.persistence.*;
@@ -15,8 +16,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "question", schema = "staub")
-@org.hibernate.annotations.TypeDef(name = "question_type",
-        typeClass = ru.spbspu.staub.entity.XmlType.class,
+@TypeDef(name = "question_type",
+        typeClass = XmlType.class,
         parameters = {@Parameter(name = "pojoClass", value = "ru.spbspu.staub.model.question.QuestionType")}
 )
 public class Question implements Serializable {
@@ -36,18 +37,6 @@ public class Question implements Serializable {
         this.id = id;
     }
 
-    private Category category;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_category", referencedColumnName = "id", nullable = false)
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     private Difficulty difficulty;
 
     @ManyToOne
@@ -58,18 +47,6 @@ public class Question implements Serializable {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
-    }
-
-    private Discipline discipline;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_discipline", referencedColumnName = "id", nullable = false)
-    public Discipline getDiscipline() {
-        return discipline;
-    }
-
-    public void setDiscipline(Discipline discipline) {
-        this.discipline = discipline;
     }
 
     private String name;
@@ -190,5 +167,17 @@ public class Question implements Serializable {
         sb.append('}');
 
         return sb.toString();
+    }
+
+    private Topic topic;
+
+    @OneToOne
+    @JoinColumn(name = "fk_topic", referencedColumnName = "id", nullable = false)
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 }

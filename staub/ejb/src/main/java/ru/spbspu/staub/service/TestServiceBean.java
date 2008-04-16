@@ -81,7 +81,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         for (Integer userId : usersIds) {
             Assignment assignment = new Assignment();
             assignment.setFkTest(testId);
-            assignment.setFkUser(userId);
+            assignment.setFkStudent(userId);
             assignment.setTestBegin(begin);
             assignment.setTestEnd(end);
 

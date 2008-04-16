@@ -23,10 +23,11 @@ import java.util.Map;
 @Stateless
 public class QuestionServiceBean extends GenericServiceBean<Question, Integer> implements QuestionService {
     public FormTable findAllForTest(FormProperties formProperties, Test test) {
-        String query = "select q from Question q, TestQuestion tq where q.id = tq.fkQuestion and tq.fkTest = :testId";
+        throw new IllegalStateException("Achtung, Partisanen!");
+        /*String query = "select q from Question q, TestQuestion tq where q.id = tq.fkQuestion and tq.fkTest = :testId";
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("testId", test.getId());
-        return findAll(query, formProperties, parameters);
+        return findAll(query, formProperties, parameters);*/
     }
 
     public Question saveQuestion(Question question, User user) {

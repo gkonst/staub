@@ -4,20 +4,20 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * The <code>Category</code> class represents the Category entity.
+ * The <code>Topic</code> class represents the Topic entity.
  *
  * @author Alexander V. Elagin
  */
 @Entity
-@Table(schema = "staub", name = "category")
-public class Category implements Serializable {
-    private static final long serialVersionUID = 2761822203636106066L;
+@Table(schema = "staub", name = "topic")
+public class Topic implements Serializable {
+    private static final long serialVersionUID = 4023851716967865845L;
 
     private Integer id;
 
     @Id
-    @SequenceGenerator(name = "CategoryIdGenerator", sequenceName = "seq_category", allocationSize = 1)
-    @GeneratedValue(generator = "CategoryIdGenerator", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "TopicIdGenerator", sequenceName = "seq_topic", allocationSize = 1)
+    @GeneratedValue(generator = "TopicIdGenerator", strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, length = 10)
     public Integer getId() {
         return id;
@@ -51,16 +51,16 @@ public class Category implements Serializable {
         this.code = code;
     }
 
-    private Discipline discipline;
+    private Category category;
 
     @OneToOne
-    @JoinColumn(name = "fk_discipline", referencedColumnName = "id", nullable = false)
-    public Discipline getDiscipline() {
-        return discipline;
+    @JoinColumn(name = "fk_category", referencedColumnName = "id", nullable = false)
+    public Category getCategory() {
+        return category;
     }
 
-    public void setDiscipline(Discipline discipline) {
-        this.discipline = discipline;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
@@ -68,13 +68,14 @@ public class Category implements Serializable {
         if (this == otherObject) {
             return true;
         }
-        if (!(otherObject instanceof Category)) {
+        if (!(otherObject instanceof Topic)) {
             return false;
         }
 
-        Category other = (Category) otherObject;
+        Topic other = (Topic) otherObject;
 
         return id.equals(other.id);
+
     }
 
     @Override
@@ -85,11 +86,11 @@ public class Category implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Category");
+        sb.append("Topic");
         sb.append("{id=").append(id);
         sb.append(", name='").append(name).append('\'');
         sb.append(", code=").append(code);
-        sb.append(", discipline=").append(discipline);
+        sb.append(", category=").append(category);
         sb.append('}');
 
         return sb.toString();
