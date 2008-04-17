@@ -22,14 +22,6 @@ import java.util.Map;
 @AutoCreate
 @Stateless
 public class QuestionServiceBean extends GenericServiceBean<Question, Integer> implements QuestionService {
-    public FormTable findAllForTest(FormProperties formProperties, Test test) {
-        throw new IllegalStateException("Achtung, Partisanen!");
-        /*String query = "select q from Question q, TestQuestion tq where q.id = tq.fkQuestion and tq.fkTest = :testId";
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("testId", test.getId());
-        return findAll(query, formProperties, parameters);*/
-    }
-
     public Question saveQuestion(Question question, User user) {
         if (question.getId() == null) {
             question.setCreatedBy(user.getUsername());

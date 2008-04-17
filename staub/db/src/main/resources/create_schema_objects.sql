@@ -129,9 +129,6 @@ CREATE TABLE assignment (
     id INTEGER NOT NULL,
     fk_test INTEGER NOT NULL,
     fk_student INTEGER NOT NULL,
-    test_begin TIMESTAMP,
-    test_end TIMESTAMP,
-    test_started BOOLEAN,
     CONSTRAINT pk_assignment PRIMARY KEY (id),
     CONSTRAINT fk_test FOREIGN KEY (fk_test) REFERENCES test (id),
     CONSTRAINT fk_student FOREIGN KEY (fk_student) REFERENCES student (id)
