@@ -9,7 +9,8 @@ CREATE TABLE discipline (
     id INTEGER NOT NULL,
     name CHARACTER VARYING(256),
     code INTEGER,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT ak_discipline_code UNIQUE (code)
 );
 
 CREATE TABLE category (
@@ -18,6 +19,7 @@ CREATE TABLE category (
     name CHARACTER VARYING(256),
     code INTEGER,
     PRIMARY KEY (id),
+    CONSTRAINT ak_category_code UNIQUE (code),
     CONSTRAINT fk_discipline FOREIGN KEY (fk_discipline) REFERENCES discipline (id)
 );
 
@@ -27,6 +29,7 @@ CREATE TABLE topic (
     name CHARACTER VARYING(256),
     code INTEGER,
     PRIMARY KEY (id),
+    CONSTRAINT ak_topic_code UNIQUE (code),
     CONSTRAINT fk_category FOREIGN KEY (fk_category) REFERENCES category (id)
 );
 
@@ -34,7 +37,8 @@ CREATE TABLE difficulty (
     id INTEGER NOT NULL,
     name CHARACTER VARYING(256),
     code INTEGER,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT ak_difficulty_code UNIQUE (code)
 );
 
 CREATE TABLE question (
@@ -46,6 +50,7 @@ CREATE TABLE question (
     name CHARACTER VARYING(256),
     time_limit INTEGER,
     definition BYTEA,
+    active BOOLEAN,
     created TIMESTAMP,
     created_by CHARACTER VARYING(64),
     modified TIMESTAMP,
@@ -59,12 +64,13 @@ CREATE TABLE question (
 
 CREATE TABLE test (
     id INTEGER NOT NULL,
+    fk_category INTEGER, -- intentionally nullable
     name CHARACTER VARYING(256),
     description TEXT,
     time_limit INTEGER,
     pass_score INTEGER,
 --    questions_count INTEGER,
-    fk_category INTEGER, -- intentionally nullable
+    active BOOLEAN,
     created TIMESTAMP,
     created_by CHARACTER VARYING(64),
     modified TIMESTAMP,

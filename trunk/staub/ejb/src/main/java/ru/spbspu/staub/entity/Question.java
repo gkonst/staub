@@ -85,6 +85,30 @@ public class Question implements Serializable {
         this.definition = definition;
     }
 
+    private Boolean active;
+
+    @Basic
+    @Column(name = "active", length = 1)
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    private Topic topic;
+
+    @OneToOne
+    @JoinColumn(name = "fk_topic", referencedColumnName = "id", nullable = false)
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
+
     private Date created;
 
     @Basic
@@ -167,17 +191,5 @@ public class Question implements Serializable {
         sb.append('}');
 
         return sb.toString();
-    }
-
-    private Topic topic;
-
-    @OneToOne
-    @JoinColumn(name = "fk_topic", referencedColumnName = "id", nullable = false)
-    public Topic getTopic() {
-        return topic;
-    }
-
-    public void setTopic(Topic topic) {
-        this.topic = topic;
     }
 }
