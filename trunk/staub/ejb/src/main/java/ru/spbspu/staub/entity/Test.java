@@ -3,6 +3,7 @@ package ru.spbspu.staub.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * The <code>Test</code> class represents the Test entity.
@@ -89,6 +90,32 @@ public class Test implements Serializable {
         this.active = active;
     }
 
+    private Category category;
+
+    @OneToOne
+    @JoinColumn(name = "fk_category", referencedColumnName = "id")
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    private List<Topic> topicList;
+
+    @OneToMany
+    @JoinTable(schema = "staub", name = "test_topic",
+            joinColumns = @JoinColumn(name = "fk_test", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "fk_topic", referencedColumnName = "id", nullable = false))
+    public List<Topic> getTopicList() {
+        return topicList;
+    }
+
+    public void setTopicList(List<Topic> topicList) {
+        this.topicList = topicList;
+    }
+
     private Date created;
 
     @Basic
@@ -135,18 +162,6 @@ public class Test implements Serializable {
 
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
-    }
-
-    private Category category;
-
-    @OneToOne
-    @JoinColumn(name = "fk_category", referencedColumnName = "id")
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     @Override
