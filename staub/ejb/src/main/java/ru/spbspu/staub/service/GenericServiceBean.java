@@ -168,15 +168,6 @@ public abstract class GenericServiceBean<T, ID extends Serializable> implements 
         return entity;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void makeTransient(T entity) {
-        logger.debug(">>> Making transient(entity=#0)...", entityClass.getName());
-        getEntityManager().remove(entity);
-        logger.debug("<<< Making transient...Ok");
-    }
-
     public void flush() {
         getEntityManager().flush();
     }

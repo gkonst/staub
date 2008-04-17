@@ -20,7 +20,8 @@ import javax.persistence.Query;
 @Stateless
 public class AssignmentServiceBean extends GenericServiceBean<Assignment, Integer> implements AssignmentService {
     public Assignment findAssignment(Student student, Test test) {
-        Query q = getEntityManager().createQuery("select a from Assignment a where a.student = :student and a.test = :test");
+        Query q = getEntityManager()
+                .createQuery("select a from Assignment a where a.student = :student and a.test = :test");
         q.setParameter("student", student);
         q.setParameter("test", test);
         Assignment assignment = null;

@@ -50,10 +50,13 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
         QuestionType questionType = questionTrace.getQuestion().getDefinition();
         AnswerType answerType = questionTrace.getAnswer();
         boolean result = false;
-        if (questionType.getMultipleChoice() != null) {
-            result = check(questionType.getMultipleChoice().getAnswer(), answerType.getMultipleChoice().getElement());
-        } else if (questionType.getSingleChoice() != null) {
-            result = check(questionType.getSingleChoice().getAnswer(), answerType.getSingleChoice().getElement());
+        if (answerType != null) {
+            if (questionType.getMultipleChoice() != null) {
+                result = check(questionType.getMultipleChoice().getAnswer(),
+                        answerType.getMultipleChoice().getElement());
+            } else if (questionType.getSingleChoice() != null) {
+                result = check(questionType.getSingleChoice().getAnswer(), answerType.getSingleChoice().getElement());
+            }
         }
 
         questionTrace.setCorrect(result);

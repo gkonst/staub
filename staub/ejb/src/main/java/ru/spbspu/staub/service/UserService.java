@@ -22,13 +22,4 @@ public interface UserService extends GenericService<User, String> {
      * @return fetched user
      */
     User findUserByUserNameAndPassword(String username, String password);
-
-    /**
-     * Fetches users available for being assigned some test.
-     *
-     * @param formProperties form properties
-     *
-     * @return result fetch
-     */
-    FormTable findUsersToAssign(FormProperties formProperties);
 }

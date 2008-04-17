@@ -47,11 +47,4 @@ public interface GenericService<T, ID extends Serializable> {
      * @return persistent entity(with id field filled)
      */
     T makePersistent(T entity);
-
-    /**
-     * Makes entity transient(i.e. deletes from table).
-     *
-     * @param entity entity to remove
-     */
-    void makeTransient(T entity);
 }

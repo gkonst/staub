@@ -15,4 +15,5 @@ import javax.ejb.Stateless;
 @AutoCreate
 @Stateless
 public class DisciplineServiceBean extends GenericServiceBean<Discipline, Integer> implements DisciplineService {
+    
 }
