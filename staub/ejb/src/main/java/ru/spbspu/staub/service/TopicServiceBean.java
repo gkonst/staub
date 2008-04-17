@@ -18,7 +18,7 @@ import java.util.List;
 @Name("categoryService")
 @AutoCreate
 @Stateless
-public class TopicServiceBean extends GenericServiceBean<Category, Integer> implements TopicService {
+public class TopicServiceBean extends GenericServiceBean<Topic, Integer> implements TopicService {
     @SuppressWarnings("unchecked")
     public List<Topic> getTopics(Category category) {
         Query q = getEntityManager().createQuery("select t from Topic t where t.category = :category");

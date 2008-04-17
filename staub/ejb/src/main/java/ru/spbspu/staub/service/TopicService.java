@@ -12,7 +12,7 @@ import java.util.List;
  * @author Alexander V. Elagin
  */
 @Local
-public interface TopicService extends GenericService<Category, Integer> {
+public interface TopicService extends GenericService<Topic, Integer> {
     /**
      * Returns a list of topics associated with a category.
      *
