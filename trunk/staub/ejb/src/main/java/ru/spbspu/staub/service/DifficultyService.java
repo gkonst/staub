@@ -22,4 +22,8 @@ public interface DifficultyService extends GenericService<Difficulty, Integer> {
      * @return the difficulty levels list
      */
     List<Difficulty> getDifficultyLevels(Test test);
+
+    void addDifficultyLevelToTest(Test test, Difficulty difficulty);
+
+    void removeDifficultyLevelFromTest(Test test, Difficulty difficulty);
 }

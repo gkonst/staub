@@ -36,11 +36,4 @@ public class UserServiceBean extends GenericServiceBean<User, String> implements
         }
         return user;
     }
-
-    public FormTable findUsersToAssign(FormProperties formProperties) {
-        String query = "select u from User u where u.role = :role";
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("role", RoleEnum.USER);
-        return findAll(query, formProperties, parameters);
-    }
 }

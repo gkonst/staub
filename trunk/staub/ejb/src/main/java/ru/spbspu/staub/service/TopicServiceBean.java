@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Alexander V. Elagin
  */
-@Name("categoryService")
+@Name("topicService")
 @AutoCreate
 @Stateless
 public class TopicServiceBean extends GenericServiceBean<Topic, Integer> implements TopicService {
