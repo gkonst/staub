@@ -16,15 +16,6 @@ import javax.ejb.Local;
 @Local
 public interface QuestionService extends GenericService<Question, Integer> {
     /**
-     * Fetches all questions for specific test.
-     *
-     * @param formProperties form properties
-     * @param test           specific test
-     * @return result fetch
-     */
-    FormTable findAllForTest(FormProperties formProperties, Test test);
-
-    /**
      * Saves question (updates or inserts).
      * Also updates neede audit fields(created, createdBy, etc.)
      *

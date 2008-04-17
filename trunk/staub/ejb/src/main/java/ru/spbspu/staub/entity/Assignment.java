@@ -28,64 +28,29 @@ public class Assignment implements Serializable {
         this.id = id;
     }
 
-    private Date testBegin;
 
-    @Basic
-    @Column(name = "test_begin", length = 13)
-    public Date getTestBegin() {
-        return testBegin;
+    private Student student;
+
+    @OneToOne
+    @JoinColumn(name = "fk_student", referencedColumnName = "id", nullable = false)
+    public Student getStudent() {
+        return student;
     }
 
-    public void setTestBegin(Date testBegin) {
-        this.testBegin = testBegin;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    private Date testEnd;
+    private Test test;
 
-    @Basic
-    @Column(name = "test_end", length = 13)
-    public Date getTestEnd() {
-        return testEnd;
+    @OneToOne
+    @JoinColumn(name = "fk_test", referencedColumnName = "id", nullable = false)
+    public Test getTest() {
+        return test;
     }
 
-    public void setTestEnd(Date testEnd) {
-        this.testEnd = testEnd;
-    }
-
-    private Boolean testStarted;
-
-    @Basic
-    @Column(name = "test_started", length = 1)
-    public Boolean getTestStarted() {
-        return testStarted;
-    }
-
-    public void setTestStarted(Boolean testStarted) {
-        this.testStarted = testStarted;
-    }
-
-    private Integer fkTest;
-
-    @Basic
-    @Column(name = "fk_test")
-    public Integer getFkTest() {
-        return fkTest;
-    }
-
-    public void setFkTest(Integer fkTest) {
-        this.fkTest = fkTest;
-    }
-
-    private Integer fkStudent;
-
-    @Basic
-    @Column(name = "fk_student")
-    public Integer getFkStudent() {
-        return fkStudent;
-    }
-
-    public void setFkStudent(Integer fkStudent) {
-        this.fkStudent = fkStudent;
+    public void setTest(Test test) {
+        this.test = test;
     }
 
     @Override
@@ -112,11 +77,8 @@ public class Assignment implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("Assignment");
         sb.append("{id=").append(id);
-        sb.append(", testBegin=").append(testBegin);
-        sb.append(", testEnd=").append(testEnd);
-        sb.append(", testStarted=").append(testStarted);
-        sb.append(", fkStudent=").append(fkStudent);
-        sb.append(", fkTest=").append(fkTest);
+        sb.append(", fkStudent=").append(student);
+        sb.append(", fkTest=").append(test);
         sb.append('}');
 
         return sb.toString();
