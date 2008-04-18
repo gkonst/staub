@@ -32,4 +32,12 @@ public interface TestService extends GenericService<Test, Integer> {
      * @param studentIds list or students identifiers
      */
     void assignTest(Integer testId, List<Integer> studentIds);
+
+    /**
+     * Returns a questions count for a test.
+     *
+     * @param test the test
+     * @return the questions count
+     */
+    long getTotalNumberOfQuestions(Test test);
 }
