@@ -12,9 +12,21 @@
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
     <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:define name="sidebar">
-            <s:fragment id="timerFragment"
-                        rendered="#{!pageBean.finished and pageBean.timeLimitPresent}">
-                <ui:include src="/controls/questionTimerControl.jspx"/>
+            <s:fragment id="testTimerFragment"
+                        rendered="#{!pageBean.finished and pageBean.testTimer != null}">
+                <ui:include src="/controls/questionTimerControl.jspx">
+                    <ui:param name="timerId" value="testTimer"/>
+                    <ui:param name="timerModel" value="#{pageBean.testTimer}"/>
+                    <ui:param name="onExpireJsFunction" value="nextQuestion"/>
+                </ui:include>
+            </s:fragment>
+            <s:fragment id="questionTimerFragment"
+                        rendered="#{!pageBean.finished and pageBean.questionTimer != null}">
+                <ui:include src="/controls/questionTimerControl.jspx">
+                    <ui:param name="timerId" value="questionTimer"/>
+                    <ui:param name="timerModel" value="#{pageBean.questionTimer}"/>
+                    <ui:param name="onExpireJsFunction" value="nextQuestion"/>
+                </ui:include>
             </s:fragment>
     </ui:define>
     <ui:define name="contentTitle">
@@ -38,7 +50,7 @@
                                    styleClass="button"
                                    rendered="#{!pageBean.finished}"
                                    reRender="content, sidebar"
-                                   onclick="Timer.destroy()">
+                                   onclick="Widget.Timer.destroyById('questionTimer')">
                     <f:param id="nextQuestionButtonParamBeanMode" name="beanMode" value="VIEW_MODE"/>
                 </a4j:commandButton>
                 <a4j:jsFunction id="nextQuestionJsFunction"
