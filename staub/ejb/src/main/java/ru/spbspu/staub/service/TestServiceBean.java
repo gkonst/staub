@@ -9,6 +9,7 @@ import ru.spbspu.staub.entity.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
@@ -71,5 +72,11 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             String message = MessageFormat.format("Could not save Test with passScore={0}.", passScore);
             throw new IllegalArgumentException(message);
         }
+    }
+
+    public long getTotalNumberOfQuestions(Test test) {
+        Query q = getEntityManager().createQuery("select sum(td.questionsCount) from TestDifficulty td where td.fkTest = :testId");
+        q.setParameter("testId", test.getId());
+        return (Long) q.getSingleResult();
     }
 }
