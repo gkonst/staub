@@ -59,8 +59,9 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         assignment.setTestStarted(true);
         assignmentService.saveAssignment(assignment);
 */
-
-        testTrace.setStarted(new Date());
+        if(testTrace.getStarted() == null) {
+            testTrace.setStarted(new Date());
+        }
         return makePersistent(testTrace);
     }
 
