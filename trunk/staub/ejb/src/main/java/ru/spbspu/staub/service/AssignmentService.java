@@ -3,6 +3,8 @@ package ru.spbspu.staub.service;
 import ru.spbspu.staub.entity.Assignment;
 import ru.spbspu.staub.entity.Student;
 import ru.spbspu.staub.entity.Test;
+import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
 
@@ -13,6 +15,16 @@ import javax.ejb.Local;
  */
 @Local
 public interface AssignmentService extends GenericService<Assignment, Integer> {
+    /**
+     * Searches tests assigned for a student.
+     *
+     * @param formProperties the form properties
+     * @param student        the student
+     *
+     * @return the result table
+     */
+    FormTable findAssigned(FormProperties formProperties, Student student);
+
     /**
      * Searches an assignment.
      *
