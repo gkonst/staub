@@ -1,4 +1,4 @@
-INSERT INTO role (id, description) VALUES (0, 'Administrator');
+п»їINSERT INTO role (id, description) VALUES (0, 'Administrator');
 INSERT INTO role (id, description) VALUES (1, 'Test Writer');
 
 INSERT INTO "user" (id,
@@ -30,7 +30,7 @@ INSERT INTO student (id,
                      code)
      VALUES (nextval('seq_student'),
              currval('seq_group'),
-             'Иванов Иван Иванович',
+             'РРІР°РЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡',
              '87654351');
 
 INSERT INTO student (id,
@@ -39,7 +39,7 @@ INSERT INTO student (id,
                      code)
      VALUES (nextval('seq_student'),
              currval('seq_group'),
-             'Петров Петр Петрович',
+             'РџРµС‚СЂРѕРІ РџРµС‚СЂ РџРµС‚СЂРѕРІРёС‡',
              '87654352');
 
 INSERT INTO "group" (id,
@@ -53,7 +53,7 @@ INSERT INTO student (id,
                      code)
      VALUES (nextval('seq_student'),
              currval('seq_group'),
-             'Сидоров Сидор Сидорович',
+             'РЎРёРґРѕСЂРѕРІ РЎРёРґРѕСЂ РЎРёРґРѕСЂРѕРІРёС‡',
              '87654353');
 
 INSERT INTO test (id,
@@ -84,7 +84,7 @@ INSERT INTO discipline (id,
                         name,
                         code)
      VALUES (nextval('seq_discipline'), 
-             'Математика',
+             'РњР°С‚РµРјР°С‚РёРєР°',
              0);
 
 INSERT INTO category (id,
@@ -93,7 +93,7 @@ INSERT INTO category (id,
                       code)
      VALUES (nextval('seq_category'), 
 	     currval('seq_discipline'),
-             'Дифференциальные уравнения',
+             'Р”РёС„С„РµСЂРµРЅС†РёР°Р»СЊРЅС‹Рµ СѓСЂР°РІРЅРµРЅРёСЏ',
              1);
 
 UPDATE test SET fk_category = currval('seq_category') WHERE id = currval('seq_test');
@@ -102,14 +102,14 @@ INSERT INTO difficulty (id,
                         name,
                         code)
      VALUES (nextval('seq_difficulty'),
-             'Низкая сложность',
+             'РќРёР·РєР°СЏ СЃР»РѕР¶РЅРѕСЃС‚СЊ',
              0);
 
 INSERT INTO difficulty (id,
                         name,
                         code)
      VALUES (nextval('seq_difficulty'),
-             'Стандартная сложность',
+             'РЎС‚Р°РЅРґР°СЂС‚РЅР°СЏ СЃР»РѕР¶РЅРѕСЃС‚СЊ',
              1);
 
 INSERT INTO test_difficulty (fk_test,
@@ -125,7 +125,7 @@ INSERT INTO topic (id,
                    code)
      VALUES (nextval('seq_topic'), 
 	     currval('seq_category'),
-             'Линейные дифференциальные уравнения',
+             'Р›РёРЅРµР№РЅС‹Рµ РґРёС„С„РµСЂРµРЅС†РёР°Р»СЊРЅС‹Рµ СѓСЂР°РІРЅРµРЅРёСЏ',
              0);
 
 INSERT INTO question (id,
@@ -149,7 +149,7 @@ INSERT INTO difficulty (id,
                         name,
                         code)
      VALUES (nextval('seq_difficulty'),
-             'Высокая сложность',
+             'Р’С‹СЃРѕРєР°СЏ СЃР»РѕР¶РЅРѕСЃС‚СЊ',
              2);
 
 INSERT INTO test_difficulty (fk_test,
@@ -165,7 +165,7 @@ INSERT INTO topic (id,
                    code)
      VALUES (nextval('seq_topic'), 
 	     currval('seq_category'),
-             'Системы дифференциальных уравнений',
+             'РЎРёСЃС‚РµРјС‹ РґРёС„С„РµСЂРµРЅС†РёР°Р»СЊРЅС‹С… СѓСЂР°РІРЅРµРЅРёР№',
              1);
 
 INSERT INTO question (id,
