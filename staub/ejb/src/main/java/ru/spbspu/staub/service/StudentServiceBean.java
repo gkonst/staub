@@ -12,6 +12,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 /**
  * The <code>StudentServiceBean</code> is a stateless EJB service to manipulate <code>Student</code> entities.
@@ -34,6 +35,13 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
             // do nothing
         }
         return student;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Student> findStudentsByGroup(Group group) {
+        Query q = getEntityManager().createQuery("select s from Student s where s.group = :group");
+        q.setParameter("group", group);
+        return q.getResultList();
     }
 
     public FormTable findStudentsToAssign(FormProperties formProperties, Group group) {
