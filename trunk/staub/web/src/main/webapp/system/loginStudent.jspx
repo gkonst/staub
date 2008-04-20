@@ -1,0 +1,100 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+<ui:composition template="/template/staub-template.jspx">
+    <ui:define name="headerStatus"/>
+    <ui:define name="contentMessage"/>
+    <ui:define name="contentBody">
+        <rich:spacer height="20em"/>
+        <h:form id="loginForm">
+            <div align="center">
+                <table class="detailTable">
+                    <tr>
+                        <td colspan="2" align="center">
+                            <rich:spacer height="10"/>
+                            <br/>
+                            #{messages['system.loginStudent.subTitle']}
+                            <br/>
+                            <rich:spacer height="5"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>#{messages['system.loginStudent.group']}</strong>
+                        </td>
+                        <td align="left">
+                            <h:selectOneMenu id="groupSelect"
+                                             value="#{loginStudentBean.group}"
+                                             converter="ru.spbspu.staub.ObjectSelectConverter">
+                                <s:selectItems value="#{loginStudentBean.groups}" var="group" label="#{group.name}"
+                                               noSelectionLabel=""/>
+                                <a4j:support id="groupSelectSupport"
+                                             event="onchange"
+                                             action="#{loginStudentBean.refreshStudents}"
+                                             ajaxSingle="true"
+                                             reRender="studentSelectPanel, passwordPanel, loginButtonPanel"/>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>#{messages['system.loginStudent.student']}</strong>
+                        </td>
+                        <td align="left">
+                            <a4j:outputPanel id="studentSelectPanel">
+                                <h:selectOneMenu id="studentSelect"
+                                                 value="#{loginStudentBean.username}"
+                                                 disabled="#{loginStudentBean.group == null}">
+                                    <s:selectItems id="studentSelectItems"
+                                                   value="#{loginStudentBean.students}" var="student"
+                                                   label="#{student.name}"
+                                                   noSelectionLabel="" itemValue="#{student.name}"/>
+                                    <a4j:support id="studentSelectSupport"
+                                                 event="onchange"
+                                                 ajaxSingle="true"
+                                                 reRender="passwordPanel, loginButtonPanel"/>
+                                </h:selectOneMenu>
+                            </a4j:outputPanel>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>#{messages['system.loginStudent.password']}</strong>
+                        </td>
+                        <td align="left">
+                            <a4j:outputPanel id="passwordPanel">
+                                <h:inputSecret id="password"
+                                               value="#{loginStudentBean.password}"
+                                               style="width: 9em;"
+                                               disabled="#{loginStudentBean.username == null}"/>
+                            </a4j:outputPanel>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <ui:include src="../controls/genericMessageControl.jspx"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <a4j:outputPanel id="loginButtonPanel">
+                                <a4j:commandButton id="loginButton" action="#{loginStudentBean.login}"
+                                                   value="#{messages['system.login.enter']}"
+                                                   styleClass="button"
+                                                   disabled="#{loginStudentBean.username == null}"/>
+                            </a4j:outputPanel>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>
