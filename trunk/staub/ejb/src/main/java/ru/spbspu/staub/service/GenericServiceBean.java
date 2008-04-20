@@ -2,6 +2,8 @@ package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.log.Log;
+import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Remove;
 import javax.persistence.EntityManager;
@@ -9,14 +11,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import ru.spbspu.staub.model.list.FormTable;
-import ru.spbspu.staub.model.list.FormProperties;
 
 /**
  * Implements the generic CRUD data access operations using Java Persistence APIs.
@@ -84,6 +83,7 @@ public abstract class GenericServiceBean<T, ID extends Serializable> implements 
      * @param queryString     specific query string
      * @param formProperties  form properties for fetching
      * @param queryParameters query parameters
+     *
      * @return result fetch
      */
     protected FormTable findAll(String queryString, FormProperties formProperties, Map<String, Object> queryParameters) {
@@ -109,6 +109,7 @@ public abstract class GenericServiceBean<T, ID extends Serializable> implements 
      *
      * @param queryString     current query string
      * @param queryParameters some parameters (search values for example)
+     *
      * @return total rows in table
      */
     private long countQuery(String queryString, Map<String, Object> queryParameters) {
@@ -182,8 +183,9 @@ public abstract class GenericServiceBean<T, ID extends Serializable> implements 
     }
 
     protected EntityManager getEntityManager() {
-        if (em == null)
+        if (em == null) {
             throw new IllegalStateException("EntityManager has not been set on Service before usage");
+        }
         return em;
     }
 
@@ -197,5 +199,11 @@ public abstract class GenericServiceBean<T, ID extends Serializable> implements 
 
     @Remove
     public void destroy() {
+    }
+
+    public void remove(T entity) {
+        logger.debug(">>> remove(entity=#0)...", entityClass.getName());
+        getEntityManager().remove(entity);
+        logger.debug("<<< remove...Ok");
     }
 }
