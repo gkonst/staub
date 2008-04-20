@@ -3,7 +3,7 @@ package ru.spbspu.staub.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 /**
  * The <code>Test</code> class represents the Test entity.
@@ -102,23 +102,34 @@ public class Test implements Serializable {
         this.category = category;
     }
 
-    private List<Topic> topicList;
+    private Set<Topic> topics;
 
     @OneToMany
     @JoinTable(schema = "staub", name = "test_topic",
             joinColumns = @JoinColumn(name = "fk_test", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "fk_topic", referencedColumnName = "id", nullable = false))
-    public List<Topic> getTopicList() {
-        return topicList;
+    public Set<Topic> getTopics() {
+        return topics;
     }
 
-    public void setTopicList(List<Topic> topicList) {
-        this.topicList = topicList;
+    public void setTopics(Set<Topic> topics) {
+        this.topics = topics;
+    }
+
+    private Set<TestDifficulty> difficultyLevels;
+
+    @OneToMany(mappedBy = "test")
+    public Set<TestDifficulty> getDifficultyLevels() {
+        return difficultyLevels;
+    }
+
+    public void setDifficultyLevels(Set<TestDifficulty> difficultyLevels) {
+        this.difficultyLevels = difficultyLevels;
     }
 
     private Date created;
 
-    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created", nullable = false)
     public Date getCreated() {
         return created;
@@ -142,7 +153,7 @@ public class Test implements Serializable {
 
     private Date modified;
 
-    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modified")
     public Date getModified() {
         return modified;

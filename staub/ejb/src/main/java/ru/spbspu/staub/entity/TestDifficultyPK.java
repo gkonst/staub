@@ -12,49 +12,47 @@ import java.io.Serializable;
 public class TestDifficultyPK implements Serializable {
     private static final long serialVersionUID = 6673970679487117717L;
 
-    private Integer fkTest;
+    private Test test;
 
+    @Id
     @Column(name = "fk_test", nullable = false, length = 10)
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
+    }
+
+    private Difficulty difficulty;
+
     @Id
-    public Integer getFkTest() {
-        return fkTest;
-    }
-
-    public void setFkTest(Integer fkTest) {
-        this.fkTest = fkTest;
-    }
-
-    private Integer fkDifficulty;
-
     @Column(name = "fk_difficulty", nullable = false, length = 10)
-    @Id
-    public Integer getFkDifficulty() {
-        return fkDifficulty;
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 
-    public void setFkDifficulty(Integer fkDifficulty) {
-        this.fkDifficulty = fkDifficulty;
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object otherObject) {
+        if (this == otherObject) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(otherObject instanceof TestDifficultyPK)) {
             return false;
         }
 
-        TestDifficultyPK that = (TestDifficultyPK) o;
+        TestDifficultyPK other = (TestDifficultyPK) otherObject;
 
-        return (fkDifficulty != null ? fkDifficulty.equals(that.fkDifficulty) : that.fkDifficulty == null)
-                && (fkTest != null ? fkTest.equals(that.fkTest) : that.fkTest == null);
-
+        return difficulty.equals(other.difficulty) && test.equals(other.test);
     }
 
     public int hashCode() {
         int result;
-        result = (fkTest != null ? fkTest.hashCode() : 0);
-        result = 31 * result + (fkDifficulty != null ? fkDifficulty.hashCode() : 0);
+        result = test.hashCode();
+        result = 31 * result + difficulty.hashCode();
         return result;
     }
 }

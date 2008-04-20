@@ -43,8 +43,6 @@ CREATE TABLE difficulty (
 
 CREATE TABLE question (
     id INTEGER NOT NULL,
---    fk_discipline INTEGER NOT NULL,
---    fk_category INTEGER NOT NULL,
     fk_topic INTEGER NOT NULL,
     fk_difficulty INTEGER NOT NULL,
     name CHARACTER VARYING(256),
@@ -56,8 +54,6 @@ CREATE TABLE question (
     modified TIMESTAMP,
     modified_by CHARACTER VARYING(64),
     CONSTRAINT pk_question PRIMARY KEY (id),
---    CONSTRAINT fk_discipline FOREIGN KEY (fk_discipline) REFERENCES discipline (id),
---    CONSTRAINT fk_category FOREIGN KEY (fk_category) REFERENCES category (id),
     CONSTRAINT fk_topic FOREIGN KEY (fk_topic) REFERENCES topic (id),
     CONSTRAINT fk_difficulty FOREIGN KEY (fk_difficulty) REFERENCES difficulty (id)
 );
@@ -69,7 +65,6 @@ CREATE TABLE test (
     description TEXT,
     time_limit INTEGER,
     pass_score INTEGER,
---    questions_count INTEGER,
     active BOOLEAN,
     created TIMESTAMP,
     created_by CHARACTER VARYING(64),
@@ -78,7 +73,6 @@ CREATE TABLE test (
     CONSTRAINT pk_test PRIMARY KEY (id),
     CONSTRAINT fk_category FOREIGN KEY (fk_category) REFERENCES category (id),
     CONSTRAINT chk_pass_score CHECK ((pass_score > 0) AND (pass_score <= 100)),
---    CONSTRAINT chk_questions_count CHECK (questions_count >= 0),
     CONSTRAINT chk_time_limit CHECK (time_limit > 0)
 );
 
@@ -138,7 +132,6 @@ CREATE TABLE test_trace (
     id INTEGER NOT NULL,
     fk_test INTEGER NOT NULL,
     fk_student INTEGER NOT NULL,
---    session_id CHARACTER VARYING(64),
     score INTEGER,
     test_passed BOOLEAN,
     started TIMESTAMP,
@@ -161,17 +154,6 @@ CREATE TABLE question_trace (
     CONSTRAINT fk_test_trace FOREIGN KEY (fk_test_trace) REFERENCES test_trace (id),
     CONSTRAINT fk_question FOREIGN KEY (fk_question) REFERENCES question (id)
 );
-
---CREATE TABLE user_history (
---    id INTEGER NOT NULL,
---    fk_test_trace INTEGER NOT NULL,
---    name CHARACTER VARYING(256),
---    score INTEGER,
---    test_passed BOOLEAN,
---    test_date TIMESTAMP,
---    CONSTRAINT pk_user_history PRIMARY KEY (id),
---    CONSTRAINT fk_test_trace FOREIGN KEY (fk_test_trace) REFERENCES test_trace (id)
---);
 
 -- Sequences
 CREATE SEQUENCE seq_discipline

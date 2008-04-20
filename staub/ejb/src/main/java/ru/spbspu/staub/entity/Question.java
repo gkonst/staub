@@ -111,7 +111,7 @@ public class Question implements Serializable {
 
     private Date created;
 
-    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created", nullable = false)
     public Date getCreated() {
         return created;
@@ -135,7 +135,7 @@ public class Question implements Serializable {
 
     private Date modified;
 
-    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modified")
     public Date getModified() {
         return modified;

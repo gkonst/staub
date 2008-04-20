@@ -6,7 +6,6 @@ import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
-import java.util.List;
 
 /**
  * The <code>StudentService</code> is a stateless EJB service to manipulate <code>Student</code> entities.
