@@ -17,7 +17,4 @@
                   conversation-id-parameter="cid"/>
 
     <transaction:ejb-transaction/>
-
-    <security:identity authenticate-method="#{loginBean.authenticate}"/>
-
 </components>

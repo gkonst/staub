@@ -28,5 +28,4 @@ public class StaubIdentity extends Identity {
         unAuthenticate();
         return super.login();
     }
-
 }
