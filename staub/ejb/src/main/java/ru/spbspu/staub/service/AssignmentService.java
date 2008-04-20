@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface AssignmentService extends GenericService<Assignment, Integer> {
     /**
-     * Searches tests assigned for a student.
+     * Searches tests assigned to a student.
      *
      * @param formProperties the form properties
      * @param student        the student
