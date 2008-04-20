@@ -12,13 +12,13 @@ import ru.spbspu.staub.entity.TestTrace;
 import ru.spbspu.staub.model.AnswerWrapper;
 import ru.spbspu.staub.service.QuestionTraceService;
 import ru.spbspu.staub.service.TestTraceService;
+import ru.spbspu.staub.util.TimerModel;
 
-import java.util.Date;
 import java.util.List;
 
 
 /**
- * TODO add descritpion
+ * Main webbean for solving questions.
  *
  * @author Konstantin Grigoriev
  */
@@ -39,9 +39,6 @@ public class QuestionBean extends GenericModeBean {
     private List<Integer> questionIds;
     private QuestionTrace currentQuestion;
     private int questionIndex = 0;
-    private int currentTime = -1;
-    // TODO remove
-    private long startTime;
 
     private AnswerWrapper answer;
 
@@ -49,14 +46,19 @@ public class QuestionBean extends GenericModeBean {
 
     private boolean finished = false;
 
+    private TimerModel questionTimer;
+    private TimerModel testTimer;
+
     public void initBean() {
         if (isBeanModeDefined()) {
             initTest();
         }
     }
 
-    public String initTest() {
-        // TODO remove return
+    // TODO split method for test initialization and question initialization
+    // TODO translate messages
+    // TODO part may be wrong sometimes
+    private void initTest() {
         logger.debug(">>> Init question(index=#0) in testTrace(#1)...", questionIndex, testTrace.getId());
         logger.debug(" this bean : #0", this);
         // fill ids
@@ -67,8 +69,12 @@ public class QuestionBean extends GenericModeBean {
                 addFacesMessage("В тесте не осталось неотвеченных вопросов");
                 finished = true;
                 logger.debug("<<< Init question...failed");
-                return "questionDetail";
+                return;
             }
+        }
+
+        if (testTimer == null && testTrace.getTest().getTimeLimit() != null && testTrace.getTest().getTimeLimit() != 0) {
+            testTimer = new TimerModel(testTrace.getStarted(), testTrace.getTest().getTimeLimit());
         }
 
         if (questionIndex < questionIds.size()) {
@@ -76,27 +82,43 @@ public class QuestionBean extends GenericModeBean {
             fillModel(questionIds.get(questionIndex));
 
             logger.debug(" currentQuestion : #0", currentQuestion);
-            if (isTimeLimitPresent()) {
-                logger.debug(" currentTime : #0", currentTime);
-                if (currentTime == -1) {
-                    resetTimer();
-                } else {
-                    refreshTimer();
-                }
-            }
 
-            if (previousPart != null && !previousPart.equals(currentQuestion.getPart())) {
-                logger.debug(" part changed(#0->#1) -> checking", previousPart, currentQuestion.getPart());
-                if (!testTraceService.checkPart(testTrace, previousPart, 100)) {
-                    logger.debug(" part checking failed -> test ended");
-                    testTrace = testTraceService.endTest(testTrace);
-                    addFacesMessage("Part validation failed");
-                    finished = true;
+                if (previousPart != null && !previousPart.equals(currentQuestion.getPart())) {
+                    logger.debug(" part changed(#0->#1) -> checking", previousPart, currentQuestion.getPart());
+                    if (!testTraceService.checkPart(testTrace, previousPart, 100)) {
+                        logger.debug(" part checking failed -> test ended");
+                        testTrace = testTraceService.endTest(testTrace);
+                        addFacesMessage("Part validation failed");
+                        finished = true;
+                    }
                 }
+
+            // not sure
+            if (testTimer != null && testTimer.isExpired()) {
+                logger.debug(" test timer expired -> test ended");
+                  // TODO implement ask AEL what to do
+//                testTraceService.checkPart(testTrace, previousPart != null ? previousPart : currentQuestion.getPart(), );
+//                testTrace = testTraceService.endTest(testTrace);
+                addFacesMessage("время теста истекло");
+                finished = true;
             }
 
             // starting solving question
             currentQuestion = questionTraceService.start(currentQuestion);
+
+            if (getCurrentQuestion().getTimeLimit() != null && getCurrentQuestion().getTimeLimit() != 0) {
+                questionTimer = new TimerModel(currentQuestion.getStarted(), currentQuestion.getQuestion().getTimeLimit());
+            } else {
+                questionTimer = null;
+            }
+
+            if (questionTimer != null && questionTimer.isExpired()) {
+                logger.debug(" question timer expired -> next question");
+                nextQuestion();
+                // recursive =))
+                initTest();
+                addFacesMessage("время вопроса истекло");
+            }
 
             previousPart = currentQuestion.getPart();
         } else {
@@ -109,16 +131,6 @@ public class QuestionBean extends GenericModeBean {
 
         }
         logger.debug("<<< Init question...Ok");
-        return "questionDetail";
-    }
-
-    // unused
-    public String previousQuestion() {
-        logger.debug(">>> Previous question...");
-        fillModel(questionIds.get(--questionIndex));
-        resetTimer();
-        logger.debug(">>> Previous question...Ok");
-        return null;
     }
 
     public String nextQuestion() {
@@ -126,7 +138,6 @@ public class QuestionBean extends GenericModeBean {
         currentQuestion.setAnswer(answer.getAnswer());
         currentQuestion = questionTraceService.saveAnswer(currentQuestion);
         questionIndex++;
-        currentTime = -1;
         logger.debug(" question index : #0", questionIndex);
         logger.debug(">>> Next question...Ok");
         return null;
@@ -137,30 +148,12 @@ public class QuestionBean extends GenericModeBean {
         answer = AnswerWrapper.getAnswer(currentQuestion.getQuestion().getDefinition());
     }
 
-    private void resetTimer() {
-        currentTime = getCurrentQuestion().getTimeLimit();
-        startTime = new Date().getTime();
-    }
-
-    public void refreshTimer() {
-        logger.debug(">>> Refreshing timer...");
-        long newTime = (new Date().getTime() - startTime) / 1000;
-        logger.debug(" time elapsed : " + newTime);
-        logger.debug(" time remaining : " + (getCurrentQuestion().getTimeLimit() - (int) newTime));
-        this.currentTime = getCurrentQuestion().getTimeLimit() - (int) newTime;
-        logger.debug(">>> Refreshing timer...Ok");
-    }
-
     public boolean isHasPreviousQuestion() {
         return questionIndex > 0;
     }
 
     public boolean isHasNextQuestion() {
         return questionIndex < questionIds.size();
-    }
-
-    public boolean isTimeLimitPresent() {
-        return getCurrentQuestion().getTimeLimit() != null && getCurrentQuestion().getTimeLimit() != 0;
     }
 
     public Question getCurrentQuestion() {
@@ -175,19 +168,19 @@ public class QuestionBean extends GenericModeBean {
         this.answer = answer;
     }
 
-    public int getCurrentTime() {
-        return currentTime;
-    }
-
-    public void setCurrentTime(int currentTime) {
-        this.currentTime = currentTime;
-    }
-
     public boolean isFinished() {
         return finished;
     }
 
     public TestTrace getTestTrace() {
         return testTrace;
+    }
+
+    public TimerModel getQuestionTimer() {
+        return questionTimer;
+    }
+
+    public TimerModel getTestTimer() {
+        return testTimer;
     }
 }
