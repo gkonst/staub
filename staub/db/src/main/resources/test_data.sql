@@ -1,4 +1,4 @@
-﻿INSERT INTO role (id, description) VALUES (0, 'Administrator');
+INSERT INTO role (id, description) VALUES (0, 'Administrator');
 INSERT INTO role (id, description) VALUES (1, 'Test Writer');
 
 INSERT INTO "user" (id,
