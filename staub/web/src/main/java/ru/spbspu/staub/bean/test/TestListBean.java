@@ -35,7 +35,7 @@ public class TestListBean extends GenericListBean<Test> {
      */
     @Override
     public void doDelete() {
-        testService.makeTransient(getSelected());
+        //TODO implement
         doRefresh();
     }
 }

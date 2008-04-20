@@ -10,6 +10,7 @@ import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.entity.TestTrace;
 import ru.spbspu.staub.entity.User;
+import ru.spbspu.staub.entity.Student;
 import ru.spbspu.staub.service.TestService;
 import ru.spbspu.staub.service.TestTraceService;
 
@@ -29,7 +30,7 @@ public class TestStartBean extends GenericDetailBean<Test> {
     private TestTraceService testTraceService;
 
     @In
-    private User user;
+    private Student student;
 
     @Out(required = false, scope = ScopeType.CONVERSATION)
     private TestTrace testTrace;
@@ -40,7 +41,7 @@ public class TestStartBean extends GenericDetailBean<Test> {
     }
 
     public String prepareTest() {
-        testTrace = testTraceService.getTestTrace(getModel(), user, getSessionId());
+        testTrace = testTraceService.getTestTrace(getModel(), student);
         testTrace = testTraceService.startTest(testTrace); // may be moved to startTest()
         return "testPrepare";
     }

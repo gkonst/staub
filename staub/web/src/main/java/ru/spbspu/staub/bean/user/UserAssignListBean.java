@@ -12,6 +12,7 @@ import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.TestService;
 import ru.spbspu.staub.service.UserService;
+import ru.spbspu.staub.service.StudentService;
 
 import java.util.Date;
 import java.util.List;
@@ -31,7 +32,7 @@ public class UserAssignListBean extends GenericListBean<User> {
     private Integer testId;
 
     @In
-    private UserService userService;
+    private StudentService studentService;
 
     @In
     private TestService testService;
@@ -68,7 +69,8 @@ public class UserAssignListBean extends GenericListBean<User> {
      * {@inheritDoc}
      */
     protected FormTable findObjects(FormProperties formProperties) {
-        return userService.findUsersToAssign(formProperties);
+        // TODO add group selection
+        return studentService.findStudentsToAssign(formProperties, null);
     }
 
     /**
@@ -78,7 +80,7 @@ public class UserAssignListBean extends GenericListBean<User> {
         logger.debug(">>> Assigning users...");
         List<Integer> usersIds = getSelectedItems();
         // TODO replace nulls
-        testService.assignTest(testId, usersIds, testBegin, testEnd);
+        testService.assignTest(testId, usersIds);
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("user.assign.list.assignSuccess");
