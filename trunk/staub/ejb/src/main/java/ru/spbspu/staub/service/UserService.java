@@ -1,8 +1,6 @@
 package ru.spbspu.staub.service;
 
 import ru.spbspu.staub.entity.User;
-import ru.spbspu.staub.model.list.FormProperties;
-import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
 

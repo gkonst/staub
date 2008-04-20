@@ -39,7 +39,7 @@ public class QuestionTrace implements Serializable {
 
     private Date started;
 
-    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "started")
     public Date getStarted() {
         return started;
@@ -51,7 +51,7 @@ public class QuestionTrace implements Serializable {
 
     private Date finished;
 
-    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "finished")
     public Date getFinished() {
         return finished;

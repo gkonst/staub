@@ -2,17 +2,14 @@ package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
-import ru.spbspu.staub.entity.Assignment;
-import ru.spbspu.staub.entity.Student;
-import ru.spbspu.staub.entity.Test;
-import ru.spbspu.staub.entity.User;
+import ru.spbspu.staub.entity.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.Query;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Stateless EJB Service for manipulations with <code>Test</code> entity.
@@ -74,9 +71,25 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         }
     }
 
-    public long getTotalNumberOfQuestions(Test test) {
-        Query q = getEntityManager().createQuery("select sum(td.questionsCount) from TestDifficulty td where td.fkTest = :testId");
-        q.setParameter("testId", test.getId());
-        return (Long) q.getSingleResult();
+    public long getExpectedNumberOfQuestions(Test test) {
+        long result = 0;
+        Set<TestDifficulty> levels = test.getDifficultyLevels();
+        if (levels != null) {
+            for (TestDifficulty testDifficulty : levels) {
+                result += testDifficulty.getQuestionsCount();
+            }
+        }
+        return result;
+    }
+
+    public void removeDifficultyLevel(TestDifficulty testDifficulty) {
+        Test test = testDifficulty.getTest();
+        if (test != null) { // redundant
+            Set<TestDifficulty> difficultyLevels = test.getDifficultyLevels();
+            if (difficultyLevels != null) { // redundant
+                difficultyLevels.remove(testDifficulty);
+                getEntityManager().remove(testDifficulty);
+            }
+        }
     }
 }

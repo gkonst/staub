@@ -2,7 +2,6 @@ package ru.spbspu.staub.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * The <code>Assignment</code> class represents the Assignment entity.
@@ -77,8 +76,8 @@ public class Assignment implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("Assignment");
         sb.append("{id=").append(id);
-        sb.append(", fkStudent=").append(student);
-        sb.append(", fkTest=").append(test);
+        sb.append(", student=").append(student);
+        sb.append(", test=").append(test);
         sb.append('}');
 
         return sb.toString();
