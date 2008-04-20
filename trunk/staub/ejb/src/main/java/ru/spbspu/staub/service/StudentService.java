@@ -6,6 +6,7 @@ import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
+import java.util.List;
 
 /**
  * The <code>StudentService</code> is a stateless EJB service to manipulate <code>Student</code> entities.
@@ -15,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface StudentService extends GenericService<Student, Integer> {
     /**
-     * Searches a user with the name and code values specified.
+     * Searches a student with the name and code values specified.
      *
      * @param name the name
      * @param code the code
@@ -23,6 +24,15 @@ public interface StudentService extends GenericService<Student, Integer> {
      * @return the User entity if found; <code>null</code> otherwise
      */
     Student findByNameAndCode(String name, String code);
+
+    /**
+     * Searches a students from the specified group.
+     *
+     * @param group the group
+     *
+     * @return the search results
+     */
+    List<Student> findStudentsByGroup(Group group);
 
     /**
      * Returns a list of students from the specified group.
