@@ -47,4 +47,11 @@ public interface GenericService<T, ID extends Serializable> {
      * @return persistent entity(with id field filled)
      */
     T makePersistent(T entity);
+
+    /**
+     * Removes an entity from a database.
+     *
+     * @param entity the entity to remove
+     */
+    void remove(T entity);
 }
