@@ -10,144 +10,70 @@
       xmlns:s="http://jboss.com/products/seam/taglib"
       xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <ui:composition template="/template/staub-template.jspx">
-<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.test.TestDetailBean"-->
-<!--@elvariable id="messages" type="java.util.Map"-->
-<ui:param name="pageBean" value="#{testDetailBean}"/>
-<ui:define name="sidebar">
-    <ui:include src="/system/menuPage.jspx"/>
-</ui:define>
-<ui:define name="contentTitle">
-    #{messages['test.detail.title']}
-</ui:define>
-<ui:define name="contentBody">
-<a4j:form id="testDetailForm">
-<a4j:outputPanel id="contentButtons" styleClass="contentButtons">
-    <ui:include src="/controls/genericSaveControl.jspx"/>
-</a4j:outputPanel>
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.test.TestDetailBean"-->
+    <!--@elvariable id="messages" type="java.util.Map"-->
+    <ui:param name="pageBean" value="#{testDetailBean}"/>
+    <ui:define name="sidebar">
+        <ui:include src="/system/menuPage.jspx"/>
+    </ui:define>
+    <ui:define name="contentTitle">
+        #{messages['test.detail.title']}
+    </ui:define>
+    <ui:define name="contentBody">
+        <a4j:form id="testDetailForm">
+            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+                <ui:include src="/controls/genericSaveControl.jspx"/>
+            </a4j:outputPanel>
 
-<div class="detailTable">
-<table width="99%">
-<tr>
-    <td align="right">
-        <strong>#{messages['test.detail.name']}</strong>
-    </td>
-    <td style="width:100%;" colspan="3">
-        <h:inputText id="testNameInput"
-                     value="#{pageBean.model.name}"
-                     disabled="#{pageBean.viewMode}"
-                     style="width:99%;"/>
-    </td>
-</tr>
-<tr>
-    <td align="right">
-        <strong>#{messages['test.detail.description']}</strong>
-    </td>
-    <td style="width:100%;" colspan="3">
-        <h:inputTextarea id="testDescTextarea"
-                         value="#{pageBean.model.description}"
-                         disabled="#{pageBean.viewMode}"
-                         style="width:99%;"/>
-    </td>
-</tr>
-<tr>
-    <td align="right">
-        <strong>#{messages['test.detail.passScore']}</strong>
-    </td>
-    <td>
-        <h:inputText id="passScoreInput"
-                     value="#{pageBean.model.passScore}"
-                     disabled="#{pageBean.viewMode}"
-                     styleClass="required"
-                     required="true"
-                     requiredMessage="#{messages['test.detail.required.passScore']}"/>
-    </td>
-    <td align="right">
-        <strong>#{messages['test.detail.timeLimit']}</strong>
-    </td>
-    <td width="10%">
-        <h:inputText id="timeLimitInput"
-                     value="#{pageBean.model.timeLimit}"
-                     disabled="#{pageBean.viewMode}"
-                     style="width:5em;"/>
-    </td>
-</tr>
-<tr>
-    <td align="right">
-        <strong>#{messages['test.detail.selectorType']}</strong>
-    </td>
-    <td>
-        <h:selectOneMenu id="answerTypesSelect"
-                         value="#{pageBean.model.selectorType}"
-                         converter="ru.spbspu.staub.ObjectSelectConverter"
-                         disabled="#{pageBean.viewMode}"
-                         styleClass="required"
-                         required="true"
-                         requiredMessage="#{messages['test.detail.required.selectorType']}">
-            <s:selectItems id="answerTypesSelectItems"
-                           value="#{pageBean.selectorTypes}"
-                           var="type"
-                           label="#{messages[fn:join('test.detail.selectorType.', type)]}"
-                           noSelectionLabel=""/>
-            <a4j:support id="answerTypesSelectSupport"
-                         event="onchange"
-                         reRender="selectorCountPanel, selectorCountLabel, checkAfterEachPartLabel, checkAfterEachPartPanel"
-                         ajaxSingle="true"/>
-        </h:selectOneMenu>
-    </td>
-    <td align="right">
-        <a4j:outputPanel id="selectorCountLabel">
-            <s:fragment rendered="#{pageBean.selectorCountAvailable}">
-                <strong>#{messages['test.detail.selectorCount']}</strong>
-            </s:fragment>
-        </a4j:outputPanel>
-    </td>
-    <td>
-        <a4j:outputPanel id="selectorCountPanel">
-            <h:inputText id="selectorCountInput"
-                         value="#{pageBean.model.selectorCount}"
-                         disabled="#{pageBean.viewMode}"
-                         style="width:5em;"
-                         rendered="#{pageBean.selectorCountAvailable}"
-                         styleClass="required"
-                         required="true"
-                         requiredMessage="#{messages['test.detail.required.selectorCount']}"/>
-        </a4j:outputPanel>
-    </td>
-</tr>
-<tr>
-    <td align="right">
-        <a4j:outputPanel id="checkAfterEachPartLabel">
-            <s:fragment rendered="#{pageBean.checkAfterEachPartAvailable}">
-                <strong>#{messages['test.detail.checkAfterEachPart']}</strong>
-            </s:fragment>
-        </a4j:outputPanel>
-    </td>
-    <td colspan="3">
-        <a4j:outputPanel id="checkAfterEachPartPanel">
-            <h:selectBooleanCheckbox id="checkAfterEachPartCheckbox"
-                                     value="#{pageBean.model.checkAfterEachPart}"
-                                     disabled="#{pageBean.viewMode}"
-                                     rendered="#{pageBean.checkAfterEachPartAvailable}"
-                                     styleClass="checkbox"/>
-        </a4j:outputPanel>
-    </td>
-</tr>
-</table>
-</div>
-</a4j:form>
-<s:fragment id="questionsListFragment" rendered="#{!pageBean.createMode}">
-    <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
-        <a4j:form id="contentButtonsForm">
-            <ui:include src="/controls/genericCreateControl.jspx"/>
-            <ui:include src="/controls/genericRefreshControl.jspx"/>
-            <h:commandButton id="selectQuestionButton"
-                             action="#{pageBean.selectQuestion}"
-                             value="#{messages['test.detail.selectQuestion']}"
-                             styleClass="button"/>
+            <div class="detailTable">
+                <table width="99%">
+                    <tr>
+                        <td align="right">
+                            <strong>#{messages['test.detail.name']}</strong>
+                        </td>
+                        <td style="width:100%;" colspan="3">
+                            <h:inputText id="testNameInput"
+                                         value="#{pageBean.model.name}"
+                                         disabled="#{pageBean.viewMode}"
+                                         style="width:99%;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>#{messages['test.detail.description']}</strong>
+                        </td>
+                        <td style="width:100%;" colspan="3">
+                            <h:inputTextarea id="testDescTextarea"
+                                             value="#{pageBean.model.description}"
+                                             disabled="#{pageBean.viewMode}"
+                                             style="width:99%;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>#{messages['test.detail.passScore']}</strong>
+                        </td>
+                        <td>
+                            <h:inputText id="passScoreInput"
+                                         value="#{pageBean.model.passScore}"
+                                         disabled="#{pageBean.viewMode}"
+                                         styleClass="required"
+                                         required="true"
+                                         requiredMessage="#{messages['test.detail.required.passScore']}"/>
+                        </td>
+                        <td align="right">
+                            <strong>#{messages['test.detail.timeLimit']}</strong>
+                        </td>
+                        <td width="10%">
+                            <h:inputText id="timeLimitInput"
+                                         value="#{pageBean.model.timeLimit}"
+                                         disabled="#{pageBean.viewMode}"
+                                         style="width:5em;"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </a4j:form>
-    </a4j:outputPanel>
-    <ui:include src="/question/questionListData.jspx"/>
-</s:fragment>
-</ui:define>
+    </ui:define>
 </ui:composition>
 </html>

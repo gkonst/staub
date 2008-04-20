@@ -87,9 +87,6 @@
             <rule if-outcome="detail">
                 <render view-id="/question/questionDetail.jspx"/>
             </rule>
-            <rule if-outcome="questionSelectList">
-                <render view-id="/question/questionSelectList.jspx"/>
-            </rule>
         </navigation>
     </page>
 
@@ -124,16 +121,6 @@
             <rule if-outcome="list">
                 <render view-id="/question/questionList.jspx"/>
             </rule>
-            <rule if-outcome="testDetail">
-                <render view-id="/test/testDetail.jspx"/>
-            </rule>
-        </navigation>
-    </page>
-    <page view-id="/question/questionSelectList.jspx"
-          login-required="true"
-          action="#{questionSelectListBean.initBean}">
-        <restrict>#{s:hasRole('ADMIN')}</restrict>
-        <navigation>
             <rule if-outcome="testDetail">
                 <render view-id="/test/testDetail.jspx"/>
             </rule>

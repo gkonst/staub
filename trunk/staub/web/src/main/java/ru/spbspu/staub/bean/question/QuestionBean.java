@@ -50,7 +50,7 @@ public class QuestionBean extends GenericModeBean {
     private boolean finished = false;
 
     public void initBean() {
-        if(isBeanModeDefined()) {
+        if (isBeanModeDefined()) {
             initTest();
         }
     }
@@ -85,15 +85,13 @@ public class QuestionBean extends GenericModeBean {
                 }
             }
 
-            if (testTrace.getTest().getCheckAfterEachPart()) {
-                if (previousPart != null && !previousPart.equals(currentQuestion.getPart())) {
-                    logger.debug(" part changed(#0->#1) -> checking", previousPart, currentQuestion.getPart());
-                    if (!testTraceService.checkPart(testTrace, previousPart)) {
-                        logger.debug(" part checking failed -> test ended");
-                        testTrace = testTraceService.endTest(testTrace);
-                        addFacesMessage("Part validation failed");
-                        finished = true;
-                    }
+            if (previousPart != null && !previousPart.equals(currentQuestion.getPart())) {
+                logger.debug(" part changed(#0->#1) -> checking", previousPart, currentQuestion.getPart());
+                if (!testTraceService.checkPart(testTrace, previousPart, 100)) {
+                    logger.debug(" part checking failed -> test ended");
+                    testTrace = testTraceService.endTest(testTrace);
+                    addFacesMessage("Part validation failed");
+                    finished = true;
                 }
             }
 
@@ -104,7 +102,7 @@ public class QuestionBean extends GenericModeBean {
         } else {
             // last question
             logger.debug(" no questions -> test ended");
-            testTraceService.checkPart(testTrace, previousPart);
+            testTraceService.checkPart(testTrace, previousPart, testTrace.getTest().getPassScore());
             testTrace = testTraceService.endTest(testTrace);
             addFacesMessage("Вы ответили на все вопросы теста");
             finished = true;

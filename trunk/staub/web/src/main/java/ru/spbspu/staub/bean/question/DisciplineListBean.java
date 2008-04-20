@@ -34,7 +34,8 @@ public class DisciplineListBean extends GenericListBean<Discipline> {
      */
     @Override
     public void doDelete() {
-        disciplineService.makeTransient(getSelected());
+        //TODO implement
+        //disciplineService.makeTransient(getSelected());
         doRefresh();
     }
 }

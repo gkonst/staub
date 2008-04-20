@@ -7,9 +7,11 @@ import org.jboss.seam.annotations.Scope;
 import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.entity.User;
+import ru.spbspu.staub.entity.Student;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.TestService;
+import ru.spbspu.staub.service.AssignmentService;
 
 /**
  * TODO add descritpion
@@ -21,12 +23,12 @@ import ru.spbspu.staub.service.TestService;
 public class TestToPassListBean extends GenericListBean<Test> {
 
     @In
-    private TestService testService;
+    private AssignmentService assignmentService;
 
     @In
-    private User user;
+    private Student student;
 
     protected FormTable findObjects(FormProperties formProperties) {
-        return testService.findAllToPassForUser(formProperties, user);
+        return assignmentService.findAssigned(formProperties, student);
     }
 }

@@ -49,9 +49,6 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     @In
     private DifficultyService difficultyService;
 
-    @In
-    private TestService testService;
-
     private List<Discipline> disciplineList;
     private List<Category> categoryList;
     private List<Difficulty> difficultyList;
@@ -142,10 +139,6 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         logger.debug("Saving question...");
         resolveCorrectAnswer();
         setModel(questionService.saveQuestion(getModel(), user));
-        if (test != null && isCreateMode()) {
-            logger.debug(" adding question to test : #0", test);
-            test = testService.addQuestionToTest(test, getModel(), user);
-        }
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
