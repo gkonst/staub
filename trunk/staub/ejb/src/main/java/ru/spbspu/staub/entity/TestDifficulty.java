@@ -63,7 +63,7 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
     }
 
     @ManyToOne
-    @Column(name = "fk_test", nullable = false, insertable = false, updatable = false, length = 10)
+    @JoinColumn(name = "fk_test", referencedColumnName = "id", insertable = false, updatable = false)
     public Test getTest() {
         return test;
     }
@@ -73,7 +73,7 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
     }
 
     @OneToOne
-    @Column(name = "fk_difficulty", nullable = false, insertable = false, updatable = false, length = 10)
+    @JoinColumn(name = "fk_difficulty", referencedColumnName = "id", insertable = false, updatable = false)
     public Difficulty getDifficulty() {
         return difficulty;
     }
