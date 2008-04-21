@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(schema = "staub", name = "test_difficulty")
 @IdClass(ru.spbspu.staub.entity.TestDifficultyPK.class)
-public class TestDifficulty implements Serializable {
+public class TestDifficulty implements Comparable<TestDifficulty>, Serializable {
     private static final long serialVersionUID = -334261114330418617L;
 
     public TestDifficulty() {
@@ -76,6 +76,11 @@ public class TestDifficulty implements Serializable {
         this.questionsCount = questionsCount;
     }
 
+    public int compareTo(TestDifficulty other) {
+        return getDifficulty().getCode().compareTo(other.getDifficulty().getCode());
+    }
+
+    @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {
             return true;
@@ -89,10 +94,24 @@ public class TestDifficulty implements Serializable {
         return difficulty.equals(other.difficulty) && test.equals(other.test);
     }
 
+    @Override
     public int hashCode() {
         int result;
         result = test.hashCode();
         result = 31 * result + difficulty.hashCode();
+
         return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("TestDifficulty");
+        sb.append("{test=").append(test);
+        sb.append(", difficulty=").append(difficulty);
+        sb.append(", questionsCount=").append(questionsCount);
+        sb.append('}');
+
+        return sb.toString();
     }
 }

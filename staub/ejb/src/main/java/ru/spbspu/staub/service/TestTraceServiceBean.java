@@ -129,9 +129,10 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     @SuppressWarnings("unchecked")
     private void createTestTraceElements(TestTrace testTrace) {
         Test test = testTrace.getTest();
-        Query q = getEntityManager().createQuery("select d from Test t join t.difficultyLevels d where t = :test order by d.code");
+        Query q = getEntityManager().createQuery("select d from Test t join t.difficultyLevels d where t = :test");
         q.setParameter("test", test);
         List<TestDifficulty> difficultyLevels = q.getResultList();
+        Collections.sort(difficultyLevels);
         for (TestDifficulty testDifficulty : difficultyLevels) {
             createTestTraceElements(testTrace, testDifficulty);
         }
