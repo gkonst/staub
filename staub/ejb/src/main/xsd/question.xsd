@@ -34,6 +34,7 @@
                         <xs:field xpath="@id"/>
                     </xs:key>
                 </xs:element>
+                <xs:element name="user-input" type="q:user-input-type"/>
             </xs:choice>
         </xs:sequence>
     </xs:complexType>
@@ -53,6 +54,20 @@
     <xs:simpleType name="true-type">
         <xs:restriction base="xs:string">
             <xs:pattern value="true"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="user-input-type">
+        <xs:sequence>
+            <xs:element name="type" type="q:input-type"/>
+            <xs:element name="answer" type="xs:string"/>
+            <xs:element name="regexp" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="input-type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="integer"/>
+            <xs:enumeration value="real"/>
+            <xs:enumeration value="complex"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

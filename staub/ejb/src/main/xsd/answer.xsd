@@ -35,6 +35,7 @@
                         <xs:field xpath="@answer-id"/>
                     </xs:unique>
                 </xs:element>
+                <xs:element name="user-input" type="xs:string"/>
             </xs:choice>
         </xs:sequence>
     </xs:complexType>
