@@ -49,6 +49,10 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
         difficultyLevels.add(this);
     }
 
+    protected TestDifficulty() {
+        id = new TestDifficultyPK();
+    }
+
     @EmbeddedId
     protected TestDifficultyPK getId() {
         return id;
@@ -56,10 +60,6 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
 
     protected void setId(TestDifficultyPK id) {
         this.id = id;
-    }
-
-    protected TestDifficulty() {
-        id = new TestDifficultyPK();
     }
 
     @ManyToOne
