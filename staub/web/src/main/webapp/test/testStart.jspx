@@ -38,14 +38,6 @@
                     #{testStartBean.model.passScore}
                 </td>
             </tr>
-            <tr>
-                <td align="right">
-                    <strong>#{messages['test.detail.questionsCount']}</strong>
-                </td>
-                <td>
-                    #{testStartBean.model.questionsCount}
-                </td>
-            </tr>
         </table>
         <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
             <s:button action="testListForPass" value="#{messages['test.detail.back']}" styleClass="button"/>
