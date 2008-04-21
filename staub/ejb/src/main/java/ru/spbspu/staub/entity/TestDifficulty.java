@@ -72,7 +72,7 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
         this.test = test;
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fk_difficulty", referencedColumnName = "id", insertable = false, updatable = false)
     public Difficulty getDifficulty() {
         return difficulty;
@@ -113,8 +113,8 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
     @Override
     public int hashCode() {
         int result;
-        result = test.hashCode();
-        result = 31 * result + difficulty.hashCode();
+        result = id.getFkTest().hashCode();
+        result = 31 * result + id.getFkDifficulty().hashCode();
         return result;
     }
 
