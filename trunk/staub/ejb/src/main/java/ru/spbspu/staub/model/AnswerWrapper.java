@@ -13,6 +13,8 @@ public abstract class AnswerWrapper {
             return new SingleChoiceAnswerWrapper(definition.getSingleChoice());
         } else if (definition.getMultipleChoice() != null) {
             return new MultipleChoiceAnswerWrapper(definition.getMultipleChoice());
+        } else if (definition.getUserInput() != null) {
+            return new UserInputAnswerWrapper(definition.getUserInput());
         } else {
             return null;
         }
@@ -26,5 +28,9 @@ public abstract class AnswerWrapper {
 
     public boolean isMultipleChoice() {
         return this instanceof MultipleChoiceAnswerWrapper;
+    }
+
+    public boolean isUserInput() {
+        return this instanceof UserInputAnswerWrapper;
     }
 }
