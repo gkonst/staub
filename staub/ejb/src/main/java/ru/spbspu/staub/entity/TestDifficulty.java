@@ -15,7 +15,6 @@ import java.util.Set;
 public class TestDifficulty implements Comparable<TestDifficulty>, Serializable {
     private static final long serialVersionUID = -334261114330418617L;
 
-    @EmbeddedId
     private TestDifficultyPK id;
 
     private Test test;
@@ -48,6 +47,15 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
             this.test.setDifficultyLevels(difficultyLevels);
         }
         difficultyLevels.add(this);
+    }
+
+    @EmbeddedId
+    protected TestDifficultyPK getId() {
+        return id;
+    }
+
+    protected void setId(TestDifficultyPK id) {
+        this.id = id;
     }
 
     protected TestDifficulty() {
