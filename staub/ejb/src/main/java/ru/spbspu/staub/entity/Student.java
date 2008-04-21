@@ -1,6 +1,7 @@
 package ru.spbspu.staub.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * The <code>Student</code> class represents the Student entity.
@@ -9,7 +10,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(schema = "staub", name = "student")
-public class Student {
+public class Student implements Serializable {
+    private static final long serialVersionUID = 2591120742273218659L;
+    
     private Integer id;
 
     @Id
