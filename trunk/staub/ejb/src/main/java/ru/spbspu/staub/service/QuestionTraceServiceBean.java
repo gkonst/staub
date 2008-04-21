@@ -94,14 +94,13 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
     private boolean check(UserInputType userInputType, String userAnswer) {
         String regexp = userInputType.getRegexp();
         if ((regexp == null) || (regexp.length() == 0)) {
-            return (userAnswer == null) || (userAnswer.length() == 0);
+            return ((userAnswer == null) || (userAnswer.length() == 0));
         } else {
             Pattern p = Pattern.compile(regexp);
             Matcher m = p.matcher(userAnswer);
             return m.matches();
         }
     }
-
 
     private Set<BigInteger> getCorrectAnswers
             (List<ru.spbspu.staub.model.question.AnswerType> questionAnswers) {
