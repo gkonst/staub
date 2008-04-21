@@ -1,7 +1,7 @@
 package ru.spbspu.staub.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
@@ -9,33 +9,42 @@ import java.io.Serializable;
  *
  * @author Alexander V. Elagin
  */
-public class TestDifficultyPK implements Serializable {
+@Embeddable
+class TestDifficultyPK implements Serializable {
     private static final long serialVersionUID = 6673970679487117717L;
 
-    private Test test;
+    public TestDifficultyPK() {
+        // do nothing
+    }
 
-    @Id
+    public TestDifficultyPK(Integer fkTest, Integer fkDifficulty) {
+        this.fkTest = fkTest;
+        this.fkDifficulty = fkDifficulty;
+    }
+
+    private Integer fkTest;
+
     @Column(name = "fk_test", nullable = false, length = 10)
-    public Test getTest() {
-        return test;
+    public Integer getFkTest() {
+        return fkTest;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setFkTest(Integer fkTest) {
+        this.fkTest = fkTest;
     }
 
-    private Difficulty difficulty;
+    private Integer fkDifficulty;
 
-    @Id
     @Column(name = "fk_difficulty", nullable = false, length = 10)
-    public Difficulty getDifficulty() {
-        return difficulty;
+    public Integer getFkDifficulty() {
+        return fkDifficulty;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
+    public void setFkDifficulty(Integer fkDifficulty) {
+        this.fkDifficulty = fkDifficulty;
     }
 
+    @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {
             return true;
@@ -46,13 +55,24 @@ public class TestDifficultyPK implements Serializable {
 
         TestDifficultyPK other = (TestDifficultyPK) otherObject;
 
-        return difficulty.equals(other.difficulty) && test.equals(other.test);
+        return fkDifficulty.equals(other.fkDifficulty) && fkTest.equals(other.fkTest);
     }
 
+    @Override
     public int hashCode() {
         int result;
-        result = test.hashCode();
-        result = 31 * result + difficulty.hashCode();
+        result = fkTest.hashCode();
+        result = 31 * result + fkDifficulty.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("TestDifficultyPK");
+        sb.append("{fkTest=").append(fkTest);
+        sb.append(", fkDifficulty=").append(fkDifficulty);
+        sb.append('}');
+        return sb.toString();
     }
 }
