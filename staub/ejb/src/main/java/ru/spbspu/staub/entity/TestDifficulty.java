@@ -12,7 +12,6 @@ import java.util.Set;
  */
 @Entity
 @Table(schema = "staub", name = "test_difficulty")
-@IdClass(ru.spbspu.staub.entity.TestDifficultyPK.class)
 public class TestDifficulty implements Comparable<TestDifficulty>, Serializable {
     private static final long serialVersionUID = -334261114330418617L;
 
