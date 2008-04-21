@@ -52,7 +52,7 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     }
 
     public TestTrace startTest(TestTrace testTrace) {
-        if(testTrace.getStarted() == null) {
+        if (testTrace.getStarted() == null) {
             testTrace.setStarted(new Date());
         }
         return makePersistent(testTrace);
@@ -141,9 +141,16 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     @SuppressWarnings("unchecked")
     private void createTestTraceElements(TestTrace testTrace, TestDifficulty testDifficulty) {
         Test test = testTrace.getTest();
-        Query q = getEntityManager().createQuery("select q.id from Question q, Test tt join tt.topics t where q.topic = t and tt = :test and q.difficulty = :difficulty");
-        q.setParameter("test", test);
-        q.setParameter("difficulty", testDifficulty.getDifficulty());
+        Category category = test.getCategory();
+        Query q;
+        if (category == null) {
+            q = getEntityManager().createQuery("select q.id from Question q, Test tt join tt.topics t where q.topic = t and tt = :test and q.difficulty = :difficulty");
+            q.setParameter("test", test);
+            q.setParameter("difficulty", testDifficulty.getDifficulty());
+        } else {
+            q = getEntityManager().createQuery("select q.id from Question q join q.topic t where t.category = :category");
+            q.setParameter("category", category);
+        }
         List<Integer> questionIds = q.getResultList();
         Collections.shuffle(questionIds);
         questionIds = questionIds.subList(0, testDifficulty.getQuestionsCount());
