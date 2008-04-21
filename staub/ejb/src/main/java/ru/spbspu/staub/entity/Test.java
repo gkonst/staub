@@ -104,7 +104,7 @@ public class Test implements Serializable {
 
     private Set<Topic> topics;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(schema = "staub", name = "test_topic",
             joinColumns = @JoinColumn(name = "fk_test", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "fk_topic", referencedColumnName = "id", nullable = false))
@@ -118,7 +118,7 @@ public class Test implements Serializable {
 
     private Set<TestDifficulty> difficultyLevels;
 
-    @OneToMany(mappedBy = "test")
+    @OneToMany(mappedBy = "test", fetch = FetchType.EAGER)
     public Set<TestDifficulty> getDifficultyLevels() {
         return difficultyLevels;
     }
