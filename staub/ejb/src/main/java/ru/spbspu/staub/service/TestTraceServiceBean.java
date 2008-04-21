@@ -148,12 +148,15 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
             q.setParameter("test", test);
             q.setParameter("difficulty", testDifficulty.getDifficulty());
         } else {
-            q = getEntityManager().createQuery("select q.id from Question q join q.topic t where t.category = :category");
+            q = getEntityManager().createQuery("select q.id from Question q where q.topic.category = :category");
             q.setParameter("category", category);
         }
         List<Integer> questionIds = q.getResultList();
         Collections.shuffle(questionIds);
-        questionIds = questionIds.subList(0, testDifficulty.getQuestionsCount());
+        int questionsCount = testDifficulty.getQuestionsCount();
+        if (questionsCount < questionIds.size()) {
+            questionIds = questionIds.subList(0, questionsCount);
+        }
         createTestTraceElements(testTrace, questionIds, testDifficulty.getDifficulty().getId());
     }
 
