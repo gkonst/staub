@@ -8,8 +8,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="/template/staub-template.jspx">
-    <ui:define name="sidebar">
-    </ui:define>
+    <ui:define name="headerStatus"/>
+    <ui:define name="sidebar"/>
     <ui:define name="contentBody">
         <s:link view="/system/loginStudent.seam"
                 value="Пройти тест"/>
