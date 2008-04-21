@@ -45,6 +45,7 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
         Set<TestDifficulty> difficultyLevels = this.test.getDifficultyLevels();
         if (difficultyLevels == null) {
             difficultyLevels = new HashSet<TestDifficulty>();
+            this.test.setDifficultyLevels(difficultyLevels);
         }
         difficultyLevels.add(this);
     }
