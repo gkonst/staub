@@ -7,6 +7,7 @@ import ru.spbspu.staub.entity.TestTrace;
 import ru.spbspu.staub.model.answer.AnswerType;
 import ru.spbspu.staub.model.answer.ElementType;
 import ru.spbspu.staub.model.question.QuestionType;
+import ru.spbspu.staub.model.question.UserInputType;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -15,6 +16,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Stateless EJB Service for manipulations with <code>QuestionTrace</code> entity.
@@ -56,6 +59,8 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
                         answerType.getMultipleChoice().getElement());
             } else if (questionType.getSingleChoice() != null) {
                 result = check(questionType.getSingleChoice().getAnswer(), answerType.getSingleChoice().getElement());
+            } else if (questionType.getUserInput() != null) {
+                result = check(questionType.getUserInput(), answerType.getUserInput());
             }
         }
 
@@ -86,7 +91,20 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
         return correctAnswers.contains(userAnswer.getAnswerId());
     }
 
-    private Set<BigInteger> getCorrectAnswers(List<ru.spbspu.staub.model.question.AnswerType> questionAnswers) {
+    private boolean check(UserInputType userInputType, String userAnswer) {
+        String regexp = userInputType.getRegexp();
+        if ((regexp == null) || (regexp.length() == 0)) {
+            return (userAnswer == null) || (userAnswer.length() == 0);
+        } else {
+            Pattern p = Pattern.compile(regexp);
+            Matcher m = p.matcher(userAnswer);
+            return m.matches();
+        }
+    }
+
+
+    private Set<BigInteger> getCorrectAnswers
+            (List<ru.spbspu.staub.model.question.AnswerType> questionAnswers) {
         Set<BigInteger> correctAnswers = new HashSet<BigInteger>();
         for (ru.spbspu.staub.model.question.AnswerType questionAnswer : questionAnswers) {
             if ("true".equals(questionAnswer.getCorrect())) {
