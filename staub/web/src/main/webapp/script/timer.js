@@ -1,31 +1,69 @@
-if (typeof Timer == 'undefined') {
-  Timer = {};
+if (typeof Widget == 'undefined') {
+    var Widget = {};
+    Widget.all = [];
 }
-Timer.init = function(objArgs) {
-    Timer.destroy();
-    Timer.timeToCount = objArgs.timeToCount;
-    Timer.currentTime = objArgs.currentTime;
-    Timer.timerFieldId = objArgs.timerFieldId;
-    Timer.tickTock();
+if (typeof Widget.Timer == 'undefined') {
+    Widget.Timer = {};
+}
+Widget.Timer = function(objArgs) {
+    this.timeToCount = objArgs.timeToCount;
+    this.timerFieldId = objArgs.timerFieldId;
+    this.onExpire = objArgs.onExpire;
+    if (typeof objArgs.timerId == 'undefined') {
+        this.id = Widget.all.length;
+    } else {
+        this.id = objArgs.timerId;
+    }
+    if (Widget.getWidgetById(this.id) != null) {
+        Widget.updateWidgetById(this.id, this);
+    }
+    Widget.all.push(this);
+    Widget.Timer.tickTock(this.id);
 };
-Timer.destroy = function() {
-    if(typeof Timer.t != 'undefined') {
-        clearTimeout(Timer.t);
+Widget.Timer.prototype.destroy = function() {
+    if (typeof this.t != 'undefined') {
+        clearTimeout(this.t);
     }
 }
-Timer.tickTock = function() {
-        
-        var timerField = document.getElementById(Timer.timerFieldId);
-        var sec = Timer.currentTime % 60;
-        var min = (Timer.currentTime - sec) / 60;
-        if (sec < 10) {
-            sec = '0' + sec;
-        }
-        timerField.innerHTML = min + ':' + sec;
-        Timer.currentTime--;
-    if (Timer.currentTime != -1) {
-        Timer.t = setTimeout('Timer.tickTock()', 1000);
+Widget.Timer.destroyById = function(id) {
+    var timer = Widget.getWidgetById(id);
+    if (timer != null && typeof timer.t != 'undefined') {
+        clearTimeout(timer.t);
+    }
+}
+Widget.Timer.tickTock = function(id) {
+    var timer = Widget.getWidgetById(id);
+    var timerField = document.getElementById(timer.timerFieldId);
+    var sec = timer.timeToCount % 60;
+    var min = (timer.timeToCount - sec) / 60;
+    if (sec < 10) {
+        sec = '0' + sec;
+    }
+    timerField.innerHTML = min + ':' + sec;
+    timer.timeToCount--;
+    if (timer.timeToCount > -1) {
+        timer.t = setTimeout("Widget.Timer.tickTock('" + id + "')", 1000);
     } else {
-        nextQuestion();
+        timer.destroy();
+        if (timer.onExpire) {
+            timer.onExpire();
+        }
+    }
+}
+Widget.getWidgetById = function(id) {
+    for (var i = 0; i < Widget.all.length; i++) {
+        if (Widget.all[i].id == id) {
+            return Widget.all[i];
+        }
+    }
+    return null;
+}
+Widget.updateWidgetById = function(id, newWidget) {
+    for (var i = 0; i < Widget.all.length; i++) {
+        if (Widget.all[i].id == id) {
+            Widget.all[i].destroy();
+            Widget.all.splice(i,1, newWidget);
+            return;
+        }
     }
 }
