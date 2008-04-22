@@ -17,7 +17,9 @@
     <page view-id="/system/loginUser.jspx">
         <navigation>
             <rule if="#{identity.loggedIn and s:hasRole('TEST_WRITER')}">
-                <redirect view-id="/test/testList.jspx"/>
+                <redirect view-id="/test/testList.jspx">
+                    <param name="beanMode" value="VIEW_MODE"/>
+                </redirect>
             </rule>
         </navigation>
     </page>
@@ -75,8 +77,8 @@
             <rule if-outcome="detail">
                 <render view-id="/test/testDetail.jspx"/>
             </rule>
-            <rule if-outcome="userAssign">
-                <render view-id="/user/userAssignList.jspx"/>
+            <rule if-outcome="studentAssign">
+                <render view-id="/student/studentAssignList.jspx"/>
             </rule>
         </navigation>
     </page>
@@ -95,9 +97,9 @@
     </page>
 
     <!-- Users -->
-    <page view-id="/user/userAssignList.jspx"
+    <page view-id="/student/studentAssignList.jspx"
           login-required="true"
-          action="#{userAssignListBean.initBean}">
+          action="#{studentAssignListBean.initBean}">
         <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
         <navigation>
             <rule if-outcome="testList">
