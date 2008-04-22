@@ -81,15 +81,4 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         }
         return result;
     }
-
-    public void removeDifficultyLevel(TestDifficulty testDifficulty) {
-        Test test = testDifficulty.getTest();
-        if (test != null) { // redundant
-            Set<TestDifficulty> difficultyLevels = test.getDifficultyLevels();
-            if (difficultyLevels != null) { // redundant
-                difficultyLevels.remove(testDifficulty);
-                getEntityManager().remove(testDifficulty);
-            }
-        }
-    }
 }
