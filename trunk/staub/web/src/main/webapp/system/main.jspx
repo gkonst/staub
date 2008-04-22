@@ -11,11 +11,16 @@
     <ui:define name="headerStatus"/>
     <ui:define name="sidebar"/>
     <ui:define name="contentBody">
-        <s:link view="/system/loginStudent.seam"
-                value="Пройти тест"/>
-        <br/>
-        <s:link view="/system/loginUser.seam"
-                value="Модуль администрирования системы"/>
+        <ul>
+            <li>
+                <s:link view="/system/loginStudent.seam"
+                        value="Пройти тест"/>
+            </li>
+            <li>
+                <s:link view="/system/loginUser.seam"
+                        value="Модуль администрирования системы"/>
+            </li>
+        </ul>
     </ui:define>
 </ui:composition>
 </html>
