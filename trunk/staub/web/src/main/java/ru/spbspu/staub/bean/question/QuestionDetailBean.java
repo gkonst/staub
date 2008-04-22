@@ -27,12 +27,8 @@ import java.util.List;
 @Name("questionDetailBean")
 @Scope(SESSION)
 public class QuestionDetailBean extends GenericDetailBean<Question> {
+
     private static final long serialVersionUID = -458598915895087232L;
-
-    @In(value = "test", required = false)
-    private Test injectedTest;
-
-    private Test test;
 
     @In
     private User user;
@@ -47,10 +43,14 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     private CategoryService categoryService;
 
     @In
+    private TopicService topicService;
+
+    @In
     private DifficultyService difficultyService;
 
     private List<Discipline> disciplineList;
     private List<Category> categoryList;
+    private List<Topic> topicList;
     private List<Difficulty> difficultyList;
 
     private Object correctAnswer;
@@ -64,14 +64,15 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     private String imageTag;
 
+    private Discipline discipline;
+    private Category category;
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void fillModel(Integer modelId) {
-        test = injectedTest;
         fillDisciplineList();
-        fillCategoryList();
         fillDifficultyList();
         answerType = null;
         correctAnswer = null;
@@ -80,6 +81,8 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             setQuestionDefinition(new QuestionType());
         } else {
             setModel(questionService.findById(modelId));
+            setCategory(getModel().getTopic().getCategory());
+            setDiscipline(getModel().getTopic().getCategory().getDiscipline());
             determineAnswerType();
             determineCorrectAnswer();
         }
@@ -123,8 +126,20 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         disciplineList = disciplineService.findAll();
     }
 
-    private void fillCategoryList() {
-        categoryList = categoryService.findAll();
+    public void refreshCategories() {
+        if(discipline != null) {
+            categoryList = categoryService.getCategories(discipline);
+        } else {
+            categoryList = null;
+        }
+    }
+
+    public void refreshTopics() {
+        if(category != null) {
+            topicList = topicService.getTopics(category);
+        } else {
+            topicList = null;
+        }
     }
 
     private void fillDifficultyList() {
@@ -143,30 +158,6 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
         logger.debug("Saving... OK");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String doCancel() {
-        if (test != null) {
-            return "testDetail";
-        } else {
-            return super.doCancel();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String doBack() {
-        if (test != null) {
-            return doRefresh("testDetail");
-        } else {
-            return super.doBack();
-        }
     }
 
     private void resolveCorrectAnswer() {
@@ -344,5 +335,29 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     public void setImageTag(String imageTag) {
         this.imageTag = imageTag;
+    }
+
+    public List<Topic> getTopicList() {
+        return topicList;
+    }
+
+    public void setTopicList(List<Topic> topicList) {
+        this.topicList = topicList;
+    }
+
+    public Discipline getDiscipline() {
+        return discipline;
+    }
+
+    public void setDiscipline(Discipline discipline) {
+        this.discipline = discipline;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
