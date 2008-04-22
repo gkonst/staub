@@ -62,8 +62,6 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         MULTIPLE_CHOICE
     }
 
-    private String imageTag;
-
     private Discipline discipline;
     private Category category;
 
@@ -258,8 +256,13 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             imageTag.append(getRequest().getContextPath());
             imageTag.append("/seam/resource");
             imageTag.append(ImageResource.RESOURCE_PATH);
+            imageTag.append("/");
             imageTag.append(fileName);
             imageTag.append("\"/>");
+            if(getQuestionDefinition().getDescription() == null) {
+                getQuestionDefinition().setDescription("");
+            }
+            getQuestionDefinition().setDescription(getQuestionDefinition().getDescription() + imageTag);
         } catch (FileNotFoundException e) {
             logger.error("", e);
         } catch (IOException e) {
@@ -327,14 +330,6 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     public void setAnswerType(AnswerTypes answerType) {
         this.answerType = answerType;
-    }
-
-    public String getImageTag() {
-        return imageTag;
-    }
-
-    public void setImageTag(String imageTag) {
-        this.imageTag = imageTag;
     }
 
     public List<Topic> getTopicList() {
