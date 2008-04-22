@@ -17,10 +17,6 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
 
     private TestDifficultyPK id;
 
-    private Test test;
-
-    private Difficulty difficulty;
-
     private Integer questionsCount;
 
     /**
@@ -32,19 +28,14 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
      * @param questionsCount the number of questions to select
      */
     public TestDifficulty(Test test, Difficulty difficulty, Integer questionsCount) {
-        this();
+        id = new TestDifficultyPK(test, difficulty);
 
-        this.test = test;
-        this.difficulty = difficulty;
         this.questionsCount = questionsCount;
 
-        id.setFkTest(this.test.getId());
-        id.setFkDifficulty(this.difficulty.getId());
-
-        Set<TestDifficulty> difficultyLevels = this.test.getDifficultyLevels();
+        Set<TestDifficulty> difficultyLevels = id.getTest().getDifficultyLevels();
         if (difficultyLevels == null) {
             difficultyLevels = new HashSet<TestDifficulty>();
-            this.test.setDifficultyLevels(difficultyLevels);
+            id.getTest().setDifficultyLevels(difficultyLevels);
         }
         difficultyLevels.add(this);
     }
@@ -62,25 +53,24 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
         this.id = id;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "fk_test", referencedColumnName = "id", insertable = false, updatable = false)
+    @Transient
     public Test getTest() {
-        return test;
+        return id.getTest();
     }
 
     public void setTest(Test test) {
-        this.test = test;
+        id.setTest(test);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "fk_difficulty", referencedColumnName = "id", insertable = false, updatable = false)
+    @Transient
     public Difficulty getDifficulty() {
-        return difficulty;
+        return id.getDifficulty();
     }
 
     public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
+        id.setDifficulty(difficulty);
     }
+
 
     @Basic
     @Column(name = "questions_count", length = 10)
@@ -93,7 +83,7 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
     }
 
     public int compareTo(TestDifficulty other) {
-        return getDifficulty().getCode().compareTo(other.getDifficulty().getCode());
+        return id.getDifficulty().getCode().compareTo(other.id.getDifficulty().getCode());
     }
 
     @Override
@@ -107,15 +97,12 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
 
         TestDifficulty other = (TestDifficulty) otherObject;
 
-        return difficulty.equals(other.difficulty) && test.equals(other.test);
+        return id.equals(other.id);
     }
 
     @Override
     public int hashCode() {
-        int result;
-        result = id.getFkTest().hashCode();
-        result = 31 * result + id.getFkDifficulty().hashCode();
-        return result;
+        return id.hashCode();
     }
 
     @Override
@@ -123,8 +110,6 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
         StringBuilder sb = new StringBuilder();
         sb.append("TestDifficulty");
         sb.append("{id=").append(id);
-        sb.append(", test=").append(test);
-        sb.append(", difficulty=").append(difficulty);
         sb.append(", questionsCount=").append(questionsCount);
         sb.append('}');
         return sb.toString();

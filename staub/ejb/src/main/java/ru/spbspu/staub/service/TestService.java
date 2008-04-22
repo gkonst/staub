@@ -2,7 +2,6 @@ package ru.spbspu.staub.service;
 
 import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.entity.User;
-import ru.spbspu.staub.entity.TestDifficulty;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -38,15 +37,8 @@ public interface TestService extends GenericService<Test, Integer> {
      * Returns a questions count for a test.
      *
      * @param test the test
+     *
      * @return the questions count
      */
     long getExpectedNumberOfQuestions(Test test);
-
-    /**
-     * Removes a difficulty level from a test. The <code>TestDifficulty</code> entity is removed from a database as
-     * well.
-     *
-     * @param testDifficulty the difficulty level to process
-     */
-    void removeDifficultyLevel(TestDifficulty testDifficulty);
 }

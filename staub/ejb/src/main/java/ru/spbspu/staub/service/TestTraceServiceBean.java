@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Stateless EJB Service for manipulations with <code>TestTrace</code> entity.
@@ -141,15 +142,15 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     @SuppressWarnings("unchecked")
     private void createTestTraceElements(TestTrace testTrace, TestDifficulty testDifficulty) {
         Test test = testTrace.getTest();
-        Category category = test.getCategory();
         Query q;
-        if (category == null) {
+        Set<Topic> topics = test.getTopics();
+        if ((topics != null) && (!topics.isEmpty())) {
             q = getEntityManager().createQuery("select q.id from Question q, Test tt join tt.topics t where q.topic = t and tt = :test and q.difficulty = :difficulty");
             q.setParameter("test", test);
             q.setParameter("difficulty", testDifficulty.getDifficulty());
         } else {
             q = getEntityManager().createQuery("select q.id from Question q where q.topic.category = :category and q.difficulty = :difficulty");
-            q.setParameter("category", category);
+            q.setParameter("category", test.getCategory());
             q.setParameter("difficulty", testDifficulty.getDifficulty());
         }
         List<Integer> questionIds = q.getResultList();

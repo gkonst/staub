@@ -118,7 +118,9 @@ public class Test implements Serializable {
 
     private Set<TestDifficulty> difficultyLevels;
 
-    @OneToMany(mappedBy = "test", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "test", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @org.hibernate.annotations.Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    @org.hibernate.annotations.Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
     public Set<TestDifficulty> getDifficultyLevels() {
         return difficultyLevels;
     }
