@@ -17,6 +17,10 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
 
     private TestDifficultyPK id;
 
+    private Test test;
+
+    private Difficulty difficulty;
+
     private Integer questionsCount;
 
     /**
@@ -30,6 +34,8 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
     public TestDifficulty(Test test, Difficulty difficulty, Integer questionsCount) {
         id = new TestDifficultyPK(test, difficulty);
 
+        this.test = test;
+        this.difficulty = difficulty;
         this.questionsCount = questionsCount;
 
         Set<TestDifficulty> difficultyLevels = id.getTest().getDifficultyLevels();
@@ -53,24 +59,25 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
         this.id = id;
     }
 
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "fk_test", referencedColumnName = "id", insertable = false, updatable = false)
     public Test getTest() {
-        return id.getTest();
+        return test;
     }
 
     public void setTest(Test test) {
-        id.setTest(test);
+        this.test = test;
     }
 
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "fk_difficulty", referencedColumnName = "id", insertable = false, updatable = false)
     public Difficulty getDifficulty() {
-        return id.getDifficulty();
+        return difficulty;
     }
 
     public void setDifficulty(Difficulty difficulty) {
-        id.setDifficulty(difficulty);
+        this.difficulty = difficulty;
     }
-
 
     @Basic
     @Column(name = "questions_count", length = 10)
