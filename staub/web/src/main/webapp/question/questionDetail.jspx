@@ -51,9 +51,9 @@
     <td align="right">
         <strong>#{messages['question.detail.discipline.name']}</strong>
     </td>
-    <td width="50%">
+    <td width="100%" colspan="3">
         <h:selectOneMenu id="disciplineSelect"
-                         value="#{pageBean.model.discipline}"
+                         value="#{pageBean.discipline}"
                          disabled="#{pageBean.viewMode}"
                          converter="ru.spbspu.staub.ObjectSelectConverter"
                          styleClass="required"
@@ -64,15 +64,22 @@
                            var="discipline"
                            label="#{discipline.name}"
                            noSelectionLabel=""/>
+            <a4j:support id="disciplineSelectSupport"
+                         event="onchange"
+                         action="#{pageBean.refreshCategories}"
+                         reRender="categorySelect"
+                         ajaxSingle="true"/>
         </h:selectOneMenu>
     </td>
+</tr>
+<tr>
     <td align="right">
         <strong>#{messages['question.detail.category.name']}</strong>
     </td>
-    <td width="50%">
+    <td width="100%" colspan="3">
         <h:selectOneMenu id="categorySelect"
-                         value="#{pageBean.model.category}"
-                         disabled="#{pageBean.viewMode}"
+                         value="#{pageBean.category}"
+                         disabled="#{pageBean.viewMode or pageBean.discipline == null}"
                          converter="ru.spbspu.staub.ObjectSelectConverter"
                          styleClass="required"
                          required="true"
@@ -81,6 +88,31 @@
                            value="#{pageBean.categoryList}"
                            var="category"
                            label="#{category.name}"
+                           noSelectionLabel=""/>
+            <a4j:support id="categorySelectSupport"
+                         event="onchange"
+                         action="#{pageBean.refreshTopics}"
+                         reRender="topicSelect"
+                         ajaxSingle="true"/>
+        </h:selectOneMenu>
+    </td>
+</tr>
+<tr>
+    <td align="right">
+        <strong>#{messages['question.detail.topic.name']}</strong>
+    </td>
+    <td width="100%" colspan="3">
+        <h:selectOneMenu id="topicSelect"
+                         value="#{pageBean.model.topic}"
+                         disabled="#{pageBean.viewMode or pageBean.category == null}"
+                         converter="ru.spbspu.staub.ObjectSelectConverter"
+                         styleClass="required"
+                         required="true"
+                         requiredMessage="#{messages['question.detail.required.topic']}">
+            <s:selectItems id="topicSelectItems"
+                           value="#{pageBean.topicList}"
+                           var="topic"
+                           label="#{topic.name}"
                            noSelectionLabel=""/>
         </h:selectOneMenu>
     </td>
