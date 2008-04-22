@@ -77,6 +77,8 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         if (isCreateMode()) {
             setModel(new Question());
             setQuestionDefinition(new QuestionType());
+            setCategory(null);
+            setDiscipline(null);
         } else {
             setModel(questionService.findById(modelId));
             setCategory(getModel().getTopic().getCategory());
@@ -84,6 +86,8 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             determineAnswerType();
             determineCorrectAnswer();
         }
+        refreshCategories();
+        refreshTopics();
     }
 
     private void determineCorrectAnswer() {
@@ -125,7 +129,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     }
 
     public void refreshCategories() {
-        if(discipline != null) {
+        if (discipline != null) {
             categoryList = categoryService.getCategories(discipline);
         } else {
             categoryList = null;
@@ -133,7 +137,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     }
 
     public void refreshTopics() {
-        if(category != null) {
+        if (category != null) {
             topicList = topicService.getTopics(category);
         } else {
             topicList = null;
@@ -244,7 +248,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             File file = new File(filePath);
             file.createNewFile();
             fi = new FileInputStream(event.getUploadItem().getFile());
-            fo = new FileOutputStream(file);            
+            fo = new FileOutputStream(file);
             byte[] buf = new byte[100];
             int size;
             while ((size = fi.read(buf)) > 0) {
@@ -259,7 +263,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             imageTag.append("/");
             imageTag.append(fileName);
             imageTag.append("\"/>");
-            if(getQuestionDefinition().getDescription() == null) {
+            if (getQuestionDefinition().getDescription() == null) {
                 getQuestionDefinition().setDescription("");
             }
             getQuestionDefinition().setDescription(getQuestionDefinition().getDescription() + imageTag);
