@@ -85,7 +85,7 @@
                     <tr>
                         <td colspan="2" align="center">
                             <a4j:outputPanel id="loginButtonPanel">
-                                <a4j:commandButton id="loginButton" action="#{loginStudentBean.login}"
+                                <h:commandButton id="loginButton" action="#{loginStudentBean.login}"
                                                    value="#{messages['system.login.enter']}"
                                                    styleClass="button"
                                                    disabled="#{loginStudentBean.username == null}"/>

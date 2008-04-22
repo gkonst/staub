@@ -10,15 +10,6 @@
       xmlns:s="http://jboss.com/products/seam/taglib"
       xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <ui:composition template="/template/staub-template.jspx">
-<ui:define name="pageScript">
-    <script type="text/javascript">
-        function updateFieldAfterImageUpload() {
-            var oldValue = document.getElementById("questionDetailForm:questionDefinitionTextarea").value;
-            var imagePath = document.getElementById("imageTagInput").value;
-            document.getElementById("questionDetailForm:questionDefinitionTextarea").value = oldValue + imagePath;
-        }
-    </script>
-</ui:define>
 <ui:param name="pageBean" value="#{questionDetailBean}"/>
 <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionDetailBean"-->
 <!--@elvariable id="messages" type="java.util.Map"-->
@@ -299,12 +290,11 @@
     <f:facet name="header">
         Вставить изображение
     </f:facet>
-    <h:inputHidden id="imageTagInput" value="#{pageBean.imageTag}"/>
     <h:form enctype="multipart/form-data">
 
         <rich:fileUpload fileUploadListener="#{questionDetailBean.fileUploadListener}">
-            <a4j:support event="onuploadcomplete" reRender="imageUploadModalBox"
-                         oncomplete="updateFieldAfterImageUpload();Richfaces.hideModalPanel('imageUploadModalBox');"/>
+            <a4j:support event="onuploadcomplete" reRender="imageUploadModalBox, questionDefinitionTextarea"
+                         oncomplete="Richfaces.hideModalPanel('imageUploadModalBox');"/>
         </rich:fileUpload>
 
         <a4j:commandButton id="cancelUploadButton"

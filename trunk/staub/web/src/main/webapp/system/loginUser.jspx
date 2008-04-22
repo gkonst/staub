@@ -30,7 +30,7 @@
                     <ui:include src="../controls/genericMessageControl.jspx"/>
                 </div>
                 <div class="buttonBox">
-                    <a4j:commandButton id="login" action="#{loginUserBean.login}" value="#{messages['system.login.enter']}"
+                    <h:commandButton id="login" action="#{loginUserBean.login}" value="#{messages['system.login.enter']}"
                                        styleClass="button"/>
                 </div>
             </fieldset>
