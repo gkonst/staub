@@ -36,9 +36,9 @@
                                     rendered="#{pageBean.dataModel.rowCount > 0}"
                                     styleClass="dataTable">
                         <rich:column styleClass="columnIcon">
-                            <a4j:htmlCommandLink id="userAssignLink"
-                                                 action="userAssign">
-                                <h:graphicImage id="userAssignImage"
+                            <a4j:htmlCommandLink id="studentAssignLink"
+                                                 action="studentAssign">
+                                <h:graphicImage id="studentAssignImage"
                                                 url="/images/icons/icon_detail_edit.gif"/>
                                 <f:param name="testId" value="#{test.id}"/>
                                 <f:param name="beanMode" value="EDIT_MODE"/>
