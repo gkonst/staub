@@ -59,27 +59,19 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         return makePersistent(testTrace);
     }
 
-    public TestTrace endTest(TestTrace testTrace) {
-        checkTestTrace(testTrace);
-
-        testTrace.setFinished(new Date());
-        makePersistent(testTrace);
-
-        assignmentService.removeAssignment(testTrace.getStudent(), testTrace.getTest());
-
-        return testTrace;
-    }
-
-    public TestTrace checkTestTrace(TestTrace testTrace) {
+    public TestTrace endTest(TestTrace testTrace, boolean passed) {
         long questionsCount = getCount(testTrace);
         long correctCount = getCorrectCount(testTrace);
         int score = (int) (correctCount * 100 / questionsCount);
-
         testTrace.setScore(score);
-        // TODO: Analyze the logic of this. Looks like it is wrong, as only questions of a highest difficulty level should be analyzed. 
-        testTrace.setTestPassed(score >= testTrace.getTest().getPassScore());
 
+        testTrace.setTestPassed(passed);
+
+        testTrace.setFinished(new Date());
+        
         makePersistent(testTrace);
+
+        assignmentService.removeAssignment(testTrace.getStudent(), testTrace.getTest());
 
         return testTrace;
     }

@@ -4,7 +4,6 @@ import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Topic;
-import ru.spbspu.staub.entity.Discipline;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;

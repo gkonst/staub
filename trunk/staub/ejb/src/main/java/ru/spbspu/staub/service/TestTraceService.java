@@ -38,10 +38,12 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      * Forms <code>UserHistory</code>, etc.
      *
      * @param testTrace ended test trace
+     * @param passed <true>true</true> if the test should be marked as passed; <code>false</code> if the test sould be
+     * marked as failed
      *
      * @return updated instance
      */
-    TestTrace endTest(TestTrace testTrace);
+    TestTrace endTest(TestTrace testTrace, boolean passed);
 
     /**
      * Validates questions from a given part.
@@ -53,18 +55,6 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      * @return <code>true</code> if check succeeded; <code>false</code> otherwise
      */
     boolean checkPart(TestTrace testTrace, Integer partId, int passScore);
-
-    /**
-     * Validates the whole TestTrace. No actual validation of QuestionTrace elements is performed. Field
-     * QuestionTrace.correct is analyzed, null value is treated as false.
-     * <p/>
-     * This method is called by {@link #endTest(TestTrace)}.
-     *
-     * @param testTrace the <code>TestTrace</code> to process
-     *
-     * @return the updated <code>TestTrace</code> entity
-     */
-    TestTrace checkTestTrace(TestTrace testTrace);
 
     /**
      * Returns a number of answers marked as correct.

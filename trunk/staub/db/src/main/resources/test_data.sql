@@ -60,7 +60,6 @@ INSERT INTO test (id,
                   name,
                   description,
                   time_limit,
-                  pass_score,
                   active,
                   created,
                   created_by)
@@ -68,7 +67,6 @@ INSERT INTO test (id,
              'Simple test',
              'There is nothing easier, than this test.',
              50,
-             75,
              true,
              current_date,
              'Generation Script');
@@ -85,7 +83,7 @@ INSERT INTO discipline (id,
                         code)
      VALUES (nextval('seq_discipline'), 
              'Математика',
-             0);
+             'D0');
 
 INSERT INTO category (id,
                       fk_discipline,
@@ -94,7 +92,7 @@ INSERT INTO category (id,
      VALUES (nextval('seq_category'), 
 	     currval('seq_discipline'),
              'Дифференциальные уравнения',
-             1);
+             'D1');
 
 UPDATE test SET fk_category = currval('seq_category') WHERE id = currval('seq_test');
 
@@ -114,10 +112,12 @@ INSERT INTO difficulty (id,
 
 INSERT INTO test_difficulty (fk_test,
                              fk_difficulty,
-                             questions_count)
+                             questions_count,
+                             pass_score)
      VALUES (currval('seq_test'),
              currval('seq_difficulty'),
-             5);
+             5,
+             100);
 
 INSERT INTO topic (id,
                    fk_category,
@@ -126,7 +126,7 @@ INSERT INTO topic (id,
      VALUES (nextval('seq_topic'), 
 	     currval('seq_category'),
              'Линейные дифференциальные уравнения',
-             0);
+             'T0');
 
 INSERT INTO question (id,
                       fk_topic,
@@ -154,10 +154,12 @@ INSERT INTO difficulty (id,
 
 INSERT INTO test_difficulty (fk_test,
                              fk_difficulty,
-                             questions_count)
+                             questions_count,
+                             pass_score)
      VALUES (currval('seq_test'),
              currval('seq_difficulty'),
-             10);
+             10,
+             75);
 
 INSERT INTO topic (id,
                    fk_category,
@@ -166,7 +168,7 @@ INSERT INTO topic (id,
      VALUES (nextval('seq_topic'), 
 	     currval('seq_category'),
              'Системы дифференциальных уравнений',
-             1);
+             'T1');
 
 INSERT INTO question (id,
                       fk_topic,

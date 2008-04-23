@@ -63,12 +63,6 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             String message = MessageFormat.format("Could not save Test with timeLimit={0}.", timeLimit);
             throw new IllegalArgumentException(message);
         }
-
-        Integer passScore = test.getPassScore();
-        if ((passScore != null) && ((passScore <= 0) || (passScore > 100))) {
-            String message = MessageFormat.format("Could not save Test with passScore={0}.", passScore);
-            throw new IllegalArgumentException(message);
-        }
     }
 
     public long getExpectedNumberOfQuestions(Test test) {

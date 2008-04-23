@@ -66,18 +66,6 @@ public class Test implements Serializable {
         this.timeLimit = timeLimit;
     }
 
-    private Integer passScore;
-
-    @Basic
-    @Column(name = "pass_score", length = 10, nullable = false)
-    public Integer getPassScore() {
-        return passScore;
-    }
-
-    public void setPassScore(Integer passScore) {
-        this.passScore = passScore;
-    }
-
     private Boolean active;
 
     @Basic
@@ -118,8 +106,7 @@ public class Test implements Serializable {
 
     private Set<TestDifficulty> difficultyLevels;
 
-    @OneToMany(mappedBy = "test", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @org.hibernate.annotations.Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    @OneToMany(mappedBy = "test", fetch = FetchType.EAGER)
     @org.hibernate.annotations.Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
     public Set<TestDifficulty> getDifficultyLevels() {
         return difficultyLevels;
@@ -204,7 +191,6 @@ public class Test implements Serializable {
         sb.append(", name='").append(name).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", timeLimit=").append(timeLimit);
-        sb.append(", passScore=").append(passScore);
         sb.append(", created=").append(created);
         sb.append(", createdBy='").append(createdBy).append('\'');
         sb.append(", modified=").append(modified);
