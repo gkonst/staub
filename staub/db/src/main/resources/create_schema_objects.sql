@@ -8,7 +8,7 @@ CREATE TABLE role (
 CREATE TABLE discipline (
     id INTEGER NOT NULL,
     name CHARACTER VARYING(256),
-    code INTEGER,
+    code CHARACTER VARYING(8),
     PRIMARY KEY (id),
     CONSTRAINT ak_discipline_code UNIQUE (code)
 );
@@ -17,7 +17,7 @@ CREATE TABLE category (
     id INTEGER NOT NULL,
     fk_discipline INTEGER NOT NULL,
     name CHARACTER VARYING(256),
-    code INTEGER,
+    code CHARACTER VARYING(8),
     PRIMARY KEY (id),
     CONSTRAINT ak_category_code UNIQUE (code),
     CONSTRAINT fk_discipline FOREIGN KEY (fk_discipline) REFERENCES discipline (id)
@@ -27,7 +27,7 @@ CREATE TABLE topic (
     id INTEGER NOT NULL,
     fk_category INTEGER NOT NULL,
     name CHARACTER VARYING(256),
-    code INTEGER,
+    code CHARACTER VARYING(8),
     PRIMARY KEY (id),
     CONSTRAINT ak_topic_code UNIQUE (code),
     CONSTRAINT fk_category FOREIGN KEY (fk_category) REFERENCES category (id)
@@ -64,7 +64,6 @@ CREATE TABLE test (
     name CHARACTER VARYING(256),
     description TEXT,
     time_limit INTEGER,
-    pass_score INTEGER,
     active BOOLEAN,
     created TIMESTAMP,
     created_by CHARACTER VARYING(64),
@@ -72,7 +71,6 @@ CREATE TABLE test (
     modified_by CHARACTER VARYING(64),
     CONSTRAINT pk_test PRIMARY KEY (id),
     CONSTRAINT fk_category FOREIGN KEY (fk_category) REFERENCES category (id),
-    CONSTRAINT chk_pass_score CHECK ((pass_score > 0) AND (pass_score <= 100)),
     CONSTRAINT chk_time_limit CHECK (time_limit > 0)
 );
 
@@ -88,6 +86,7 @@ CREATE TABLE test_difficulty (
     fk_test INTEGER NOT NULL,
     fk_difficulty INTEGER NOT NULL,
     questions_count INTEGER,
+    pass_score INTEGER,
     CONSTRAINT pk_test_difficulty PRIMARY KEY (fk_test, fk_difficulty),
     CONSTRAINT fk_test FOREIGN KEY (fk_test) REFERENCES test (id),
     CONSTRAINT fk_difficulty FOREIGN KEY (fk_difficulty) REFERENCES difficulty (id)
@@ -221,12 +220,6 @@ CREATE SEQUENCE seq_question_trace
     MAXVALUE 2147483647
     MINVALUE 1
     CACHE 1;
-
---CREATE SEQUENCE seq_user_history
---    INCREMENT BY 1
---   MAXVALUE 2147483647
---    MINVALUE 1
---    CACHE 1;
     
 CREATE SEQUENCE seq_assignment
     INCREMENT BY 1

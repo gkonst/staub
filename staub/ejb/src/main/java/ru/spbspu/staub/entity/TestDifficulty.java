@@ -89,6 +89,18 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
         this.questionsCount = questionsCount;
     }
 
+    private Integer passScore;
+
+    @Basic
+    @Column(name = "pass_score", length = 10, nullable = false)
+    public Integer getPassScore() {
+        return passScore;
+    }
+
+    public void setPassScore(Integer passScore) {
+        this.passScore = passScore;
+    }
+
     public int compareTo(TestDifficulty other) {
         return id.getDifficulty().getCode().compareTo(other.id.getDifficulty().getCode());
     }
@@ -118,6 +130,7 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
         sb.append("TestDifficulty");
         sb.append("{id=").append(id);
         sb.append(", questionsCount=").append(questionsCount);
+        sb.append(", passScore=").append(passScore);
         sb.append('}');
         return sb.toString();
     }

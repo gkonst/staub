@@ -39,15 +39,15 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    private Integer code;
+    private String code;
 
     @Basic
-    @Column(name = "code", length = 10)
-    public Integer getCode() {
+    @Column(name = "code", length = 8)
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
