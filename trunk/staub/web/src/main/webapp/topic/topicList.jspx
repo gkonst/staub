@@ -19,7 +19,7 @@
         #{messages['topic.list.title']}
     </ui:define>
     <ui:define name="contentBody">
-        <a4j:form id="contentButtonsForm">
+        <a4j:form id="contentBodyForm">
             <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <ui:include src="/controls/genericCreateControl.jspx"/>
                 <ui:include src="/controls/genericRefreshControl.jspx"/>
@@ -36,9 +36,10 @@
                                     styleClass="dataTable">
                         <rich:column id="col1">
                             <f:facet name="header">#{messages['topic.list.code']}</f:facet>
-                            <s:link action="detail" value="#{topic.code}">
-                                <f:param name="modelId" value="#{topic.id}"/>
-                                <f:param name="beanMode" value="EDIT_MODE"/>
+                            <s:link id="editTopicLink"
+                                    action="detail" value="#{topic.code}">
+                                <f:param id="idParam" name="modelId" value="#{topic.id}"/>
+                                <f:param id="beanModeParam" name="beanMode" value="EDIT_MODE"/>
                             </s:link>
                         </rich:column>
                         <rich:column id="col2">
@@ -46,12 +47,12 @@
                             #{topic.name}
                         </rich:column>
                         <rich:column id="col3">
-                            <f:facet name="header">#{messages['topic.list.category.name']}</f:facet>
-                            #{topic.category.name}
-                        </rich:column>
-                        <rich:column id="col4">
                             <f:facet name="header">#{messages['topic.list.category.discipline.name']}</f:facet>
                             #{topic.category.discipline.name}
+                        </rich:column>
+                        <rich:column id="col4">
+                            <f:facet name="header">#{messages['topic.list.category.name']}</f:facet>
+                            #{topic.category.name}
                         </rich:column>
                         <rich:column id="col5" styleClass="columnIcon">
                             <a4j:commandButton id="deleteButton"

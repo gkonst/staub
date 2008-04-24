@@ -34,7 +34,7 @@ public class QuestionListBean extends GenericListBean<Question> {
      */
     @Override
     public void doDelete() {
-        //TODO implement
+        questionService.remove(getSelected());
         doRefresh();
     }
 
