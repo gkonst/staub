@@ -2,6 +2,7 @@ package ru.spbspu.staub.service;
 
 import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.entity.User;
+import ru.spbspu.staub.model.DifficultyWrapper;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -18,12 +19,12 @@ public interface TestService extends GenericService<Test, Integer> {
      * Saves test (updates or inserts).
      * Also updates neede audit fields(created, createdBy, etc.)
      *
-     * @param test test to save
-     * @param user current user, author of this modifications
-     *
+     * @param test         test to save
+     * @param difficulties list of wrapped difficlties
+     * @param user         current user, author of this modifications
      * @return updated test
      */
-    Test saveTest(Test test, User user);
+    Test saveTest(Test test, List<DifficultyWrapper> difficulties, User user);
 
     /**
      * Assigns students for specific test.
@@ -37,7 +38,6 @@ public interface TestService extends GenericService<Test, Integer> {
      * Returns a questions count for a test.
      *
      * @param test the test
-     *
      * @return the questions count
      */
     long getExpectedNumberOfQuestions(Test test);
