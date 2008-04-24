@@ -3,6 +3,7 @@ package ru.spbspu.staub.service;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.*;
+import ru.spbspu.staub.model.DifficultyWrapper;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -30,7 +31,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     @EJB
     private StudentService studentService;
 
-    public Test saveTest(Test test, User user) {
+    public Test saveTest(Test test, List<DifficultyWrapper> difficulties, User user) {
         validateTest(test);
 
         if (test.getId() == null) {
