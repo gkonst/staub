@@ -29,7 +29,7 @@
 <table width="99%">
 <tr>
     <td align="right">
-        <strong>#{messages['question.detail.name']}</strong>
+        <strong>#{messages['question.detail.code']}</strong>
     </td>
     <td width="100%" colspan="3">
         <h:inputText id="nameInput"

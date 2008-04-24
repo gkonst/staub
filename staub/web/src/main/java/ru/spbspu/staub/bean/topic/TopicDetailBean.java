@@ -48,7 +48,9 @@ public class TopicDetailBean extends GenericDetailBean<Topic> {
             setModel(new Topic());
         } else {
             setModel(topicService.findById(modelId));
+            setDiscipline(getModel().getCategory().getDiscipline());
         }
+        refreshCategories();
     }
 
     /**
