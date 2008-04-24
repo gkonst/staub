@@ -7,10 +7,13 @@ import org.jboss.seam.annotations.Scope;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.entity.*;
-import ru.spbspu.staub.service.*;
 import ru.spbspu.staub.model.DifficultyWrapper;
+import ru.spbspu.staub.service.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Webbean for manipulating detail data of <code>Test</code> entity.
@@ -50,12 +53,14 @@ public class TestDetailBean extends GenericDetailBean<Test> {
     protected void fillModel(Integer modelId) {
         fillDisciplines();
         fillDifficulties();
+        cleanTopics();
         if (isCreateMode()) {
             setModel(new Test());
             setDiscipline(null);
         } else {
             setModel(testService.findById(modelId));
             setDiscipline(getModel().getCategory().getDiscipline());
+            fillTopics();
             if (getModel().getTopics() != null && !getModel().getTopics().isEmpty()) {
                 selectedTopics = getModel().getTopics().toArray(new Topic[getModel().getTopics().size()]);
             }
@@ -70,7 +75,6 @@ public class TestDetailBean extends GenericDetailBean<Test> {
             }
         }
         refreshCategories();
-        refreshTopics();
     }
 
     public void doSave() {
@@ -79,11 +83,14 @@ public class TestDetailBean extends GenericDetailBean<Test> {
             if (getModel().getTopics() == null) {
                 getModel().setTopics(new HashSet<Topic>());
             }
+            // may be bad but works fine
+            getModel().getTopics().clear();
             getModel().getTopics().addAll(Arrays.asList(selectedTopics));
         }
         if (isDifficultiesEmpty()) {
             addFacesMessageFromResourceBundle("test.detail.required.difficulty");
             logger.debug("Saving... failed");
+            return;
         }
         setModel(testService.saveTest(getModel(), difficultyList, user));
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
@@ -106,12 +113,20 @@ public class TestDetailBean extends GenericDetailBean<Test> {
 
     public void refreshTopics() {
         if (getModel().getCategory() != null) {
-            topicList = topicService.getTopics(getModel().getCategory());
-            selectedTopics = new Topic[topicList.size()];
+            fillTopics();
         } else {
-            topicList = null;
-            selectedTopics = null;
+            cleanTopics();
         }
+    }
+
+    private void fillTopics() {
+        topicList = topicService.getTopics(getModel().getCategory());
+        selectedTopics = new Topic[topicList.size()];
+    }
+
+    private void cleanTopics() {
+        topicList = null;
+        selectedTopics = null;
     }
 
     private void fillDifficulties() {
