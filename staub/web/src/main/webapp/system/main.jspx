@@ -13,12 +13,12 @@
     <ui:define name="contentBody">
         <ul>
             <li>
-                <s:link view="/system/loginStudent.seam"
-                        value="Пройти тест"/>
+                <h1><s:link view="/system/loginStudent.seam"
+                        value="Пройти тест"/></h1>
             </li>
             <li>
-                <s:link view="/system/loginUser.seam"
-                        value="Модуль администрирования системы"/>
+                <h1><s:link view="/system/loginUser.seam"
+                        value="Администрирования системы"/></h1>
             </li>
         </ul>
     </ui:define>
