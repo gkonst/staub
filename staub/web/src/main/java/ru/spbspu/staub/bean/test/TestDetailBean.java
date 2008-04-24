@@ -1,17 +1,16 @@
 package ru.spbspu.staub.bean.test;
 
-import org.jboss.seam.ScopeType;
 import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.web.RequestParameter;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericDetailBean;
-import ru.spbspu.staub.entity.Test;
-import ru.spbspu.staub.entity.User;
-import ru.spbspu.staub.service.TestService;
+import ru.spbspu.staub.entity.*;
+import ru.spbspu.staub.service.*;
+import ru.spbspu.staub.model.DifficultyWrapper;
+
+import java.util.*;
 
 /**
  * Webbean for manipulating detail data of <code>Test</code> entity.
@@ -22,33 +21,153 @@ import ru.spbspu.staub.service.TestService;
 @Scope(SESSION)
 public class TestDetailBean extends GenericDetailBean<Test> {
 
-    @RequestParameter
-    private Integer modelId;
-
-    @Out(value = "test", scope = ScopeType.EVENT, required = false)
-    private Test model;
-
     @In
     private User user;
 
     @In
     private TestService testService;
 
+    @In
+    private DisciplineService disciplineService;
+
+    @In
+    private CategoryService categoryService;
+
+    @In
+    private TopicService topicService;
+
+    @In
+    private DifficultyService difficultyService;
+
+    private List<Discipline> disciplineList;
+    private List<Category> categoryList;
+    private List<Topic> topicList;
+    private List<DifficultyWrapper> difficultyList;
+
+    private Discipline discipline;
+    private Topic[] selectedTopics;
+
     protected void fillModel(Integer modelId) {
+        fillDisciplines();
+        fillDifficulties();
         if (isCreateMode()) {
             setModel(new Test());
-            getModel().setPassScore(50);
+            setDiscipline(null);
         } else {
             setModel(testService.findById(modelId));
+            setDiscipline(getModel().getCategory().getDiscipline());
+            if (getModel().getTopics() != null && !getModel().getTopics().isEmpty()) {
+                selectedTopics = getModel().getTopics().toArray(new Topic[getModel().getTopics().size()]);
+            }
+            if (getModel().getDifficultyLevels() != null && !getModel().getDifficultyLevels().isEmpty()) {
+                for (TestDifficulty td : getModel().getDifficultyLevels()) {
+                    for (DifficultyWrapper dw : difficultyList) {
+                        if (td.getDifficulty().equals(dw.getDifficulty())) {
+                            dw.setSelected(Boolean.TRUE);
+                        }
+                    }
+                }
+            }
         }
+        refreshCategories();
+        refreshTopics();
     }
 
     public void doSave() {
         logger.debug("Saving test...");
-        setModel(testService.saveTest(getModel(), user));
+        if (selectedTopics != null && selectedTopics.length != 0) {
+            if (getModel().getTopics() == null) {
+                getModel().setTopics(new HashSet<Topic>());
+            }
+            getModel().getTopics().addAll(Arrays.asList(selectedTopics));
+        }
+        if (isDifficultiesEmpty()) {
+            addFacesMessageFromResourceBundle("test.detail.required.difficulty");
+            logger.debug("Saving... failed");
+        }
+        setModel(testService.saveTest(getModel(), difficultyList, user));
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
         logger.debug("Saving... OK");
+    }
+
+    private void fillDisciplines() {
+        disciplineList = disciplineService.findAll();
+    }
+
+    public void refreshCategories() {
+        if (discipline != null) {
+            categoryList = categoryService.getCategories(discipline);
+        } else {
+            categoryList = null;
+        }
+    }
+
+    public void refreshTopics() {
+        if (getModel().getCategory() != null) {
+            topicList = topicService.getTopics(getModel().getCategory());
+            selectedTopics = new Topic[topicList.size()];
+        } else {
+            topicList = null;
+            selectedTopics = null;
+        }
+    }
+
+    private void fillDifficulties() {
+        List<Difficulty> difficulties = difficultyService.findAll();
+        difficultyList = new ArrayList<DifficultyWrapper>();
+        for (Difficulty difficulty : difficulties) {
+            difficultyList.add(new DifficultyWrapper(difficulty));
+        }
+    }
+
+    private boolean isDifficultiesEmpty() {
+        for (DifficultyWrapper df : difficultyList) {
+            if (df.getSelected()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isTopicsAvailable() {
+        return topicList != null && !topicList.isEmpty();
+    }
+
+    public List<Discipline> getDisciplineList() {
+        return disciplineList;
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public List<Topic> getTopicList() {
+        return topicList;
+    }
+
+    public List<DifficultyWrapper> getDifficultyList() {
+        return difficultyList;
+    }
+
+    public void setDifficultyList(List<DifficultyWrapper> difficultyList) {
+        this.difficultyList = difficultyList;
+    }
+
+    public Discipline getDiscipline() {
+        return discipline;
+    }
+
+    public void setDiscipline(Discipline discipline) {
+        this.discipline = discipline;
+    }
+
+    public Topic[] getSelectedTopics() {
+        return selectedTopics;
+    }
+
+    public void setSelectedTopics(Topic[] selectedTopics) {
+        this.selectedTopics = selectedTopics;
     }
 }
