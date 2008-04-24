@@ -10,70 +10,178 @@
       xmlns:s="http://jboss.com/products/seam/taglib"
       xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <ui:composition template="/template/staub-template.jspx">
-    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.test.TestDetailBean"-->
-    <!--@elvariable id="messages" type="java.util.Map"-->
-    <ui:param name="pageBean" value="#{testDetailBean}"/>
-    <ui:define name="sidebar">
-        <ui:include src="/system/menuPage.jspx"/>
-    </ui:define>
-    <ui:define name="contentTitle">
-        #{messages['test.detail.title']}
-    </ui:define>
-    <ui:define name="contentBody">
-        <a4j:form id="testDetailForm">
-            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
-                <ui:include src="/controls/genericSaveControl.jspx"/>
-            </a4j:outputPanel>
+<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.test.TestDetailBean"-->
+<!--@elvariable id="messages" type="java.util.Map"-->
+<ui:param name="pageBean" value="#{testDetailBean}"/>
+<ui:define name="sidebar">
+    <ui:include src="/system/menuPage.jspx"/>
+</ui:define>
+<ui:define name="contentTitle">
+    #{messages['test.detail.title']}
+</ui:define>
+<ui:define name="contentBody">
+<a4j:form id="testDetailForm">
+<a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+    <ui:include src="/controls/genericSaveControl.jspx"/>
+</a4j:outputPanel>
 
-            <div class="detailTable">
-                <table width="99%">
+<div class="detailTable">
+<table width="99%">
+<tr>
+    <td align="right">
+        <strong>#{messages['test.detail.name']}</strong>
+    </td>
+    <td style="width:100%;" colspan="3">
+        <h:inputText id="testNameInput"
+                     value="#{pageBean.model.name}"
+                     disabled="#{pageBean.viewMode}"
+                     style="width:99%;"/>
+    </td>
+</tr>
+<tr>
+    <td align="right">
+        <strong>#{messages['test.detail.description']}</strong>
+    </td>
+    <td style="width:100%;" colspan="3">
+        <h:inputTextarea id="testDescTextarea"
+                         value="#{pageBean.model.description}"
+                         disabled="#{pageBean.viewMode}"
+                         style="width:99%;"/>
+    </td>
+</tr>
+<tr>
+    <td align="right">
+        <strong>#{messages['test.detail.timeLimit']}</strong>
+    </td>
+    <td style="width:100%;" colspan="3">
+        <h:inputText id="timeLimitInput"
+                     value="#{pageBean.model.timeLimit}"
+                     disabled="#{pageBean.viewMode}"
+                     style="width:5em;"/>
+    </td>
+</tr>
+<tr>
+    <td align="right">
+        <strong>#{messages['test.detail.discipline.name']}</strong>
+    </td>
+    <td style="width:100%;" colspan="3">
+        <h:selectOneMenu id="disciplineSelect"
+                         value="#{pageBean.discipline}"
+                         disabled="#{pageBean.viewMode}"
+                         converter="ru.spbspu.staub.ObjectSelectConverter"
+                         styleClass="required"
+                         required="true"
+                         requiredMessage="#{messages['test.detail.required.discipline']}">
+            <s:selectItems id="disciplineSelectItems"
+                           value="#{pageBean.disciplineList}"
+                           var="discipline"
+                           label="#{discipline.name}"
+                           noSelectionLabel=""/>
+            <a4j:support id="disciplineSelectSupport"
+                         event="onchange"
+                         action="#{pageBean.refreshCategories}"
+                         reRender="categorySelect, topicSelectPanel"
+                         ajaxSingle="true"/>
+        </h:selectOneMenu>
+    </td>
+</tr>
+<tr>
+    <td align="right">
+        <strong>#{messages['test.detail.category.name']}</strong>
+    </td>
+    <td width="100%" colspan="3">
+        <h:selectOneMenu id="categorySelect"
+                         value="#{pageBean.model.category}"
+                         disabled="#{pageBean.viewMode or pageBean.discipline == null}"
+                         converter="ru.spbspu.staub.ObjectSelectConverter"
+                         styleClass="required"
+                         required="true"
+                         requiredMessage="#{messages['test.detail.required.category']}">
+            <s:selectItems id="categorySelectItems"
+                           value="#{pageBean.categoryList}"
+                           var="category"
+                           label="#{category.name}"
+                           noSelectionLabel=""/>
+            <a4j:support id="categorySelectSupport"
+                         event="onchange"
+                         action="#{pageBean.refreshTopics}"
+                         reRender="topicSelectPanel"
+                         ajaxSingle="true"/>
+        </h:selectOneMenu>
+    </td>
+</tr>
+<tr>
+    <td align="right" style="vertical-align:top">
+        <strong>#{messages['test.detail.topic.name']}</strong>
+    </td>
+    <td width="100%" colspan="3">
+        <a4j:outputPanel id="topicSelectPanel"
+                         layout="block"
+                         style="border: 1px solid #D2C9C4;overflow-y: auto;overflow-x: hidden;">
+            <h:outputText id="topicNotFoundText"
+                          value="Нет тем или не выбрана категория"
+                          rendered="#{!pageBean.topicsAvailable}"/>
+            <h:selectManyCheckbox id="topicSelect"
+                                  disabled="#{pageBean.viewMode or pageBean.model.category == null}"
+                                  converter="ru.spbspu.staub.ObjectSelectConverter"
+                                  style="width:auto;"
+                                  value="#{pageBean.selectedTopics}"
+                                  layout="pageDirection"
+                                  rendered="#{pageBean.topicsAvailable}">
+                <s:selectItems id="topicSelectItems"
+                               value="#{pageBean.topicList}"
+                               var="topic"
+                               label="#{topic.name}"/>
+            </h:selectManyCheckbox>
+        </a4j:outputPanel>
+    </td>
+</tr>
+<tr>
+    <td align="right" style="vertical-align:top">
+        <strong>#{messages['test.detail.difficulty.name']}</strong>
+    </td>
+    <td width="100%" colspan="3">
+        <a4j:outputPanel id="difficultySelectPanel"
+                         layout="block"
+                         style="border: 1px solid #D2C9C4;overflow-y: auto;overflow-x: hidden;">
+            <table>
+                <tr>
+                    <td colspan="2"/>
+                    <td>
+                        #{messages['test.detail.difficukty.questionsCount']}
+                    </td>
+                    <td>
+                        #{messages['test.detail.difficukty.passScore']}
+                    </td>
+                </tr>
+                <a4j:repeat id="difficultiesRepeat"
+                            value="#{pageBean.difficultyList}"
+                            var="testDifficulty">
                     <tr>
-                        <td align="right">
-                            <strong>#{messages['test.detail.name']}</strong>
-                        </td>
-                        <td style="width:100%;" colspan="3">
-                            <h:inputText id="testNameInput"
-                                         value="#{pageBean.model.name}"
-                                         disabled="#{pageBean.viewMode}"
-                                         style="width:99%;"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            <strong>#{messages['test.detail.description']}</strong>
-                        </td>
-                        <td style="width:100%;" colspan="3">
-                            <h:inputTextarea id="testDescTextarea"
-                                             value="#{pageBean.model.description}"
-                                             disabled="#{pageBean.viewMode}"
-                                             style="width:99%;"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            <strong>#{messages['test.detail.passScore']}</strong>
+                        <td>
+                            <h:selectBooleanCheckbox id="difficultyCheckbox"
+                                                     value="#{testDifficulty.selected}"/>
                         </td>
                         <td>
-                            <h:inputText id="passScoreInput"
-                                         value="#{pageBean.model.passScore}"
-                                         disabled="#{pageBean.viewMode}"
-                                         styleClass="required"
-                                         required="true"
-                                         requiredMessage="#{messages['test.detail.required.passScore']}"/>
+                            #{testDifficulty.difficulty.name}
                         </td>
-                        <td align="right">
-                            <strong>#{messages['test.detail.timeLimit']}</strong>
+                        <td>
+                            <h:inputText id="difficultyQuestionsCount"
+                                         value="#{testDifficulty.questionsCount}"/>
                         </td>
-                        <td width="10%">
-                            <h:inputText id="timeLimitInput"
-                                         value="#{pageBean.model.timeLimit}"
-                                         disabled="#{pageBean.viewMode}"
-                                         style="width:5em;"/>
+                        <td>
+                            <h:inputText id="difficultyPassScore"
+                                         value="#{testDifficulty.passScore}"/>
                         </td>
                     </tr>
-                </table>
-            </div>
-        </a4j:form>
-    </ui:define>
+                </a4j:repeat>
+            </table>
+        </a4j:outputPanel>
+    </td>
+</tr>
+</table>
+</div>
+</a4j:form>
+</ui:define>
 </ui:composition>
 </html>
