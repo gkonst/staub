@@ -26,12 +26,17 @@
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.categories']}" view="/question/categoryList.seam">
+            <s:link value="#{messages['system.menu.categories']}" view="/category/categoryList.seam">
                 <f:param name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.difficulties']}" view="/question/difficultyList.seam">
+            <s:link value="#{messages['system.menu.topics']}" view="/topic/topicList.seam">
+                <f:param name="beanMode" value="VIEW_MODE"/>
+            </s:link>
+        </li>
+        <li>
+            <s:link value="#{messages['system.menu.difficulties']}" view="/difficulty/difficultyList.seam">
                 <f:param name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>

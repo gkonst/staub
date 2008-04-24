@@ -155,6 +155,28 @@
         </navigation>
     </page>
 
+    <!-- Categories -->
+    <page view-id="/category/categoryList.jspx"
+          login-required="true"
+          action="#{categoryListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/category/categoryDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/category/categoryDetail.jspx"
+          login-required="true"
+          action="#{categoryDetailBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/category/categoryList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
     <!-- Exceptions -->
     <exception class="org.jboss.seam.security.NotLoggedInException">
         <redirect view-id="/system/main.jspx">
