@@ -177,6 +177,50 @@
         </navigation>
     </page>
 
+    <!-- Topics -->
+    <page view-id="/topic/topicList.jspx"
+          login-required="true"
+          action="#{topicListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/topic/topicDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/topic/topicDetail.jspx"
+          login-required="true"
+          action="#{topicDetailBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/topic/topicList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Difficulties -->
+    <page view-id="/difficulty/difficultyList.jspx"
+          login-required="true"
+          action="#{difficultyListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/difficulty/difficultyDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/difficulty/difficultyDetail.jspx"
+          login-required="true"
+          action="#{difficultyDetailBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/difficulty/difficultyList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
     <!-- Exceptions -->
     <exception class="org.jboss.seam.security.NotLoggedInException">
         <redirect view-id="/system/main.jspx">

@@ -1,0 +1,94 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+<ui:composition template="/template/staub-template.jspx">
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.topic.TopicDetailBean"-->
+    <!--@elvariable id="messages" type="java.util.Map"-->
+    <ui:param name="pageBean" value="#{topicDetailBean}"/>
+    <ui:define name="sidebar">
+        <ui:include src="/system/menuPage.jspx"/>
+    </ui:define>
+    <ui:define name="contentTitle">
+        #{messages['topic.detail.title']}
+    </ui:define>
+    <ui:define name="contentBody">
+        <a4j:form id="topicDetailForm">
+            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+                <ui:include src="/controls/genericSaveControl.jspx"/>
+            </a4j:outputPanel>
+            <table class="detailTable">
+                <tr>
+                    <td align="right">
+                        <strong>#{messages['topic.detail.code']}</strong>
+                    </td>
+                    <td>
+                        <h:inputText value="#{pageBean.model.code}"
+                                     disabled="#{pageBean.viewMode}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <strong>#{messages['topic.detail.name']}</strong>
+                    </td>
+                    <td>
+                        <h:inputText value="#{pageBean.model.name}"
+                                     disabled="#{pageBean.viewMode}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <strong>#{messages['topic.detail.discipline']}</strong>
+                    </td>
+                    <td>
+                        <h:selectOneMenu id="disciplineSelect"
+                                         value="#{pageBean.discipline}"
+                                         disabled="#{pageBean.viewMode}"
+                                         converter="ru.spbspu.staub.ObjectSelectConverter"
+                                         styleClass="required"
+                                         required="true"
+                                         requiredMessage="#{messages['topic.detail.required.discipline']}">
+                            <s:selectItems id="disciplineSelectItems"
+                                           value="#{pageBean.disciplineList}"
+                                           var="discipline"
+                                           label="#{discipline.name}"
+                                           noSelectionLabel=""/>
+                            <a4j:support id="disciplineSelectSupport"
+                                         event="onchange"
+                                         action="#{pageBean.refreshCategories}"
+                                         reRender="categorySelect"
+                                         ajaxSingle="true"/>
+                        </h:selectOneMenu>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <strong>#{messages['topic.detail.category']}</strong>
+                    </td>
+                    <td>
+                        <h:selectOneMenu id="categorySelect"
+                                         value="#{pageBean.model.category}"
+                                         disabled="#{pageBean.viewMode or pageBean.discipline == null}"
+                                         converter="ru.spbspu.staub.ObjectSelectConverter"
+                                         styleClass="required"
+                                         required="true"
+                                         requiredMessage="#{messages['topic.detail.required.category']}">
+                            <s:selectItems id="categorySelectItems"
+                                           value="#{pageBean.categoryList}"
+                                           var="category"
+                                           label="#{category.name}"
+                                           noSelectionLabel=""/>
+                        </h:selectOneMenu>
+                    </td>
+                </tr>
+            </table>
+        </a4j:form>
+    </ui:define>
+</ui:composition>
+</html>

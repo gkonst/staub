@@ -1,4 +1,4 @@
-package ru.spbspu.staub.bean.question;
+package ru.spbspu.staub.bean.discipline;
 
 import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.bean.BeanMode;
