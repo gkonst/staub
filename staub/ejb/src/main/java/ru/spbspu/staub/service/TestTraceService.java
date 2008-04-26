@@ -50,11 +50,10 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      *
      * @param testTrace the <code>TestTrace</code> to process
      * @param partId    the identification number
-     * @param passScore the minimal score to pass
      *
      * @return <code>true</code> if check succeeded; <code>false</code> otherwise
      */
-    boolean checkPart(TestTrace testTrace, Integer partId, int passScore);
+    boolean checkPart(TestTrace testTrace, Integer partId);
 
     /**
      * Returns a number of answers marked as correct.

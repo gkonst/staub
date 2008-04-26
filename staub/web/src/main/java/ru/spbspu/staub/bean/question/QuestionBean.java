@@ -85,7 +85,7 @@ public class QuestionBean extends GenericModeBean {
 
                 if (previousPart != null && !previousPart.equals(currentQuestion.getPart())) {
                     logger.debug(" part changed(#0->#1) -> checking", previousPart, currentQuestion.getPart());
-                    if (!testTraceService.checkPart(testTrace, previousPart, 100)) {
+                    if (!testTraceService.checkPart(testTrace, previousPart)) {
                         logger.debug(" part checking failed -> test ended");
                         testTrace = testTraceService.endTest(testTrace, false);
                         addFacesMessage("Part validation failed");
@@ -97,7 +97,7 @@ public class QuestionBean extends GenericModeBean {
             if (testTimer != null && testTimer.isExpired()) {
                 logger.debug(" test timer expired -> test ended");
                   // TODO implement ask AEL what to do
-                testTraceService.checkPart(testTrace, previousPart != null ? previousPart : currentQuestion.getPart(), 100);
+                testTraceService.checkPart(testTrace, previousPart != null ? previousPart : currentQuestion.getPart());
                 testTrace = testTraceService.endTest(testTrace, false);
                 addFacesMessage("время теста истекло");
                 finished = true;
@@ -124,7 +124,7 @@ public class QuestionBean extends GenericModeBean {
         } else {
             // last question
             logger.debug(" no questions -> test ended");
-            boolean result = testTraceService.checkPart(testTrace, previousPart, 100);
+            boolean result = testTraceService.checkPart(testTrace, previousPart);
             testTrace = testTraceService.endTest(testTrace, result);
             addFacesMessage("Вы ответили на все вопросы теста");
             finished = true;

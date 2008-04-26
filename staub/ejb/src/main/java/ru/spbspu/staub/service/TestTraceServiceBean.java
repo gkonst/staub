@@ -77,11 +77,13 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     }
 
     @SuppressWarnings("unchecked")
-    public boolean checkPart(TestTrace testTrace, Integer part, int passScore) {
+    public boolean checkPart(TestTrace testTrace, Integer part) {
         Query q = getEntityManager().createQuery("select q.id from QuestionTrace q where q.testTrace = :testTrace and q.part = :part");
         q.setParameter("testTrace", testTrace);
         q.setParameter("part", part);
         List<Integer> questionTraceIds = q.getResultList();
+
+        int passScore = getPassScore(testTrace, part);
 
         int questionsCount = questionTraceIds.size();
         int correctCount = 0;
@@ -129,6 +131,17 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         for (TestDifficulty testDifficulty : difficultyLevels) {
             createTestTraceElements(testTrace, testDifficulty);
         }
+    }
+
+    private int getPassScore(TestTrace testTrace, Integer part) {
+        int passScore = 0;
+        for (TestDifficulty testDifficulty : testTrace.getTest().getDifficultyLevels()) {
+            if (testDifficulty.getDifficulty().getId().equals(part)) {
+                passScore = testDifficulty.getPassScore();
+                break;
+            }
+        }
+        return passScore;
     }
 
     @SuppressWarnings("unchecked")
