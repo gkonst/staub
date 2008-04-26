@@ -68,6 +68,7 @@
             <xs:enumeration value="integer"/>
             <xs:enumeration value="real"/>
             <xs:enumeration value="complex"/>
+            <xs:enumeration value="string"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
