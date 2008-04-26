@@ -61,7 +61,8 @@ public abstract class GenericServiceBean<T, ID extends Serializable> implements 
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
         logger.debug(">>> Finding all(entity=#0)...", entityClass.getName());
-        List<T> result = getEntityManager().createQuery("from " + getEntityClass().getName()).getResultList();
+        StringBuilder queryString = new StringBuilder().append("from ").append(getEntityClass().getName());
+        List<T> result = getEntityManager().createQuery(queryString.toString()).getResultList();
         logger.debug("<<< Finding all...Ok(#0 found)", result.size());
         return result;
     }

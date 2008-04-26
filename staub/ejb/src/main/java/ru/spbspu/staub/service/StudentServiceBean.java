@@ -11,8 +11,8 @@ import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The <code>StudentServiceBean</code> is a stateless EJB service to manipulate <code>Student</code> entities.
@@ -49,5 +49,27 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("group", group);
         return findAll(query, formProperties, parameters);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Student> findAll() {
+        logger.debug(">>> Finding all(entity=#0)...", Student.class.getName());
+        StringBuilder queryString = new StringBuilder()
+                .append("select o from ")
+                .append(Student.class.getName())
+                .append(" o where o.active = true");
+        List<Student> result = getEntityManager().createQuery(queryString.toString()).getResultList();
+        logger.debug("<<< Finding all...Ok(#0 found)", result.size());
+        return result;
+    }
+
+    @Override
+    public FormTable findAll(FormProperties formProperties) {
+        StringBuilder queryString = new StringBuilder()
+                .append("select o from ")
+                .append(Student.class.getName())
+                .append(" o where o.active = true");
+        return findAll(queryString.toString(), formProperties, new HashMap<String, Object>(0));
     }
 }
