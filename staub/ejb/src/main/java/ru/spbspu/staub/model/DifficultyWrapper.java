@@ -9,15 +9,18 @@ import ru.spbspu.staub.entity.Difficulty;
  */
 public class DifficultyWrapper {
     private Boolean selected;
+
     private Difficulty difficulty;
+
     private Integer questionsCount;
+
     private Integer passScore;
 
     public DifficultyWrapper(Difficulty difficulty) {
         this.difficulty = difficulty;
-        this.selected = Boolean.FALSE;
-        this.questionsCount = 0;
-        this.passScore = 100;
+        selected = false;
+        questionsCount = 0;
+        passScore = 100;
     }
 
     public Boolean getSelected() {

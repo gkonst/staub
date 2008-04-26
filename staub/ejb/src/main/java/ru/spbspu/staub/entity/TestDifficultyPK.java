@@ -1,8 +1,7 @@
 package ru.spbspu.staub.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 /**
@@ -10,42 +9,39 @@ import java.io.Serializable;
  *
  * @author Alexander V. Elagin
  */
-@SuppressWarnings({"JpaModelErrorInspection"}) // Make IDE happy :)
 @Embeddable
 public class TestDifficultyPK implements Serializable {
     private static final long serialVersionUID = 6673970679487117717L;
 
-    private Test test;
+    private Integer fkTest;
 
-    private Difficulty difficulty;
+    private Integer fkDifficulty;
 
     public TestDifficultyPK() {
         // do nothing
     }
 
-    public TestDifficultyPK(Test test, Difficulty difficulty) {
-        this.test = test;
-        this.difficulty = difficulty;
+    public TestDifficultyPK(Integer fkTest, Integer fkDifficulty) {
+        this.fkTest = fkTest;
+        this.fkDifficulty = fkDifficulty;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "fk_test", referencedColumnName = "id", nullable = false)
-    public Test getTest() {
-        return test;
+    @Column(name = "fk_test", nullable = false)
+    public Integer getFkTest() {
+        return fkTest;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setFkTest(Integer fkTest) {
+        this.fkTest = fkTest;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "fk_difficulty", referencedColumnName = "id", nullable = false)
-    public Difficulty getDifficulty() {
-        return difficulty;
+    @Column(name = "fk_difficulty", nullable = false)
+    public Integer getFkDifficulty() {
+        return fkDifficulty;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
+    public void setFkDifficulty(Integer fkDifficulty) {
+        this.fkDifficulty = fkDifficulty;
     }
 
     @Override
@@ -59,20 +55,23 @@ public class TestDifficultyPK implements Serializable {
 
         TestDifficultyPK other = (TestDifficultyPK) otherObject;
 
-        return difficulty.equals(other.difficulty);
+        return fkDifficulty.equals(other.fkDifficulty) && fkTest.equals(other.fkTest);
     }
 
     @Override
     public int hashCode() {
-        return difficulty.hashCode();
+        int result;
+        result = fkTest.hashCode();
+        result = 31 * result + fkDifficulty.hashCode();
+        return result;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("TestDifficultyPK");
-        sb.append("{test=").append(test);
-        sb.append(", difficulty=").append(difficulty);
+        sb.append("{fkTest=").append(fkTest);
+        sb.append(", fkDifficulty=").append(fkDifficulty);
         sb.append('}');
         return sb.toString();
     }

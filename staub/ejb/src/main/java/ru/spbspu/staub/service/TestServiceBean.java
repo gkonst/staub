@@ -11,6 +11,7 @@ import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.Iterator;
 
 /**
  * Stateless EJB Service for manipulations with <code>Test</code> entity.
@@ -39,11 +40,26 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             test.setCreatedBy(user.getUsername());
             test.setCreated(new Date());
         } else {
+            Iterator<TestDifficulty> iter = test.getDifficultyLevels().iterator();
+            while (iter.hasNext()) {
+                TestDifficulty testDifficulty = iter.next();
+                iter.remove();
+                getEntityManager().remove(testDifficulty);
+            }
+
             test.setModifiedBy(user.getUsername());
             test.setModified(new Date());
         }
 
-        return makePersistent(test);
+        Test result = makePersistent(test);
+
+        for (DifficultyWrapper wrapper : difficulties) {
+            TestDifficulty testDifficulty = new TestDifficulty(test, wrapper.getDifficulty(),
+                    wrapper.getQuestionsCount(), wrapper.getPassScore());
+            getEntityManager().persist(testDifficulty);
+        }
+
+        return result;
     }
 
     public void assignTest(Integer testId, List<Integer> studentIds) {

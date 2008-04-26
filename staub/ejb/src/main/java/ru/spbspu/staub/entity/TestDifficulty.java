@@ -23,6 +23,8 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
 
     private Integer questionsCount;
 
+    private Integer passScore;
+
     /**
      * Constructs a new <code>TestDifficulty</code> instance with the test, difficulty and questions count parameters
      * specified. This constructor also updates a relationship in the Test entity.
@@ -30,20 +32,17 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
      * @param test           the test
      * @param difficulty     the difficulty
      * @param questionsCount the number of questions to select
+     * @param passScore      the minimal score to pass the test's part
      */
-    public TestDifficulty(Test test, Difficulty difficulty, Integer questionsCount) {
-        id = new TestDifficultyPK(test, difficulty);
+    public TestDifficulty(Test test, Difficulty difficulty, Integer questionsCount, Integer passScore) {
+        id = new TestDifficultyPK(test.getId(), difficulty.getId());
 
         this.test = test;
         this.difficulty = difficulty;
         this.questionsCount = questionsCount;
+        this.passScore = passScore;
 
-        Set<TestDifficulty> difficultyLevels = id.getTest().getDifficultyLevels();
-        if (difficultyLevels == null) {
-            difficultyLevels = new HashSet<TestDifficulty>();
-            id.getTest().setDifficultyLevels(difficultyLevels);
-        }
-        difficultyLevels.add(this);
+        updateCollection();
     }
 
     protected TestDifficulty() {
@@ -80,7 +79,7 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
     }
 
     @Basic
-    @Column(name = "questions_count", length = 10)
+    @Column(name = "questions_count", length = 10, nullable = false)
     public Integer getQuestionsCount() {
         return questionsCount;
     }
@@ -88,8 +87,6 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
     public void setQuestionsCount(Integer questionsCount) {
         this.questionsCount = questionsCount;
     }
-
-    private Integer passScore;
 
     @Basic
     @Column(name = "pass_score", length = 10, nullable = false)
@@ -102,7 +99,7 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
     }
 
     public int compareTo(TestDifficulty other) {
-        return id.getDifficulty().getCode().compareTo(other.id.getDifficulty().getCode());
+        return difficulty.getCode().compareTo(difficulty.getCode());
     }
 
     @Override
@@ -129,9 +126,20 @@ public class TestDifficulty implements Comparable<TestDifficulty>, Serializable 
         StringBuilder sb = new StringBuilder();
         sb.append("TestDifficulty");
         sb.append("{id=").append(id);
+        sb.append(", test=").append(test);
+        sb.append(", difficulty=").append(difficulty);
         sb.append(", questionsCount=").append(questionsCount);
         sb.append(", passScore=").append(passScore);
         sb.append('}');
         return sb.toString();
+    }
+
+    private void updateCollection() {
+        Set<TestDifficulty> difficultyLevels = test.getDifficultyLevels();
+        if (difficultyLevels == null) {
+            difficultyLevels = new HashSet<TestDifficulty>();
+            test.setDifficultyLevels(difficultyLevels);
+        }
+        difficultyLevels.add(this);
     }
 }
