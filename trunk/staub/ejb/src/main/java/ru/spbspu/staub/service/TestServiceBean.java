@@ -53,9 +53,11 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         Test result = makePersistent(test);
 
         for (DifficultyWrapper wrapper : difficulties) {
-            TestDifficulty testDifficulty = new TestDifficulty(test, wrapper.getDifficulty(),
-                    wrapper.getQuestionsCount(), wrapper.getPassScore());
-            getEntityManager().persist(testDifficulty);
+            if (wrapper.getSelected()) {
+                TestDifficulty testDifficulty = new TestDifficulty(test, wrapper.getDifficulty(),
+                        wrapper.getQuestionsCount(), wrapper.getPassScore());
+                getEntityManager().persist(testDifficulty);
+            }
         }
 
         return result;
