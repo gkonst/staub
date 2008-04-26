@@ -26,7 +26,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
     public Student findByNameAndCode(String name, String code) {
         Student student = null;
         try {
-            Query q = getEntityManager().createQuery("select s from Student s where s.name = :name and s.code = :code");
+            Query q = getEntityManager().createQuery("select s from Student s where s.name = :name and s.code = :code and s.active = true");
             q.setParameter("name", name);
             q.setParameter("code", code);
 
@@ -39,13 +39,13 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
 
     @SuppressWarnings("unchecked")
     public List<Student> findStudentsByGroup(Group group) {
-        Query q = getEntityManager().createQuery("select s from Student s where s.group = :group");
+        Query q = getEntityManager().createQuery("select s from Student s where s.group = :group and s.active = true");
         q.setParameter("group", group);
         return q.getResultList();
     }
 
     public FormTable findStudentsToAssign(FormProperties formProperties, Group group) {
-        String query = "select s from Student s where s.group = :group";
+        String query = "select s from Student s where s.group = :group and s.active = true";
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("group", group);
         return findAll(query, formProperties, parameters);

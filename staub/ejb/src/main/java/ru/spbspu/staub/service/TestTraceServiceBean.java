@@ -137,11 +137,11 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         Query q;
         Set<Topic> topics = test.getTopics();
         if ((topics != null) && (!topics.isEmpty())) {
-            q = getEntityManager().createQuery("select q.id from Question q, Test tt join tt.topics t where q.topic = t and tt = :test and q.difficulty = :difficulty");
+            q = getEntityManager().createQuery("select q.id from Question q, Test tt join tt.topics t where q.topic = t and tt = :test and q.difficulty = :difficulty and q.active = true");
             q.setParameter("test", test);
             q.setParameter("difficulty", testDifficulty.getDifficulty());
         } else {
-            q = getEntityManager().createQuery("select q.id from Question q where q.topic.category = :category and q.difficulty = :difficulty");
+            q = getEntityManager().createQuery("select q.id from Question q where q.topic.category = :category and q.difficulty = :difficulty and q.active = true");
             q.setParameter("category", test.getCategory());
             q.setParameter("difficulty", testDifficulty.getDifficulty());
         }
