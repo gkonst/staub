@@ -113,6 +113,7 @@ CREATE TABLE student (
     fk_group INTEGER NOT NULL,
     name CHARACTER VARYING(256) NOT NULL,
     code CHARACTER VARYING(16) NOT NULL,
+    active BOOLEAN,
     CONSTRAINT pk_student PRIMARY KEY (id),
     CONSTRAINT ak_student_code UNIQUE (code),
     CONSTRAINT fk_group FOREIGN KEY (fk_group) REFERENCES "group" (id)

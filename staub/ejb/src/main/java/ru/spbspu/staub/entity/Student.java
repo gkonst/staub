@@ -63,6 +63,18 @@ public class Student implements Serializable {
         this.group = group;
     }
 
+    private Boolean active;
+
+    @Basic
+    @Column(name = "active", length = 1)
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
