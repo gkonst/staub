@@ -27,20 +27,24 @@ INSERT INTO "group" (id,
 INSERT INTO student (id,
                      fk_group,
                      name,
-                     code)
+                     code,
+                     active)
      VALUES (nextval('seq_student'),
              currval('seq_group'),
              'Иванов Иван Иванович',
-             '87654351');
+             '87654351',
+             true);
 
 INSERT INTO student (id,
                      fk_group,
                      name,
-                     code)
+                     code,
+                     active)
      VALUES (nextval('seq_student'),
              currval('seq_group'),
              'Петров Петр Петрович',
-             '87654352');
+             '87654352',
+             true);
 
 INSERT INTO "group" (id,
                     name)
@@ -50,11 +54,13 @@ INSERT INTO "group" (id,
 INSERT INTO student (id,
                      fk_group,
                      name,
-                     code)
+                     code,
+                     active)
      VALUES (nextval('seq_student'),
              currval('seq_group'),
              'Сидоров Сидор Сидорович',
-             '87654353');
+             '87654353',
+             true);
 
 INSERT INTO test (id,
                   name,
