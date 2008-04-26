@@ -4,14 +4,13 @@ import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.DifficultyWrapper;
+import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.text.MessageFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Stateless EJB Service for manipulations with <code>Test</code> entity.
@@ -92,5 +91,27 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             }
         }
         return result;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Test> findAll() {
+        logger.debug(">>> Finding all(entity=#0)...", Test.class.getName());
+        StringBuilder queryString = new StringBuilder()
+                .append("select o from ")
+                .append(Test.class.getName())
+                .append(" o where o.active = true");
+        List<Test> result = getEntityManager().createQuery(queryString.toString()).getResultList();
+        logger.debug("<<< Finding all...Ok(#0 found)", result.size());
+        return result;
+    }
+
+    @Override
+    public FormTable findAll(FormProperties formProperties) {
+        StringBuilder queryString = new StringBuilder()
+                .append("select o from ")
+                .append(Test.class.getName())
+                .append(" o where o.active = true");
+        return findAll(queryString.toString(), formProperties, new HashMap<String, Object>(0));
     }
 }
