@@ -35,6 +35,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         validateTest(test);
 
         if (test.getId() == null) {
+            test.setActive(true);
             test.setCreatedBy(user.getUsername());
             test.setCreated(new Date());
         } else {

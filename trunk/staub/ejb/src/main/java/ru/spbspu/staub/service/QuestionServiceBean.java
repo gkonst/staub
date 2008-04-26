@@ -19,6 +19,7 @@ import java.util.Date;
 public class QuestionServiceBean extends GenericServiceBean<Question, Integer> implements QuestionService {
     public Question saveQuestion(Question question, User user) {
         if (question.getId() == null) {
+            question.setActive(true);
             question.setCreatedBy(user.getUsername());
             question.setCreated(new Date());
         } else {
