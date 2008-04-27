@@ -29,9 +29,6 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     @EJB
     private TestTraceService testTraceService;
 
-    @EJB
-    private StudentService studentService;
-
     public long countTests(Category category) {
         Query q = getEntityManager().createQuery("select count(t) from Test t where t.category = :category");
         q.setParameter("category", category);
@@ -91,7 +88,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     public void assignTest(Integer testId, List<Integer> studentIds) {
         Test test = findById(testId);
         for (Integer studentId : studentIds) {
-            Student student = studentService.findById(studentId);
+            Student student = getEntityManager().find(Student.class, studentId);
 
             Assignment assignment = new Assignment();
             assignment.setTest(test);
