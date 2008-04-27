@@ -7,6 +7,7 @@ import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
+import java.util.List;
 
 /**
  * The <code>AssignmentService</code> is a stateless EJB service to manipulate <code>Assignment</code> entities.
@@ -34,6 +35,15 @@ public interface AssignmentService extends GenericService<Assignment, Integer> {
      * @return the assignment if found; <code>null</code> otherwise
      */
     Assignment findAssignment(Student student, Test test);
+
+    /**
+     * Searches an assignments.
+     *
+     * @param student the test
+     *
+     * @return the list of assignments
+     */
+    List<Assignment> findAssignment(Student student);
 
     /**
      * Creates or updates an assignment.
