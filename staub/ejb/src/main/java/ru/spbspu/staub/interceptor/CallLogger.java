@@ -1,4 +1,4 @@
-package ru.spbspu.staub.interceptors;
+package ru.spbspu.staub.interceptor;
 
 import org.jboss.seam.log.Log;
 import org.jboss.seam.log.Logging;
