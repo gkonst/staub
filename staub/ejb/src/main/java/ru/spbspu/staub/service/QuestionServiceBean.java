@@ -8,6 +8,7 @@ import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -53,5 +54,30 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
                 .append(Question.class.getName())
                 .append(" o where o.active = true");
         return findAll(queryString.toString(), formProperties, new HashMap<String, Object>(0));
+    }
+
+    @Override
+    public void remove(Question question) {
+        logger.debug("> remove(question=#0)", question);
+
+        Question q = getEntityManager().merge(question);
+
+        long count = getQuestionTracesCount(q);
+        if (count == 0) {
+            logger.debug("*  No relations found.");
+            getEntityManager().remove(q);
+        } else {
+            logger.debug("*  Relations exist.");
+            q.setActive(false);
+            q = getEntityManager().merge(q);
+        }
+
+        logger.debug("< remove(question=#0)", q);
+    }
+
+    private long getQuestionTracesCount(Question question) {
+        Query q = getEntityManager().createQuery("select count(q) from QuestionTrace q where q.question = :question");
+        q.setParameter("question", question);
+        return (Long) q.getSingleResult();
     }
 }

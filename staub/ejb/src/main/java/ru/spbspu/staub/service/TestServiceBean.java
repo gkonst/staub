@@ -9,6 +9,7 @@ import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -76,14 +77,6 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         }
     }
 
-    private void validateTest(Test test) {
-        Integer timeLimit = test.getTimeLimit();
-        if ((timeLimit != null) && (timeLimit <= 0)) {
-            String message = MessageFormat.format("Could not save Test with timeLimit={0}.", timeLimit);
-            throw new IllegalArgumentException(message);
-        }
-    }
-
     public long getExpectedNumberOfQuestions(Test test) {
         long result = 0;
         Set<TestDifficulty> levels = test.getDifficultyLevels();
@@ -115,5 +108,38 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
                 .append(Test.class.getName())
                 .append(" o where o.active = true");
         return findAll(queryString.toString(), formProperties, new HashMap<String, Object>(0));
+    }
+
+    @Override
+    public void remove(Test test) {
+        logger.debug("> remove(test=#0)", test);
+
+        Test t = getEntityManager().merge(test);
+
+        long count = getTestTracesCount(t);
+        if (count == 0) {
+            logger.debug("*  No relations found.");
+            getEntityManager().remove(t);
+        } else {
+            logger.debug("*  Relations exist.");
+            t.setActive(false);
+            t = getEntityManager().merge(t);
+        }
+
+        logger.debug("< remove(difficulty=#0)", t);
+    }
+
+    private void validateTest(Test test) {
+        Integer timeLimit = test.getTimeLimit();
+        if ((timeLimit != null) && (timeLimit <= 0)) {
+            String message = MessageFormat.format("Could not save Test with timeLimit={0}.", timeLimit);
+            throw new IllegalArgumentException(message);
+        }
+    }
+
+    private long getTestTracesCount(Test test) {
+        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.test = :test");
+        q.setParameter("test", test);
+        return (Long) q.getSingleResult();
     }
 }

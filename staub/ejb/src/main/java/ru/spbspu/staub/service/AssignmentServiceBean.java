@@ -13,6 +13,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 /**
  * The <code>AssignmentServiceBean</code> is a stateless EJB service to manipulate <code>Assignment</code> entities.
@@ -42,6 +43,13 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
             // do nothing
         }
         return assignment;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Assignment> findAssignment(Student student) {
+        Query q = getEntityManager().createQuery("select a from Assignment a where a.student = :student");
+        q.setParameter("student", student);
+        return q.getResultList();     
     }
 
     public Assignment saveAssignment(Assignment assignment) {
