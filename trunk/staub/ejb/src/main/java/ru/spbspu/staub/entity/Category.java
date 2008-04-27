@@ -2,6 +2,7 @@ package ru.spbspu.staub.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * The <code>Category</code> class represents the Category entity.
@@ -15,6 +16,14 @@ public class Category implements Serializable {
 
     private Integer id;
 
+    private String name;
+
+    private String code;
+
+    private Discipline discipline;
+
+    private Set<Topic> topics;
+
     @Id
     @SequenceGenerator(name = "CategoryIdGenerator", sequenceName = "seq_category", allocationSize = 1)
     @GeneratedValue(generator = "CategoryIdGenerator", strategy = GenerationType.SEQUENCE)
@@ -27,8 +36,6 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    private String name;
-
     @Basic
     @Column(name = "name", length = 256)
     public String getName() {
@@ -38,8 +45,6 @@ public class Category implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    private String code;
 
     @Basic
     @Column(name = "code", length = 8)
@@ -51,9 +56,7 @@ public class Category implements Serializable {
         this.code = code;
     }
 
-    private Discipline discipline;
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fk_discipline", referencedColumnName = "id", nullable = false)
     public Discipline getDiscipline() {
         return discipline;
@@ -61,6 +64,15 @@ public class Category implements Serializable {
 
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
+    }
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
+    public Set<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(Set<Topic> topics) {
+        this.topics = topics;
     }
 
     @Override
@@ -88,7 +100,7 @@ public class Category implements Serializable {
         sb.append("Category");
         sb.append("{id=").append(id);
         sb.append(", name='").append(name).append('\'');
-        sb.append(", code=").append(code);
+        sb.append(", code='").append(code).append('\'');
         sb.append(", discipline=").append(discipline);
         sb.append('}');
 
