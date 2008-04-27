@@ -83,24 +83,28 @@ public class QuestionBean extends GenericModeBean {
 
             logger.debug(" currentQuestion : #0", currentQuestion);
 
-                if (previousPart != null && !previousPart.equals(currentQuestion.getPart())) {
-                    logger.debug(" part changed(#0->#1) -> checking", previousPart, currentQuestion.getPart());
-                    if (!testTraceService.checkPart(testTrace, previousPart)) {
-                        logger.debug(" part checking failed -> test ended");
-                        testTrace = testTraceService.endTest(testTrace, false);
-                        addFacesMessage("Part validation failed");
-                        finished = true;
-                    }
+            if (previousPart != null && !previousPart.equals(currentQuestion.getPart())) {
+                logger.debug(" part changed(#0->#1) -> checking", previousPart, currentQuestion.getPart());
+                if (!testTraceService.checkPart(testTrace, previousPart)) {
+                    logger.debug(" part checking failed -> test ended");
+                    testTrace = testTraceService.endTest(testTrace, false);
+                    addFacesMessage("Part validation failed");
+                    finished = true;
+                    logger.debug("<<< Init question...failed");
+                    return;
                 }
+            }
 
             // not sure
             if (testTimer != null && testTimer.isExpired()) {
                 logger.debug(" test timer expired -> test ended");
-                  // TODO implement ask AEL what to do
+                // TODO implement ask AEL what to do
                 testTraceService.checkPart(testTrace, previousPart != null ? previousPart : currentQuestion.getPart());
                 testTrace = testTraceService.endTest(testTrace, false);
                 addFacesMessage("время теста истекло");
                 finished = true;
+                logger.debug("<<< Init question...failed");
+                return;
             }
 
             // starting solving question
@@ -117,7 +121,7 @@ public class QuestionBean extends GenericModeBean {
                 nextQuestion();
                 // recursive =))
                 initTest();
-                addFacesMessage("время вопроса истекло");
+                //addFacesMessage("время вопроса истекло"); TODO ?????????
             }
 
             previousPart = currentQuestion.getPart();

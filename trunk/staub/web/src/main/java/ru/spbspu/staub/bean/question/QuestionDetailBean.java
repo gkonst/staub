@@ -8,15 +8,13 @@ import org.richfaces.event.UploadEvent;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.entity.*;
-import ru.spbspu.staub.model.question.AnswerType;
-import ru.spbspu.staub.model.question.ChoiceType;
+import ru.spbspu.staub.model.AnswerWrapper;
+import ru.spbspu.staub.model.ChoiceAnswerWrapper;
 import ru.spbspu.staub.model.question.QuestionType;
 import ru.spbspu.staub.service.*;
 import ru.spbspu.staub.util.ImageResource;
 
 import java.io.*;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,14 +51,10 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     private List<Topic> topicList;
     private List<Difficulty> difficultyList;
 
-    private Object correctAnswer;
+    private AnswerWrapper answer;
 
-    private AnswerTypes answerType;
+    private AnswerWrapper.Type answerType;
 
-    private static enum AnswerTypes {
-        SINGLE_CHOICE,
-        MULTIPLE_CHOICE
-    }
 
     private Discipline discipline;
     private Category category;
@@ -73,7 +67,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         fillDisciplineList();
         fillDifficultyList();
         answerType = null;
-        correctAnswer = null;
+        answer = null;
         if (isCreateMode()) {
             setModel(new Question());
             setQuestionDefinition(new QuestionType());
@@ -83,45 +77,12 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             setModel(questionService.findById(modelId));
             setCategory(getModel().getTopic().getCategory());
             setDiscipline(getModel().getTopic().getCategory().getDiscipline());
-            determineAnswerType();
-            determineCorrectAnswer();
+            answer = AnswerWrapper.getAnswer(getQuestionDefinition());
+            answer.determineCorrectAnswer();
+            setAnswerType(answer.getType());
         }
         refreshCategories();
         refreshTopics();
-    }
-
-    private void determineCorrectAnswer() {
-        logger.debug(" determineCorrectAnswer...");
-        if (AnswerTypes.SINGLE_CHOICE.equals(answerType)) {
-            for (AnswerType type : getQuestionDefinition().getSingleChoice().getAnswer()) {
-                logger.debug("  checking answer : id=#0,value=#1,correct=#2", type.getId(), type.getValue(), type.getCorrect());
-                if (Boolean.valueOf(type.getCorrect())) {
-                    logger.debug("  !found correct answer : id=#0,value=#1", type.getId(), type.getValue());
-                    setCorrectAnswer(type);
-                }
-            }
-        } else if (AnswerTypes.MULTIPLE_CHOICE.equals(answerType)) {
-            List<AnswerType> result = new ArrayList<AnswerType>();
-            for (AnswerType type : getQuestionDefinition().getMultipleChoice().getAnswer()) {
-                if (Boolean.valueOf(type.getCorrect())) {
-                    result.add(type);
-                }
-            }
-            setCorrectAnswer(result);
-        } else {
-            throw new IllegalArgumentException("Unrecognized answer type : " + answerType);
-        }
-        logger.debug(" determineCorrectAnswer...Ok");
-    }
-
-    private void determineAnswerType() {
-        if (getQuestionDefinition().getSingleChoice() != null) {
-            setAnswerType(AnswerTypes.SINGLE_CHOICE);
-        } else if (getQuestionDefinition().getMultipleChoice() != null) {
-            setAnswerType(AnswerTypes.MULTIPLE_CHOICE);
-        } else {
-            throw new IllegalArgumentException("Unrecognized answer type");
-        }
     }
 
     private void fillDisciplineList() {
@@ -154,7 +115,8 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     @Override
     public void doSave() {
         logger.debug("Saving question...");
-        resolveCorrectAnswer();
+        answer.resolveCorrectAnswer();
+        // may be need update model?
         setModel(questionService.saveQuestion(getModel(), user));
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
@@ -162,77 +124,16 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         logger.debug("Saving... OK");
     }
 
-    private void resolveCorrectAnswer() {
-        if (AnswerTypes.SINGLE_CHOICE.equals(answerType)) {
-            for (AnswerType type : getQuestionDefinition().getSingleChoice().getAnswer()) {
-                if (((AnswerType) getCorrectAnswer()).getId().equals(type.getId())) {
-                    type.setCorrect(String.valueOf(Boolean.TRUE));
-                }
-            }
-        } else if (AnswerTypes.MULTIPLE_CHOICE.equals(answerType)) {
-            List<AnswerType> result = new ArrayList<AnswerType>();
-            for (AnswerType type : getQuestionDefinition().getMultipleChoice().getAnswer()) {
-                for (AnswerType correctAnswer : (List<AnswerType>) getCorrectAnswer()) {
-                    if (correctAnswer.getId().equals(type.getId())) {
-                        type.setCorrect(String.valueOf(Boolean.TRUE));
-                    }
-                }
-            }
-            setCorrectAnswer(result);
-        } else {
-            throw new IllegalArgumentException("Unrecognized answer type");
-        }
-    }
-
-    public AnswerTypes[] getAnswerTypes() {
-        return AnswerTypes.values();
-    }
-
-    public void addAnswer() {
-        logger.debug(">>> Adding answer...");
-        if (getQuestionDefinition().getSingleChoice() != null) {
-            AnswerType newAnswer = new AnswerType();
-            newAnswer.setId(new BigInteger(String.valueOf(getQuestionDefinition().getSingleChoice().getAnswer().size() + 1)));
-            logger.debug(" single choice type, id=#0, totalWas=#1", newAnswer.getId(), getQuestionDefinition().getSingleChoice().getAnswer().size());
-            getQuestionDefinition().getSingleChoice().getAnswer().add(newAnswer);
-        } else if (getQuestionDefinition().getMultipleChoice() != null) {
-            AnswerType newAnswer = new AnswerType();
-            newAnswer.setId(new BigInteger(String.valueOf(getQuestionDefinition().getMultipleChoice().getAnswer().size() + 1)));
-            logger.debug(" multiple choice type, id=#0, totalWas=#1", newAnswer.getId(), getQuestionDefinition().getMultipleChoice().getAnswer().size());
-            getQuestionDefinition().getMultipleChoice().getAnswer().add(newAnswer);
-        }
-        logger.debug("<<< Adding answer...Ok");
-    }
-
-    public void removeAnswer() {
-        logger.debug(">>> Removing answer...");
-        if (getQuestionDefinition().getSingleChoice() != null) {
-            int answerToRemoveId = getQuestionDefinition().getSingleChoice().getAnswer().size() - 1;
-            logger.debug(" single choice type, id=#0", answerToRemoveId);
-            getQuestionDefinition().getSingleChoice().getAnswer().remove(answerToRemoveId);
-        } else if (getQuestionDefinition().getMultipleChoice() != null) {
-            int answerToRemoveId = getQuestionDefinition().getMultipleChoice().getAnswer().size() - 1;
-            logger.debug(" single choice type, id=#0", answerToRemoveId);
-            getQuestionDefinition().getMultipleChoice().getAnswer().remove(answerToRemoveId);
-        }
-        logger.debug("<<< Removing answer...Ok");
+    public AnswerWrapper.Type[] getAnswerTypes() {
+        return AnswerWrapper.Type.values();
     }
 
     public void changeAnswerType() {
         logger.debug(">>> Changing answer type...#0", answerType);
-        if (AnswerTypes.SINGLE_CHOICE.equals(answerType)) {
-            getQuestionDefinition().setSingleChoice(new ChoiceType());
-            getQuestionDefinition().setMultipleChoice(null);
-            setCorrectAnswer(new AnswerType());
-        } else if (AnswerTypes.MULTIPLE_CHOICE.equals(answerType)) {
-            getQuestionDefinition().setMultipleChoice(new ChoiceType());
-            getQuestionDefinition().setSingleChoice(null);
-            setCorrectAnswer(new ArrayList<AnswerType>());
-        } else {
-            throw new IllegalArgumentException("Unrecognized answer type");
+        answer = AnswerWrapper.createAnswer(getQuestionDefinition(), getAnswerType());
+        if (answer.isChoice()) {
+            ((ChoiceAnswerWrapper)answer).addAnswer();
         }
-        addAnswer();
-        logger.debug(" new answer type=#0, correct answer type=#1", answerType, correctAnswer.getClass().getName());
         logger.debug("<<< Changing answer type...Ok");
     }
 
@@ -320,19 +221,19 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         getModel().setDefinition(questionDefinition);
     }
 
-    public Object getCorrectAnswer() {
-        return correctAnswer;
-    }
-
-    public void setCorrectAnswer(Object correctAnswer) {
-        this.correctAnswer = correctAnswer;
-    }
-
-    public AnswerTypes getAnswerType() {
+    public AnswerWrapper.Type getAnswerType() {
         return answerType;
     }
 
-    public void setAnswerType(AnswerTypes answerType) {
+    public AnswerWrapper getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(AnswerWrapper answer) {
+        this.answer = answer;
+    }
+
+    public void setAnswerType(AnswerWrapper.Type answerType) {
         this.answerType = answerType;
     }
 
