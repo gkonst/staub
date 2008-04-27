@@ -11,38 +11,55 @@ import ru.spbspu.staub.model.question.ChoiceType;
  * @author Konstantin Grigoriev
  * @author Alexander V. Elagin
  */
-public class SingleChoiceAnswerWrapper extends AnswerWrapper {
-    private ChoiceType answerDefinition;
+public class SingleChoiceAnswerWrapper extends ChoiceAnswerWrapper<ru.spbspu.staub.model.question.AnswerType> {
 
-    private ru.spbspu.staub.model.question.AnswerType userChoice;
-
-    public SingleChoiceAnswerWrapper(ChoiceType answerDefinition) {
-        this.answerDefinition = answerDefinition;
+    protected SingleChoiceAnswerWrapper(ChoiceType definition) {
+        super(definition);
     }
 
-    public ru.spbspu.staub.model.question.AnswerType getUserChoice() {
-        return userChoice;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Type getType() {
+        return Type.SINGLE_CHOICE;
     }
 
-    public void setUserChoice(ru.spbspu.staub.model.question.AnswerType userChoice) {
-        this.userChoice = userChoice;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resolveCorrectAnswer() {
+        for (ru.spbspu.staub.model.question.AnswerType type : getDefinition().getAnswer()) {
+            if (getCurrent().getId().equals(type.getId())) {
+                type.setCorrect(String.valueOf(Boolean.TRUE));
+            }
+        }
     }
 
-    public ChoiceType getAnswerDefinition() {
-        return answerDefinition;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void determineCorrectAnswer() {
+        for (ru.spbspu.staub.model.question.AnswerType type : getDefinition().getAnswer()) {
+            if (Boolean.valueOf(type.getCorrect())) {
+                setCurrent(type);
+            }
+        }
     }
 
-    public void setAnswerDefinition(ChoiceType answerDefinition) {
-        this.answerDefinition = answerDefinition;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public ru.spbspu.staub.model.answer.AnswerType getAnswer() {
         ru.spbspu.staub.model.answer.AnswerType answer = null;
-        if (userChoice != null) {
+        if (getCurrent() != null) {
             answer = new ru.spbspu.staub.model.answer.AnswerType();
             AnswerType.SingleChoice singleChoice = new AnswerType.SingleChoice();
             ElementType element = new ElementType();
-            element.setAnswerId(userChoice.getId());
+            element.setAnswerId(getCurrent().getId());
             singleChoice.setElement(element);
             answer.setSingleChoice(singleChoice);
         }

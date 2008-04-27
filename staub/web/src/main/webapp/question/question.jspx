@@ -50,7 +50,7 @@
                                    styleClass="button"
                                    rendered="#{!pageBean.finished}"
                                    reRender="content, sidebar"
-                                   onclick="Widget.Timer.destroyById('questionTimer')">
+                                   onclick="Widget.Timer.destroyById('questionTimer'); Widget.Timer.destroyById('testTimer')">
                     <f:param id="nextQuestionButtonParamBeanMode" name="beanMode" value="VIEW_MODE"/>
                 </a4j:commandButton>
                 <a4j:jsFunction id="nextQuestionJsFunction"

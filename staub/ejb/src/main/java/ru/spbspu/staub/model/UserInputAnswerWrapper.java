@@ -9,26 +9,43 @@ import ru.spbspu.staub.model.question.UserInputType;
  *
  * @author Alexander V. Elagin
  */
-public class UserInputAnswerWrapper extends AnswerWrapper {
-    private UserInputType userInputType;
+public class UserInputAnswerWrapper extends AnswerWrapper<UserInputType, String> {
 
-    private String userInput;
-
-    public UserInputAnswerWrapper(UserInputType userInputType) {
-        this.userInputType = userInputType;
+    protected UserInputAnswerWrapper(UserInputType definition) {
+        super(definition);
     }
 
-    public UserInputType getUserInputType() {
-        return userInputType;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Type getType() {
+        return Type.USER_INPUT;
     }
 
-    public void setUserInput(String userInput) {
-        this.userInput = userInput;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resolveCorrectAnswer() {
+        getDefinition().setAnswer(getCurrent());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void determineCorrectAnswer() {
+        setCurrent(getDefinition().getAnswer());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public AnswerType getAnswer() {
         AnswerType answerType = new AnswerType();
-        answerType.setUserInput(userInput);
+        answerType.setUserInput(getCurrent());
         return answerType;
     }
 }

@@ -209,54 +209,48 @@
         <a4j:outputPanel id="correctAnswerPanel">
             <h:selectOneRadio id="correctAnswerSingleChoice"
                               layout="pageDirection"
-                              rendered="#{pageBean.questionDefinition.singleChoice != null}"
+                              rendered="#{pageBean.answer.singleChoice}"
                               converter="ru.spbspu.staub.ObjectSelectConverter"
-                              value="#{pageBean.correctAnswer}"
+                              value="#{pageBean.answer.current}"
                               disabled="#{pageBean.viewMode}"
                               required="true"
                               requiredMessage="#{messages['question.detail.required.correctSingleChoice']}"
                               styleClass="radio">
                 <s:selectItems id="correctAnswerSingleChoiceItems"
-                               value="#{pageBean.questionDefinition.singleChoice.answer}"
+                               value="#{pageBean.answer.definition.answer}"
                                var="temp"/>
             </h:selectOneRadio>
             <h:selectManyCheckbox id="correctAnswerMultipleChoice"
                                   layout="pageDirection"
-                                  rendered="#{pageBean.questionDefinition.multipleChoice != null}"
+                                  rendered="#{pageBean.answer.multipleChoice}"
                                   converter="ru.spbspu.staub.ObjectSelectConverter"
-                                  value="#{pageBean.correctAnswer}"
+                                  value="#{pageBean.answer.current}"
                                   disabled="#{pageBean.viewMode}"
                                   required="true"
                                   requiredMessage="#{messages['question.detail.required.correctMultipleChoice']}"
                                   styleClass="checkbox">
                 <s:selectItems id="correctAnswerMultipleChoiceItems"
-                               value="#{pageBean.questionDefinition.multipleChoice.answer}"
+                               value="#{pageBean.answer.definition.answer}"
                                var="temp"/>
             </h:selectManyCheckbox>
+            <h:inputText id="correctAnswerUserInput"
+                         value="#{pageBean.answer.current}"
+                         disabled="#{pageBean.viewMode}"
+                         rendered="#{pageBean.answer.userInput}"
+                         required="true"
+                         requiredMessage="#{messages['question.detail.required.correctUserInput']}"/>
         </a4j:outputPanel>
     </td>
     <td colspan="2">
         <a4j:outputPanel id="answerLabelPanel">
             <table cellpadding="0" cellspacing="0">
-                <a4j:repeat id="singleChoiceRepeat"
-                            value="#{pageBean.questionDefinition.singleChoice.answer}"
+                <a4j:repeat id="choiceRepeat"
+                            value="#{pageBean.answer.definition.answer}"
                             var="answer"
-                            rendered="#{pageBean.questionDefinition.singleChoice != null}">
+                            rendered="#{pageBean.answer.singleChoice or pageBean.answer.multipleChoice}">
                     <tr>
                         <td>
-                            <h:inputText id="singleChoiceValueInput"
-                                         value="#{answer.value}"
-                                         disabled="#{pageBean.viewMode}"/>
-                        </td>
-                    </tr>
-                </a4j:repeat>
-                <a4j:repeat id="multipleChoiceRepeat"
-                            value="#{pageBean.questionDefinition.multipleChoice.answer}"
-                            var="answer"
-                            rendered="#{pageBean.questionDefinition.multipleChoice != null}">
-                    <tr>
-                        <td>
-                            <h:inputText id="multipleChoiceValueInput"
+                            <h:inputText id="choiceValueInput"
                                          value="#{answer.value}"
                                          disabled="#{pageBean.viewMode}"/>
                         </td>
@@ -266,21 +260,25 @@
         </a4j:outputPanel>
     </td>
     <td align="right">
-        <a4j:commandButton id="addAnswerButton"
-                           action="#{pageBean.addAnswer}"
-                           reRender="correctAnswerPanel,answerLabelPanel"
-                           styleClass="buttonImage"
-                           image="/images/icons/icon_add.gif"
-                           disabled="#{pageBean.viewMode}"
-                           immediate="true"/>
-        <rich:separator width="2px" lineType=""/>
-        <a4j:commandButton id="removeAnswerButton"
-                           action="#{pageBean.removeAnswer}"
-                           reRender="correctAnswerPanel,answerLabelPanel"
-                           styleClass="buttonImage"
-                           image="/images/icons/icon_remove.gif"
-                           disabled="#{pageBean.viewMode}"
-                           immediate="true"/>
+        <a4j:outputPanel id="answerButtonPanel">
+            <a4j:commandButton id="addAnswerButton"
+                               action="#{pageBean.answer.addAnswer}"
+                               reRender="correctAnswerPanel,answerLabelPanel"
+                               styleClass="buttonImage"
+                               image="/images/icons/icon_add.gif"
+                               disabled="#{pageBean.viewMode}"
+                               rendered="#{pageBean.answer.choice}"
+                               immediate="true"/>
+            <rich:separator width="2px"/>
+            <a4j:commandButton id="removeAnswerButton"
+                               action="#{pageBean.answer.removeAnswer}"
+                               reRender="correctAnswerPanel,answerLabelPanel"
+                               styleClass="buttonImage"
+                               image="/images/icons/icon_remove.gif"
+                               disabled="#{pageBean.viewMode}"
+                               rendered="#{pageBean.answer.choice}"
+                               immediate="true"/>
+        </a4j:outputPanel>
     </td>
 </tr>
 </table>

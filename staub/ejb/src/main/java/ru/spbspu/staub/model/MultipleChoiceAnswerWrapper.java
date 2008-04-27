@@ -14,39 +14,60 @@ import java.util.List;
  * @author Konstantin Grigoriev
  * @author Alexander V. Elagin
  */
-public class MultipleChoiceAnswerWrapper extends AnswerWrapper {
-    private ChoiceType answerDefinition;
+public class MultipleChoiceAnswerWrapper extends ChoiceAnswerWrapper<List<ru.spbspu.staub.model.question.AnswerType>> {
 
-    private List<ru.spbspu.staub.model.question.AnswerType> userChoice;
-
-    public MultipleChoiceAnswerWrapper(ChoiceType answerDefinition) {
-        userChoice = new ArrayList<ru.spbspu.staub.model.question.AnswerType>();
-        this.answerDefinition = answerDefinition;
+    protected MultipleChoiceAnswerWrapper(ChoiceType definition) {
+        super(definition);
+        setCurrent(new ArrayList<ru.spbspu.staub.model.question.AnswerType>());
     }
 
-    public ChoiceType getAnswerDefinition() {
-        return answerDefinition;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Type getType() {
+        return Type.MULTIPLE_CHOICE;
     }
 
-    public void setAnswerDefinition(ChoiceType answerDefinition) {
-        this.answerDefinition = answerDefinition;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resolveCorrectAnswer() {
+        for (ru.spbspu.staub.model.question.AnswerType type : getDefinition().getAnswer()) {
+            type.setCorrect(String.valueOf(Boolean.FALSE));
+            for (ru.spbspu.staub.model.question.AnswerType correctAnswer : getCurrent()) {
+                if (correctAnswer.getId().equals(type.getId())) {
+                    type.setCorrect(String.valueOf(Boolean.TRUE));
+                }
+            }
+        }
     }
 
-    public List<ru.spbspu.staub.model.question.AnswerType> getUserChoice() {
-        return userChoice;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void determineCorrectAnswer() {
+        setCurrent(new ArrayList<ru.spbspu.staub.model.question.AnswerType>()); // redundant
+        for (ru.spbspu.staub.model.question.AnswerType type : getDefinition().getAnswer()) {
+            if (Boolean.valueOf(type.getCorrect())) {
+                getCurrent().add(type);
+            }
+        }
     }
 
-    public void setUserChoice(List<ru.spbspu.staub.model.question.AnswerType> userChoice) {
-        this.userChoice = userChoice;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public AnswerType getAnswer() {
         AnswerType answer = null;
-        if (!userChoice.isEmpty()) {
+        if (!getCurrent().isEmpty()) {
             answer = new AnswerType();
             AnswerType.MultipleChoice multipleChoice = new AnswerType.MultipleChoice();
             List<ElementType> elements = multipleChoice.getElement();
-            for (ru.spbspu.staub.model.question.AnswerType choice : userChoice) {
+            for (ru.spbspu.staub.model.question.AnswerType choice : getCurrent()) {
                 ElementType element = new ElementType();
                 element.setAnswerId(choice.getId());
                 elements.add(element);
