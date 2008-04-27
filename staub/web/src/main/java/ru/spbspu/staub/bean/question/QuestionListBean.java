@@ -6,6 +6,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.Question;
+import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.QuestionService;
@@ -34,8 +35,12 @@ public class QuestionListBean extends GenericListBean<Question> {
      */
     @Override
     public void doDelete() {
-        questionService.remove(getSelected());
-        doRefresh();
+        try {
+            questionService.remove(getSelected());
+            doRefresh();
+        } catch (RemoveException e) {
+            addFacesMessageFromResourceBundle("common.messages.deleteFailed");
+        }
     }
 
 }
