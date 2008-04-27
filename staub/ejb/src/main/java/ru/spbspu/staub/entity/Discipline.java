@@ -2,6 +2,7 @@ package ru.spbspu.staub.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * The <code>Discipline</code> class represents the Discipline entity.
@@ -15,6 +16,12 @@ public class Discipline implements Serializable {
 
     private Integer id;
 
+    private String name;
+
+    private String code;
+
+    private Set<Category> categories;
+
     @Id
     @SequenceGenerator(name = "DisciplineIdGenerator", sequenceName = "seq_discipline", allocationSize = 1)
     @GeneratedValue(generator = "DisciplineIdGenerator", strategy = GenerationType.SEQUENCE)
@@ -27,8 +34,6 @@ public class Discipline implements Serializable {
         this.id = id;
     }
 
-    private String name;
-
     @Basic
     @Column(name = "name", length = 256)
     public String getName() {
@@ -39,8 +44,6 @@ public class Discipline implements Serializable {
         this.name = name;
     }
 
-    private String code;
-
     @Basic
     @Column(name = "code", length = 8)
     public String getCode() {
@@ -49,6 +52,15 @@ public class Discipline implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    @OneToMany(mappedBy = "discipline", cascade = CascadeType.REMOVE)
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
     @Override
@@ -76,7 +88,7 @@ public class Discipline implements Serializable {
         sb.append("Discipline");
         sb.append("{id=").append(id);
         sb.append(", name='").append(name).append('\'');
-        sb.append(", code=").append(code);
+        sb.append(", code='").append(code).append('\'');
         sb.append('}');
 
         return sb.toString();

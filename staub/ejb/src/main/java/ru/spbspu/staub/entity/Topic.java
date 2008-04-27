@@ -15,6 +15,12 @@ public class Topic implements Serializable {
 
     private Integer id;
 
+    private String name;
+
+    private String code;
+
+    private Category category;
+
     @Id
     @SequenceGenerator(name = "TopicIdGenerator", sequenceName = "seq_topic", allocationSize = 1)
     @GeneratedValue(generator = "TopicIdGenerator", strategy = GenerationType.SEQUENCE)
@@ -27,8 +33,6 @@ public class Topic implements Serializable {
         this.id = id;
     }
 
-    private String name;
-
     @Basic
     @Column(name = "name", length = 256)
     public String getName() {
@@ -38,8 +42,6 @@ public class Topic implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    private String code;
 
     @Basic
     @Column(name = "code", length = 10)
@@ -51,9 +53,7 @@ public class Topic implements Serializable {
         this.code = code;
     }
 
-    private Category category;
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fk_category", referencedColumnName = "id", nullable = false)
     public Category getCategory() {
         return category;
@@ -75,7 +75,6 @@ public class Topic implements Serializable {
         Topic other = (Topic) otherObject;
 
         return id.equals(other.id);
-
     }
 
     @Override
@@ -89,7 +88,7 @@ public class Topic implements Serializable {
         sb.append("Topic");
         sb.append("{id=").append(id);
         sb.append(", name='").append(name).append('\'');
-        sb.append(", code=").append(code);
+        sb.append(", code='").append(code).append('\'');
         sb.append(", category=").append(category);
         sb.append('}');
 

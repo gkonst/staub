@@ -24,4 +24,35 @@ public class TopicServiceBean extends GenericServiceBean<Topic, Integer> impleme
         q.setParameter("category", category);
         return q.getResultList();
     }
+
+    @Override
+    public void remove(Topic topic) {
+        logger.debug("> remove(topic=#0)", topic);
+
+        Topic t = getEntityManager().merge(topic);
+
+        long count = getQuestionsCount(t) + getTestsCount(t);
+        if (count == 0) {
+            logger.debug("*  No relations found.");
+        } else {
+            logger.debug("*  Relations exist.");
+            throw new IllegalArgumentException("Could not remove a topic.");
+        }
+
+        getEntityManager().remove(t);
+
+        logger.debug("< remove(topic=#0)", topic);
+    }
+
+    private long getQuestionsCount(Topic topic) {
+        Query q = getEntityManager().createQuery("select count(q) from Question q where q.topic = :topic");
+        q.setParameter("topic", topic);
+        return (Long) q.getSingleResult();
+    }
+
+    private long getTestsCount(Topic topic) {
+        Query q = getEntityManager().createQuery("select count(t) from Test t join t.topics tt where tt = :topic");
+        q.setParameter("topic", topic);
+        return (Long) q.getSingleResult();
+    }
 }
