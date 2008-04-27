@@ -24,13 +24,10 @@ import java.util.Set;
 @Stateless
 public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer> implements TestTraceService {
     @EJB
-    AssignmentService assignmentService;
+    private AssignmentService assignmentService;
 
     @EJB
-    QuestionTraceService questionTraceService;
-
-    @EJB
-    TestService testService;
+    private QuestionTraceService questionTraceService;
 
     @SuppressWarnings("unchecked")
     public TestTrace getTestTrace(Test test, Student student) {
