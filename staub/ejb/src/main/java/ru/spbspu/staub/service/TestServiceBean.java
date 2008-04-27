@@ -116,6 +116,8 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
 
         Test t = getEntityManager().merge(test);
 
+        assignmentService.removeAssignments(test);
+
         long count = getTestTracesCount(t);
         if (count == 0) {
             logger.debug("*  No relations found.");

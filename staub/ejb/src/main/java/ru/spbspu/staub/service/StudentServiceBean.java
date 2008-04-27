@@ -2,7 +2,6 @@ package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
-import ru.spbspu.staub.entity.Assignment;
 import ru.spbspu.staub.entity.Group;
 import ru.spbspu.staub.entity.Student;
 import ru.spbspu.staub.model.list.FormProperties;
@@ -13,7 +12,6 @@ import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -85,7 +83,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
 
         Student s = getEntityManager().merge(student);
 
-        removeAssignments(s);
+        assignmentService.removeAssignments(s);
 
         long count = getTestTracesCount(s);
         if (count == 0) {
@@ -104,14 +102,5 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
         Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.student = :student");
         q.setParameter("student", student);
         return (Long) q.getSingleResult();
-    }
-
-    private void removeAssignments(Student s) {
-        Iterator<Assignment> iter = assignmentService.findAssignment(s).iterator();
-        while (iter.hasNext()) {
-            Assignment assignment = iter.next();
-            iter.remove();
-            getEntityManager().remove(assignment);
-        }
     }
 }
