@@ -1,5 +1,6 @@
 package ru.spbspu.staub.service;
 
+import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
 
@@ -24,6 +25,15 @@ public interface QuestionTraceService extends GenericService<QuestionTrace, Inte
      * @return fetched list
      */
     List<Integer> findIdsByTestTraceId(TestTrace testTrace);
+
+    /**
+     * Counts a question traces of a specific question.
+     *
+     * @param question the question
+     *
+     * @return the number of question traces
+     */
+    long countQuestionTraces(Question question);
 
     /**
      * Sets the "started" field of a trace element. If the field is not <code>null</code> it is keeped unchanged.

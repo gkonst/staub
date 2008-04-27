@@ -68,7 +68,7 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         testTrace.setTestPassed(passed);
 
         testTrace.setFinished(new Date());
-        
+
         makePersistent(testTrace);
 
         assignmentService.removeAssignment(testTrace.getStudent(), testTrace.getTest());
@@ -107,6 +107,18 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     public long getCount(TestTrace testTrace) {
         Query q = getEntityManager().createQuery("select count(q) from QuestionTrace q where q.testTrace = :testTrace");
         q.setParameter("testTrace", testTrace);
+        return (Long) q.getSingleResult();
+    }
+
+    public long countTestTraces(Student student) {
+        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.student = :student");
+        q.setParameter("student", student);
+        return (Long) q.getSingleResult();
+    }
+
+    public long countTestTraces(Test test) {
+        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.test = :test");
+        q.setParameter("test", test);
         return (Long) q.getSingleResult();
     }
 

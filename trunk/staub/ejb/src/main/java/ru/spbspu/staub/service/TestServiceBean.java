@@ -27,10 +27,34 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     private AssignmentService assignmentService;
 
     @EJB
-    private TestService testService;
+    private TestTraceService testTraceService;
 
     @EJB
     private StudentService studentService;
+
+    public long countTests(Category category) {
+        Query q = getEntityManager().createQuery("select count(t) from Test t where t.category = :category");
+        q.setParameter("category", category);
+        return (Long) q.getSingleResult();
+    }
+
+    private long countTests(Difficulty difficulty) {
+        Query q = getEntityManager().createQuery("select count(t) from Test t join t.difficultyLevels d where d.difficulty = :difficulty");
+        q.setParameter("difficulty", difficulty);
+        return (Long) q.getSingleResult();
+    }
+
+    public long countTests(Discipline discipline) {
+        Query q = getEntityManager().createQuery("select count(t) from Discipline d join d.categories c, Test t where c = t.category and d = :discipline");
+        q.setParameter("discipline", discipline);
+        return (Long) q.getSingleResult();
+    }
+
+    public long countTests(Topic topic) {
+        Query q = getEntityManager().createQuery("select count(t) from Test t join t.topics tt where tt = :topic");
+        q.setParameter("topic", topic);
+        return (Long) q.getSingleResult();
+    }
 
     public Test saveTest(Test test, List<DifficultyWrapper> difficulties, User user) {
         validateTest(test);
@@ -65,7 +89,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     }
 
     public void assignTest(Integer testId, List<Integer> studentIds) {
-        Test test = testService.findById(testId);
+        Test test = findById(testId);
         for (Integer studentId : studentIds) {
             Student student = studentService.findById(studentId);
 
@@ -115,17 +139,21 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         logger.debug("> remove(test=#0)", test);
 
         Test t = getEntityManager().merge(test);
-
-        assignmentService.removeAssignments(test);
-
-        long count = getTestTracesCount(t);
-        if (count == 0) {
-            logger.debug("*  No relations found.");
-            getEntityManager().remove(t);
+        if (assignmentService.countAssignments(t) == 0) {
+            logger.debug("*  No related Assignment entities found.");
+            if (testTraceService.countTestTraces(t) == 0) {
+                logger.debug("*  No related TestTrace entities found.");
+                getEntityManager().remove(t);
+                logger.debug("*  Test removed from a database.");
+            } else {
+                logger.debug("*  Related TestTrace entities exist.");
+                t.setActive(false);
+                t = getEntityManager().merge(t);
+                logger.debug("*  Test marked inactive.");
+            }
         } else {
-            logger.debug("*  Relations exist.");
-            t.setActive(false);
-            t = getEntityManager().merge(t);
+            logger.debug("*  Related Assignment entities exist.");
+            throw new IllegalArgumentException("Could not remove a Test.");
         }
 
         logger.debug("< remove(difficulty=#0)", t);
@@ -137,11 +165,5 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             String message = MessageFormat.format("Could not save Test with timeLimit={0}.", timeLimit);
             throw new IllegalArgumentException(message);
         }
-    }
-
-    private long getTestTracesCount(Test test) {
-        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.test = :test");
-        q.setParameter("test", test);
-        return (Long) q.getSingleResult();
     }
 }

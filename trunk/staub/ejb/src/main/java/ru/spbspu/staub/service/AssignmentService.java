@@ -55,6 +55,24 @@ public interface AssignmentService extends GenericService<Assignment, Integer> {
     Assignment findAssignment(Student student, Test test);
 
     /**
+     * Counts assignments for a specific test.
+     *
+     * @param test the test
+     *
+     * @return the number of assignments
+     */
+    long countAssignments(Test test);
+
+    /**
+     * Counts assignments of a student.
+     *
+     * @param student the student
+     *
+     * @return the number of assignments
+     */
+    long countAssignments(Student student);
+
+    /**
      * Creates or updates an assignment.
      *
      * @param assignment the assignment to process
