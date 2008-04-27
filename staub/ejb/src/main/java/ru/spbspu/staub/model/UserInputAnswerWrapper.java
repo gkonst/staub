@@ -1,6 +1,7 @@
 package ru.spbspu.staub.model;
 
 import ru.spbspu.staub.model.answer.AnswerType;
+import ru.spbspu.staub.model.question.InputType;
 import ru.spbspu.staub.model.question.UserInputType;
 
 /**
@@ -47,5 +48,9 @@ public class UserInputAnswerWrapper extends AnswerWrapper<UserInputType, String>
         AnswerType answerType = new AnswerType();
         answerType.setUserInput(getCurrent());
         return answerType;
+    }
+
+    public InputType[] getSubtypes() {
+        return InputType.values();
     }
 }
