@@ -38,7 +38,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         return (Long) q.getSingleResult();
     }
 
-    private long countTests(Difficulty difficulty) {
+    public long countTests(Difficulty difficulty) {
         Query q = getEntityManager().createQuery("select count(t) from Test t join t.difficultyLevels d where d.difficulty = :difficulty");
         q.setParameter("difficulty", difficulty);
         return (Long) q.getSingleResult();
