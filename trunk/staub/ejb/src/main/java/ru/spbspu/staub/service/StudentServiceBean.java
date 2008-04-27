@@ -4,6 +4,7 @@ import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.Group;
 import ru.spbspu.staub.entity.Student;
+import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
@@ -81,7 +82,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
     }
 
     @Override
-    public void remove(Student student) {
+    public void remove(Student student) throws RemoveException {
         logger.debug("> remove(student=#0)", student);
 
         Student s = getEntityManager().merge(student);
@@ -99,7 +100,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
             }
         } else {
             logger.debug("*  Related Assignment entities exist.");
-            throw new IllegalArgumentException("Could not remove a Student.");
+            throw new RemoveException("Could not remove a Student.");
         }
 
         logger.debug("< remove(student=#0)", s);

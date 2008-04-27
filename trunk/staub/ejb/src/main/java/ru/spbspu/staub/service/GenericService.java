@@ -1,5 +1,6 @@
 package ru.spbspu.staub.service;
 
+import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
@@ -17,6 +18,7 @@ public interface GenericService<T, ID extends Serializable> {
      * Fetches entity by specific id.
      *
      * @param id id to fetch
+     *
      * @return fetched entity
      */
     T findById(ID id);
@@ -35,6 +37,7 @@ public interface GenericService<T, ID extends Serializable> {
      * Encapsulates paging, sort and search features.
      *
      * @param formProperties form properties for fetching
+     *
      * @return result fetch
      */
     FormTable findAll(FormProperties formProperties);
@@ -44,6 +47,7 @@ public interface GenericService<T, ID extends Serializable> {
      * Uses <code>EntityManager.merge(Object entity)</code> method.
      *
      * @param entity entity to persist
+     *
      * @return persistent entity(with id field filled)
      */
     T makePersistent(T entity);
@@ -52,6 +56,8 @@ public interface GenericService<T, ID extends Serializable> {
      * Removes an entity from a database.
      *
      * @param entity the entity to remove
+     *
+     * @throws RemoveException if a remove operation could not be performed.
      */
-    void remove(T entity);
+    void remove(T entity) throws RemoveException;
 }

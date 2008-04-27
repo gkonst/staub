@@ -2,6 +2,7 @@ package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.log.Log;
+import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
@@ -202,7 +203,7 @@ public abstract class GenericServiceBean<T, ID extends Serializable> implements 
     public void destroy() {
     }
 
-    public void remove(T entity) {
+    public void remove(T entity) throws RemoveException {
         logger.debug(">>> remove(entity=#0)...", entityClass.getName());
         getEntityManager().remove(entity);
         logger.debug("<<< remove...Ok");

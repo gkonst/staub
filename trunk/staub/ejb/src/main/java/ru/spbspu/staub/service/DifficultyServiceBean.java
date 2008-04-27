@@ -3,6 +3,7 @@ package ru.spbspu.staub.service;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.Difficulty;
+import ru.spbspu.staub.exception.RemoveException;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -24,7 +25,7 @@ public class DifficultyServiceBean extends GenericServiceBean<Difficulty, Intege
     private TestService testService;
 
     @Override
-    public void remove(Difficulty difficulty) {
+    public void remove(Difficulty difficulty) throws RemoveException {
         logger.debug("> remove(difficulty=#0)", difficulty);
 
         Difficulty d = getEntityManager().merge(difficulty);
@@ -34,7 +35,7 @@ public class DifficultyServiceBean extends GenericServiceBean<Difficulty, Intege
             logger.debug("*  Difficulty removed from a database.");
         } else {
             logger.debug("*  Related entities exist.");
-            throw new IllegalArgumentException("Could not remove a difficulty.");
+            throw new RemoveException("Could not remove a difficulty.");
         }
 
         logger.debug("< remove(difficulty=#0)", difficulty);

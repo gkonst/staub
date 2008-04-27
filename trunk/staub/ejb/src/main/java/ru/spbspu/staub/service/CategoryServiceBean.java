@@ -4,6 +4,7 @@ import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Discipline;
+import ru.spbspu.staub.exception.RemoveException;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -34,7 +35,7 @@ public class CategoryServiceBean extends GenericServiceBean<Category, Integer> i
     }
 
     @Override
-    public void remove(Category category) {
+    public void remove(Category category) throws RemoveException {
         logger.debug("> remove(category=#0)", category);
 
         Category c = getEntityManager().merge(category);
@@ -44,7 +45,7 @@ public class CategoryServiceBean extends GenericServiceBean<Category, Integer> i
             logger.debug("*  Category removed from a database.");
         } else {
             logger.debug("*  Related entities exist.");
-            throw new IllegalArgumentException("Could not remove a category.");
+            throw new RemoveException("Could not remove a category.");
         }
 
         logger.debug("< remove(category=#0)", category);
