@@ -12,8 +12,8 @@ import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The <code>AssignmentServiceBean</code> is a stateless EJB service to manipulate <code>Assignment</code> entities.
@@ -31,6 +31,20 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
         return findAll(query, formProperties, parameters);
     }
 
+    @SuppressWarnings("unchecked")
+    public List<Assignment> findAssignment(Student student) {
+        Query q = getEntityManager().createQuery("select a from Assignment a where a.student = :student");
+        q.setParameter("student", student);
+        return q.getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Assignment> findAssignment(Test test) {
+        Query q = getEntityManager().createQuery("select a from Assignment a where a.test = :test");
+        q.setParameter("test", test);
+        return q.getResultList();
+    }
+
     public Assignment findAssignment(Student student, Test test) {
         Query q = getEntityManager()
                 .createQuery("select a from Assignment a where a.student = :student and a.test = :test");
@@ -45,15 +59,20 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
         return assignment;
     }
 
-    @SuppressWarnings("unchecked")
-    public List<Assignment> findAssignment(Student student) {
-        Query q = getEntityManager().createQuery("select a from Assignment a where a.student = :student");
-        q.setParameter("student", student);
-        return q.getResultList();     
-    }
-
     public Assignment saveAssignment(Assignment assignment) {
         return makePersistent(assignment);
+    }
+
+    public void removeAssignments(Student student) {
+        for (Assignment assignment : findAssignment(student)) {
+            getEntityManager().remove(assignment);
+        }
+    }
+
+    public void removeAssignments(Test test) {
+        for (Assignment assignment : findAssignment(test)) {
+            getEntityManager().remove(assignment);
+        }
     }
 
     public void removeAssignment(Student student, Test test) {
