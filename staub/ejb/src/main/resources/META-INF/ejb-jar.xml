@@ -8,7 +8,7 @@
         <interceptor-binding>
             <ejb-name>*</ejb-name>
             <interceptor-class>org.jboss.seam.ejb.SeamInterceptor</interceptor-class>
-            <interceptor-class>ru.spbspu.staub.interceptors.CallLogger</interceptor-class>
+            <interceptor-class>ru.spbspu.staub.interceptor.CallLogger</interceptor-class>
         </interceptor-binding>
     </assembly-descriptor>
 </ejb-jar>

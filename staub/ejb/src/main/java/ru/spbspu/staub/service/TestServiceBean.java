@@ -3,6 +3,7 @@ package ru.spbspu.staub.service;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.*;
+import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.DifficultyWrapper;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
@@ -132,7 +133,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     }
 
     @Override
-    public void remove(Test test) {
+    public void remove(Test test) throws RemoveException {
         logger.debug("> remove(test=#0)", test);
 
         Test t = getEntityManager().merge(test);
@@ -150,7 +151,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             }
         } else {
             logger.debug("*  Related Assignment entities exist.");
-            throw new IllegalArgumentException("Could not remove a Test.");
+            throw new RemoveException("Could not remove a Test.");
         }
 
         logger.debug("< remove(difficulty=#0)", t);
