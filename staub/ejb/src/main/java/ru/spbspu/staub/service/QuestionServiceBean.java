@@ -2,11 +2,11 @@ package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
-import ru.spbspu.staub.entity.Question;
-import ru.spbspu.staub.entity.User;
+import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import java.util.Date;
@@ -17,11 +17,39 @@ import java.util.List;
  * Stateless EJB Service for manipulations with <code>Question</code> entity.
  *
  * @author Konstantin Grigoriev
+ * @author Alexander V. Elagin
  */
 @Name("questionService")
 @AutoCreate
 @Stateless
 public class QuestionServiceBean extends GenericServiceBean<Question, Integer> implements QuestionService {
+    @EJB
+    QuestionTraceService questionTraceService;
+
+    public long countQuestions(Category category) {
+        Query q = getEntityManager().createQuery("select count(q) from Category c join c.topics t, Question q where q.topic = t and c = :category");
+        q.setParameter("category", category);
+        return (Long) q.getSingleResult();
+    }
+
+    public long countQuestions(Difficulty difficulty) {
+        Query q = getEntityManager().createQuery("select count(q) from Question q where q.difficulty = :difficulty");
+        q.setParameter("difficulty", difficulty);
+        return (Long) q.getSingleResult();
+    }
+
+    public long countQuestions(Discipline discipline) {
+        Query q = getEntityManager().createQuery("select count(q) from Discipline d join d.categories c join c.topics t, Question q where q.topic = t and d = :discipline");
+        q.setParameter("discipline", discipline);
+        return (Long) q.getSingleResult();
+    }
+
+    public long countQuestions(Topic topic) {
+        Query q = getEntityManager().createQuery("select count(q) from Question q where q.topic = :topic");
+        q.setParameter("topic", topic);
+        return (Long) q.getSingleResult();
+    }
+
     public Question saveQuestion(Question question, User user) {
         if (question.getId() == null) {
             question.setActive(true);
@@ -61,23 +89,17 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
         logger.debug("> remove(question=#0)", question);
 
         Question q = getEntityManager().merge(question);
-
-        long count = getQuestionTracesCount(q);
-        if (count == 0) {
-            logger.debug("*  No relations found.");
+        if (questionTraceService.countQuestionTraces(q) == 0) {
+            logger.debug("*  No related QuestionTrace entities found.");
             getEntityManager().remove(q);
+            logger.debug("*  Question removed from a database.");
         } else {
-            logger.debug("*  Relations exist.");
+            logger.debug("*  Related QuestionTrace entities exist.");
             q.setActive(false);
             q = getEntityManager().merge(q);
+            logger.debug("*  Question marked inactive.");
         }
 
         logger.debug("< remove(question=#0)", q);
-    }
-
-    private long getQuestionTracesCount(Question question) {
-        Query q = getEntityManager().createQuery("select count(q) from QuestionTrace q where q.question = :question");
-        q.setParameter("question", question);
-        return (Long) q.getSingleResult();
     }
 }

@@ -27,6 +27,9 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
     @EJB
     private AssignmentService assignmentService;
 
+    @EJB
+    private TestTraceService testTraceService;
+
     public Student findByNameAndCode(String name, String code) {
         Student student = null;
         try {
@@ -82,25 +85,23 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
         logger.debug("> remove(student=#0)", student);
 
         Student s = getEntityManager().merge(student);
-
-        assignmentService.removeAssignments(s);
-
-        long count = getTestTracesCount(s);
-        if (count == 0) {
-            logger.debug("*  No relations found.");
-            getEntityManager().remove(s);
+        if (assignmentService.countAssignments(s) == 0) {
+            logger.debug("*  No related Assignment entities found.");
+            if (testTraceService.countTestTraces(s) == 0) {
+                logger.debug("*  No related TestTrace entities found.");
+                getEntityManager().remove(s);
+                logger.debug("*  Student removed from a database.");
+            } else {
+                logger.debug("*  Related TestTrace entities exist.");
+                s.setActive(false);
+                s = getEntityManager().merge(s);
+                logger.debug("*  Student marked inactive.");
+            }
         } else {
-            logger.debug("*  Relations exist.");
-            s.setActive(false);
-            s = getEntityManager().merge(s);
+            logger.debug("*  Related Assignment entities exist.");
+            throw new IllegalArgumentException("Could not remove a Student.");
         }
 
         logger.debug("< remove(student=#0)", s);
-    }
-
-    private long getTestTracesCount(Student student) {
-        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.student = :student");
-        q.setParameter("student", student);
-        return (Long) q.getSingleResult();
     }
 }

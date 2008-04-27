@@ -38,8 +38,8 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      * Forms <code>UserHistory</code>, etc.
      *
      * @param testTrace ended test trace
-     * @param passed <true>true</true> if the test should be marked as passed; <code>false</code> if the test sould be
-     * marked as failed
+     * @param passed    <true>true</true> if the test should be marked as passed; <code>false</code> if the test should
+     *                  be marked as failed
      *
      * @return updated instance
      */
@@ -72,4 +72,22 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      * @return the element count
      */
     long getCount(TestTrace testTrace);
+
+    /**
+     * Counts test traces of a specific student.
+     *
+     * @param student the student
+     *
+     * @return the number of test traces
+     */
+    long countTestTraces(Student student);
+
+    /**
+     * Counts test traces of a specific test.
+     *
+     * @param test the test
+     *
+     * @return the number of test traces
+     */
+    long countTestTraces(Test test);
 }

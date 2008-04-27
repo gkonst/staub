@@ -1,7 +1,6 @@
 package ru.spbspu.staub.service;
 
-import ru.spbspu.staub.entity.Test;
-import ru.spbspu.staub.entity.User;
+import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.DifficultyWrapper;
 
 import javax.ejb.Local;
@@ -16,12 +15,49 @@ import java.util.List;
 @Local
 public interface TestService extends GenericService<Test, Integer> {
     /**
+     * Counts a tests of a specified category.
+     *
+     * @param category the category
+     *
+     * @return the number of tests
+     */
+    long countTests(Category category);
+
+    /**
+     * Counts a tests of a specified difficulty.
+     *
+     * @param difficulty the difficulty
+     *
+     * @return the number of tests
+     */
+    long countTests(Difficulty difficulty);
+
+    /**
+     * Counts a tests of a specified discipline.
+     *
+     * @param discipline the discipline
+     *
+     * @return the number of tests
+     */
+    long countTests(Discipline discipline);
+
+    /**
+     * Counts a tests of a specified topic.
+     *
+     * @param topic the topic
+     *
+     * @return the number of tests
+     */
+    long countTests(Topic topic);
+
+    /**
      * Saves test (updates or inserts).
      * Also updates neede audit fields(created, createdBy, etc.)
      *
      * @param test         test to save
      * @param difficulties list of wrapped difficlties
      * @param user         current user, author of this modifications
+     *
      * @return updated test
      */
     Test saveTest(Test test, List<DifficultyWrapper> difficulties, User user);
@@ -38,6 +74,7 @@ public interface TestService extends GenericService<Test, Integer> {
      * Returns a questions count for a test.
      *
      * @param test the test
+     *
      * @return the questions count
      */
     long getExpectedNumberOfQuestions(Test test);

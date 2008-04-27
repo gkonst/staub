@@ -4,8 +4,8 @@ import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.Difficulty;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.Query;
 
 /**
  * Stateless EJB Service for manipulations with <code>Difficulty</code> entity.
@@ -17,34 +17,26 @@ import javax.persistence.Query;
 @AutoCreate
 @Stateless
 public class DifficultyServiceBean extends GenericServiceBean<Difficulty, Integer> implements DifficultyService {
+    @EJB
+    private QuestionService questionService;
+
+    @EJB
+    private TestService testService;
+
     @Override
     public void remove(Difficulty difficulty) {
         logger.debug("> remove(difficulty=#0)", difficulty);
 
         Difficulty d = getEntityManager().merge(difficulty);
-
-        long count = getQuestionsCount(d) + getTestsCount(d);
-        if (count == 0) {
-            logger.debug("*  No relations found.");
+        if ((questionService.countQuestions(d) + testService.countTests(d)) == 0) {
+            logger.debug("*  No related entities found.");
+            getEntityManager().remove(d);
+            logger.debug("*  Difficulty removed from a database.");
         } else {
-            logger.debug("*  Relations exist.");
+            logger.debug("*  Related entities exist.");
             throw new IllegalArgumentException("Could not remove a difficulty.");
         }
 
-        getEntityManager().remove(d);
-
         logger.debug("< remove(difficulty=#0)", difficulty);
-    }
-
-    private long getQuestionsCount(Difficulty difficulty) {
-        Query q = getEntityManager().createQuery("select count(q) from Question q where q.difficulty = :difficulty");
-        q.setParameter("difficulty", difficulty);
-        return (Long) q.getSingleResult();
-    }
-
-    private long getTestsCount(Difficulty difficulty) {
-        Query q = getEntityManager().createQuery("select count(t) from Test t join t.difficultyLevels d where d.difficulty = :difficulty");
-        q.setParameter("difficulty", difficulty);
-        return (Long) q.getSingleResult();
     }
 }

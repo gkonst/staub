@@ -2,6 +2,7 @@ package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
+import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
 import ru.spbspu.staub.model.answer.AnswerType;
@@ -33,6 +34,12 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
         Query q = getEntityManager().createQuery("select qt.id from QuestionTrace qt where qt.testTrace = :testTrace and qt.finished is null");
         q.setParameter("testTrace", testTrace);
         return q.getResultList();
+    }
+
+    public long countQuestionTraces(Question question) {
+        Query q = getEntityManager().createQuery("select count(q) from QuestionTrace q where q.question = :question");
+        q.setParameter("question", question);
+        return (Long) q.getSingleResult();
     }
 
     public QuestionTrace start(QuestionTrace questionTrace) {
