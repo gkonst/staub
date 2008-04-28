@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<taglib xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee">
+    <tlib-version>1.0</tlib-version>
+    <short-name>st</short-name>
+    <uri>http://spbspu.ru/staub/taglib</uri>
+    <tag>
+        <name>validateRegex</name>
+        <tag-class>ru.spbspu.staub.components.taglib.RegexValidatorTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>regex</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+</taglib>

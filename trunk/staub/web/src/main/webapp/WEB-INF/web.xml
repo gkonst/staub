@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-           version="2.5">
+         version="2.5">
 
     <!-- Seam -->
-    
+
     <listener>
         <listener-class>org.jboss.seam.servlet.SeamListener</listener-class>
     </listener>
-    
+
     <servlet>
         <servlet-name>Seam Resource Servlet</servlet-name>
         <servlet-class>org.jboss.seam.servlet.SeamResourceServlet</servlet-class>
     </servlet>
-    
+
     <servlet-mapping>
         <servlet-name>Seam Resource Servlet</servlet-name>
         <url-pattern>/seam/resource/*</url-pattern>
     </servlet-mapping>
-    
+
     <filter>
         <filter-name>Seam Filter</filter-name>
         <filter-class>org.jboss.seam.servlet.SeamFilter</filter-class>
@@ -31,11 +31,16 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-	<!-- JSF -->
+    <!-- JSF -->
 
     <context-param>
         <param-name>facelets.DEVELOPMENT</param-name>
         <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>facelets.LIBRARIES</param-name>
+        <param-value>/WEB-INF/staub.taglib.xml</param-value>
     </context-param>
 
     <context-param>

@@ -11,6 +11,10 @@
             org.jboss.seam.jsf.SeamPhaseListener
         </phase-listener>
     </lifecycle>
+    <validator>
+        <validator-id>ru.spbspu.staub.RegexValidator</validator-id>
+        <validator-class>ru.spbspu.staub.components.validator.RegexValidator</validator-class>
+    </validator>
     <converter>
         <converter-id>ru.spbspu.staub.ObjectSelectConverter</converter-id>
         <converter-class>ru.spbspu.staub.components.converter.ObjectSelectConverter</converter-class>
