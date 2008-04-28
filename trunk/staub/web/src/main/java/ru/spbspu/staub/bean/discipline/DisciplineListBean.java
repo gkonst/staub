@@ -19,6 +19,8 @@ import ru.spbspu.staub.service.DisciplineService;
 @Name("disciplineListBean")
 @Scope(SESSION)
 public class DisciplineListBean extends GenericListBean<Discipline> {
+    private static final long serialVersionUID = 554953481314388855L;
+
     @In
     private DisciplineService disciplineService;
 

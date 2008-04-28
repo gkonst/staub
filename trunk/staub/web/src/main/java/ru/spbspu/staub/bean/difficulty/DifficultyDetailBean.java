@@ -17,6 +17,7 @@ import ru.spbspu.staub.service.DifficultyService;
 @Name("difficultyDetailBean")
 @Scope(SESSION)
 public class DifficultyDetailBean extends GenericDetailBean<Difficulty> {
+    private static final long serialVersionUID = 4972878435691024078L;
 
     @In
     private DifficultyService difficultyService;

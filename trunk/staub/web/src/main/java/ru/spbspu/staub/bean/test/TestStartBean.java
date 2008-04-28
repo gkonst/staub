@@ -7,10 +7,9 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import ru.spbspu.staub.bean.GenericDetailBean;
+import ru.spbspu.staub.entity.Student;
 import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.entity.TestTrace;
-import ru.spbspu.staub.entity.User;
-import ru.spbspu.staub.entity.Student;
 import ru.spbspu.staub.service.TestService;
 import ru.spbspu.staub.service.TestTraceService;
 
@@ -22,6 +21,7 @@ import ru.spbspu.staub.service.TestTraceService;
 @Name("testStartBean")
 @Scope(SESSION)
 public class TestStartBean extends GenericDetailBean<Test> {
+    private static final long serialVersionUID = 3880691395764425507L;
 
     @In
     private TestService testService;
@@ -31,7 +31,6 @@ public class TestStartBean extends GenericDetailBean<Test> {
 
     @In
     private Student student;
-
     @Out(required = false, scope = ScopeType.CONVERSATION)
     private TestTrace testTrace;
 

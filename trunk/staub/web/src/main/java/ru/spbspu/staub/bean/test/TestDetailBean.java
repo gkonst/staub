@@ -23,6 +23,7 @@ import java.util.List;
 @Name("testDetailBean")
 @Scope(SESSION)
 public class TestDetailBean extends GenericDetailBean<Test> {
+    private static final long serialVersionUID = -6228085298741173166L;
 
     @In
     private User user;
@@ -43,13 +44,18 @@ public class TestDetailBean extends GenericDetailBean<Test> {
     private DifficultyService difficultyService;
 
     private List<Discipline> disciplineList;
+
     private List<Category> categoryList;
+
     private List<Topic> topicList;
+
     private List<DifficultyWrapper> difficultyList;
 
     private Discipline discipline;
+
     private Topic[] selectedTopics;
 
+    @Override
     protected void fillModel(Integer modelId) {
         fillDisciplines();
         fillDifficulties();
@@ -77,6 +83,7 @@ public class TestDetailBean extends GenericDetailBean<Test> {
         refreshCategories();
     }
 
+    @Override
     public void doSave() {
         logger.debug("Saving test...");
         if (selectedTopics != null && selectedTopics.length != 0) {

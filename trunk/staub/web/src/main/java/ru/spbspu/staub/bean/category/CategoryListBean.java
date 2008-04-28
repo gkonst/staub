@@ -19,6 +19,8 @@ import ru.spbspu.staub.service.CategoryService;
 @Name("categoryListBean")
 @Scope(SESSION)
 public class CategoryListBean extends GenericListBean<Category> {
+    private static final long serialVersionUID = 1729729174867773807L;
+
     @In
     private CategoryService categoryService;
 

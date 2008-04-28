@@ -16,11 +16,13 @@ import ru.spbspu.staub.service.TestTraceService;
 @Name("testEndBean")
 @Scope(SESSION)
 public class TestEndBean extends GenericDetailBean<TestTrace> {
+    private static final long serialVersionUID = -813821348600430259L;
 
     @In
     private TestTraceService testTraceService;
 
+    @Override
     protected void fillModel(Integer modelId) {
-        setModel(testTraceService.findById(modelId));    
+        setModel(testTraceService.findById(modelId));
     }
 }

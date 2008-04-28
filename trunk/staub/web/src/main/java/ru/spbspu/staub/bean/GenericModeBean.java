@@ -1,8 +1,7 @@
 package ru.spbspu.staub.bean;
 
-import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.annotations.In;
-import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.web.RequestParameter;
 
 /**
  * Generic webbean implementation, which operates with modes.
@@ -13,9 +12,9 @@ import org.jboss.seam.ScopeType;
  * @see BeanMode
  */
 public abstract class GenericModeBean extends GenericBean {
+    private static final long serialVersionUID = -4271552460137044825L;
 
     protected static final String BEAN_MODE = "beanMode";
-
     /**
      * Injected new mode from request parameter.
      */
@@ -57,7 +56,7 @@ public abstract class GenericModeBean extends GenericBean {
             setBeanMode(beanModeFromRequestParameter);
             logger.debug("Defining bean mode... OK");
             return true;
-        } else if(beanModeFromRequestAttribute != null){
+        } else if (beanModeFromRequestAttribute != null) {
             logger.debug("Defining bean mode from request attribute...#0", beanModeFromRequestAttribute);
             setBeanMode(beanModeFromRequestAttribute);
             logger.debug("Defining bean mode... OK");
@@ -73,6 +72,7 @@ public abstract class GenericModeBean extends GenericBean {
      * redirects to the destination page.
      *
      * @param outcome string for navigation
+     *
      * @return string for navigation
      */
     public String doView(String outcome) {
@@ -85,6 +85,7 @@ public abstract class GenericModeBean extends GenericBean {
      * redirects to the destination page.
      *
      * @param outcome string for navigation
+     *
      * @return string for navigation
      */
     public String doEdit(String outcome) {
@@ -97,6 +98,7 @@ public abstract class GenericModeBean extends GenericBean {
      * redirects to the destination page.
      *
      * @param outcome string for navigation
+     *
      * @return string for navigation
      */
     public String doCreate(String outcome) {
@@ -109,6 +111,7 @@ public abstract class GenericModeBean extends GenericBean {
      * redirects to the destination page.
      *
      * @param outcome string for navigation
+     *
      * @return string for navigation
      */
     public String doRefresh(String outcome) {

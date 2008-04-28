@@ -19,6 +19,8 @@ import ru.spbspu.staub.service.TopicService;
 @Name("topicListBean")
 @Scope(SESSION)
 public class TopicListBean extends GenericListBean<Topic> {
+    private static final long serialVersionUID = 6593447031990966851L;
+
     @In
     private TopicService topicService;
 

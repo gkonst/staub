@@ -6,8 +6,8 @@ import org.jboss.seam.faces.Renderer;
 import org.jboss.seam.log.Log;
 
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 
 /**
@@ -16,6 +16,8 @@ import java.io.Serializable;
  * @author Konstantin Grigoriev
  */
 public abstract class GenericBean implements Serializable {
+    private static final long serialVersionUID = 6717563395858478703L;
+
     @Logger
     protected Log logger;
 

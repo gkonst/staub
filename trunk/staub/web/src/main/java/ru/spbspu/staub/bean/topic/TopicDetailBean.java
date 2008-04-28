@@ -23,6 +23,7 @@ import java.util.List;
 @Name("topicDetailBean")
 @Scope(SESSION)
 public class TopicDetailBean extends GenericDetailBean<Topic> {
+    private static final long serialVersionUID = 2741355957669534823L;
 
     @In
     private DisciplineService disciplineService;
@@ -34,6 +35,7 @@ public class TopicDetailBean extends GenericDetailBean<Topic> {
     private TopicService topicService;
 
     private List<Discipline> disciplineList;
+
     private List<Category> categoryList;
 
     private Discipline discipline;

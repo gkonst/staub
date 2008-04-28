@@ -21,13 +21,14 @@ import java.util.List;
 @Name("categoryDetailBean")
 @Scope(SESSION)
 public class CategoryDetailBean extends GenericDetailBean<Category> {
+    private static final long serialVersionUID = 7860014639037606020L;
 
     @In
     private CategoryService categoryService;
 
     @In
     private DisciplineService disciplineService;
-
+    
     private List<Discipline> disciplineList;
 
     /**
