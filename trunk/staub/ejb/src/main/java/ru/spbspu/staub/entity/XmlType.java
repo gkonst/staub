@@ -7,6 +7,7 @@ import org.jboss.seam.log.Log;
 import org.jboss.seam.log.Logging;
 import ru.spbspu.staub.util.JAXBUtil;
 
+import javax.xml.bind.JAXBException;
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,7 +73,11 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
         InputStream is = resultSet.getBinaryStream(strings[0]);
         Object result;
         if (is != null) {
-            result = JAXBUtil.parseXml(pojoClass, is);
+            try {
+                result = JAXBUtil.parseXml(pojoClass, is);
+            } catch (JAXBException e) {
+                throw new HibernateException(e);
+            }
         } else {
             result = null;
         }
@@ -84,8 +89,12 @@ public class XmlType implements UserType, ParameterizedType, Serializable {
             SQLException {
         LOG.debug(" nullSafeSet(#0, #1, #2)", preparedStatement, o, i);
         if (o != null) {
-            byte[] bytes = JAXBUtil.createXml(o);
-            preparedStatement.setBytes(i, bytes);
+            try {
+                byte[] bytes = JAXBUtil.createXml(o);
+                preparedStatement.setBytes(i, bytes);
+            } catch (JAXBException e) {
+                throw new HibernateException(e);
+            }
         } else {
             preparedStatement.setNull(i, SQL_TYPES[0]);
         }
