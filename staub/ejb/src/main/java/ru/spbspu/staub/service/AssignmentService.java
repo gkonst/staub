@@ -102,4 +102,12 @@ public interface AssignmentService extends GenericService<Assignment, Integer> {
      * @param test    the test
      */
     void removeAssignment(Student student, Test test);
+
+    /**
+     * Assigns students for specific test.
+     *
+     * @param testId     specific test identifier
+     * @param studentIds list or students identifiers
+     */
+    void assignTest(Integer testId, List<Integer> studentIds);
 }

@@ -86,19 +86,6 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         return result;
     }
 
-    public void assignTest(Integer testId, List<Integer> studentIds) {
-        Test test = findById(testId);
-        for (Integer studentId : studentIds) {
-            Student student = getEntityManager().find(Student.class, studentId);
-
-            Assignment assignment = new Assignment();
-            assignment.setTest(test);
-            assignment.setStudent(student);
-
-            assignmentService.saveAssignment(assignment);
-        }
-    }
-
     public long getExpectedNumberOfQuestions(Test test) {
         long result = 0;
         Set<TestDifficulty> levels = test.getDifficultyLevels();
