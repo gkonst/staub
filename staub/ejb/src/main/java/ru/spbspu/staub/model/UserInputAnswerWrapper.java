@@ -29,7 +29,6 @@ public class UserInputAnswerWrapper extends AnswerWrapper<UserInputType, String>
 
     protected UserInputAnswerWrapper(UserInputType definition) {
         super(definition);
-        getDefinition().setType(InputType.STRING);
     }
 
     /**
@@ -46,6 +45,7 @@ public class UserInputAnswerWrapper extends AnswerWrapper<UserInputType, String>
     @Override
     public void resolveCorrectAnswer() {
         getDefinition().setAnswer(getCurrent());
+        //TODO convert to regular expression.
     }
 
     /**
@@ -62,7 +62,6 @@ public class UserInputAnswerWrapper extends AnswerWrapper<UserInputType, String>
     @Override
     public AnswerType getAnswer() {
         AnswerType answerType = new AnswerType();
-        //TODO convert to regular expression.
         answerType.setUserInput(getCurrent());
         return answerType;
     }
