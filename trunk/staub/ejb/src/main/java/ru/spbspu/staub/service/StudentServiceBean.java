@@ -59,6 +59,12 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
         return findAll(query, formProperties, parameters);
     }
 
+    public long countStudents(Group group) {
+        Query q = getEntityManager().createQuery("select count(s) from Student s where s.group = :group");
+        q.setParameter("group", group);
+        return (Long) q.getSingleResult();
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Student> findAll() {
