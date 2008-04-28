@@ -1,6 +1,7 @@
 package ru.spbspu.staub.model;
 
 import ru.spbspu.staub.model.question.ChoiceType;
+import ru.spbspu.staub.model.question.InputType;
 import ru.spbspu.staub.model.question.QuestionType;
 import ru.spbspu.staub.model.question.UserInputType;
 
@@ -57,6 +58,7 @@ public abstract class AnswerWrapper<D, C> {
                 break;
             case USER_INPUT:
                 questionDefinition.setUserInput(new UserInputType());
+                questionDefinition.getUserInput().setType(InputType.STRING);
                 questionDefinition.setSingleChoice(null);
                 questionDefinition.setMultipleChoice(null);
                 break;
