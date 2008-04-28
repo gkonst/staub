@@ -22,7 +22,7 @@ import java.util.Map;
  * @author Alexander V. Elagin
  */
 public final class JAXBUtil {
-    private static final Map<Class, QName> qNameMap;
+    private static final Map<Class, QName> QNAME_MAP;
 
     private static final Log logger = Logging.getLog(JAXBUtil.class);
 
@@ -30,7 +30,7 @@ public final class JAXBUtil {
         HashMap<Class, QName> map = new HashMap<Class, QName>();
         map.put(QuestionType.class, new QName("http://staub.spbspu.ru/Question", "question"));
         map.put(AnswerType.class, new QName("http://staub.spbspu.ru/Answer", "answer"));
-        qNameMap = Collections.unmodifiableMap(map);
+        QNAME_MAP = Collections.unmodifiableMap(map);
     }
 
     private JAXBUtil() {
@@ -54,7 +54,7 @@ public final class JAXBUtil {
             throw new IllegalArgumentException(message);
         }
 
-        if (!qNameMap.containsKey(pojoClass)) {
+        if (!QNAME_MAP.containsKey(pojoClass)) {
             String message = MessageFormat.format("Unmarshalling an instance of the {0} class is not supported.",
                     pojoClass.getName());
             throw new UnsupportedOperationException(message);
@@ -94,7 +94,7 @@ public final class JAXBUtil {
 
         Class pojoClass = pojo.getClass();
 
-        if (!qNameMap.containsKey(pojoClass)) {
+        if (!QNAME_MAP.containsKey(pojoClass)) {
             String message = MessageFormat.format("Marshalling an instance of the {0} class is not supported.",
                     pojoClass.getName());
             throw new UnsupportedOperationException(message);
@@ -105,7 +105,7 @@ public final class JAXBUtil {
             logger.debug("  pojoClass : #0", pojoClass.getName());
             JAXBContext jaxbContext = JAXBContext.newInstance(pojoClass.getPackage().getName());
             Marshaller marshaller = jaxbContext.createMarshaller();
-            JAXBElement jaxbElement = new JAXBElement(qNameMap.get(pojoClass), pojoClass, null, pojo);
+            JAXBElement jaxbElement = new JAXBElement(QNAME_MAP.get(pojoClass), pojoClass, null, pojo);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             marshaller.marshal(jaxbElement, baos);
             byte[] result = baos.toByteArray();
