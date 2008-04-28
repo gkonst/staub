@@ -43,4 +43,13 @@ public interface StudentService extends GenericService<Student, Integer> {
      * @return the table of results
      */
     FormTable findStudentsToAssign(FormProperties formProperties, Group group);
+
+    /**
+     * Counts students from a specified group.
+     *
+     * @param group the group
+     *
+     * @return the number of sudents
+     */
+    long countStudents(Group group);
 }
