@@ -20,5 +20,5 @@ public interface TopicService extends GenericService<Topic, Integer> {
      *
      * @return the list of topics
      */
-    List<Topic> getTopics(Category category);
+    List<Topic> findTopics(Category category);
 }

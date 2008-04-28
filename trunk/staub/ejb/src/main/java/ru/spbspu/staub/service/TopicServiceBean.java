@@ -27,7 +27,7 @@ public class TopicServiceBean extends GenericServiceBean<Topic, Integer> impleme
     private TestService testService;
 
     @SuppressWarnings("unchecked")
-    public List<Topic> getTopics(Category category) {
+    public List<Topic> findTopics(Category category) {
         Query q = getEntityManager().createQuery("select t from Topic t where t.category = :category");
         q.setParameter("category", category);
         return q.getResultList();
