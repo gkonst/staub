@@ -11,9 +11,9 @@ import ru.spbspu.staub.entity.Group;
 import ru.spbspu.staub.entity.User;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.service.AssignmentService;
 import ru.spbspu.staub.service.GroupService;
 import ru.spbspu.staub.service.StudentService;
-import ru.spbspu.staub.service.TestService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +26,7 @@ import java.util.List;
 @Name("studentAssignListBean")
 @Scope(SESSION)
 public class StudentAssignListBean extends GenericListBean<User> {
+    private static final long serialVersionUID = 3595505505814623943L;
 
     @RequestParameter("testId")
     private Integer injectedTestId;
@@ -33,13 +34,13 @@ public class StudentAssignListBean extends GenericListBean<User> {
     private Integer testId;
 
     @In
+    private AssignmentService assignmentService;
+
+    @In
     private StudentService studentService;
 
     @In
     private GroupService groupService;
-
-    @In
-    private TestService testService;
 
     private List<Group> groups;
 
@@ -65,6 +66,7 @@ public class StudentAssignListBean extends GenericListBean<User> {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected FormTable findObjects(FormProperties formProperties) {
         return studentService.findStudentsToAssign(formProperties, group);
     }
@@ -75,7 +77,7 @@ public class StudentAssignListBean extends GenericListBean<User> {
     public void assign() {
         logger.debug(">>> Assigning students...");
         List<Integer> studentsIds = getSelectedItems();
-        testService.assignTest(testId, studentsIds);
+        assignmentService.assignTest(testId, studentsIds);
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("student.assign.list.assignSuccess");
