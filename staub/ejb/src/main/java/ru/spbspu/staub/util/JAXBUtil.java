@@ -44,9 +44,11 @@ public final class JAXBUtil {
      * @param inputStream the xml data stream
      *
      * @return the unmarshalled POJO class
+     *
+     * @throws JAXBException if an instance can not be unmarshalled.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T parseXml(Class<T> pojoClass, InputStream inputStream) {
+    public static <T> T parseXml(Class<T> pojoClass, InputStream inputStream) throws JAXBException {
         if (pojoClass == null) {
             String message = "Parameter pojoClass can not be null.";
             throw new IllegalArgumentException(message);
@@ -70,7 +72,7 @@ public final class JAXBUtil {
             return result;
         } catch (JAXBException e) {
             logger.error("Could not unmarshall an xml.", e);
-            throw new RuntimeException(e);
+            throw e;
         }
     }
 
@@ -80,9 +82,11 @@ public final class JAXBUtil {
      * @param pojo the instance to marshall
      *
      * @return the marshalled xml data
+     *
+     * @throws JAXBException if an instance can not be marshalled.
      */
     @SuppressWarnings("unchecked")
-    public static <T> byte[] createXml(T pojo) {
+    public static <T> byte[] createXml(T pojo) throws JAXBException {
         if (pojo == null) {
             String message = "Parameter pojo can not be null.";
             throw new IllegalArgumentException(message);
@@ -109,7 +113,7 @@ public final class JAXBUtil {
             return result;
         } catch (JAXBException e) {
             logger.error("Could not marshall an xml.", e);
-            throw new RuntimeException(e);
+            throw e;
         }
     }
 }
