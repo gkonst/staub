@@ -105,7 +105,7 @@ public class TestDetailBean extends GenericDetailBean<Test> {
 
     public void refreshCategories() {
         if (discipline != null) {
-            categoryList = categoryService.getCategories(discipline);
+            categoryList = categoryService.findCategories(discipline);
         } else {
             categoryList = null;
         }
@@ -120,7 +120,7 @@ public class TestDetailBean extends GenericDetailBean<Test> {
     }
 
     private void fillTopics() {
-        topicList = topicService.getTopics(getModel().getCategory());
+        topicList = topicService.findTopics(getModel().getCategory());
         selectedTopics = new Topic[topicList.size()];
     }
 

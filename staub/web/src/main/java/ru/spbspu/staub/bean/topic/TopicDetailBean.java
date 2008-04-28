@@ -72,7 +72,7 @@ public class TopicDetailBean extends GenericDetailBean<Topic> {
 
     public void refreshCategories() {
         if (discipline != null) {
-            categoryList = categoryService.getCategories(discipline);
+            categoryList = categoryService.findCategories(discipline);
         } else {
             categoryList = null;
         }

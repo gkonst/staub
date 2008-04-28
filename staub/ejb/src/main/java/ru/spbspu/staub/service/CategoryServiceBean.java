@@ -28,7 +28,7 @@ public class CategoryServiceBean extends GenericServiceBean<Category, Integer> i
     private TestService testService;
 
     @SuppressWarnings("unchecked")
-    public List<Category> getCategories(Discipline discipline) {
+    public List<Category> findCategories(Discipline discipline) {
         Query q = getEntityManager().createQuery("select c from Category c where c.discipline = :discipline");
         q.setParameter("discipline", discipline);
         return q.getResultList();

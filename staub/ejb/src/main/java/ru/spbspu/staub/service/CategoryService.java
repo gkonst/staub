@@ -21,5 +21,5 @@ public interface CategoryService extends GenericService<Category, Integer> {
      *
      * @return the list of categories
      */
-    List<Category> getCategories(Discipline discipline);
+    List<Category> findCategories(Discipline discipline);
 }
