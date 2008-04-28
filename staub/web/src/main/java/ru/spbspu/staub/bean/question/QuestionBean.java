@@ -26,6 +26,7 @@ import java.util.List;
 @Scope(ScopeType.CONVERSATION)
 @Conversational
 public class QuestionBean extends GenericModeBean {
+    private static final long serialVersionUID = -8353141534361734709L;
 
     @In
     private QuestionTraceService questionTraceService;
@@ -37,7 +38,9 @@ public class QuestionBean extends GenericModeBean {
     private TestTrace testTrace;
 
     private List<Integer> questionIds;
+
     private QuestionTrace currentQuestion;
+
     private int questionIndex = 0;
 
     private AnswerWrapper answer;
@@ -47,8 +50,10 @@ public class QuestionBean extends GenericModeBean {
     private boolean finished = false;
 
     private TimerModel questionTimer;
+
     private TimerModel testTimer;
 
+    @Override
     public void initBean() {
         if (isBeanModeDefined()) {
             initTest();

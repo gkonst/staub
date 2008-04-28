@@ -1,30 +1,35 @@
 package ru.spbspu.staub.bean.system;
 
-import org.jboss.seam.annotations.*;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.*;
 import org.jboss.seam.core.Expressions;
 import org.jboss.seam.security.Identity;
-import ru.spbspu.staub.entity.Student;
-import ru.spbspu.staub.entity.Group;
 import ru.spbspu.staub.bean.GenericBean;
-import ru.spbspu.staub.service.StudentService;
+import ru.spbspu.staub.entity.Group;
+import ru.spbspu.staub.entity.Student;
 import ru.spbspu.staub.service.GroupService;
+import ru.spbspu.staub.service.StudentService;
 
 import java.util.List;
 
 /**
- * Webbean for logging into the system as <code>Student</code>. 
+ * Webbean for logging into the system as <code>Student</code>.
  *
  * @author Konstantin Grigoriev
  */
 @Name("loginStudentBean")
 @Scope(ScopeType.SESSION)
 public class LoginStudentBean extends GenericBean {
+    private static final long serialVersionUID = 5740399344448977004L;
 
     private String username;
+
     private String password;
+
     private List<Group> groups;
+
     private List<Student> students;
+
     @In
     private Identity identity;
 

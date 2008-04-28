@@ -17,6 +17,7 @@ import static org.jboss.seam.ScopeType.SESSION;
 @Name("disciplineDetailBean")
 @Scope(SESSION)
 public class DisciplineDetailBean extends GenericDetailBean<Discipline> {
+    private static final long serialVersionUID = -4702431357733560796L;
 
     @In
     private DisciplineService disciplineService;

@@ -16,6 +16,7 @@ import java.util.Map;
  * @author Konstantin Grigoriev
  */
 public abstract class GenericListBean<T> extends GenericModeBean {
+    private static final long serialVersionUID = -5579488872426850764L;
 
     private Map<Object, Boolean> selectedMap;
 
@@ -72,6 +73,7 @@ public abstract class GenericListBean<T> extends GenericModeBean {
      * Every specific subclass must implement this method own way.
      *
      * @param formProperties form properties
+     *
      * @return fetched form table
      */
     protected abstract FormTable findObjects(FormProperties formProperties);
@@ -357,8 +359,9 @@ public abstract class GenericListBean<T> extends GenericModeBean {
         this.rowsTotal = rowsTotal;
     }
 
+    @SuppressWarnings("unchecked")
     public T getSelected() {
-        return (T)dataModel.getRowData();
+        return (T) dataModel.getRowData();
     }
 
     public Map<Object, Boolean> getSelectedMap() {

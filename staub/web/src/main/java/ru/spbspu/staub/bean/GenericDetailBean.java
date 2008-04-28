@@ -8,6 +8,7 @@ import org.jboss.seam.annotations.web.RequestParameter;
  * @author Konstantin Grigoriev
  */
 public abstract class GenericDetailBean<T> extends GenericModeBean {
+    private static final long serialVersionUID = -3291096277306979986L;
 
     @RequestParameter
     private Integer modelId;
@@ -52,6 +53,7 @@ public abstract class GenericDetailBean<T> extends GenericModeBean {
 
     /**
      * Defines cancel operation for current bean (optional).
+     *
      * @return navigation outcome, by default 'list'
      */
     public String doCancel() {
@@ -60,6 +62,7 @@ public abstract class GenericDetailBean<T> extends GenericModeBean {
 
     /**
      * Defines back operation for current bean (optional).
+     *
      * @return navigation outcome, by default 'list'
      */
     public String doBack() {
