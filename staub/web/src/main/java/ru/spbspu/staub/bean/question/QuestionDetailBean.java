@@ -121,7 +121,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         setModel(questionService.saveQuestion(getModel(), user));
         logger.debug("  Changing bean mode -> #0", BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
-        addFacesMessageFromResourceBundle("common.messages.saveSuccess");
+        addFacesMessageFromResourceBundle("question.detail.saveSuccess", getModel().getId());
         logger.debug("Saving... OK");
     }
 
