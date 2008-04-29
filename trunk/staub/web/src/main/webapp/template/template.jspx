@@ -14,7 +14,7 @@
     <ui:insert name="style"/>
     <ui:insert name="script"/>
 </head>
-<body>
+<body onload="genericOnBodyLoad();" onunload="genericOnBodyUnload();">
 <ui:insert name="ajaxStatus"/>
 <f:view>
     <div id="document">

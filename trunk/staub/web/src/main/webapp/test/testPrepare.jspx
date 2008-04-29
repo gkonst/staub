@@ -8,15 +8,26 @@
       xmlns:rich="http://richfaces.org/rich"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
-<ui:composition template="../template/staub-template.jspx">
+<ui:composition template="/template/staub-template.jspx">
+    <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:define name="pageScript">
-        <meta http-equiv="Refresh" content="1;URL='../question/question.seam?beanMode=VIEW_MODE&amp;cid=#{conversation.id}'" />
+        <script type="text/javascript">
+            function onBodyLoad() {
+                setTimeout('document.getElementById(\'testPrepareButton\').click();', 2000);
+            }
+        </script>
     </ui:define>
     <ui:define name="contentTitle">
-        подготовка...
+        #{messages['test.prepare.title']}
     </ui:define>
     <ui:define name="contentBody">
-        формирование теста....
+        #{messages['test.prepare.message']}
+        <s:button id="testPrepareButton"
+                  view="/question/question.seam"
+                  propagation="join"
+                  style="display:none;">
+            <f:param name="beanMode" value="VIEW_MODE"/>
+        </s:button>
     </ui:define>
 </ui:composition>
 </html>
