@@ -37,8 +37,10 @@ public class LoginUserBean extends GenericBean {
     public boolean authenticate() {
         logger.debug(">>> Authentinicating user(username=#{identity.username}), password=#{identity.password}");
         user = userService.findUserByUserNameAndPassword(identity.getUsername(), identity.getPassword());
-        logger.debug(" User Role : #0", user.getRole());
-        identity.addRole(String.valueOf(user.getRole()));
+        if (user != null) {
+            logger.debug(" User Role : #0", user.getRole());
+            identity.addRole(String.valueOf(user.getRole()));
+        }
         logger.debug("<<< Authentinicating ok(result=#0)", user != null);
         return user != null;
     }
@@ -47,7 +49,11 @@ public class LoginUserBean extends GenericBean {
         identity.setUsername(username);
         identity.setPassword(password);
         identity.setAuthenticateMethod(Expressions.instance().createMethodExpression("#{loginUserBean.authenticate}"));
-        return identity.login();
+        String outcome = identity.login();
+        if (user == null) {
+            addFacesMessageFromResourceBundle("system.login.error.usernameOrPassword");
+        }
+        return outcome;
     }
 
     public String getUsername() {

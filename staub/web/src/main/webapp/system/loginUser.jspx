@@ -5,36 +5,74 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="/template/staub-template.jspx">
+    <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:define name="headerStatus"/>
     <ui:define name="contentMessage"/>
-    <ui:define name="sidebar">
-        <h:form id="login">
-            <fieldset>
-                <div>
-                    <h:outputLabel for="username">
-                        #{messages['system.login.username']}
-                    </h:outputLabel>
-                    <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
-                    <h:inputText id="username" value="#{loginUserBean.username}" style="width: 9em;"/>
-                </div>
-                <div>
-                    <h:outputLabel for="password">
-                        #{messages['system.login.password']}
-                    </h:outputLabel>
-                    <h:inputSecret id="password" value="#{loginUserBean.password}" style="width: 9em;"/>
-                </div>
-                <div align="center">
-                    <ui:include src="../controls/genericMessageControl.jspx"/>
-                </div>
-                <div class="buttonBox">
-                    <h:commandButton id="login" action="#{loginUserBean.login}" value="#{messages['system.login.enter']}"
-                                       styleClass="button"/>
-                </div>
-            </fieldset>
-        </h:form>
+    <ui:define name="contentBody">
+        <rich:spacer height="20em"/>
+        <a4j:form id="loginForm">
+            <div align="center">
+                <table class="area loginTable">
+                    <tr>
+                        <td colspan="2" align="center">
+                            <rich:spacer height="10"/>
+                            <br/>
+                            #{messages['system.login.title']}
+                            <br/>
+                            <rich:spacer height="5"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>#{messages['system.login.username']}</strong>
+                        </td>
+                        <td align="left">
+                            <a4j:outputPanel id="usernamePanel">
+                                <h:inputText id="usernameInput"
+                                             value="#{loginUserBean.username}"
+                                             style="width: 9em;"
+                                             required="true"
+                                             requiredMessage="#{messages['system.login.required.username']}"/>
+                            </a4j:outputPanel>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <strong>#{messages['system.login.password']}</strong>
+                        </td>
+                        <td align="left">
+                            <a4j:outputPanel id="passwordPanel">
+                                <h:inputSecret id="passwordInput"
+                                               value="#{loginUserBean.password}"
+                                               style="width: 9em;"
+                                               required="true"
+                                               requiredMessage="#{messages['system.login.required.password']}"/>
+                            </a4j:outputPanel>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <ui:include src="/controls/genericMessageControl.jspx"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <a4j:outputPanel id="loginButtonPanel">
+                                <a4j:commandButton id="loginButton" action="#{loginUserBean.login}"
+                                                   value="#{messages['system.login.enter']}"
+                                                   styleClass="button">
+                                    <s:defaultAction/>
+                                </a4j:commandButton>
+                            </a4j:outputPanel>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </a4j:form>
     </ui:define>
 </ui:composition>
 </html>

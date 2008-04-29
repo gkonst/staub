@@ -25,7 +25,7 @@
     <ui:include src="/controls/genericSaveControl.jspx"/>
 </a4j:outputPanel>
 
-<div class="detailTable">
+<div class="area detailTable">
 <table width="99%">
 <tr>
     <td align="right">

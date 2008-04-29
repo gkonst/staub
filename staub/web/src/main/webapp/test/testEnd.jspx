@@ -16,7 +16,7 @@
         Результаты теста.
     </ui:define>
     <ui:define name="contentBody">
-        <table class="detailTable">
+        <table class="area detailTable">
             <tr>
                 <td align="right">
                     <strong>Название теста</strong>
