@@ -9,7 +9,8 @@
       xmlns:rich="http://richfaces.org/rich">
 
 <ui:composition template="template.jspx">
-
+<!--@elvariable id="messages" type="java.util.Map"-->
+<!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
     <ui:define name="ajaxStatus">
         <a4j:status onstart="Richfaces.showModalPanel('ajaxLoadingModalBox')"
                     onstop="Richfaces.hideModalPanel('ajaxLoadingModalBox')"/>
@@ -37,8 +38,7 @@
         #{messages['page.header.title']}
     </ui:define>
 
-    <ui:define name="headerStatus">
-        <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
+    <ui:define name="headerStatus">       
         #{messages['page.header.status.user']}&#160;<u>#{identity.username}</u>
         |<s:link id="logout" action="#{identity.logout}" value="#{messages['system.login.exit']}"/>
     </ui:define>

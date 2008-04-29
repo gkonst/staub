@@ -35,7 +35,10 @@
         <h:inputText id="testNameInput"
                      value="#{pageBean.model.name}"
                      disabled="#{pageBean.viewMode}"
-                     style="width:99%;"/>
+                     style="width:99%;"
+                     required="true"
+                     styleClass="required"
+                     requiredMessage="#{messages['test.detail.required.name']}"/>
     </td>
 </tr>
 <tr>
