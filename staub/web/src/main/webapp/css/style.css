@@ -41,6 +41,10 @@ h1 {
     font-weight: 300;
 }
 
+h3 {
+    font-size: 1.6em;
+}
+
 /* General */
 .button {
     color: #fff;
@@ -127,7 +131,7 @@ h1 {
 
 /* Content */
 #contentTitle {
-    padding: 1em 1em 0 1em;
+    padding: 1em;
     vertical-align: middle;
 }
 
@@ -136,7 +140,7 @@ h1 {
 }
 
 .contentButtons {
-    padding: 15px 0 0 0;
+    padding: 0;
 }
 
 #contentMessage {
