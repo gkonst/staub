@@ -52,7 +52,7 @@
                                                onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"
                                                title="#{messages['common.list.functions.delete']}"
                                                image="/images/icons/icon_delete.gif"
-                                               reRender="#{bodyPanelId}"/>
+                                               reRender="contentBodyForm"/>
                         </rich:column>
                     </rich:dataTable>
                 </ui:define>
