@@ -62,12 +62,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             test.setCreatedBy(user.getUsername());
             test.setCreated(new Date());
         } else {
-            Iterator<TestDifficulty> iter = test.getDifficultyLevels().iterator();
-            while (iter.hasNext()) {
-                TestDifficulty testDifficulty = iter.next();
-                iter.remove();
-                getEntityManager().remove(getEntityManager().merge(testDifficulty));
-            }
+            removeDifficultyLevels(test);
 
             test.setModifiedBy(user.getUsername());
             test.setModified(new Date());
@@ -128,6 +123,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             logger.debug("*  No related Assignment entities found.");
             if (testTraceService.countTestTraces(t) == 0) {
                 logger.debug("*  No related TestTrace entities found.");
+                removeDifficultyLevels(t);
                 getEntityManager().remove(t);
                 logger.debug("*  Test removed from a database.");
             } else {
@@ -149,6 +145,15 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         if ((timeLimit != null) && (timeLimit <= 0)) {
             String message = MessageFormat.format("Could not save Test with timeLimit={0}.", timeLimit);
             throw new IllegalArgumentException(message);
+        }
+    }
+
+    private void removeDifficultyLevels(Test test) {
+        Iterator<TestDifficulty> iter = test.getDifficultyLevels().iterator();
+        while (iter.hasNext()) {
+            TestDifficulty testDifficulty = iter.next();
+            iter.remove();
+            getEntityManager().remove(getEntityManager().merge(testDifficulty));
         }
     }
 }
