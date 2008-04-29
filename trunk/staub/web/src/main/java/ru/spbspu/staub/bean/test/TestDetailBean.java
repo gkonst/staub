@@ -75,6 +75,8 @@ public class TestDetailBean extends GenericDetailBean<Test> {
                     for (DifficultyWrapper dw : difficultyList) {
                         if (td.getDifficulty().equals(dw.getDifficulty())) {
                             dw.setSelected(Boolean.TRUE);
+                            dw.setPassScore(td.getPassScore());
+                            dw.setQuestionsCount(td.getQuestionsCount());
                         }
                     }
                 }
@@ -100,7 +102,7 @@ public class TestDetailBean extends GenericDetailBean<Test> {
             return;
         }
         setModel(testService.saveTest(getModel(), difficultyList, user));
-        logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
+        logger.debug("  Changing bean mode -> #0", BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
         logger.debug("Saving... OK");

@@ -53,7 +53,11 @@
                             <f:facet name="header">#{messages['question.list.topic.name']}</f:facet>
                             #{question.topic.name}
                         </rich:column>
-                        <rich:column id="col5" styleClass="columnIcon">
+                        <rich:column id="col5">
+                            <f:facet name="header">#{messages['question.list.difficulty.name']}</f:facet>
+                            #{question.difficulty.name}
+                        </rich:column>
+                        <rich:column id="col6" styleClass="columnIcon">
                             <a4j:commandButton id="deleteButton"
                                                action="#{pageBean.doDelete}"
                                                onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"

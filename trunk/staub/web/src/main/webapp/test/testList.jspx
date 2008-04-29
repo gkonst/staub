@@ -19,13 +19,11 @@
         #{messages['test.list.title']}
     </ui:define>
     <ui:define name="contentBody">
-        <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
-            <a4j:form id="contentButtonsForm">
+        <a4j:form id="contentBodyForm">
+            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <ui:include src="/controls/genericCreateControl.jspx"/>
                 <ui:include src="/controls/genericRefreshControl.jspx"/>
-            </a4j:form>
-        </a4j:outputPanel>
-        <a4j:form id="testListForm">
+            </a4j:outputPanel>
             <ui:decorate template="../controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">
                     <h:outputText value="#{messages['common.list.noDataFound']}"
@@ -35,21 +33,38 @@
                                     var="test"
                                     rendered="#{pageBean.dataModel.rowCount > 0}"
                                     styleClass="dataTable">
-                        <rich:column styleClass="columnIcon">
+                        <rich:column id="col1"
+                                     styleClass="columnIcon">
                             <a4j:htmlCommandLink id="studentAssignLink"
                                                  action="studentAssign">
                                 <h:graphicImage id="studentAssignImage"
                                                 url="/images/icons/icon_detail_edit.gif"/>
-                                <f:param name="testId" value="#{test.id}"/>
-                                <f:param name="beanMode" value="EDIT_MODE"/>
+                                <f:param id="assignLinkIdParam" name="testId" value="#{test.id}"/>
+                                <f:param id="assignLinkBeanModeParam" name="beanMode" value="EDIT_MODE"/>
                             </a4j:htmlCommandLink>
                         </rich:column>
-                        <rich:column>
+                        <rich:column id="col2">
                             <f:facet name="header">#{messages['test.list.name']}</f:facet>
-                            <s:link action="detail" value="#{test.name}">
-                                <f:param name="modelId" value="#{test.id}"/>
-                                <f:param name="beanMode" value="EDIT_MODE"/>
+                            <s:link id="editTestLink" action="detail" value="#{test.name}">
+                                <f:param id="editTestLinkIdParam" name="modelId" value="#{test.id}"/>
+                                <f:param id="editTestLinkBeanModeParam" name="beanMode" value="EDIT_MODE"/>
                             </s:link>
+                        </rich:column>
+                        <rich:column id="col3">
+                            <f:facet name="header">#{messages['test.list.category.discipline.name']}</f:facet>
+                            #{test.category.discipline.name}
+                        </rich:column>
+                        <rich:column id="col4">
+                            <f:facet name="header">#{messages['test.list.category.name']}</f:facet>
+                            #{test.category.name}
+                        </rich:column>
+                        <rich:column id="col5" styleClass="columnIcon">
+                            <a4j:commandButton id="deleteButton"
+                                               action="#{pageBean.doDelete}"
+                                               onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"
+                                               title="#{messages['common.list.functions.delete']}"
+                                               image="/images/icons/icon_delete.gif"
+                                               reRender="contentBodyForm"/>
                         </rich:column>
                     </rich:dataTable>
                 </ui:define>
