@@ -66,7 +66,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             while (iter.hasNext()) {
                 TestDifficulty testDifficulty = iter.next();
                 iter.remove();
-                getEntityManager().remove(testDifficulty);
+                getEntityManager().remove(getEntityManager().merge(testDifficulty));
             }
 
             test.setModifiedBy(user.getUsername());
@@ -77,7 +77,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
 
         for (DifficultyWrapper wrapper : difficulties) {
             if (wrapper.getSelected()) {
-                TestDifficulty testDifficulty = new TestDifficulty(test, wrapper.getDifficulty(),
+                TestDifficulty testDifficulty = new TestDifficulty(result, wrapper.getDifficulty(),
                         wrapper.getQuestionsCount(), wrapper.getPassScore());
                 getEntityManager().persist(testDifficulty);
             }
