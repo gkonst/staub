@@ -36,7 +36,7 @@
                         <rich:column id="col1">
                             <f:facet name="header">#{messages['question.list.code']}</f:facet>
                             <s:link id="editQuestionLink"
-                                    action="detail" value="#{question.name}">
+                                    action="detail" value="#{question.id}">
                                 <f:param id="idParam" name="modelId" value="#{question.id}"/>
                                 <f:param id="beanModeParam" name="beanMode" value="EDIT_MODE"/>
                             </s:link>

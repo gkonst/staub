@@ -34,9 +34,8 @@
     </td>
     <td width="100%" colspan="3">
         <h:inputText id="nameInput"
-                     value="#{pageBean.model.name }"
-                     disabled="#{pageBean.viewMode}"
-                     style="width:99%"/>
+                     value="#{pageBean.model.id != null ? pageBean.model.id : ''}"
+                     disabled="true"/>
     </td>
 </tr>
 <tr>
@@ -203,7 +202,7 @@
             <a4j:support id="answerTypesSelectSupport"
                          event="onchange"
                          action="#{pageBean.changeAnswerType}"
-                         reRender="correctAnswerPanel, answerLabelPanel, answerSubtypePanel"
+                         reRender="correctAnswerPanel, answerLabelPanel, answerSubtypePanel, answerButtonPanel"
                          ajaxSingle="true"/>
         </h:selectOneMenu>
         <br/>
