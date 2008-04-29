@@ -162,11 +162,14 @@ h1 {
     height: 5px;
 }
 
-.detailTable {
+.area {
     border-collapse: collapse;
     border-spacing: 0;
     border: 1px solid #D2C9C4;
     background-color: #F5F3F1;
+}
+
+.detailTable {
 }
 
 .detailTable td {
@@ -183,6 +186,13 @@ h1 {
     padding: 0.5em 0;
     vertical-align: middle;
     white-space: nowrap;
+}
+
+.loginTable{
+}
+
+.loginTable td {
+    padding: 0.3em 1em;
 }
 
 .questionDefinitionPanel {

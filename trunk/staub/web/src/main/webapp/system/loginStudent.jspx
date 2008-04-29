@@ -9,18 +9,19 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="/template/staub-template.jspx">
+    <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:define name="headerStatus"/>
     <ui:define name="contentMessage"/>
     <ui:define name="contentBody">
         <rich:spacer height="20em"/>
-        <h:form id="loginForm">
+        <a4j:form id="loginForm">
             <div align="center">
-                <table class="detailTable">
+                <table class="area loginTable">
                     <tr>
                         <td colspan="2" align="center">
                             <rich:spacer height="10"/>
                             <br/>
-                            #{messages['system.loginStudent.subTitle']}
+                            #{messages['system.loginStudent.title']}
                             <br/>
                             <rich:spacer height="5"/>
                         </td>
@@ -32,7 +33,9 @@
                         <td align="left">
                             <h:selectOneMenu id="groupSelect"
                                              value="#{loginStudentBean.group}"
-                                             converter="ru.spbspu.staub.ObjectSelectConverter">
+                                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                                             required="true"
+                                             requiredMessage="#{messages['system.loginStudent.required.group']}">
                                 <s:selectItems value="#{loginStudentBean.groups}" var="group" label="#{group.name}"
                                                noSelectionLabel=""/>
                                 <a4j:support id="groupSelectSupport"
@@ -50,12 +53,15 @@
                         <td align="left">
                             <a4j:outputPanel id="studentSelectPanel">
                                 <h:selectOneMenu id="studentSelect"
-                                                 value="#{loginStudentBean.username}"
-                                                 disabled="#{loginStudentBean.group == null}">
+                                                 value="#{loginStudentBean.selectedStudent}"
+                                                 disabled="#{loginStudentBean.group == null}"
+                                                 converter="ru.spbspu.staub.ObjectSelectConverter"
+                                                 required="true"
+                                                 requiredMessage="#{messages['system.loginStudent.required.student']}">
                                     <s:selectItems id="studentSelectItems"
                                                    value="#{loginStudentBean.students}" var="student"
                                                    label="#{student.name}"
-                                                   noSelectionLabel="" itemValue="#{student.name}"/>
+                                                   noSelectionLabel=""/>
                                     <a4j:support id="studentSelectSupport"
                                                  event="onchange"
                                                  ajaxSingle="true"
@@ -70,31 +76,35 @@
                         </td>
                         <td align="left">
                             <a4j:outputPanel id="passwordPanel">
-                                <h:inputSecret id="password"
+                                <h:inputSecret id="passwordInput"
                                                value="#{loginStudentBean.password}"
                                                style="width: 9em;"
-                                               disabled="#{loginStudentBean.username == null}"/>
+                                               disabled="#{loginStudentBean.username == null}"
+                                               required="true"
+                                               requiredMessage="#{messages['system.loginStudent.required.password']}"/>
                             </a4j:outputPanel>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
-                            <ui:include src="../controls/genericMessageControl.jspx"/>
+                            <ui:include src="/controls/genericMessageControl.jspx"/>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
                             <a4j:outputPanel id="loginButtonPanel">
                                 <a4j:commandButton id="loginButton" action="#{loginStudentBean.login}"
-                                                   value="#{messages['system.login.enter']}"
+                                                   value="#{messages['system.loginStudent.enter']}"
                                                    styleClass="button"
-                                                   disabled="#{loginStudentBean.username == null}"/>
+                                                   disabled="#{loginStudentBean.username == null}">
+                                    <s:defaultAction/>
+                                </a4j:commandButton>
                             </a4j:outputPanel>
                         </td>
                     </tr>
                 </table>
             </div>
-        </h:form>
+        </a4j:form>
     </ui:define>
 </ui:composition>
 </html>

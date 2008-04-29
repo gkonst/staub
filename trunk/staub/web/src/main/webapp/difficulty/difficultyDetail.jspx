@@ -23,7 +23,7 @@
             <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <ui:include src="/controls/genericSaveControl.jspx"/>
             </a4j:outputPanel>
-            <table class="detailTable">
+            <table class="area detailTable">
                 <tr>
                     <td align="right">
                         <strong>#{messages['difficulty.detail.code']}</strong>

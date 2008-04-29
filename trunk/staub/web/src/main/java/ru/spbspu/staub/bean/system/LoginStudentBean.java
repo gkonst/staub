@@ -42,6 +42,8 @@ public class LoginStudentBean extends GenericBean {
     @Out(scope = ScopeType.SESSION, required = false)
     private Student student;
 
+    private Student selectedStudent;
+
     private Group group;
 
     @Create
@@ -53,7 +55,11 @@ public class LoginStudentBean extends GenericBean {
         identity.setUsername(username);
         identity.setPassword(password);
         identity.setAuthenticateMethod(Expressions.instance().createMethodExpression("#{loginStudentBean.authenticate}"));
-        return identity.login();
+        String outcome = identity.login();
+        if (student == null) {
+            addFacesMessageFromResourceBundle("system.loginStudent.error.password");
+        }
+        return outcome;
     }
 
     public boolean authenticate() {
@@ -65,6 +71,7 @@ public class LoginStudentBean extends GenericBean {
 
     public void refreshStudents() {
         if (group != null) {
+            getFacesMessages().clear();
             students = studentService.findStudentsByGroup(group);
         }
     }
@@ -95,6 +102,17 @@ public class LoginStudentBean extends GenericBean {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Student getSelectedStudent() {
+        return selectedStudent;
+    }
+
+    public void setSelectedStudent(Student selectedStudent) {
+        this.selectedStudent = selectedStudent;
+        if (selectedStudent != null) {
+            setUsername(selectedStudent.getName());
+        }
     }
 
     public String getPassword() {

@@ -13,7 +13,7 @@
         #{testStartBean.model.name}
     </ui:define>
     <ui:define name="contentBody">
-        <table class="detailTable">
+        <table class="area detailTable">
             <tr>
                 <td align="right">
                     <strong>#{messages['test.detail.description']}</strong>
