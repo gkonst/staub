@@ -1,3 +1,14 @@
+function genericOnBodyLoad() {
+    if (typeof onBodyLoad != 'undefined') {
+        onBodyLoad();
+    }
+}
+
+function genericOnBodyUnload() {
+    if (typeof onBodyUnload != 'undefined') {
+        onBodyUnload();
+    }
+}
 function expandOrCollapseElement(objArgs) {
     if (objArgs == null || typeof objArgs != 'object') {
         return;
