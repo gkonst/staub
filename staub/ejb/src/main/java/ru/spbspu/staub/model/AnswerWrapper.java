@@ -1,5 +1,7 @@
 package ru.spbspu.staub.model;
 
+import org.jboss.seam.log.Log;
+import org.jboss.seam.log.Logging;
 import ru.spbspu.staub.model.question.ChoiceType;
 import ru.spbspu.staub.model.question.InputType;
 import ru.spbspu.staub.model.question.QuestionType;
@@ -15,6 +17,7 @@ import ru.spbspu.staub.model.question.UserInputType;
  * @param <C> current answer class
  */
 public abstract class AnswerWrapper<D, C> {
+    protected static final Log LOG = Logging.getLog(AnswerWrapper.class);
 
     /**
      * Answers definition, as it is.
@@ -42,6 +45,7 @@ public abstract class AnswerWrapper<D, C> {
      *
      * @param questionDefinition question definitin in which answer will be created
      * @param type               specific amswer type
+     *
      * @return created answer instance
      */
     public static AnswerWrapper createAnswer(QuestionType questionDefinition, Type type) {
@@ -72,6 +76,7 @@ public abstract class AnswerWrapper<D, C> {
      * Factory method for creating answer on base of question definition.
      *
      * @param questionDefinition filled previously question definition
+     *
      * @return answer instance
      */
     public static AnswerWrapper getAnswer(QuestionType questionDefinition) {

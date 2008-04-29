@@ -7,6 +7,7 @@ import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
 import ru.spbspu.staub.model.answer.AnswerType;
 import ru.spbspu.staub.model.answer.ElementType;
+import ru.spbspu.staub.model.question.InputType;
 import ru.spbspu.staub.model.question.QuestionType;
 import ru.spbspu.staub.model.question.UserInputType;
 
@@ -101,7 +102,16 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
     private boolean check(UserInputType userInputType, String userAnswer) {
         String regexp = userInputType.getRegexp();
         if ((regexp == null) || (regexp.length() == 0)) {
-            return ((userAnswer == null) || (userAnswer.length() == 0));
+            if (InputType.STRING == userInputType.getType()) {
+                String answer = userInputType.getAnswer();
+                if ((answer != null) && (answer.length() > 0)) {
+                    return answer.equals(userAnswer);
+                } else {
+                    return ((userAnswer == null) || (userAnswer.length() == 0));
+                }
+            } else { // Should not happen.
+                return false;
+            }
         } else {
             Pattern p = Pattern.compile(regexp);
             Matcher m = p.matcher(userAnswer);
