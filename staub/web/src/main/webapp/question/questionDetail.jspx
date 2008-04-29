@@ -8,7 +8,8 @@
       xmlns:rich="http://richfaces.org/rich"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib"
-      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:st="http://spbspu.ru/staub/taglib">
 <ui:composition template="/template/staub-template.jspx">
 <ui:param name="pageBean" value="#{questionDetailBean}"/>
 <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionDetailBean"-->
@@ -220,8 +221,7 @@
                              rendered="#{pageBean.answer.userInput}">
                 <s:selectItems id="answerSubtypeSelectItems"
                                var="subtype" value="#{pageBean.answer.subtypes}"
-                               label="#{messages[fn:join(fn:join(fn:join('question.detail.answerType.', pageBean.answer.type), '.'), subtype)]}"
-                               noSelectionLabel=""/>
+                               label="#{messages[fn:join(fn:join(fn:join('question.detail.answerType.', pageBean.answer.type), '.'), subtype)]}"/>
                 <a4j:support id="answerSubtypeSelectSupport"
                              event="onchange"
                              reRender="correctAnswerPanel"
@@ -259,12 +259,9 @@
                                value="#{pageBean.answer.definition.answer}"
                                var="temp"/>
             </h:selectManyCheckbox>
-            <h:inputText id="correctAnswerUserInput"
-                         value="#{pageBean.answer.current}"
-                         disabled="#{pageBean.viewMode}"
-                         rendered="#{pageBean.answer.userInput}"
-                         required="true"
-                         requiredMessage="#{messages['question.detail.required.correctUserInput']}"/>
+            <ui:include src="/controls/answerUserInputControl.jspx">
+                <ui:param name="answerModel" value="#{pageBean.answer}"/>
+            </ui:include>
         </a4j:outputPanel>
     </td>
     <td colspan="2">

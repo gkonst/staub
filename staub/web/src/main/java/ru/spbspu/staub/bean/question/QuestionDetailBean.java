@@ -10,6 +10,8 @@ import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.AnswerWrapper;
 import ru.spbspu.staub.model.ChoiceAnswerWrapper;
+import ru.spbspu.staub.model.UserInputAnswerWrapper;
+import ru.spbspu.staub.model.question.InputType;
 import ru.spbspu.staub.model.question.QuestionType;
 import ru.spbspu.staub.service.*;
 import ru.spbspu.staub.util.ImageResource;
@@ -116,9 +118,8 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     public void doSave() {
         logger.debug("Saving question...");
         answer.resolveCorrectAnswer();
-        // may be need update model?
         setModel(questionService.saveQuestion(getModel(), user));
-        logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
+        logger.debug("  Changing bean mode -> #0", BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
         logger.debug("Saving... OK");
@@ -235,6 +236,10 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     public void setAnswerType(AnswerWrapper.Type answerType) {
         this.answerType = answerType;
+    }
+
+    public String getUserInputRegex(String inputType) {
+        return UserInputAnswerWrapper.REGEX_MAP.get(InputType.valueOf(inputType));
     }
 
     public List<Topic> getTopicList() {

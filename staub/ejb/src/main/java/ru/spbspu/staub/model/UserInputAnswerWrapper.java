@@ -119,7 +119,7 @@ public class UserInputAnswerWrapper extends AnswerWrapper<UserInputType, String>
 
         String regexpString = regexp.toString();
         getDefinition().setRegexp(regexpString);
-        LOG.debug("*  Regexp : ", regexpString);
+        LOG.debug("*  Regexp : #0", regexpString);
 
         LOG.debug("< resolveCorrectAnswer()");
     }
