@@ -5,11 +5,15 @@ import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Discipline;
 import ru.spbspu.staub.exception.RemoveException;
+import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.model.list.FormProperties;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Stateless EJB Service for manipulations with <code>Category</code> entity.
@@ -34,9 +38,32 @@ public class CategoryServiceBean extends GenericServiceBean<Category, Integer> i
         return q.getResultList();
     }
 
+    public FormTable findCategories(FormProperties formProperties, Discipline discipline) {
+        logger.debug("> findCategories(FormProperties=#0, Discipline=#1)", formProperties, discipline);
+
+        StringBuilder query = new StringBuilder();
+        query.append("select c from Category c");
+
+        Map<String, Object> parameters = new HashMap<String, Object>();
+
+        if (discipline != null) {
+            query.append(" where c.discipline = :discipline");
+            parameters.put("discipline", discipline);
+        }
+
+        String queryString = query.toString();
+        logger.debug("*  Query: #0", queryString);
+
+        FormTable formTable = findAll(queryString, formProperties, parameters);
+
+        logger.debug("< findCategories(FormProperties, Discipline)");
+
+        return formTable;
+    }
+
     @Override
     public void remove(Category category) throws RemoveException {
-        logger.debug("> remove(category=#0)", category);
+        logger.debug("> remove(Category=#0)", category);
 
         Category c = getEntityManager().merge(category);
         if ((questionService.countQuestions(c) + testService.countTests(c)) == 0) {
@@ -48,6 +75,6 @@ public class CategoryServiceBean extends GenericServiceBean<Category, Integer> i
             throw new RemoveException("Could not remove a category.");
         }
 
-        logger.debug("< remove(category=#0)", category);
+        logger.debug("< remove(Category)");
     }
 }

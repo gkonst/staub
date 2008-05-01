@@ -30,6 +30,40 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     @EJB
     private TestTraceService testTraceService;
 
+    public FormTable findTests(FormProperties formProperties, Discipline discipline, Category category, Topic topic) {
+        logger.debug("> findTests(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3)", formProperties, discipline,
+                category, topic);
+
+        StringBuilder query = new StringBuilder();
+        query.append("select t from Test t");
+
+        Map<String, Object> parameters = new HashMap<String, Object>();
+
+        if (topic != null) {
+            query.append(" join t.topics tt where tt = :topic and");
+            parameters.put("topic", topic);
+        } else if (category != null) {
+            query.append(" where t.category = :category and");
+            parameters.put("category", category);
+        } else if (discipline != null) {
+            query.append(", Discipline d join d.categories c where t.category = c and d = :discipline and");
+            parameters.put("discipline", discipline);
+        } else {
+            query.append(" where");
+        }
+
+        query.append(" t.active = true");
+
+        String queryString = query.toString();
+        logger.debug("*  Query: #0", queryString);
+
+        FormTable formTable = findAll(queryString, formProperties, parameters);
+
+        logger.debug("< findTests(FormProperties, Discipline, Category, Topic)");
+
+        return formTable;
+    }
+
     public long countTests(Category category) {
         Query q = getEntityManager().createQuery("select count(t) from Test t where t.category = :category");
         q.setParameter("category", category);
@@ -96,10 +130,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     @SuppressWarnings("unchecked")
     public List<Test> findAll() {
         logger.debug(">>> Finding all(entity=#0)...", Test.class.getName());
-        StringBuilder queryString = new StringBuilder()
-                .append("select o from ")
-                .append(Test.class.getName())
-                .append(" o where o.active = true");
+        StringBuilder queryString = new StringBuilder().append("select t from Test t where t.active = true");
         List<Test> result = getEntityManager().createQuery(queryString.toString()).getResultList();
         logger.debug("<<< Finding all...Ok(#0 found)", result.size());
         return result;
@@ -107,16 +138,13 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
 
     @Override
     public FormTable findAll(FormProperties formProperties) {
-        StringBuilder queryString = new StringBuilder()
-                .append("select o from ")
-                .append(Test.class.getName())
-                .append(" o where o.active = true");
+        StringBuilder queryString = new StringBuilder().append("select t from Test t where t.active = true");
         return findAll(queryString.toString(), formProperties, new HashMap<String, Object>(0));
     }
 
     @Override
     public void remove(Test test) throws RemoveException {
-        logger.debug("> remove(test=#0)", test);
+        logger.debug("> remove(Test=#0)", test);
 
         Test t = getEntityManager().merge(test);
         if (assignmentService.countAssignments(t) == 0) {
@@ -129,7 +157,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             } else {
                 logger.debug("*  Related TestTrace entities exist.");
                 t.setActive(false);
-                t = getEntityManager().merge(t);
+                getEntityManager().merge(t);
                 logger.debug("*  Test marked inactive.");
             }
         } else {
@@ -137,7 +165,7 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             throw new RemoveException("Could not remove a Test.");
         }
 
-        logger.debug("< remove(difficulty=#0)", t);
+        logger.debug("< remove(Test)");
     }
 
     private void validateTest(Test test) {

@@ -2,6 +2,8 @@ package ru.spbspu.staub.service;
 
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Topic;
+import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -14,11 +16,21 @@ import java.util.List;
 @Local
 public interface TopicService extends GenericService<Topic, Integer> {
     /**
-     * Returns a list of topics associated with a category.
+     * Searches topics of a specified category.
      *
      * @param category the category
      *
      * @return the list of topics
      */
     List<Topic> findTopics(Category category);
+
+    /**
+     * Searches topics of a specified category.
+     *
+     * @param formProperties the form properties
+     * @param category       the category
+     *
+     * @return the table of results
+     */
+    FormTable findTopics(FormProperties formProperties, Category category);
 }
