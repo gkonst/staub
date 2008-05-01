@@ -32,17 +32,17 @@ public interface StudentService extends GenericService<Student, Integer> {
      *
      * @return the search results
      */
-    List<Student> findStudentsByGroup(Group group);
+    List<Student> findStudents(Group group);
 
     /**
-     * Returns a list of students from the specified group.
+     * Searches a students from the specified group.
      *
      * @param formProperties the form properties
      * @param group          the group
      *
      * @return the table of results
      */
-    FormTable findStudentsToAssign(FormProperties formProperties, Group group);
+    FormTable findStudents(FormProperties formProperties, Group group);
 
     /**
      * Counts students from a specified group.

@@ -26,7 +26,7 @@ public class DisciplineServiceBean extends GenericServiceBean<Discipline, Intege
 
     @Override
     public void remove(Discipline discipline) throws RemoveException {
-        logger.debug("> remove(discipline=#0)", discipline);
+        logger.debug("> remove(Discipline=#0)", discipline);
 
         Discipline d = getEntityManager().merge(discipline);
         if ((questionService.countQuestions(d) + testService.countTests(d)) == 0) {
@@ -38,6 +38,6 @@ public class DisciplineServiceBean extends GenericServiceBean<Discipline, Intege
             throw new RemoveException("Could not remove a discipline.");
         }
 
-        logger.debug("< remove(discipline=#0)", discipline);
+        logger.debug("< remove(Discipline)");
     }
 }

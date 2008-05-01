@@ -68,7 +68,7 @@ public class StudentAssignListBean extends GenericListBean<User> {
      */
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return studentService.findStudentsToAssign(formProperties, group);
+        return studentService.findStudents(formProperties, group);
     }
 
     /**

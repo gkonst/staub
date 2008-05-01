@@ -2,6 +2,8 @@ package ru.spbspu.staub.service;
 
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Discipline;
+import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -15,11 +17,21 @@ import java.util.List;
 @Local
 public interface CategoryService extends GenericService<Category, Integer> {
     /**
-     * Returns a list of categories associated with a discipline.
+     * Searches categories of a specified discipline.
      *
      * @param discipline the discipline
      *
      * @return the list of categories
      */
     List<Category> findCategories(Discipline discipline);
+
+    /**
+     * Searches categories of a specified discipline.
+     *
+     * @param formProperties the form properties
+     * @param discipline     the discipline
+     *
+     * @return the table of reults
+     */
+    FormTable findCategories(FormProperties formProperties, Discipline discipline);
 }

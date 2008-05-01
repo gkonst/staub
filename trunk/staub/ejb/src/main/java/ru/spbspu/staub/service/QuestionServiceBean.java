@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Stateless EJB Service for manipulations with <code>Question</code> entity.
@@ -25,6 +26,46 @@ import java.util.List;
 public class QuestionServiceBean extends GenericServiceBean<Question, Integer> implements QuestionService {
     @EJB
     QuestionTraceService questionTraceService;
+
+    public FormTable findQuestions(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
+                                   Difficulty difficulty) {
+        logger.debug("> findQuestions(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3, Difficulty=#4)",
+                formProperties, discipline, category, topic, difficulty);
+
+        StringBuilder query = new StringBuilder();
+        query.append("select q from Question q");
+
+        Map<String, Object> parameters = new HashMap<String, Object>();
+
+        if (topic != null) {
+            query.append(" where q.topic = :topic and");
+            parameters.put("topic", topic);
+        } else if (category != null) {
+            query.append(", Category c join c.topics t where q.topic = t and c = :category and");
+            parameters.put("category", category);
+        } else if (discipline != null) {
+            query.append(", Discipline d join d.categories c join c.topics t where q.topic = t and d = :discipline and");
+            parameters.put("discipline", discipline);
+        } else {
+            query.append(" where");
+        }
+
+        query.append(" q.active = true");
+
+        if (difficulty != null) {
+            query.append(" and q.difficulty = :difficulty");
+            parameters.put("difficulty", difficulty);
+        }
+
+        String queryString = query.toString();
+        logger.debug("*  Query: #0", queryString);
+
+        FormTable formTable = findAll(queryString, formProperties, parameters);
+
+        logger.debug("< findQuestions(FormProperties, Discipline, Category, Topic, Difficulty)");
+
+        return formTable;
+    }
 
     public long countQuestions(Category category) {
         Query q = getEntityManager().createQuery("select count(q) from Category c join c.topics t, Question q where q.topic = t and c = :category");
@@ -66,10 +107,7 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
     @SuppressWarnings("unchecked")
     public List<Question> findAll() {
         logger.debug(">>> Finding all(entity=#0)...", Question.class.getName());
-        StringBuilder queryString = new StringBuilder()
-                .append("select o from ")
-                .append(Question.class.getName())
-                .append(" o where o.active = true");
+        StringBuilder queryString = new StringBuilder().append("select q from Question q where q.active = true");
         List<Question> result = getEntityManager().createQuery(queryString.toString()).getResultList();
         logger.debug("<<< Finding all...Ok(#0 found)", result.size());
         return result;
@@ -77,16 +115,13 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
 
     @Override
     public FormTable findAll(FormProperties formProperties) {
-        StringBuilder queryString = new StringBuilder()
-                .append("select o from ")
-                .append(Question.class.getName())
-                .append(" o where o.active = true");
+        StringBuilder queryString = new StringBuilder().append("select q from Question q where q.active = true");
         return findAll(queryString.toString(), formProperties, new HashMap<String, Object>(0));
     }
 
     @Override
     public void remove(Question question) {
-        logger.debug("> remove(question=#0)", question);
+        logger.debug("> remove(Question=#0)", question);
 
         Question q = getEntityManager().merge(question);
         if (questionTraceService.countQuestionTraces(q) == 0) {
@@ -96,10 +131,10 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
         } else {
             logger.debug("*  Related QuestionTrace entities exist.");
             q.setActive(false);
-            q = getEntityManager().merge(q);
+            getEntityManager().merge(q);
             logger.debug("*  Question marked inactive.");
         }
 
-        logger.debug("< remove(question=#0)", q);
+        logger.debug("< remove(Question)");
     }
 }

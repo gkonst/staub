@@ -2,6 +2,8 @@ package ru.spbspu.staub.service;
 
 import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.DifficultyWrapper;
+import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -15,7 +17,19 @@ import java.util.List;
 @Local
 public interface TestService extends GenericService<Test, Integer> {
     /**
-     * Counts a tests of a specified category.
+     * Searches test matching specified criteria.
+     *
+     * @param formProperties the form properties
+     * @param discipline     the discipline
+     * @param category       the category
+     * @param topic          the topic
+     *
+     * @return the table of results
+     */
+    public FormTable findTests(FormProperties formProperties, Discipline discipline, Category category, Topic topic);
+
+    /**
+     * Counts tests of a specified category.
      *
      * @param category the category
      *
@@ -24,7 +38,7 @@ public interface TestService extends GenericService<Test, Integer> {
     long countTests(Category category);
 
     /**
-     * Counts a tests of a specified difficulty.
+     * Counts tests of a specified difficulty.
      *
      * @param difficulty the difficulty
      *
@@ -33,7 +47,7 @@ public interface TestService extends GenericService<Test, Integer> {
     long countTests(Difficulty difficulty);
 
     /**
-     * Counts a tests of a specified discipline.
+     * Counts tests of a specified discipline.
      *
      * @param discipline the discipline
      *
@@ -42,7 +56,7 @@ public interface TestService extends GenericService<Test, Integer> {
     long countTests(Discipline discipline);
 
     /**
-     * Counts a tests of a specified topic.
+     * Counts tests of a specified topic.
      *
      * @param topic the topic
      *

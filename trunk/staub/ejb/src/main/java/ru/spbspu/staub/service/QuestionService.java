@@ -1,6 +1,8 @@
 package ru.spbspu.staub.service;
 
 import ru.spbspu.staub.entity.*;
+import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.model.list.FormProperties;
 
 import javax.ejb.Local;
 
@@ -13,7 +15,21 @@ import javax.ejb.Local;
 @Local
 public interface QuestionService extends GenericService<Question, Integer> {
     /**
-     * Counts a questions of a specified category.
+     * Searches questions matching specified criteria.
+     *
+     * @param formProperties the form properties
+     * @param discipline     the discipline
+     * @param category       the category
+     * @param topic          the topic
+     * @param difficulty     the difficulty
+     *
+     * @return the table of results
+     */
+    public FormTable findQuestions(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
+                                   Difficulty difficulty);
+
+    /**
+     * Counts questions of a specified category.
      *
      * @param category the category
      *
@@ -22,7 +38,7 @@ public interface QuestionService extends GenericService<Question, Integer> {
     long countQuestions(Category category);
 
     /**
-     * Counts a questions of a specified difficulty.
+     * Counts questions of a specified difficulty.
      *
      * @param difficulty the difficulty
      *
@@ -31,7 +47,7 @@ public interface QuestionService extends GenericService<Question, Integer> {
     long countQuestions(Difficulty difficulty);
 
     /**
-     * Counts a questions of a specified discipline.
+     * Counts questions of a specified discipline.
      *
      * @param discipline the discipline
      *
@@ -40,7 +56,7 @@ public interface QuestionService extends GenericService<Question, Integer> {
     long countQuestions(Discipline discipline);
 
     /**
-     * Counts a questions of a specified topic.
+     * Counts questions of a specified topic.
      *
      * @param topic the topic
      *

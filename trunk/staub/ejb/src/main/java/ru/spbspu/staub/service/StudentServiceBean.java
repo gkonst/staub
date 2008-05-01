@@ -46,17 +46,37 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
     }
 
     @SuppressWarnings("unchecked")
-    public List<Student> findStudentsByGroup(Group group) {
+    public List<Student> findStudents(Group group) {
         Query q = getEntityManager().createQuery("select s from Student s where s.group = :group and s.active = true");
         q.setParameter("group", group);
         return q.getResultList();
     }
 
-    public FormTable findStudentsToAssign(FormProperties formProperties, Group group) {
-        String query = "select s from Student s where s.group = :group and s.active = true";
+    public FormTable findStudents(FormProperties formProperties, Group group) {
+        logger.debug("> findStudents(FormProperties=#0, Group=#1)", formProperties, group);
+
+        StringBuilder query = new StringBuilder();
+        query.append("select s from Student s");
+
         Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("group", group);
-        return findAll(query, formProperties, parameters);
+
+        if (group != null) {
+            query.append(" where s.group = :group and");
+            parameters.put("group", group);
+        } else {
+            query.append(" where");
+        }
+
+        query.append(" s.active = true");
+
+        String queryString = query.toString();
+        logger.debug("*  Query: #0", queryString);
+
+        FormTable formTable = findAll(queryString, formProperties, parameters);
+
+        logger.debug("< findStudents(FormProperties, Group)");
+
+        return formTable;
     }
 
     public long countStudents(Group group) {
@@ -69,10 +89,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
     @SuppressWarnings("unchecked")
     public List<Student> findAll() {
         logger.debug(">>> Finding all(entity=#0)...", Student.class.getName());
-        StringBuilder queryString = new StringBuilder()
-                .append("select o from ")
-                .append(Student.class.getName())
-                .append(" o where o.active = true");
+        StringBuilder queryString = new StringBuilder().append("select s from Student s where s.active = true");
         List<Student> result = getEntityManager().createQuery(queryString.toString()).getResultList();
         logger.debug("<<< Finding all...Ok(#0 found)", result.size());
         return result;
@@ -80,16 +97,13 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
 
     @Override
     public FormTable findAll(FormProperties formProperties) {
-        StringBuilder queryString = new StringBuilder()
-                .append("select o from ")
-                .append(Student.class.getName())
-                .append(" o where o.active = true");
+        StringBuilder queryString = new StringBuilder().append("select s from Student s where s.active = true");
         return findAll(queryString.toString(), formProperties, new HashMap<String, Object>(0));
     }
 
     @Override
     public void remove(Student student) throws RemoveException {
-        logger.debug("> remove(student=#0)", student);
+        logger.debug("> remove(Student=#0)", student);
 
         Student s = getEntityManager().merge(student);
         if (assignmentService.countAssignments(s) == 0) {
@@ -101,7 +115,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
             } else {
                 logger.debug("*  Related TestTrace entities exist.");
                 s.setActive(false);
-                s = getEntityManager().merge(s);
+                getEntityManager().merge(s);
                 logger.debug("*  Student marked inactive.");
             }
         } else {
@@ -109,6 +123,6 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
             throw new RemoveException("Could not remove a Student.");
         }
 
-        logger.debug("< remove(student=#0)", s);
+        logger.debug("< remove(Student)");
     }
 }
