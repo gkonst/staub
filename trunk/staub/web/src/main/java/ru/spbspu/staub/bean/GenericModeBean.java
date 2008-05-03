@@ -18,7 +18,6 @@ public abstract class GenericModeBean extends GenericBean {
     /**
      * Injected new mode from request parameter.
      */
-    @In(value = BEAN_MODE, required = false)
     @RequestParameter(BEAN_MODE)
     private BeanMode beanModeFromRequestParameter;
     /**
