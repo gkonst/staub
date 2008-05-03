@@ -57,8 +57,7 @@
                             <s:selectItems id="disciplineSelectItems"
                                            value="#{pageBean.disciplineList}"
                                            var="discipline"
-                                           label="#{discipline.name}"
-                                           noSelectionLabel=""/>
+                                           label="#{discipline.name}"/>
                             <a4j:support id="disciplineSelectSupport"
                                          event="onchange"
                                          action="#{pageBean.refreshCategories}"
@@ -82,8 +81,7 @@
                             <s:selectItems id="categorySelectItems"
                                            value="#{pageBean.categoryList}"
                                            var="category"
-                                           label="#{category.name}"
-                                           noSelectionLabel=""/>
+                                           label="#{category.name}"/>
                         </h:selectOneMenu>
                     </td>
                 </tr>

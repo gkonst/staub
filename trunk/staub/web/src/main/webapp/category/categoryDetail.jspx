@@ -57,8 +57,7 @@
                             <s:selectItems id="disciplineSelectItems"
                                            value="#{pageBean.disciplineList}"
                                            var="discipline"
-                                           label="#{discipline.name}"
-                                           noSelectionLabel=""/>
+                                           label="#{discipline.name}"/>
                         </h:selectOneMenu>
                     </td>
                 </tr>

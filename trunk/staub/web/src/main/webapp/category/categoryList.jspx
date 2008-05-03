@@ -34,23 +34,28 @@
                                     var="category"
                                     rendered="#{pageBean.dataModel.rowCount > 0}"
                                     styleClass="dataTable">
-                        <rich:column id="col1">
-                            <f:facet name="header">#{messages['category.list.code']}</f:facet>
-                            <s:link id="editCategoryLink"
-                                    action="detail" value="#{category.code}">
-                                <f:param id="idParam" name="modelId" value="#{category.id}"/>
-                                <f:param id="beanModeParam" name="beanMode" value="EDIT_MODE"/>
-                            </s:link>
+                        <rich:column id="col1" styleClass="columnIcon">
+                            <a4j:htmlCommandLink id="topicListLink"
+                                                 action="#{pageBean.showTopics}">
+                                <h:graphicImage id="topicListLinkImage"
+                                                url="/images/icons/icon_detail_view.gif"
+                                                alt="#{messages['category.list.showTopics']}"/>
+                            </a4j:htmlCommandLink>
                         </rich:column>
                         <rich:column id="col2">
+                            <f:facet name="header">#{messages['category.list.code']}</f:facet>
+                            <a4j:htmlCommandLink id="editCategoryLink"
+                                                 action="#{pageBean.doEdit}" value="#{category.code}"/>
+                        </rich:column>
+                        <rich:column id="col3">
                             <f:facet name="header">#{messages['category.list.name']}</f:facet>
                             #{category.name}
                         </rich:column>
-                        <rich:column id="col3">
+                        <rich:column id="col4">
                             <f:facet name="header">#{messages['category.list.discipline.name']}</f:facet>
                             #{category.discipline.name}
                         </rich:column>
-                        <rich:column id="col4" styleClass="columnIcon">
+                        <rich:column id="col5" styleClass="columnIcon">
                             <a4j:commandButton id="deleteButton"
                                                action="#{pageBean.doDelete}"
                                                onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"

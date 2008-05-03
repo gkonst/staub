@@ -4,6 +4,7 @@ import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.contexts.Contexts;
 import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.Discipline;
 import ru.spbspu.staub.exception.RemoveException;
@@ -43,5 +44,10 @@ public class DisciplineListBean extends GenericListBean<Discipline> {
         } catch (RemoveException e) {
             addFacesMessageFromResourceBundle("common.messages.deleteFailed");
         }
+    }
+
+    public String showCategories() {
+        Contexts.getConversationContext().set(Discipline.class.getName(), getSelected());
+        return doView("categoryList");
     }
 }

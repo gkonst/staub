@@ -4,8 +4,11 @@ import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.contexts.Contexts;
+import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.Category;
+import ru.spbspu.staub.entity.Discipline;
 import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
@@ -24,12 +27,21 @@ public class CategoryListBean extends GenericListBean<Category> {
     @In
     private CategoryService categoryService;
 
+    private Discipline discipline;
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return categoryService.findAll(formProperties);
+        return categoryService.findCategories(formProperties, discipline);
+    }
+
+    protected void prepareBean() {
+        Discipline discipline = (Discipline) Contexts.getConversationContext().get(Discipline.class.getName());
+        if (discipline != null) {
+            this.discipline = discipline;
+        }
     }
 
     /**
@@ -43,5 +55,25 @@ public class CategoryListBean extends GenericListBean<Category> {
         } catch (RemoveException e) {
             addFacesMessageFromResourceBundle("common.messages.deleteFailed");
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String doCreate() {
+        Contexts.getConversationContext().set(Discipline.class.getName(), discipline);
+        return super.doCreate();
+    }
+
+    public String doEdit() {
+        Contexts.getConversationContext().set(Discipline.class.getName(), discipline);
+        getRequest().setAttribute(GenericDetailBean.MODEL_ID, getSelected().getId());
+        return doEdit("detail");
+    }
+
+    public String showTopics() {
+        Contexts.getConversationContext().set(Category.class.getName(), getSelected());
+        return doView("topicList");
     }
 }
