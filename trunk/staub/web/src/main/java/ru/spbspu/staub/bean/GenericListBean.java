@@ -73,10 +73,16 @@ public abstract class GenericListBean<T> extends GenericModeBean {
      * Every specific subclass must implement this method own way.
      *
      * @param formProperties form properties
-     *
      * @return fetched form table
      */
     protected abstract FormTable findObjects(FormProperties formProperties);
+
+    /**
+     * Do some prepare operations, for example initializes some additional parameters.
+     * Optinal operation.
+     */
+    protected void prepareBean() {
+    }
 
     /**
      * {@inheritDoc}
@@ -85,6 +91,7 @@ public abstract class GenericListBean<T> extends GenericModeBean {
     public void initBean() {
         if (isBeanModeDefined()) {
             logger.debug("Preparing list bean...");
+            prepareBean();
             switch (getBeanMode()) {
                 case VIEW_MODE:     // using fall through switch behaviour
                 case EDIT_MODE:
