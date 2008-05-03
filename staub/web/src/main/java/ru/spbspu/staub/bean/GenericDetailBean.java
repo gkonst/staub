@@ -1,5 +1,6 @@
 package ru.spbspu.staub.bean;
 
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.web.RequestParameter;
 
 /**
@@ -7,11 +8,20 @@ import org.jboss.seam.annotations.web.RequestParameter;
  *
  * @author Konstantin Grigoriev
  */
-public abstract class GenericDetailBean<T> extends GenericModeBean {
+public abstract class GenericDetailBean<T extends java.io.Serializable> extends GenericModeBean {
     private static final long serialVersionUID = -3291096277306979986L;
 
-    @RequestParameter
-    private Integer modelId;
+    public static final String MODEL_ID = "modelId";
+    /**
+     * Injected model identifier from request parameter.
+     */
+    @RequestParameter(MODEL_ID)
+    private Integer modelIdFromRequestParameter;
+    /**
+     * Injected model identifier from context.
+     */
+    @In(value = MODEL_ID, required = false)
+    private Integer modelIdFromRequestAttribute;
 
     private T model;
 
@@ -30,6 +40,14 @@ public abstract class GenericDetailBean<T> extends GenericModeBean {
     @Override
     public void initBean() {
         if (isBeanModeDefined()) {
+            Integer modelId;
+            if(modelIdFromRequestParameter != null) {
+                modelId = modelIdFromRequestParameter;
+            } else if(modelIdFromRequestAttribute != null) {
+                modelId = modelIdFromRequestAttribute;
+            } else {
+                modelId = null;
+            }
             logger.debug(">>> Initializating detail bean...id : #0", modelId);
             fillModel(modelId);
             logger.debug("<<< Initializating detail bean...Ok");
