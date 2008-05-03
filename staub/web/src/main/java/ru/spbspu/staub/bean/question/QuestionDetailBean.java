@@ -4,6 +4,7 @@ import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.contexts.Contexts;
 import org.richfaces.event.UploadEvent;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericDetailBean;
@@ -73,8 +74,10 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         if (isCreateMode()) {
             setModel(new Question());
             setQuestionDefinition(new QuestionType());
-            setCategory(null);
-            setDiscipline(null);
+            setDiscipline((Discipline)Contexts.getConversationContext().get(Discipline.class.getName()));
+            setCategory((Category)Contexts.getConversationContext().get(Category.class.getName()));
+            getModel().setTopic((Topic)Contexts.getConversationContext().get(Topic.class.getName()));
+            getModel().setDifficulty((Difficulty)Contexts.getConversationContext().get(Difficulty.class.getName()));
         } else {
             setModel(questionService.findById(modelId));
             setCategory(getModel().getTopic().getCategory());

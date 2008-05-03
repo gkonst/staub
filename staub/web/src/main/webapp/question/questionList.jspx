@@ -9,66 +9,152 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="/template/staub-template.jspx">
-    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionListBean"-->
-    <!--@elvariable id="messages" type="java.util.Map"-->
-    <ui:param name="pageBean" value="#{questionListBean}"/>
-    <ui:define name="sidebar">
-        <ui:include src="/system/menuPage.jspx"/>
-    </ui:define>
-    <ui:define name="contentTitle">
-        #{messages['question.list.title']}
-    </ui:define>
-    <ui:define name="contentBody">
-        <a4j:form id="contentBodyForm">
-            <a4j:outputPanel id="contentButtons" styleClass="contentButtons" layout="block">
-                <ui:include src="/controls/genericCreateControl.jspx"/>
-                <ui:include src="/controls/genericRefreshControl.jspx"/>
-            </a4j:outputPanel>
-            <ui:decorate template="../controls/listLayoutControl.jspx">
-                <ui:define name="listPageData">
-                    <h:outputText value="#{messages['common.list.noDataFound']}"
-                                  rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
-                    <rich:dataTable id="questionList"
-                                    value="#{pageBean.dataModel}"
-                                    var="question"
-                                    rendered="#{pageBean.dataModel.rowCount > 0}"
-                                    styleClass="dataTable">
-                        <rich:column id="col1">
-                            <f:facet name="header">#{messages['question.list.code']}</f:facet>
-                            <s:link id="editQuestionLink"
-                                    action="detail" value="#{question.id}">
-                                <f:param id="idParam" name="modelId" value="#{question.id}"/>
-                                <f:param id="beanModeParam" name="beanMode" value="EDIT_MODE"/>
-                            </s:link>
-                        </rich:column>
-                        <rich:column id="col2">
-                            <f:facet name="header">#{messages['question.list.topic.category.discipline.name']}</f:facet>
-                            #{question.topic.category.discipline.name}
-                        </rich:column>
-                        <rich:column id="col3">
-                            <f:facet name="header">#{messages['question.list.topic.category.name']}</f:facet>
-                            #{question.topic.category.name}
-                        </rich:column>
-                        <rich:column id="col4">
-                            <f:facet name="header">#{messages['question.list.topic.name']}</f:facet>
-                            #{question.topic.name}
-                        </rich:column>
-                        <rich:column id="col5">
-                            <f:facet name="header">#{messages['question.list.difficulty.name']}</f:facet>
-                            #{question.difficulty.name}
-                        </rich:column>
-                        <rich:column id="col6" styleClass="columnIcon">
-                            <a4j:commandButton id="deleteButton"
-                                               action="#{pageBean.doDelete}"
-                                               onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"
-                                               title="#{messages['common.list.functions.delete']}"
-                                               image="/images/icons/icon_delete.gif"
-                                               reRender="contentBodyForm"/>
-                        </rich:column>
-                    </rich:dataTable>
-                </ui:define>
-            </ui:decorate>
-        </a4j:form>
-    </ui:define>
+<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionListBean"-->
+<!--@elvariable id="messages" type="java.util.Map"-->
+<ui:param name="pageBean" value="#{questionListBean}"/>
+<ui:define name="sidebar">
+    <ui:include src="/system/menuPage.jspx"/>
+</ui:define>
+<ui:define name="contentTitle">
+    #{messages['question.list.title']}
+</ui:define>
+<ui:define name="contentBody">
+<a4j:form id="contentBodyForm">
+<a4j:outputPanel id="contentButtons" styleClass="contentButtons" layout="block">
+    <ui:include src="/controls/genericCreateControl.jspx"/>
+    <ui:include src="/controls/genericRefreshControl.jspx"/>
+</a4j:outputPanel>
+<ui:decorate template="../controls/listLayoutControl.jspx">
+<ui:define name="listPageData">
+<rich:dataTable id="questionList"
+                value="#{pageBean.dataModel}"
+                var="question"
+                rendered="#{pageBean.dataModel != null}"
+                styleClass="dataTable">
+<rich:column id="col1">
+    <f:facet name="header">#{messages['question.list.code']}</f:facet>
+    <s:link id="editQuestionLink"
+            action="detail" value="#{question.id}">
+        <f:param id="idParam" name="modelId" value="#{question.id}"/>
+        <f:param id="beanModeParam" name="beanMode" value="EDIT_MODE"/>
+    </s:link>
+</rich:column>
+<rich:column id="col2">
+    <f:facet name="header">
+        <a4j:outputPanel id="disciplinePanel">
+            #{messages['question.list.topic.category.discipline.name']}
+            <br/>
+            <br/>
+            <h:selectOneMenu id="disciplineSelect"
+                             value="#{pageBean.discipline}"
+                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                             style="width:8em;">
+                <s:selectItems id="disciplineSelectItems"
+                               value="#{pageBean.disciplineList}"
+                               var="discipline"
+                               label="#{discipline.name}"
+                               noSelectionLabel="#{messages['question.list.topic.category.discipline.all']}"/>
+                <a4j:support id="disciplineSelectSupport"
+                             event="onchange"
+                             action="#{pageBean.setDiscipline}"
+                             reRender="contentBodyForm"
+                             ajaxSingle="true"/>
+            </h:selectOneMenu>
+        </a4j:outputPanel>
+    </f:facet>
+    #{question.topic.category.discipline.name}
+</rich:column>
+<rich:column id="col3">
+    <f:facet name="header">
+        <a4j:outputPanel id="categoryPanel">
+            #{messages['question.list.topic.category.name']}
+            <br/>
+            <br/>
+            <h:selectOneMenu id="categorySelect"
+                             value="#{pageBean.category}"
+                             disabled="#{pageBean.discipline == null}"
+                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                             style="width:8em;">
+                <s:selectItems id="categorySelectItems"
+                               value="#{pageBean.categoryList}"
+                               var="category"
+                               label="#{category.name}"
+                               noSelectionLabel="#{messages['question.list.topic.category.all']}"/>
+                <a4j:support id="categorySelectSupport"
+                             event="onchange"
+                             action="#{pageBean.setCategory}"
+                             reRender="contentBodyForm"
+                             ajaxSingle="true"/>
+            </h:selectOneMenu>
+        </a4j:outputPanel>
+    </f:facet>
+    #{question.topic.category.name}
+</rich:column>
+<rich:column id="col4">
+    <f:facet name="header">
+        <a4j:outputPanel id="topicPanel">
+            #{messages['question.list.topic.name']}
+            <br/>
+            <br/>
+            <h:selectOneMenu id="topicSelect"
+                             value="#{pageBean.topic}"
+                             disabled="#{pageBean.category == null}"
+                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                             style="width:8em;">
+                <s:selectItems id="topicSelectItems"
+                               value="#{pageBean.topicList}"
+                               var="topic"
+                               label="#{topic.name}"
+                               noSelectionLabel="#{messages['question.list.topic.all']}"/>
+                <a4j:support id="topicSelectSupport"
+                             event="onchange"
+                             action="#{pageBean.setTopic}"
+                             reRender="contentBodyForm"
+                             ajaxSingle="true"/>
+            </h:selectOneMenu>
+        </a4j:outputPanel>
+    </f:facet>
+    #{question.topic.name}
+</rich:column>
+<rich:column id="col5">
+    <f:facet name="header">
+        <a4j:outputPanel id="difficultyPanel">
+            #{messages['question.list.difficulty.name']}
+            <br/>
+            <br/>
+            <h:selectOneMenu id="difficultySelect"
+                             value="#{pageBean.difficulty}"
+                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                             style="width:8em;">
+                <s:selectItems id="difficultySelectItems"
+                               value="#{pageBean.difficultyList}"
+                               var="difficulty"
+                               label="#{difficulty.name}"
+                               noSelectionLabel="#{messages['question.list.difficulty.all']}"/>
+                <a4j:support id="difficultySelectSupport"
+                             event="onchange"
+                             action="#{pageBean.setDifficulty}"
+                             reRender="contentBodyForm"
+                             ajaxSingle="true"/>
+            </h:selectOneMenu>
+        </a4j:outputPanel>
+    </f:facet>
+    #{question.difficulty.name}
+</rich:column>
+<rich:column id="col6" styleClass="columnIcon">
+    <a4j:commandButton id="deleteButton"
+                       action="#{pageBean.doDelete}"
+                       onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"
+                       title="#{messages['common.list.functions.delete']}"
+                       image="/images/icons/icon_delete.gif"
+                       reRender="contentBodyForm"/>
+</rich:column>
+</rich:dataTable>
+<h:outputText value="#{messages['common.list.noDataFound']}"
+              rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
+</ui:define>
+</ui:decorate>
+</a4j:form>
+</ui:define>
 </ui:composition>
 </html>
