@@ -48,7 +48,7 @@
             <h:selectOneMenu id="disciplineSelect"
                              value="#{pageBean.discipline}"
                              converter="ru.spbspu.staub.ObjectSelectConverter"
-                             style="width:10em;">
+                             style="width:8em;">
                 <s:selectItems id="disciplineSelectItems"
                                value="#{pageBean.disciplineList}"
                                var="discipline"
