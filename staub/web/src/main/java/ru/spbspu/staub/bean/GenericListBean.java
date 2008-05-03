@@ -5,6 +5,7 @@ import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
 import javax.faces.model.DataModel;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.Map;
  *
  * @author Konstantin Grigoriev
  */
-public abstract class GenericListBean<T> extends GenericModeBean {
+public abstract class GenericListBean<T extends Serializable> extends GenericModeBean {
     private static final long serialVersionUID = -5579488872426850764L;
 
     private Map<Object, Boolean> selectedMap;

@@ -3,12 +3,14 @@ package ru.spbspu.staub.bean;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.web.RequestParameter;
 
+import java.io.Serializable;
+
 /**
  * TODO add descritpion
  *
  * @author Konstantin Grigoriev
  */
-public abstract class GenericDetailBean<T extends java.io.Serializable> extends GenericModeBean {
+public abstract class GenericDetailBean<T extends Serializable> extends GenericModeBean {
     private static final long serialVersionUID = -3291096277306979986L;
 
     public static final String MODEL_ID = "modelId";
