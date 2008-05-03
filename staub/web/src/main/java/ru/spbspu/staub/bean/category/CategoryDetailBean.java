@@ -1,13 +1,14 @@
 package ru.spbspu.staub.bean.category;
 
+import static org.jboss.seam.ScopeType.SESSION;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.In;
-import static org.jboss.seam.ScopeType.SESSION;
+import org.jboss.seam.contexts.Contexts;
+import ru.spbspu.staub.bean.BeanMode;
+import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Discipline;
-import ru.spbspu.staub.bean.GenericDetailBean;
-import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.service.CategoryService;
 import ru.spbspu.staub.service.DisciplineService;
 
@@ -28,7 +29,7 @@ public class CategoryDetailBean extends GenericDetailBean<Category> {
 
     @In
     private DisciplineService disciplineService;
-    
+
     private List<Discipline> disciplineList;
 
     /**
@@ -39,6 +40,10 @@ public class CategoryDetailBean extends GenericDetailBean<Category> {
         fillDisciplineList();
         if (isCreateMode()) {
             setModel(new Category());
+            Discipline discipline = (Discipline) Contexts.getConversationContext().get(Discipline.class.getName());
+            if (discipline != null) {
+                getModel().setDiscipline(discipline);
+            }
         } else {
             setModel(categoryService.findById(modelId));
         }

@@ -4,7 +4,10 @@ import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.contexts.Contexts;
+import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.bean.GenericListBean;
+import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Topic;
 import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
@@ -24,12 +27,21 @@ public class TopicListBean extends GenericListBean<Topic> {
     @In
     private TopicService topicService;
 
+    private Category category;
+
+    protected void prepareBean() {
+        Category category = (Category) Contexts.getConversationContext().get(Category.class.getName());
+        if (category != null) {
+            this.category = category;
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return topicService.findAll(formProperties);
+        return topicService.findTopics(formProperties, category);
     }
 
     /**
@@ -43,5 +55,17 @@ public class TopicListBean extends GenericListBean<Topic> {
         } catch (RemoveException e) {
             addFacesMessageFromResourceBundle("common.messages.deleteFailed");
         }
+    }
+
+
+    public String doCreate() {
+        Contexts.getConversationContext().set(Category.class.getName(), category);
+        return super.doCreate();
+    }
+
+    public String doEdit() {
+        Contexts.getConversationContext().set(Category.class.getName(), category);
+        getRequest().setAttribute(GenericDetailBean.MODEL_ID, getSelected().getId());
+        return doEdit("detail");
     }
 }

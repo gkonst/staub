@@ -142,6 +142,9 @@
             <rule if-outcome="detail">
                 <render view-id="/question/disciplineDetail.jspx"/>
             </rule>
+            <rule if-outcome="categoryList">
+                <render view-id="/category/categoryList.jspx"/>
+            </rule>
         </navigation>
     </page>
     <page view-id="/question/disciplineDetail.jspx"
@@ -163,6 +166,9 @@
         <navigation>
             <rule if-outcome="detail">
                 <render view-id="/category/categoryDetail.jspx"/>
+            </rule>
+            <rule if-outcome="topicList">
+                <render view-id="/topic/topicList.jspx"/>
             </rule>
         </navigation>
     </page>

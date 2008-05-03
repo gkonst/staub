@@ -34,7 +34,15 @@
                                     var="discipline"
                                     rendered="#{pageBean.dataModel.rowCount > 0}"
                                     styleClass="dataTable">
-                        <rich:column id="col1">
+                        <rich:column id="col1" styleClass="columnIcon">
+                            <a4j:htmlCommandLink id="categoryListLink"
+                                                 action="#{pageBean.showCategories}">
+                                <h:graphicImage id="categoryListLinkImage"
+                                                url="/images/icons/icon_detail_view.gif"
+                                                alt="#{messages['discipline.list.showCategories']}"/>
+                            </a4j:htmlCommandLink>
+                        </rich:column>
+                        <rich:column id="col2">
                             <f:facet name="header">#{messages['discipline.list.code']}</f:facet>
                             <s:link id="editDisciplineLink"
                                     action="detail" value="#{discipline.code}">
@@ -42,11 +50,11 @@
                                 <f:param id="beanModeParam" name="beanMode" value="EDIT_MODE"/>
                             </s:link>
                         </rich:column>
-                        <rich:column id="col2">
+                        <rich:column id="col3">
                             <f:facet name="header">#{messages['discipline.list.name']}</f:facet>
                             #{discipline.name}
                         </rich:column>
-                        <rich:column id="col3" styleClass="columnIcon">
+                        <rich:column id="col4" styleClass="columnIcon">
                             <a4j:commandButton id="deleteButton"
                                                action="#{pageBean.doDelete}"
                                                onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"
