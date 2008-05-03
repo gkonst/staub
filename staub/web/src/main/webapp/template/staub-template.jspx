@@ -35,7 +35,7 @@
     </ui:define>
 
     <ui:define name="headerTitle">
-        #{messages['page.header.title']}
+        <h1>#{messages['page.header.title']}</h1>
     </ui:define>
 
     <ui:define name="headerStatus">       

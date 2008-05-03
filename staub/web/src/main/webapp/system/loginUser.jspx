@@ -21,7 +21,7 @@
                         <td colspan="2" align="center">
                             <rich:spacer height="10"/>
                             <br/>
-                            #{messages['system.login.title']}
+                            <h3>#{messages['system.login.title']}</h3>
                             <br/>
                             <rich:spacer height="5"/>
                         </td>

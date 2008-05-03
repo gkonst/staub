@@ -21,6 +21,7 @@ select {
     border: 1px solid #C3BBB6;
     background: #fff url( ../images/input.bg.gif ) 0 0 repeat-x;
     width: 14em;
+    font-size: 1em;
 }
 
 ol, ul {
@@ -36,9 +37,7 @@ fieldset {
 }
 
 h1 {
-    font-size: 1.6em;
-    margin: 0.833em;
-    font-weight: 300;
+    font-size: 1.5em;
 }
 
 h3 {
@@ -221,15 +220,6 @@ h3 {
     text-decoration: underline;
     cursor: pointer;
 }
-
-/* Style for the paging labels */
-table td.pagingContent {
-    font-size: 11px;
-    font-weight: bold;
-    padding-left: 2px;
-    padding-right: 2px;
-}
-
 .required {
     background: #FFFACD;
 }
