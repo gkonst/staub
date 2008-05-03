@@ -4,6 +4,7 @@ import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.contexts.Contexts;
 import ru.spbspu.staub.bean.BeanMode;
 import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.entity.*;
@@ -62,7 +63,15 @@ public class TestDetailBean extends GenericDetailBean<Test> {
         cleanTopics();
         if (isCreateMode()) {
             setModel(new Test());
-            setDiscipline(null);
+            setDiscipline((Discipline) Contexts.getConversationContext().get(Discipline.class.getName()));
+            getModel().setCategory((Category) Contexts.getConversationContext().get(Category.class.getName()));
+            if (getModel().getCategory() != null) {
+                fillTopics();
+            }
+            Topic topic = (Topic) Contexts.getConversationContext().get(Topic.class.getName());
+            if (topic != null) {
+                selectedTopics = new Topic[]{topic};
+            }
         } else {
             setModel(testService.findById(modelId));
             setDiscipline(getModel().getCategory().getDiscipline());
