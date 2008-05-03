@@ -7,7 +7,6 @@ import org.jboss.seam.log.Log;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 
 /**
@@ -44,9 +43,5 @@ public abstract class GenericBean implements Serializable {
      */
     protected HttpServletRequest getRequest() {
         return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-    }
-
-    protected String getSessionId() {
-        return ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).getId();
     }
 }
