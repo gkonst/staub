@@ -52,4 +52,13 @@ public interface StudentService extends GenericService<Student, Integer> {
      * @return the number of sudents
      */
     long countStudents(Group group);
+
+    /**
+     * Saves or updates a student.
+     *
+     * @param student the student
+     *
+     * @return the modified instance
+     */
+    Student saveStudent(Student student);
 }
