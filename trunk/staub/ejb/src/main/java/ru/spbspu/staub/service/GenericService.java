@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Konstantin Grigoriev
  */
-public interface GenericService<T, ID extends Serializable> {
+public interface GenericService<T extends Serializable, ID extends Serializable> {
     /**
      * Fetches entity by specific id.
      *

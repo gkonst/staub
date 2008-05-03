@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  *
  * @author Konstantin Grigoriev
  */
-public abstract class GenericServiceBean<T, ID extends Serializable> implements GenericService<T, ID> {
+public abstract class GenericServiceBean<T extends Serializable, ID extends Serializable> implements GenericService<T, ID> {
 
     private static final Pattern FROM_PATTERN = Pattern.compile("(^|\\s)(from)\\s", Pattern.CASE_INSENSITIVE);
     private static final Pattern ORDER_PATTERN = Pattern.compile("\\s(order)(\\s)+by\\s", Pattern.CASE_INSENSITIVE);
