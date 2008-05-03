@@ -85,6 +85,17 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
         return (Long) q.getSingleResult();
     }
 
+    public Student saveStudent(Student student) {
+        logger.debug("> saveStudent(Student=#0)", student);
+
+        student.setActive(true);        
+        Student result = getEntityManager().merge(student);
+
+        logger.debug("< saveStudent(Student)");
+
+        return result;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Student> findAll() {
