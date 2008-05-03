@@ -31,7 +31,7 @@
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.students']}" view="/student/groupList.seam">
+            <s:link value="#{messages['system.menu.students']}" view="/student/studentList.seam">
                 <f:param name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
