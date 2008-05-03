@@ -15,4 +15,12 @@
             <type>java.lang.String</type>
         </attribute>
     </tag>
+    <function>
+        <description>
+            Costructs java.util.List from java.util.Collection.
+        </description>
+        <name>asList</name>
+        <function-class>ru.spbspu.staub.components.function.Functions</function-class>
+        <function-signature><![CDATA[java.util.List<T> asList(java.util.Collection<T>)]]></function-signature>
+    </function>
 </taglib>
