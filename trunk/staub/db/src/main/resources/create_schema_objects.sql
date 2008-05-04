@@ -60,7 +60,7 @@ CREATE TABLE question (
 
 CREATE TABLE test (
     id INTEGER NOT NULL,
-    fk_category INTEGER, -- intentionally nullable
+    fk_category INTEGER NOT NULL,
     name CHARACTER VARYING(256),
     description TEXT,
     time_limit INTEGER,
