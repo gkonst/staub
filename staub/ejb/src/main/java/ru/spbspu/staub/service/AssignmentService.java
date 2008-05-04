@@ -7,6 +7,7 @@ import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,6 +68,8 @@ public interface AssignmentService extends GenericService<Assignment, Integer> {
      *
      * @param testId     specific test identifier
      * @param studentIds list or students identifiers
+     * @param testBegin  the test begin
+     * @param testEnd    the test end
      */
-    void assignTest(Integer testId, List<Integer> studentIds);
+    void assignTest(Integer testId, List<Integer> studentIds, Date testBegin, Date testEnd);
 }

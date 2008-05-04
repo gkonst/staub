@@ -56,7 +56,7 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
         return makePersistent(assignment);
     }
 
-    public void assignTest(Integer testId, List<Integer> studentIds) {
+    public void assignTest(Integer testId, List<Integer> studentIds, Date testBegin, Date testEnd) {
         Test test = getEntityManager().find(Test.class, testId);
         for (Integer studentId : studentIds) {
             Student student = getEntityManager().find(Student.class, studentId);
@@ -64,6 +64,8 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
             Assignment assignment = new Assignment();
             assignment.setTest(test);
             assignment.setStudent(student);
+            assignment.setTestBegin(testBegin);
+            assignment.setTestEnd(testEnd);
 
             saveAssignment(assignment);
         }
