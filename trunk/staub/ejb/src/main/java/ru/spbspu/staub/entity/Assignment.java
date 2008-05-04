@@ -2,6 +2,7 @@ package ru.spbspu.staub.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * The <code>Assignment</code> class represents the Assignment entity.
@@ -52,6 +53,30 @@ public class Assignment implements Serializable {
         this.test = test;
     }
 
+    private Date testBegin;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "test_begin")
+    public Date getTestBegin() {
+        return testBegin;
+    }
+
+    public void setTestBegin(Date testBegin) {
+        this.testBegin = testBegin;
+    }
+
+    private Date testEnd;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "test_end")
+    public Date getTestEnd() {
+        return testEnd;
+    }
+
+    public void setTestEnd(Date testEnd) {
+        this.testEnd = testEnd;
+    }
+
     @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {
@@ -78,6 +103,8 @@ public class Assignment implements Serializable {
         sb.append("{id=").append(id);
         sb.append(", student=").append(student);
         sb.append(", test=").append(test);
+        sb.append(", testBegin=").append(testBegin);
+        sb.append(", testEnd=").append(testEnd);
         sb.append('}');
 
         return sb.toString();

@@ -97,10 +97,14 @@ INSERT INTO test (id,
 
 INSERT INTO assignment (id,
                         fk_student,
-                        fk_test)
+                        fk_test,
+                        test_begin,
+                        test_end)
      VALUES (nextval('seq_assignment'),
              currval('seq_student'),
-             currval('seq_test'));
+             currval('seq_test'),
+             'today',
+             'tomorrow');
 
 INSERT INTO difficulty (id,
                         name,

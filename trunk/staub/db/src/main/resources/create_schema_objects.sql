@@ -123,6 +123,8 @@ CREATE TABLE assignment (
     id INTEGER NOT NULL,
     fk_test INTEGER NOT NULL,
     fk_student INTEGER NOT NULL,
+    test_begin TIMESTAMP,
+    test_end TIMESTAMP,
     CONSTRAINT pk_assignment PRIMARY KEY (id),
     CONSTRAINT fk_test FOREIGN KEY (fk_test) REFERENCES test (id),
     CONSTRAINT fk_student FOREIGN KEY (fk_student) REFERENCES student (id)
@@ -132,13 +134,15 @@ CREATE TABLE test_trace (
     id INTEGER NOT NULL,
     fk_test INTEGER NOT NULL,
     fk_student INTEGER NOT NULL,
+    fk_assignment INTEGER, -- intentionally nullable
     score INTEGER,
     test_passed BOOLEAN,
     started TIMESTAMP,
     finished TIMESTAMP,
     CONSTRAINT pk_test_trace PRIMARY KEY (id),
     CONSTRAINT fk_test FOREIGN KEY (fk_test) REFERENCES test (id),
-    CONSTRAINT fk_student FOREIGN KEY (fk_student) REFERENCES student (id)
+    CONSTRAINT fk_student FOREIGN KEY (fk_student) REFERENCES student (id),
+    CONSTRAINT fk_assignment FOREIGN KEY (fk_assignment) REFERENCES assignment (id)
 );
 
 CREATE TABLE question_trace (

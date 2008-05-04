@@ -1,8 +1,8 @@
 package ru.spbspu.staub.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * The <code>TestTrace</code> class represents TestTrace entity.
@@ -74,6 +74,18 @@ public class TestTrace implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    private Assignment assignment;
+
+    @OneToOne
+    @JoinColumn(name = "fk_assignment", referencedColumnName = "id")
+    public Assignment getAssignment() {
+        return assignment;
+    }
+
+    public void setAssignment(Assignment assignment) {
+        this.assignment = assignment;
     }
 
     private Integer score;
