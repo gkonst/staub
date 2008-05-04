@@ -81,7 +81,7 @@ public class Test implements Serializable {
     private Category category;
 
     @OneToOne
-    @JoinColumn(name = "fk_category", referencedColumnName = "id")
+    @JoinColumn(name = "fk_category", referencedColumnName = "id", nullable = false)
     public Category getCategory() {
         return category;
     }

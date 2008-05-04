@@ -62,28 +62,6 @@ INSERT INTO student (id,
              '87654353',
              true);
 
-INSERT INTO test (id,
-                  name,
-                  description,
-                  time_limit,
-                  active,
-                  created,
-                  created_by)
-     VALUES (nextval('seq_test'),
-             'Simple test',
-             'There is nothing easier, than this test.',
-             50,
-             true,
-             current_date,
-             'Generation Script');
-
-INSERT INTO assignment (id,
-                        fk_student,
-                        fk_test)
-     VALUES (nextval('seq_assignment'),
-             currval('seq_student'),
-             currval('seq_test'));
-
 INSERT INTO discipline (id,
                         name,
                         code)
@@ -100,7 +78,29 @@ INSERT INTO category (id,
              'Дифференциальные уравнения',
              'D1');
 
-UPDATE test SET fk_category = currval('seq_category') WHERE id = currval('seq_test');
+INSERT INTO test (id,
+                  name,
+                  description,
+                  time_limit,
+                  fk_category,
+                  active,
+                  created,
+                  created_by)
+     VALUES (nextval('seq_test'),
+             'Simple test',
+             'There is nothing easier, than this test.',
+             50,
+             currval('seq_category'),
+             true,
+             current_date,
+             'Generation Script');
+
+INSERT INTO assignment (id,
+                        fk_student,
+                        fk_test)
+     VALUES (nextval('seq_assignment'),
+             currval('seq_student'),
+             currval('seq_test'));
 
 INSERT INTO difficulty (id,
                         name,
