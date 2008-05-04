@@ -3,6 +3,7 @@ package ru.spbspu.staub.service;
 import ru.spbspu.staub.entity.Student;
 import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.entity.TestTrace;
+import ru.spbspu.staub.entity.Assignment;
 
 import javax.ejb.Local;
 
@@ -15,14 +16,13 @@ import javax.ejb.Local;
 @Local
 public interface TestTraceService extends GenericService<TestTrace, Integer> {
     /**
-     * Returns a <code>TestTrace</code> for a test. Creates if necessary.
+     * Returns a <code>TestTrace</code> instance for a test. Creates if necessary.
      *
-     * @param test    specific <code>Test</code> instance
-     * @param student the student
+     * @param assignment the assignment
      *
-     * @return created or found <code>TestTrace</code>
+     * @return the <code>TestTrace</code> instance
      */
-    TestTrace getTestTrace(Test test, Student student);
+    TestTrace getTestTrace(Assignment assignment);
 
     /**
      * Starts test (fills started field).

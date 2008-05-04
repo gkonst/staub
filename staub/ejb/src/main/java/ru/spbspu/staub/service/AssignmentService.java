@@ -17,42 +17,23 @@ import java.util.List;
 @Local
 public interface AssignmentService extends GenericService<Assignment, Integer> {
     /**
-     * Searches tests assigned to a student.
+     * Searches an active assignments of a student.
      *
      * @param formProperties the form properties
      * @param student        the student
      *
-     * @return the result table
+     * @return the table of results
      */
-    FormTable findAssigned(FormProperties formProperties, Student student);
+    FormTable findAssignments(FormProperties formProperties, Student student);
 
     /**
-     * Searches an assignments.
+     * Searches an active assignments of a student.
      *
      * @param student the studemt
      *
      * @return the list of assignments
      */
-    List<Assignment> findAssignment(Student student);
-
-    /**
-     * Searches an assignments.
-     *
-     * @param test the test
-     *
-     * @return the list of assignments
-     */
-    List<Assignment> findAssignment(Test test);
-
-    /**
-     * Searches an assignment.
-     *
-     * @param student the student
-     * @param test    the test
-     *
-     * @return the assignment if found; <code>null</code> otherwise
-     */
-    Assignment findAssignment(Student student, Test test);
+    List<Assignment> findAssignments(Student student);
 
     /**
      * Counts assignments for a specific test.
@@ -80,28 +61,6 @@ public interface AssignmentService extends GenericService<Assignment, Integer> {
      * @return the updated instance
      */
     Assignment saveAssignment(Assignment assignment);
-
-    /**
-     * Removes all assignments of a specific student.
-     *
-     * @param student the student
-     */
-    void removeAssignments(Student student);
-
-    /**
-     * Removes all assignments to a specific test.
-     *
-     * @param test the test
-     */
-    void removeAssignments(Test test);
-
-    /**
-     * Deletes information about an assignment. Returns silently if no assignment exists.
-     *
-     * @param student the student
-     * @param test    the test
-     */
-    void removeAssignment(Student student, Test test);
 
     /**
      * Assigns students for specific test.

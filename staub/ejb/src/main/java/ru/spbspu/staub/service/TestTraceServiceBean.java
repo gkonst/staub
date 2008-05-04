@@ -3,6 +3,7 @@ package ru.spbspu.staub.service;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.*;
+import ru.spbspu.staub.exception.RemoveException;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -30,10 +31,9 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     private QuestionTraceService questionTraceService;
 
     @SuppressWarnings("unchecked")
-    public TestTrace getTestTrace(Test test, Student student) {
-        Query q = getEntityManager().createQuery("select t from TestTrace t where t.student = :student and t.test = :test and t.finished is null");
-        q.setParameter("student", student);
-        q.setParameter("test", test);
+    public TestTrace getTestTrace(Assignment assignment) {
+        Query q = getEntityManager().createQuery("select t from TestTrace t where t.assignment = :assignment");
+        q.setParameter("assignment", assignment);
 
         TestTrace testTrace = null;
         try {
@@ -43,7 +43,7 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         }
 
         if (testTrace == null) {
-            testTrace = createTestTrace(test, student);
+            testTrace = createTestTrace(assignment);
         }
 
         return testTrace;
@@ -66,9 +66,17 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
         testTrace.setFinished(new Date());
 
+        Assignment assignment = testTrace.getAssignment();
+
+        testTrace.setAssignment(null);
+
         makePersistent(testTrace);
 
-        assignmentService.removeAssignment(testTrace.getStudent(), testTrace.getTest());
+        try {
+            assignmentService.remove(assignment);
+        } catch (RemoveException e) {
+            // should not happen
+        }
 
         return testTrace;
     }
@@ -119,10 +127,11 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         return (Long) q.getSingleResult();
     }
 
-    private TestTrace createTestTrace(Test test, Student student) {
+    private TestTrace createTestTrace(Assignment assignment) {
         TestTrace testTrace = new TestTrace();
-        testTrace.setTest(test);
-        testTrace.setStudent(student);
+        testTrace.setAssignment(assignment);
+        testTrace.setTest(assignment.getTest());
+        testTrace.setStudent(assignment.getStudent());
         testTrace = makePersistent(testTrace);
 
         createTestTraceElements(testTrace);
