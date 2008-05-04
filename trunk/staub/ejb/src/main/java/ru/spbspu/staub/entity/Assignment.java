@@ -53,6 +53,17 @@ public class Assignment implements Serializable {
         this.test = test;
     }
 
+    private TestTrace testTrace;
+
+    @OneToOne(mappedBy = "assignment")
+    public TestTrace getTestTrace() {
+        return testTrace;
+    }
+
+    public void setTestTrace(TestTrace testTrace) {
+        this.testTrace = testTrace;
+    }
+
     private Date testBegin;
 
     @Temporal(TemporalType.TIMESTAMP)
