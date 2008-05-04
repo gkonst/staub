@@ -47,7 +47,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
 
     @SuppressWarnings("unchecked")
     public List<Student> findStudents(Group group) {
-        Query q = getEntityManager().createQuery("select s from Student s where s.group = :group and s.active = true");
+        Query q = getEntityManager().createQuery("select s from Student s where s.group = :group and s.active = true order by s.name");
         q.setParameter("group", group);
         return q.getResultList();
     }
@@ -67,7 +67,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
             query.append(" where");
         }
 
-        query.append(" s.active = true");
+        query.append(" s.active = true order by s.name");
 
         String queryString = query.toString();
         logger.debug("*  Query: #0", queryString);
@@ -100,7 +100,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
     @SuppressWarnings("unchecked")
     public List<Student> findAll() {
         logger.debug(">>> Finding all(entity=#0)...", Student.class.getName());
-        StringBuilder queryString = new StringBuilder().append("select s from Student s where s.active = true");
+        StringBuilder queryString = new StringBuilder().append("select s from Student s where s.active = true order by s.name");
         List<Student> result = getEntityManager().createQuery(queryString.toString()).getResultList();
         logger.debug("<<< Finding all...Ok(#0 found)", result.size());
         return result;
@@ -108,7 +108,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
 
     @Override
     public FormTable findAll(FormProperties formProperties) {
-        StringBuilder queryString = new StringBuilder().append("select s from Student s where s.active = true");
+        StringBuilder queryString = new StringBuilder().append("select s from Student s where s.active = true order by s.name");
         return findAll(queryString.toString(), formProperties, new HashMap<String, Object>(0));
     }
 
