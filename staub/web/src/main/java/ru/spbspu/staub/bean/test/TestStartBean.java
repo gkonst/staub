@@ -7,10 +7,10 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import ru.spbspu.staub.bean.GenericDetailBean;
+import ru.spbspu.staub.entity.Assignment;
 import ru.spbspu.staub.entity.Student;
-import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.entity.TestTrace;
-import ru.spbspu.staub.service.TestService;
+import ru.spbspu.staub.service.AssignmentService;
 import ru.spbspu.staub.service.TestTraceService;
 
 /**
@@ -20,11 +20,11 @@ import ru.spbspu.staub.service.TestTraceService;
  */
 @Name("testStartBean")
 @Scope(SESSION)
-public class TestStartBean extends GenericDetailBean<Test> {
+public class TestStartBean extends GenericDetailBean<Assignment> {
     private static final long serialVersionUID = 3880691395764425507L;
 
     @In
-    private TestService testService;
+    private AssignmentService assignmentService;
 
     @In
     private TestTraceService testTraceService;
@@ -36,11 +36,11 @@ public class TestStartBean extends GenericDetailBean<Test> {
 
     @Override
     protected void fillModel(Integer modelId) {
-        setModel(testService.findById(modelId));
+        setModel(assignmentService.findById(modelId));
     }
 
     public String prepareTest() {
-        testTrace = testTraceService.getTestTrace(getModel(), student);
+        testTrace = testTraceService.getTestTrace(getModel());
         testTrace = testTraceService.startTest(testTrace); // may be moved to startTest()
         return "testPrepare";
     }

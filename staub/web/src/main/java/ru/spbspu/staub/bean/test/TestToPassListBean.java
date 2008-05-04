@@ -5,8 +5,8 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import ru.spbspu.staub.bean.GenericListBean;
+import ru.spbspu.staub.entity.Assignment;
 import ru.spbspu.staub.entity.Student;
-import ru.spbspu.staub.entity.Test;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.AssignmentService;
@@ -18,7 +18,7 @@ import ru.spbspu.staub.service.AssignmentService;
  */
 @Name("testToPassListBean")
 @Scope(SESSION)
-public class TestToPassListBean extends GenericListBean<Test> {
+public class TestToPassListBean extends GenericListBean<Assignment> {
     private static final long serialVersionUID = 6262195551482944809L;
 
     @In
