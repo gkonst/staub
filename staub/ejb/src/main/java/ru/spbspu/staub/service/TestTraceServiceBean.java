@@ -73,7 +73,7 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         makePersistent(testTrace);
 
         try {
-            assignmentService.remove(assignment);
+            assignmentService.remove(assignmentService.makePersistent(assignment));
         } catch (RemoveException e) {
             // should not happen
         }
