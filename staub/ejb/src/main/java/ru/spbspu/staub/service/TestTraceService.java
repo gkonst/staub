@@ -90,4 +90,9 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      * @return the number of test traces
      */
     long countTestTraces(Test test);
+
+    /**
+     * Closes an expired test trace records.
+     */
+    void processExpiredTestTraces();
 }

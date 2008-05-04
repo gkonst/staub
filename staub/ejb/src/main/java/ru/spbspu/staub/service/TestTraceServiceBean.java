@@ -24,6 +24,8 @@ import java.util.Set;
 @AutoCreate
 @Stateless
 public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer> implements TestTraceService {
+    private static final long EXPIRATION_THRESHOLD = 5 * 60 * 1000; // 5 minutes
+
     @EJB
     private AssignmentService assignmentService;
 
@@ -125,6 +127,20 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.test = :test");
         q.setParameter("test", test);
         return (Long) q.getSingleResult();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void processExpiredTestTraces() {
+        Query q = getEntityManager().createQuery("select t from TestTrace t join t.assignment a where t.finished is null and a.testEnd <= :currentDate");
+        Date date = new Date();
+        q.setParameter("currentDate", date);
+
+        for (TestTrace testTrace : (List<TestTrace>) q.getResultList()) {
+            if ((date.getTime() - testTrace.getStarted().getTime()) >
+                    (1000 * testTrace.getTest().getTimeLimit() + EXPIRATION_THRESHOLD)) {
+                endTest(testTrace, false);
+            }
+        }
     }
 
     private TestTrace createTestTrace(Assignment assignment) {

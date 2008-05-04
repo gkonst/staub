@@ -5,8 +5,10 @@ import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.Assignment;
 import ru.spbspu.staub.entity.Student;
 import ru.spbspu.staub.entity.Test;
+import ru.spbspu.staub.entity.TestTrace;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.exception.RemoveException;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -65,5 +67,33 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
 
             makePersistent(assignment);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void processExpiredAssignments() {
+        Query q = getEntityManager().createQuery("select a from Assignment a where a.testEnd <= :currentDate and a.testTrace is null");
+        q.setParameter("currentDate", new Date());
+
+        for (Assignment assignment : (List<Assignment>) q.getResultList()) {
+            createTestTrace(assignment);
+
+            try {
+                remove(assignment);
+            } catch (RemoveException e) {
+                // should not happen
+            }
+        }
+    }
+
+    private void createTestTrace(Assignment assignment) {
+        TestTrace testTrace = new TestTrace();
+        testTrace.setTest(assignment.getTest());
+        testTrace.setStudent(assignment.getStudent());
+        testTrace.setScore(0);
+        testTrace.setTestPassed(false);
+        testTrace.setStarted(assignment.getTestEnd());
+        testTrace.setFinished(new Date(0));
+
+        getEntityManager().persist(testTrace);
     }
 }

@@ -63,4 +63,9 @@ public interface AssignmentService extends GenericService<Assignment, Integer> {
      * @param testEnd    the test end
      */
     void assignTest(Integer testId, List<Integer> studentIds, Date testBegin, Date testEnd);
+
+    /**
+     * Removes an expired assignments. Creates test trace records as necessary.
+     */
+    void processExpiredAssignments();
 }
