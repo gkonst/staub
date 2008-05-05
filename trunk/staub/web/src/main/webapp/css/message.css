@@ -1,0 +1,20 @@
+/* CSS for styling jsf messages component */
+#contentMessage {
+    padding: 0 1.5em 0 1.5em;
+}
+
+.message {
+    border: 0.1em solid #D2C9C4;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #F5F3F1; /*background: #fff url(../images/th.bg.gif) 0 100% repeat-x;*/
+    margin: 0.6em 0 0 0;
+}
+
+.message td {
+    padding: 0.3em;
+}
+
+.messageSpacer {
+    height: 0.5em;
+}

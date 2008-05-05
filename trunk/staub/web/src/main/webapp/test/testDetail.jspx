@@ -131,9 +131,9 @@
     <td>
         <a4j:outputPanel id="topicSelectPanel"
                          layout="block"
-                         style="border: 1px solid #D2C9C4;overflow-y: auto;overflow-x: hidden;">
+                         styleClass="area">
             <h:outputText id="topicNotFoundText"
-                          value="Нет тем или не выбрана категория"
+                          value="#{messages['test.detail.topic.empty']}"
                           rendered="#{!pageBean.topicsAvailable}"/>
             <h:selectManyCheckbox id="topicSelect"
                                   disabled="#{pageBean.viewMode or pageBean.model.category == null}"
@@ -159,7 +159,7 @@
     <td>
         <a4j:outputPanel id="difficultySelectPanel"
                          layout="block"
-                         style="border: 1px solid #D2C9C4;overflow-y: auto;overflow-x: hidden;">
+                         styleClass="area">
             <table>
                 <tr>
                     <td colspan="2"/>
