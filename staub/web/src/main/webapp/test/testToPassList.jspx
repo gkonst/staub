@@ -5,6 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="../template/staub-template.jspx">
@@ -17,21 +18,22 @@
     <ui:define name="contentBody">
         <ui:decorate template="../controls/listLayoutControl.jspx">
             <ui:define name="listPageData">
-                <h:outputText value="#{messages['common.list.noDataFound']}"
-                              rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
-                <h:dataTable id="testList"
-                             value="#{pageBean.dataModel}"
-                             var="assigment"
-                             rendered="#{pageBean.dataModel.rowCount > 0}"
-                             styleClass="dataTable">
-                    <h:column>
+                <rich:dataTable id="testList"
+                                value="#{pageBean.dataModel}"
+                                var="assigment"
+                                rendered="#{pageBean.dataModel.rowCount > 0}"
+                                styleClass="dataTable">
+                    <rich:column id="col1">
                         <f:facet name="header">#{messages['testToPass.list.name']}</f:facet>
-                        <s:link view="/test/testStart.seam" value="#{assigment.test.name}">
-                            <f:param name="modelId" value="#{assigment.test.id}"/>
-                            <f:param name="beanMode" value="VIEW_MODE"/>
+                        <s:link id="startTestLink" view="/test/testStart.seam" value="#{assigment.test.name}">
+                            <f:param id="startTestParamModelId" name="modelId" value="#{assigment.id}"/>
+                            <f:param id="startTestParamBeanMode" name="beanMode" value="VIEW_MODE"/>
                         </s:link>
-                    </h:column>
-                </h:dataTable>
+                    </rich:column>
+                </rich:dataTable>
+                <h:outputText id="noDataFoundText"
+                              value="#{messages['common.list.noDataFound']}"
+                              rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
             </ui:define>
         </ui:decorate>
     </ui:define>

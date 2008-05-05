@@ -1,0 +1,52 @@
+.area {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #D2C9C4;
+    background-color: #F5F3F1;
+}
+
+.two-columns div {
+    float: left;
+    display: inline;
+    width: 50%;
+}
+
+*html .two-columns div {
+    width: 49.9%
+}
+
+.two-columns .left-column table {
+}
+
+.two-columns .right-column {
+    text-align: right;
+}
+
+.two-columns .right-column table {
+    text-align: left;
+    margin: 0 0 0 auto;
+}
+
+fieldset table {
+    margin: 1em 0;
+}
+
+fieldset table td {
+    padding: 0.3em 0.3em;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+fieldset label {
+    float: right;
+    font-weight: bold;
+}
+
+.simple-label {
+    float: none;
+    font-weight: normal;
+}
+
+.required {
+    background: #FFFACD;
+}

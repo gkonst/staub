@@ -8,13 +8,12 @@ import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.entity.Assignment;
-import ru.spbspu.staub.entity.Student;
 import ru.spbspu.staub.entity.TestTrace;
 import ru.spbspu.staub.service.AssignmentService;
 import ru.spbspu.staub.service.TestTraceService;
 
 /**
- * TODO add descritpion
+ * Webbean for showing detail data of <code>Assignment</code> entity.
  *
  * @author Konstantin Grigoriev
  */
@@ -29,8 +28,6 @@ public class TestStartBean extends GenericDetailBean<Assignment> {
     @In
     private TestTraceService testTraceService;
 
-    @In
-    private Student student;
     @Out(required = false, scope = ScopeType.CONVERSATION)
     private TestTrace testTrace;
 
