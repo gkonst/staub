@@ -12,7 +12,8 @@ import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.AssignmentService;
 
 /**
- * TODO add descritpion
+ * Webbean for showing list data of <code>Assignment</code> entities
+ * available for current student.
  *
  * @author Konstantin Grigoriev
  */

@@ -77,7 +77,7 @@ public class StudentAssignListBean extends GenericListBean<User> {
     public void assign() {
         logger.debug(">>> Assigning students...");
         List<Integer> studentsIds = getSelectedItems();
-        assignmentService.assignTest(testId, studentsIds);
+        assignmentService.assignTest(testId, studentsIds, null, null);
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("student.assign.list.assignSuccess");

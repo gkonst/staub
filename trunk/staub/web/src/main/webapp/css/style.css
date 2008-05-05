@@ -2,26 +2,23 @@ img {
     border: 0;
 }
 
-.label {
-    font-weight: bold;
-    color: #5E5147;
-}
-
 input {
     border: 1px solid #C3BBB6;
     background: #fff url( ../images/input.bg.gif ) 0 0 repeat-x;
+    font-size: 100%;
 }
 
 textarea {
     border: 1px solid #C3BBB6;
     background: #fff url( ../images/input.bg.gif ) 0 0 repeat-x;
+    font-size: 100%;
 }
 
 select {
     border: 1px solid #C3BBB6;
     background: #fff url( ../images/input.bg.gif ) 0 0 repeat-x;
     width: 14em;
-    font-size: 1em;
+    font-size: 100%;
 }
 
 ol, ul {
@@ -52,7 +49,8 @@ h3 {
     border-style: none;
     margin: 1em 1em 1em 0;
     padding: 0.1em;
-    font-size: 1em;
+    width: auto;
+    font-size: 100%;
 }
 
 .buttonImage {
@@ -81,6 +79,11 @@ h3 {
 .checkbox {
     border: 0 none;
     border-style: none;
+}
+
+.checkbox label {
+    float: none;
+    font-weight: normal;
 }
 
 .checkbox input {
@@ -112,10 +115,6 @@ h3 {
 }
 
 /* Sidebar */
-.notes {
-    text-align: center;
-    font-size: small;
-}
 
 .buttonBox {
     text-align: center;
@@ -142,39 +141,6 @@ h3 {
     padding: 0;
 }
 
-#contentMessage {
-    padding: 0 15px 0 15px;
-}
-
-.message {
-    border: 1px solid #D2C9C4;
-    border-collapse: collapse;
-    border-spacing: 0;
-    background-color: #F5F3F1; /*background: #fff url(../images/th.bg.gif) 0 100% repeat-x;*/
-    margin: 0.6em 0 0 0;
-}
-
-.message td {
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 3px;
-    padding-top: 3px;
-}
-
-.messageSpacer {
-    height: 5px;
-}
-
-.area {
-    border-collapse: collapse;
-    border-spacing: 0;
-    border: 1px solid #D2C9C4;
-    background-color: #F5F3F1;
-}
-
-.detailTable {
-}
-
 .detailTable td {
     padding: 0.7em 0.3em;
     vertical-align: middle;
@@ -191,7 +157,7 @@ h3 {
     white-space: nowrap;
 }
 
-.loginTable{
+.loginTable {
 }
 
 .loginTable td {
@@ -220,7 +186,3 @@ h3 {
     text-decoration: underline;
     cursor: pointer;
 }
-.required {
-    background: #FFFACD;
-}
-

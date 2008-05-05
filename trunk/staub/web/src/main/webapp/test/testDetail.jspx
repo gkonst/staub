@@ -25,13 +25,15 @@
     <ui:include src="/controls/genericSaveControl.jspx"/>
 </a4j:outputPanel>
 
-<div class="area detailTable">
-<table width="99%">
+<fieldset class="area">
+<table>
 <tr>
-    <td align="right">
-        <strong>#{messages['test.detail.name']}</strong>
+    <td>
+        <h:outputLabel id="testNameLabel"
+                       value="#{messages['test.detail.name']}"
+                       for="testNameInput"/>
     </td>
-    <td style="width:100%;" colspan="3">
+    <td>
         <h:inputText id="testNameInput"
                      value="#{pageBean.model.name}"
                      disabled="#{pageBean.viewMode}"
@@ -42,10 +44,12 @@
     </td>
 </tr>
 <tr>
-    <td align="right">
-        <strong>#{messages['test.detail.description']}</strong>
+    <td>
+        <h:outputLabel id="testDescLabel"
+                       value="#{messages['test.detail.description']}"
+                       for="testDescTextarea"/>
     </td>
-    <td style="width:100%;" colspan="3">
+    <td>
         <h:inputTextarea id="testDescTextarea"
                          value="#{pageBean.model.description}"
                          disabled="#{pageBean.viewMode}"
@@ -53,21 +57,25 @@
     </td>
 </tr>
 <tr>
-    <td align="right">
-        <strong>#{messages['test.detail.timeLimit']}</strong>
+    <td>
+        <h:outputLabel id="testTimeLimitLabel"
+                       value="#{messages['test.detail.timeLimit']}"
+                       for="testTimeLimitInput"/>
     </td>
-    <td style="width:100%;" colspan="3">
-        <h:inputText id="timeLimitInput"
+    <td>
+        <h:inputText id="testTimeLimitInput"
                      value="#{pageBean.model.timeLimit}"
                      disabled="#{pageBean.viewMode}"
                      style="width:5em;"/>
     </td>
 </tr>
 <tr>
-    <td align="right">
-        <strong>#{messages['test.detail.discipline.name']}</strong>
+    <td>
+        <h:outputLabel id="disciplineSelectLabel"
+                       value="#{messages['test.detail.discipline.name']}"
+                       for="disciplineSelect"/>
     </td>
-    <td style="width:100%;" colspan="3">
+    <td>
         <h:selectOneMenu id="disciplineSelect"
                          value="#{pageBean.discipline}"
                          disabled="#{pageBean.viewMode}"
@@ -89,10 +97,12 @@
     </td>
 </tr>
 <tr>
-    <td align="right">
-        <strong>#{messages['test.detail.category.name']}</strong>
+    <td>
+        <h:outputLabel id="categorySelectLabel"
+                       value="#{messages['test.detail.category.name']}"
+                       for="categorySelect"/>
     </td>
-    <td width="100%" colspan="3">
+    <td>
         <h:selectOneMenu id="categorySelect"
                          value="#{pageBean.model.category}"
                          disabled="#{pageBean.viewMode or pageBean.discipline == null}"
@@ -114,10 +124,11 @@
     </td>
 </tr>
 <tr>
-    <td align="right" style="vertical-align:top">
-        <strong>#{messages['test.detail.topic.name']}</strong>
+    <td style="vertical-align:top">
+        <h:outputLabel id="topicSelectLabel"
+                       value="#{messages['test.detail.topic.name']}"/>
     </td>
-    <td width="100%" colspan="3">
+    <td>
         <a4j:outputPanel id="topicSelectPanel"
                          layout="block"
                          style="border: 1px solid #D2C9C4;overflow-y: auto;overflow-x: hidden;">
@@ -141,10 +152,11 @@
     </td>
 </tr>
 <tr>
-    <td align="right" style="vertical-align:top">
-        <strong>#{messages['test.detail.difficulty.name']}</strong>
+    <td style="vertical-align:top">
+        <h:outputLabel id="difficultySelectLabel"
+                       value="#{messages['test.detail.difficulty.name']}"/>
     </td>
-    <td width="100%" colspan="3">
+    <td>
         <a4j:outputPanel id="difficultySelectPanel"
                          layout="block"
                          style="border: 1px solid #D2C9C4;overflow-y: auto;overflow-x: hidden;">
@@ -152,10 +164,12 @@
                 <tr>
                     <td colspan="2"/>
                     <td>
-                        #{messages['test.detail.difficukty.questionsCount']}
+                        <h:outputLabel id="difficultyQuestionsCountLabel"
+                                       value="#{messages['test.detail.difficulty.questionsCount']}"/>
                     </td>
                     <td>
-                        #{messages['test.detail.difficukty.passScore']}
+                        <h:outputLabel id="difficultyPassScoreLabel"
+                                       value="#{messages['test.detail.difficulty.passScore']}"/>
                     </td>
                 </tr>
                 <a4j:repeat id="difficultiesRepeat"
@@ -168,14 +182,17 @@
                                                      styleClass="checkbox"/>
                         </td>
                         <td>
-                            #{testDifficulty.difficulty.name}
+                            <h:outputLabel id="difficultyLabel"
+                                           value="#{testDifficulty.difficulty.name}"
+                                           for="difficultyCheckbox"
+                                           styleClass="simple-label"/>
                         </td>
                         <td>
-                            <h:inputText id="difficultyQuestionsCount"
+                            <h:inputText id="difficultyQuestionsCountInput"
                                          value="#{testDifficulty.questionsCount}"/>
                         </td>
                         <td>
-                            <h:inputText id="difficultyPassScore"
+                            <h:inputText id="difficultyPassScoreInput"
                                          value="#{testDifficulty.passScore}"/>
                         </td>
                     </tr>
@@ -185,7 +202,7 @@
     </td>
 </tr>
 </table>
-</div>
+</fieldset>
 </a4j:form>
 </ui:define>
 </ui:composition>

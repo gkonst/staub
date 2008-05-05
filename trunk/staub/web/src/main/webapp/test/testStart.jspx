@@ -9,34 +9,39 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="../template/staub-template.jspx">
+    <!--@elvariable id="messages" type="java.util.Map"-->
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.test.TestStartBean"-->
+    <ui:param name="pageBean" value="#{testStartBean}"/>
     <ui:define name="contentTitle">
-        #{testStartBean.model.name}
+        #{pageBean.model.test.name}
     </ui:define>
     <ui:define name="contentBody">
-        <table class="area detailTable">
-            <tr>
-                <td align="right">
-                    <strong>#{messages['test.detail.description']}</strong>
-                </td>
-                <td>
-                    #{testStartBean.model.description}
-                </td>
-            </tr>
-            <tr>
-                <td align="right">
-                    <strong>#{messages['test.detail.timeLimit']}</strong>
-                </td>
-                <td>
-                    #{testStartBean.model.timeLimit}
-                </td>
-            </tr>
-        </table>
+        <fieldset class="area">
+            <table>
+                <tr>
+                    <td>
+                        <h:outputLabel id="testDescLabel"
+                                       value="#{messages['test.start.description']}"/>
+                    </td>
+                    <td>
+                        #{pageBean.model.test.description}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:outputLabel id="testTimeLimitLabel"
+                                       value="#{messages['test.start.timeLimit']}"/>
+                    </td>
+                    <td>
+                        #{pageBean.model.test.timeLimit}
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
         <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
-            <s:button action="testListForPass" value="#{messages['test.detail.back']}" styleClass="button"/>
-            <s:button action="#{testStartBean.prepareTest}" value="#{messages['test.detail.startTest']}"
-                      styleClass="button" propagation="begin">
-                <f:param name="modelId" value="#{testStartBean.model.id}"/>
-            </s:button>
+            <s:button action="testListForPass" value="#{messages['test.start.back']}" styleClass="button"/>
+            <s:button action="#{testStartBean.prepareTest}" value="#{messages['test.start.startTest']}"
+                      styleClass="button" propagation="begin"/>
         </a4j:outputPanel>
     </ui:define>
 </ui:composition>
