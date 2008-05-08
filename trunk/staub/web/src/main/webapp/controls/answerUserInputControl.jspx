@@ -7,45 +7,80 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:s="http://jboss.com/products/seam/taglib"
-      xmlns:st="http://spbspu.ru/staub/taglib">
+      xmlns:st="http://spbspu.ru/staub/taglib"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 <ui:composition>
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionDetailBean"-->
     <!--@elvariable id="answerModel" type="ru.spbspu.staub.model.UserInputAnswerWrapper"-->
     <!--@elvariable id="messages" type="java.util.Map"-->
-    <h:inputText id="correctAnswerUserInputInteger"
-                 value="#{answerModel.current}"
-                 disabled="#{pageBean.viewMode}"
-                 rendered="#{answerModel.userInput and answerModel.integer}"
-                 required="true"
-                 requiredMessage="#{messages['question.detail.required.correctUserInput']}"
-                 validatorMessage="#{messages['question.detail.validation.USER_INPUT.INTEGER']}">
-        <st:validateRegex regex="#{pageBean.getUserInputRegex('INTEGER')}"/>
-    </h:inputText>
-    <h:inputText id="correctAnswerUserInputReal"
-                 value="#{answerModel.current}"
-                 disabled="#{pageBean.viewMode}"
-                 rendered="#{answerModel.userInput and answerModel.real}"
-                 required="true"
-                 requiredMessage="#{messages['question.detail.required.correctUserInput']}"
-                 validatorMessage="#{messages['question.detail.validation.USER_INPUT.REAL']}">
-        <st:validateRegex regex="#{pageBean.getUserInputRegex('REAL')}"/>
-    </h:inputText>
-    <h:inputText id="correctAnswerUserInputComplex"
-                 value="#{answerModel.current}"
-                 disabled="#{pageBean.viewMode}"
-                 rendered="#{answerModel.userInput and answerModel.complex}"
-                 required="true"
-                 requiredMessage="#{messages['question.detail.required.correctUserInput']}"
-                 validatorMessage="#{messages['question.detail.validation.USER_INPUT.COMPLEX']}">
-        <st:validateRegex regex="#{pageBean.getUserInputRegex('COMPLEX')}"/>
-    </h:inputText>
-    <h:inputText id="correctAnswerUserInputString"
-                 value="#{answerModel.current}"
-                 disabled="#{pageBean.viewMode}"
-                 rendered="#{answerModel.userInput and answerModel.string}"
-                 required="true"
-                 requiredMessage="#{messages['question.detail.required.correctUserInput']}">
-    </h:inputText>
+    <table>
+        <tr>
+            <td>
+                <h:outputLabel id="answerSubtypeLabel"
+                               value="Подтип"/>
+            </td>
+            <td>
+                <h:selectOneMenu id="answerSubtypeSelect"
+                                 value="#{answerModel.definition.type}"
+                                 converter="ru.spbspu.staub.ObjectSelectConverter"
+                                 disabled="#{pageBean.viewMode}"
+                                 styleClass="required"
+                                 required="true"
+                                 requiredMessage="#{messages['question.detail.required.answerSubtype']}"
+                                 rendered="#{answerModel.userInput}">
+                    <s:selectItems id="answerSubtypeSelectItems"
+                                   var="subtype" value="#{answerModel.subtypes}"
+                                   label="#{messages[fn:join(fn:join(fn:join('question.detail.answerType.', pageBean.answer.type), '.'), subtype)]}"/>
+                    <a4j:support id="answerSubtypeSelectSupport"
+                                 event="onchange"
+                                 reRender="correctAnswerPanel"
+                                 ajaxSingle="true"/>
+                </h:selectOneMenu>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h:outputLabel id="correctAnswerUserInputLabel"
+                               value="Правильный ответ"/>
+            </td>
+            <td>
+                <h:inputText id="correctAnswerUserInputInteger"
+                             value="#{answerModel.current}"
+                             disabled="#{pageBean.viewMode}"
+                             rendered="#{answerModel.userInput and answerModel.integer}"
+                             required="true"
+                             requiredMessage="#{messages['question.detail.required.correctUserInput']}"
+                             validatorMessage="#{messages['question.detail.validation.USER_INPUT.INTEGER']}">
+                    <st:validateRegex regex="#{pageBean.getUserInputRegex('INTEGER')}"/>
+                </h:inputText>
+                <h:inputText id="correctAnswerUserInputReal"
+                             value="#{answerModel.current}"
+                             disabled="#{pageBean.viewMode}"
+                             rendered="#{answerModel.userInput and answerModel.real}"
+                             required="true"
+                             requiredMessage="#{messages['question.detail.required.correctUserInput']}"
+                             validatorMessage="#{messages['question.detail.validation.USER_INPUT.REAL']}">
+                    <st:validateRegex regex="#{pageBean.getUserInputRegex('REAL')}"/>
+                </h:inputText>
+                <h:inputText id="correctAnswerUserInputComplex"
+                             value="#{answerModel.current}"
+                             disabled="#{pageBean.viewMode}"
+                             rendered="#{answerModel.userInput and answerModel.complex}"
+                             required="true"
+                             requiredMessage="#{messages['question.detail.required.correctUserInput']}"
+                             validatorMessage="#{messages['question.detail.validation.USER_INPUT.COMPLEX']}">
+                    <st:validateRegex regex="#{pageBean.getUserInputRegex('COMPLEX')}"/>
+                </h:inputText>
+                <h:inputText id="correctAnswerUserInputString"
+                             value="#{answerModel.current}"
+                             disabled="#{pageBean.viewMode}"
+                             rendered="#{answerModel.userInput and answerModel.string}"
+                             required="true"
+                             requiredMessage="#{messages['question.detail.required.correctUserInput']}">
+                </h:inputText>
+            </td>
+        </tr>
+    </table>
 </ui:composition>
 </html>
