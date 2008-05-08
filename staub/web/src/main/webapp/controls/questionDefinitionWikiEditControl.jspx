@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:st="http://spbspu.ru/staub/taglib">
+
+<ui:composition>
+    <!--@elvariable id="messages" type="java.util.Map"-->
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionDetailBean"-->
+    <table class="fullwidth" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <h:outputLabel id="questionDefinitionLabel"
+                               style="float:left;"
+                               value="#{messages['question.detail.description']}"
+                               for="questionDefinitionTextarea"/>
+            </td>
+            <td style="text-align:right;">
+                <h:graphicImage id="previewIcon"
+                                url="/images/icons/icon_preview.gif"
+                                alt="#{messages['common.detail.functions.preview']}"
+                                styleClass="clickable">
+                    <a4j:support id="previewIconSupport"
+                                 event="onclick"
+                                 reRender="previewModalBox"
+                                 oncomplete="Richfaces.showModalPanel('previewModalBox')"
+                                 process="questionDefinitionTextarea"
+                                 ajaxSingle="true"/>
+                </h:graphicImage>
+                <h:graphicImage id="imageUploadIcon"
+                                url="/images/icons/icon_upload.gif"
+                                onclick="Richfaces.showModalPanel('imageUploadModalBox')"
+                                alt="#{messages['common.detail.functions.uploadImage']}"
+                                styleClass="clickable"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h:inputTextarea id="questionDefinitionTextarea"
+                                 value="#{pageBean.questionDefinition.description}"
+                                 disabled="#{pageBean.viewMode}"
+                                 style="width:99%; height:20em"
+                                 required="true"
+                                 requiredMessage="#{messages['question.detail.required.definition']}"
+                                 validatorMessage="#{messages['question.detail.validation.definition.wrong']}">
+                    <s:validateFormattedText/>
+                </h:inputTextarea>
+            </td>
+        </tr>
+    </table>
+    <rich:modalPanel id="imageUploadModalBox" zindex="1000" autosized="true">
+        <f:facet name="header">
+            #{messages['question.detail.upload.title']}
+        </f:facet>
+        <h:form enctype="multipart/form-data">
+            <rich:fileUpload id="fileUpload"
+                             fileUploadListener="#{pageBean.fileUploadListener}"
+                             addControlLabel="#{messages['question.detail.upload.add']}"
+                             uploadControlLabel="#{messages['question.detail.upload.upload']}"
+                             cancelEntryControlLabel="#{messages['question.detail.upload.cancel']}"
+                             clearControlLabel="#{messages['question.detail.upload.clear']}"
+                             clearAllControlLabel="#{messages['question.detail.upload.clearAll']}"
+                             stopControlLabel="#{messages['question.detail.upload.stop']}">
+                <a4j:support id="fileUploadSupport"
+                             event="onuploadcomplete" reRender="imageUploadModalBox, questionDefinitionTextarea"
+                             oncomplete="Richfaces.hideModalPanel('imageUploadModalBox');"/>
+            </rich:fileUpload>
+            <a4j:commandButton id="cancelUploadButton"
+                               styleClass="button"
+                               value="#{messages['question.detail.upload.cancel']}"
+                               onclick="Richfaces.hideModalPanel('imageUploadModalBox'); return false;"/>
+        </h:form>
+    </rich:modalPanel>
+    <rich:modalPanel id="previewModalBox" zindex="1000" autosized="true" width="500">
+        <f:facet name="header">
+            #{messages['question.detail.preview.title']}
+        </f:facet>
+
+        <div id="questionDefinitionPanel" class="questionDefinitionPanel">
+            <s:formattedText id="previewText"
+                             value="#{pageBean.questionDefinition.description}"/>
+        </div>
+
+        <a4j:commandButton id="closePreviewButton"
+                           styleClass="button"
+                           value="#{messages['question.detail.preview.close']}"
+                           onclick="Richfaces.hideModalPanel('previewModalBox'); return false;"/>
+    </rich:modalPanel>
+</ui:composition>
+</html>
