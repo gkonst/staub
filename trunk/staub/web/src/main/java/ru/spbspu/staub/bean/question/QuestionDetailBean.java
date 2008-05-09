@@ -144,7 +144,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     public void fileUploadListener(UploadEvent event) {
         logger.debug(">>> Uploading image...");
         logger.debug(" fileName : #0", event.getUploadItem().getFileName());
-        String fileName = event.getUploadItem().getFileName();
+        String fileName = System.currentTimeMillis() + "_" + event.getUploadItem().getFileName();
         String filePath = ImageResource.getResourceDirectory() + File.separator + fileName;
         logger.debug(" filePath : #0", filePath);
         FileInputStream fi = null;
