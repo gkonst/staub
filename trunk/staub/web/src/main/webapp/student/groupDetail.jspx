@@ -1,0 +1,47 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib">
+<ui:composition template="/template/staub-template.jspx">
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.student.GroupDetailBean"-->
+    <!--@elvariable id="messages" type="java.util.Map"-->
+    <ui:param name="pageBean" value="#{groupDetailBean}"/>
+    <ui:define name="sidebar">
+        <ui:include src="/system/menuPage.jspx"/>
+    </ui:define>
+    <ui:define name="contentTitle">
+        #{messages['group.detail.title']}
+    </ui:define>
+    <ui:define name="contentBody">
+        <a4j:form id="groupDetailForm">
+            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+                <ui:include src="/controls/genericSaveControl.jspx"/>
+            </a4j:outputPanel>
+            <fieldset class="area">
+                    <table>
+                        <tr>
+                            <td>
+                                <h:outputLabel id="nameLabel"
+                                               value="#{messages['group.detail.name']}"
+                                               for="nameInput"/>
+                            </td>
+                            <td>
+                                <h:inputText id="nameInput"
+                                             value="#{pageBean.model.name}"
+                                             disabled="#{pageBean.viewMode}"
+                                             required="true"
+                                             requiredMessage="#{messages['group.detail.required.name']}"/>
+                            </td>
+                        </tr>
+                    </table>
+            </fieldset>
+        </a4j:form>
+    </ui:define>
+</ui:composition>
+</html>

@@ -9,6 +9,7 @@
       xmlns:s="http://jboss.com/products/seam/taglib">
 
 <ui:composition>
+<!--@elvariable id="messages" type="java.util.Map"-->
     <ul>
         <li>
             <s:link value="#{messages['system.menu.tests']}" view="/test/testList.seam">
@@ -32,6 +33,11 @@
         </li>
         <li>
             <s:link value="#{messages['system.menu.students']}" view="/student/studentList.seam">
+                <f:param name="beanMode" value="VIEW_MODE"/>
+            </s:link>
+        </li>
+        <li>
+            <s:link value="#{messages['system.menu.groups']}" view="/student/groupList.seam">
                 <f:param name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
