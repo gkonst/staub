@@ -19,7 +19,7 @@
         <tr>
             <td>
                 <h:outputLabel id="answerMultipleChoiceLabel"
-                               value="Варианты ответа"/>
+                               value="#{messages['question.detail.answerType.MULTIPLE_CHOICE.answers']}"/>
             </td>
             <td nowrap="nowrap">
                 <a4j:commandButton id="addMultipleChoiceAnswerButton"
@@ -29,7 +29,8 @@
                                    image="/images/icons/icon_add.gif"
                                    disabled="#{pageBean.viewMode}"
                                    rendered="#{answerModel.choice}"
-                                   immediate="true"/>
+                                   immediate="true"
+                                   alt="#{messages['question.detail.answerType.MULTIPLE_CHOICE.addAnswer']}"/>
                 <rich:spacer width="5"/>
                 <a4j:commandButton id="removeMultipleChoiceAnswerButton"
                                    action="#{answerModel.removeAnswer}"
@@ -38,7 +39,8 @@
                                    image="/images/icons/icon_remove.gif"
                                    disabled="#{pageBean.viewMode}"
                                    rendered="#{answerModel.choice}"
-                                   immediate="true"/>
+                                   immediate="true"
+                                   alt="#{messages['question.detail.answerType.MULTIPLE_CHOICE.addAnswer']}"/>
             </td>
         </tr>
         <tr>

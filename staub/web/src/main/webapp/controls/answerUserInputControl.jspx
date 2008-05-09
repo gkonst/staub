@@ -17,11 +17,12 @@
     <table>
         <tr>
             <td>
-                <h:outputLabel id="answerSubtypeLabel"
-                               value="Подтип"/>
+                <h:outputLabel id="answerSubtypeUserInputLabel"
+                               value="#{messages['question.detail.answerType.USER_INPUT.subtype']}"
+                               for="answerSubtypeUserInputSelect"/>
             </td>
             <td>
-                <h:selectOneMenu id="answerSubtypeSelect"
+                <h:selectOneMenu id="answerSubtypeUserInputSelect"
                                  value="#{answerModel.definition.type}"
                                  converter="ru.spbspu.staub.ObjectSelectConverter"
                                  disabled="#{pageBean.viewMode}"
