@@ -56,7 +56,7 @@ div.listTableContent {
     width: 1.5em;
 }
 
-.dataTable input {
+.dataTable td input {
     border: 0 none;
     border-style: none;
     margin: 0;
