@@ -12,7 +12,8 @@
 <!--@elvariable id="messages" type="java.util.Map"-->
 <!--@elvariable id="identity" type="org.jboss.seam.security.Identity"-->
     <ui:define name="ajaxStatus">
-        <a4j:status onstart="Richfaces.showModalPanel('ajaxLoadingModalBox')"
+        <a4j:status id="splashStatus"
+                    onstart="Richfaces.showModalPanel('ajaxLoadingModalBox')"
                     onstop="Richfaces.hideModalPanel('ajaxLoadingModalBox')"/>
         <rich:modalPanel id="ajaxLoadingModalBox"  zindex="2000" autosized="true">
             <h:graphicImage url="/images/spinner.gif" />
