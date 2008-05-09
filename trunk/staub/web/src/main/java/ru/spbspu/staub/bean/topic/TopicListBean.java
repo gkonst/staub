@@ -5,7 +5,6 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.contexts.Contexts;
-import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Topic;
@@ -29,6 +28,10 @@ public class TopicListBean extends GenericListBean<Topic> {
 
     private Category category;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void prepareBean() {
         Category category = (Category) Contexts.getConversationContext().get(Category.class.getName());
         if (category != null) {
@@ -61,11 +64,5 @@ public class TopicListBean extends GenericListBean<Topic> {
     public String doCreate() {
         Contexts.getConversationContext().set(Category.class.getName(), category);
         return super.doCreate();
-    }
-
-    public String doEdit() {
-        Contexts.getConversationContext().set(Category.class.getName(), category);
-        getRequest().setAttribute(GenericDetailBean.MODEL_ID, getSelected().getId());
-        return doEdit("detail");
     }
 }
