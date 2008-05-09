@@ -243,6 +243,28 @@
         </navigation>
     </page>
 
+    <!-- Groups -->
+    <page view-id="/student/groupList.jspx"
+          login-required="true"
+          action="#{groupListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/student/groupDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/student/groupDetail.jspx"
+          login-required="true"
+          action="#{groupDetailBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/student/groupList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
     <!-- Exceptions -->
     <exception class="org.jboss.seam.security.NotLoggedInException">
         <redirect view-id="/system/main.jspx">
