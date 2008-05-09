@@ -5,7 +5,6 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.contexts.Contexts;
-import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Discipline;
@@ -37,6 +36,10 @@ public class CategoryListBean extends GenericListBean<Category> {
         return categoryService.findCategories(formProperties, discipline);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void prepareBean() {
         Discipline discipline = (Discipline) Contexts.getConversationContext().get(Discipline.class.getName());
         if (discipline != null) {
@@ -64,12 +67,6 @@ public class CategoryListBean extends GenericListBean<Category> {
     public String doCreate() {
         Contexts.getConversationContext().set(Discipline.class.getName(), discipline);
         return super.doCreate();
-    }
-
-    public String doEdit() {
-        Contexts.getConversationContext().set(Discipline.class.getName(), discipline);
-        getRequest().setAttribute(GenericDetailBean.MODEL_ID, getSelected().getId());
-        return doEdit("detail");
     }
 
     public String showTopics() {
