@@ -317,7 +317,7 @@ public abstract class GenericListBean<T extends Serializable> extends GenericMod
     }
 
     @SuppressWarnings("unchecked")
-    protected <S> List<S> getSelectedItems() {
+    public <S> List<S> getSelectedItems() {
         List<S> result = new ArrayList<S>();
         for (Map.Entry<Object, Boolean> entry : getSelectedMap().entrySet()) {
             if (entry.getValue()) {
