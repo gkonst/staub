@@ -28,7 +28,7 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
     QuestionTraceService questionTraceService;
 
     public FormTable findQuestions(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
-                                   Difficulty difficulty) {
+                                   Difficulty difficulty, Integer questionId) {
         logger.debug("> findQuestions(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3, Difficulty=#4)",
                 formProperties, discipline, category, topic, difficulty);
 
