@@ -57,7 +57,7 @@ public class TestListBean extends GenericListBean<Test> {
         return testService.findTests(formProperties, discipline, category, topic);
     }
 
-        /**
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -89,6 +89,10 @@ public class TestListBean extends GenericListBean<Test> {
         return super.doCreate();
     }
 
+    public String showStudents() {
+        Contexts.getConversationContext().set(Test.class.getName(), getSelected());
+        return doView("studentAssignList");
+    }
 
     public void setDiscipline() {
         refreshCategories();
@@ -106,6 +110,7 @@ public class TestListBean extends GenericListBean<Test> {
     public void setTopic() {
         doRefresh();
     }
+
     private void fillDisciplineList() {
         disciplineList = disciplineService.findAll();
     }

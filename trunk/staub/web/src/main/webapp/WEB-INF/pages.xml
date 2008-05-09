@@ -77,7 +77,7 @@
             <rule if-outcome="detail">
                 <render view-id="/test/testDetail.jspx"/>
             </rule>
-            <rule if-outcome="studentAssign">
+            <rule if-outcome="studentAssignList">
                 <render view-id="/student/studentAssignList.jspx"/>
             </rule>
         </navigation>
