@@ -43,6 +43,7 @@ div.listTableContent {
     border-right: 1px solid #D2C9C4;
     padding: 6px;
     text-align: left;
+    white-space: normal;
 }
 
 .dataTable tbody td {

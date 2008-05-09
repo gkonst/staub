@@ -60,7 +60,7 @@
                                        value="#{answerModel.definition.answer}"
                                        var="temp"/>
                     </h:selectOneRadio>
-                    <table cellpadding="0" cellspacing="0" style="margin: 0.3em 0.2em">
+                    <table cellpadding="0" cellspacing="0" style="margin: 0.3em 0.2em; float:left;">
                         <a4j:repeat id="singleChoiceRepeat"
                                     value="#{answerModel.definition.answer}"
                                     var="answer"

@@ -24,14 +24,19 @@
     <ui:include src="/controls/genericCreateControl.jspx"/>
     <ui:include src="/controls/genericRefreshControl.jspx"/>
 </a4j:outputPanel>
-<ui:decorate template="../controls/listLayoutControl.jspx">
+<ui:decorate template="/controls/listLayoutControl.jspx">
 <ui:define name="listPageData">
 <rich:dataTable id="questionList"
                 value="#{pageBean.dataModel}"
                 var="question"
+                rowKeyVar="rowKey"
                 rendered="#{pageBean.dataModel != null}"
                 styleClass="dataTable">
 <rich:column id="col1">
+    <f:facet name="header">#{messages['question.list.rowNum']}</f:facet>
+    #{pageBean.rowsOnPage * (pageBean.currentPage - 1) + rowKey + 1}
+</rich:column>
+<rich:column id="col2">
     <f:facet name="header">#{messages['question.list.code']}</f:facet>
     <s:link id="editQuestionLink"
             action="detail" value="#{question.id}">
@@ -39,7 +44,7 @@
         <f:param id="beanModeParam" name="beanMode" value="EDIT_MODE"/>
     </s:link>
 </rich:column>
-<rich:column id="col2">
+<rich:column id="col3">
     <f:facet name="header">
         <a4j:outputPanel id="disciplinePanel">
             #{messages['question.list.topic.category.discipline.name']}
@@ -64,7 +69,7 @@
     </f:facet>
     #{question.topic.category.discipline.name}
 </rich:column>
-<rich:column id="col3">
+<rich:column id="col4">
     <f:facet name="header">
         <a4j:outputPanel id="categoryPanel">
             #{messages['question.list.topic.category.name']}
@@ -90,7 +95,7 @@
     </f:facet>
     #{question.topic.category.name}
 </rich:column>
-<rich:column id="col4">
+<rich:column id="col5">
     <f:facet name="header">
         <a4j:outputPanel id="topicPanel">
             #{messages['question.list.topic.name']}
@@ -116,7 +121,7 @@
     </f:facet>
     #{question.topic.name}
 </rich:column>
-<rich:column id="col5">
+<rich:column id="col6">
     <f:facet name="header">
         <a4j:outputPanel id="difficultyPanel">
             #{messages['question.list.difficulty.name']}
@@ -141,7 +146,7 @@
     </f:facet>
     #{question.difficulty.name}
 </rich:column>
-<rich:column id="col6" styleClass="columnIcon">
+<rich:column id="col7" styleClass="columnIcon">
     <a4j:commandButton id="deleteButton"
                        action="#{pageBean.doDelete}"
                        onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"
