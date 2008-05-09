@@ -37,7 +37,25 @@
     #{pageBean.rowsOnPage * (pageBean.currentPage - 1) + rowKey + 1}
 </rich:column>
 <rich:column id="col2">
-    <f:facet name="header">#{messages['question.list.code']}</f:facet>
+    <f:facet name="header">
+        <a4j:outputPanel id="questionIdPanel" style="white-space:nowrap;">
+            #{messages['question.list.code']}
+            <br/>
+            <br/>
+            <h:inputText id="questionIdInput"
+                         value="#{pageBean.questionId}"
+                         style="margin-bottom:0.5em; margin-right:0.2em; width:2em;"/>
+            <a4j:commandLink id="setQuestionIdLink"
+                             action="#{pageBean.setQuestionId}"
+                             reRender="contentBodyForm"
+                             ajaxSingle="true"
+                             process="questionIdInput">
+                <h:graphicImage id="setQuestionIdLinkImage"
+                                url="/images/icons/icon_save.gif"
+                                alt="#{messages['common.list.functions.goto']}"/>
+            </a4j:commandLink>
+        </a4j:outputPanel>
+    </f:facet>
     <s:link id="editQuestionLink"
             action="detail" value="#{question.id}">
         <f:param id="idParam" name="modelId" value="#{question.id}"/>

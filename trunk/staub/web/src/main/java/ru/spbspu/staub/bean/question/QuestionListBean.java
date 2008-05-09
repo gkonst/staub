@@ -48,12 +48,14 @@ public class QuestionListBean extends GenericListBean<Question> {
     private Topic topic;
     private Difficulty difficulty;
 
+    private Integer questionId;
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return questionService.findQuestions(formProperties, discipline, category, topic, difficulty);
+        return questionService.findQuestions(formProperties, discipline, category, topic, difficulty, questionId);
     }
 
     /**
@@ -118,20 +120,32 @@ public class QuestionListBean extends GenericListBean<Question> {
         refreshCategories();
         setCategory(null);
         setTopic(null);
+        setQuestionId(null);
         doRefresh();
     }
 
     public void setCategory() {
         refreshTopics();
         setTopic(null);
+        setQuestionId(null);
         doRefresh();
     }
 
     public void setTopic() {
+        setQuestionId(null);
         doRefresh();
     }
 
     public void setDifficulty() {
+        setQuestionId(null);
+        doRefresh();
+    }
+
+    public void setQuestionId() {
+        setDiscipline(null);
+        setCategory(null);
+        setTopic(null);
+        setDifficulty(null);
         doRefresh();
     }
 
@@ -165,7 +179,6 @@ public class QuestionListBean extends GenericListBean<Question> {
 
     public void setCategory(Category category) {
         this.category = category;
-
     }
 
     public Topic getTopic() {
@@ -182,5 +195,13 @@ public class QuestionListBean extends GenericListBean<Question> {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
     }
 }
