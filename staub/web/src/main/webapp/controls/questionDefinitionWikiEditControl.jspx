@@ -55,29 +55,6 @@
             </td>
         </tr>
     </table>
-    <rich:modalPanel id="imageUploadModalBox" zindex="1000" autosized="true">
-        <f:facet name="header">
-            #{messages['question.detail.upload.title']}
-        </f:facet>
-        <h:form enctype="multipart/form-data">
-            <rich:fileUpload id="fileUpload"
-                             fileUploadListener="#{pageBean.fileUploadListener}"
-                             addControlLabel="#{messages['question.detail.upload.add']}"
-                             uploadControlLabel="#{messages['question.detail.upload.upload']}"
-                             cancelEntryControlLabel="#{messages['question.detail.upload.cancel']}"
-                             clearControlLabel="#{messages['question.detail.upload.clear']}"
-                             clearAllControlLabel="#{messages['question.detail.upload.clearAll']}"
-                             stopControlLabel="#{messages['question.detail.upload.stop']}">
-                <a4j:support id="fileUploadSupport"
-                             event="onuploadcomplete" reRender="imageUploadModalBox, questionDefinitionTextarea"
-                             oncomplete="Richfaces.hideModalPanel('imageUploadModalBox');"/>
-            </rich:fileUpload>
-            <a4j:commandButton id="cancelUploadButton"
-                               styleClass="button"
-                               value="#{messages['question.detail.upload.cancel']}"
-                               onclick="Richfaces.hideModalPanel('imageUploadModalBox'); return false;"/>
-        </h:form>
-    </rich:modalPanel>
     <rich:modalPanel id="previewModalBox" zindex="1000" autosized="true" width="500">
         <f:facet name="header">
             #{messages['question.detail.preview.title']}

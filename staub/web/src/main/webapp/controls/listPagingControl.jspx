@@ -8,6 +8,9 @@
       xmlns:a4j="http://richfaces.org/a4j">
 
 <ui:composition>
+    <!--@elvariable id="messages" type="java.util.Map"-->
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.GenericListBean"-->
+    <!--@elvariable id="pagerAlign" type="java.lang.String"-->
     <table border="0" cellspacing="0" cellpadding="0" width="100%">
         <tr>
             <td align="left" width="50%" class="pagingContent">
