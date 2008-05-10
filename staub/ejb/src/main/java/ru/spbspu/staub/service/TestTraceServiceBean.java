@@ -4,8 +4,8 @@ import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.exception.RemoveException;
-import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -73,15 +73,14 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(end);
-            calendar.set(Calendar.HOUR, 0);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.HOUR, 23);
+            calendar.set(Calendar.MINUTE, 59);
+            calendar.set(Calendar.SECOND, 59);
 
             parameters.put("end", calendar.getTime());
         }
 
         query.append(" t.finished is not null");
-
 
         String queryString = query.toString();
         logger.debug("*  Query: #0", queryString);
