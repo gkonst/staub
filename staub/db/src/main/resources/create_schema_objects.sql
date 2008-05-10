@@ -58,6 +58,15 @@ CREATE TABLE question (
     CONSTRAINT fk_difficulty FOREIGN KEY (fk_difficulty) REFERENCES difficulty (id)
 );
 
+CREATE TABLE question_statistics (
+    fk_question INTEGER NOT NULL,
+    total_answers INTEGER,
+    correct_answers INTEGER,
+    last_update TIMESTAMP,
+    CONSTRAINT pk_question_statistics PRIMARY KEY (fk_question),
+    CONSTRAINT fk_question FOREIGN KEY (fk_question) REFERENCES question (id) ON DELETE CASCADE
+);
+
 CREATE TABLE test (
     id INTEGER NOT NULL,
     fk_category INTEGER NOT NULL,
@@ -90,6 +99,15 @@ CREATE TABLE test_difficulty (
     CONSTRAINT pk_test_difficulty PRIMARY KEY (fk_test, fk_difficulty),
     CONSTRAINT fk_test FOREIGN KEY (fk_test) REFERENCES test (id),
     CONSTRAINT fk_difficulty FOREIGN KEY (fk_difficulty) REFERENCES difficulty (id)
+);
+
+CREATE TABLE test_statistics (
+    fk_test INTEGER NOT NULL,
+    total_answers INTEGER,
+    correct_answers INTEGER,
+    last_update TIMESTAMP,
+    CONSTRAINT pk_test_statistics PRIMARY KEY (fk_test),
+    CONSTRAINT fk_test FOREIGN KEY (fk_test) REFERENCES test (id) ON DELETE CASCADE
 );
 
 CREATE TABLE "user" (
@@ -219,13 +237,13 @@ CREATE SEQUENCE seq_test_trace
     MAXVALUE 2147483647
     MINVALUE 1
     CACHE 1;
-    
+
 CREATE SEQUENCE seq_question_trace
     INCREMENT BY 1
     MAXVALUE 2147483647
     MINVALUE 1
     CACHE 1;
-    
+
 CREATE SEQUENCE seq_assignment
     INCREMENT BY 1
     MAXVALUE 2147483647
