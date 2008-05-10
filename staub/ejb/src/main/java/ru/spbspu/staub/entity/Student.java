@@ -53,7 +53,7 @@ public class Student implements Serializable {
 
     private Group group;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fk_group", referencedColumnName = "id", nullable = false)
     public Group getGroup() {
         return group;
