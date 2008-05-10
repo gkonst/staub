@@ -29,15 +29,18 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
 
     public FormTable findQuestions(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
                                    Difficulty difficulty, Integer questionId) {
-        logger.debug("> findQuestions(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3, Difficulty=#4)",
-                formProperties, discipline, category, topic, difficulty);
+        logger.debug("> findQuestions(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3, Difficulty=#4, questionId=#5)",
+                formProperties, discipline, category, topic, difficulty, questionId);
 
         StringBuilder query = new StringBuilder();
         query.append("select q from Question q");
 
         Map<String, Object> parameters = new HashMap<String, Object>();
 
-        if (topic != null) {
+        if (questionId != null) {
+            query.append(" where cast(q.id as string) like :questionId");
+            parameters.put("questionId", questionId.toString() + '%');
+        } else if (topic != null) {
             query.append(" where q.topic = :topic and");
             parameters.put("topic", topic);
         } else if (category != null) {
@@ -62,7 +65,7 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
 
         FormTable formTable = findAll(queryString, formProperties, parameters);
 
-        logger.debug("< findQuestions(FormProperties, Discipline, Category, Topic, Difficulty)");
+        logger.debug("< findQuestions(FormProperties, Discipline, Category, Topic, Difficulty, Integer)");
 
         return formTable;
     }
