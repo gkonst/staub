@@ -54,7 +54,7 @@ public class TestTrace implements Serializable {
 
     private Test test;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fk_test", referencedColumnName = "id", nullable = false)
     public Test getTest() {
         return test;
@@ -66,7 +66,7 @@ public class TestTrace implements Serializable {
 
     private Student student;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fk_student", referencedColumnName = "id", nullable = false)
     public Student getStudent() {
         return student;
