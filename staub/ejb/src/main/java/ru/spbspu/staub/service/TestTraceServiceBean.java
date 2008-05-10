@@ -61,7 +61,7 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(begin);
-            calendar.set(Calendar.HOUR, 0);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
 
@@ -73,7 +73,7 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(end);
-            calendar.set(Calendar.HOUR, 23);
+            calendar.set(Calendar.HOUR_OF_DAY, 23);
             calendar.set(Calendar.MINUTE, 59);
             calendar.set(Calendar.SECOND, 59);
 
