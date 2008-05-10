@@ -22,8 +22,8 @@ public interface QuestionService extends GenericService<Question, Integer> {
      * @param category       the category
      * @param topic          the topic
      * @param difficulty     the difficulty
+     * @param questionId     the question id
      *
-     * @param questionId
      * @return the table of results
      */
     public FormTable findQuestions(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
