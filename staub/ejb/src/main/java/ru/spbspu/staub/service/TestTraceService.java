@@ -1,11 +1,11 @@
 package ru.spbspu.staub.service;
 
-import ru.spbspu.staub.entity.Student;
-import ru.spbspu.staub.entity.Test;
-import ru.spbspu.staub.entity.TestTrace;
-import ru.spbspu.staub.entity.Assignment;
+import ru.spbspu.staub.entity.*;
+import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
+import java.util.Date;
 
 /**
  * Local Interface for <code>TestTraceServiceBean</code> Stateless EJB.
@@ -15,6 +15,39 @@ import javax.ejb.Local;
  */
 @Local
 public interface TestTraceService extends GenericService<TestTrace, Integer> {
+    /**
+     * Searches test matching specified criteria.
+     *
+     * @param formProperties the form properties
+     * @param group          the group
+     * @param student        the student
+     * @param discipline     the discipline
+     * @param begin          the begin
+     * @param end            the end
+     *
+     * @return the table of results
+     */
+    FormTable findTestTraces(FormProperties formProperties, Group group, Student student, Discipline discipline,
+                             Date begin, Date end);
+
+    /**
+     * Counts test traces of a specific student.
+     *
+     * @param student the student
+     *
+     * @return the number of test traces
+     */
+    long countTestTraces(Student student);
+
+    /**
+     * Counts test traces of a specific test.
+     *
+     * @param test the test
+     *
+     * @return the number of test traces
+     */
+    long countTestTraces(Test test);
+
     /**
      * Returns a <code>TestTrace</code> instance for a test. Creates if necessary.
      *
@@ -72,24 +105,6 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      * @return the element count
      */
     long getCount(TestTrace testTrace);
-
-    /**
-     * Counts test traces of a specific student.
-     *
-     * @param student the student
-     *
-     * @return the number of test traces
-     */
-    long countTestTraces(Student student);
-
-    /**
-     * Counts test traces of a specific test.
-     *
-     * @param test the test
-     *
-     * @return the number of test traces
-     */
-    long countTestTraces(Test test);
 
     /**
      * Closes an expired test trace records.

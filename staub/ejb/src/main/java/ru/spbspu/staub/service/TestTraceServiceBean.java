@@ -4,15 +4,14 @@ import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.exception.RemoveException;
+import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.model.list.FormProperties;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Stateless EJB Service for manipulations with <code>TestTrace</code> entity.
@@ -31,6 +30,80 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
     @EJB
     private QuestionTraceService questionTraceService;
+
+    public FormTable findTestTraces(FormProperties formProperties, Group group, Student student, Discipline discipline,
+                                    Date begin, Date end) {
+        logger.debug("> findTestTraces(FormProperties=#0, Group=#1, Student=#2, Discipline=#3, Date=#4, Date=#5)",
+                formProperties, group, student, discipline, begin, end);
+
+        StringBuilder query = new StringBuilder();
+        query.append("select t from TestTrace t");
+
+        Map<String, Object> parameters = new HashMap<String, Object>();
+
+        if (discipline != null) {
+            query.append(", Discipline d join d.categories c where t.test.category = c and d = :discipline and");
+            parameters.put("discipline", discipline);
+        } else {
+            query.append(" where");
+        }
+
+        if (student != null) {
+            query.append(" t.student = :student and");
+            parameters.put("student", student);
+        } else if (group != null) {
+            query.append(" t.student.group = :group and");
+            parameters.put("group", group);
+        }
+
+        if (begin != null) {
+            query.append(" t.started >= :begin and");
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(begin);
+            calendar.set(Calendar.HOUR, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+
+            parameters.put("begin", calendar.getTime());
+        }
+
+        if (end != null) {
+            query.append(" t.started <= :end and");
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(end);
+            calendar.set(Calendar.HOUR, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+
+            parameters.put("end", calendar.getTime());
+        }
+
+        query.append(" t.finished is not null");
+
+
+        String queryString = query.toString();
+        logger.debug("*  Query: #0", queryString);
+
+        FormTable formTable = findAll(queryString, formProperties, parameters);
+
+        logger.debug("< findTestTraces(FormProperties, Group, Student, Discipline, Date, Date)");
+
+        return formTable;
+    }
+
+    public long countTestTraces(Student student) {
+        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.student = :student");
+        q.setParameter("student", student);
+        return (Long) q.getSingleResult();
+    }
+
+    public long countTestTraces(Test test) {
+        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.test = :test");
+        q.setParameter("test", test);
+        return (Long) q.getSingleResult();
+    }
 
     @SuppressWarnings("unchecked")
     public TestTrace getTestTrace(Assignment assignment) {
@@ -114,18 +187,6 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     public long getCount(TestTrace testTrace) {
         Query q = getEntityManager().createQuery("select count(q) from QuestionTrace q where q.testTrace = :testTrace");
         q.setParameter("testTrace", testTrace);
-        return (Long) q.getSingleResult();
-    }
-
-    public long countTestTraces(Student student) {
-        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.student = :student");
-        q.setParameter("student", student);
-        return (Long) q.getSingleResult();
-    }
-
-    public long countTestTraces(Test test) {
-        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.test = :test");
-        q.setParameter("test", test);
         return (Long) q.getSingleResult();
     }
 
