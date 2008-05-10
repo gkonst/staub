@@ -29,7 +29,7 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
 
     public FormTable findQuestions(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
                                    Difficulty difficulty, Integer questionId) {
-        logger.debug("> findQuestions(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3, Difficulty=#4, questionId=#5)",
+        logger.debug("> findQuestions(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3, Difficulty=#4, Integer=#5)",
                 formProperties, discipline, category, topic, difficulty, questionId);
 
         StringBuilder query = new StringBuilder();
