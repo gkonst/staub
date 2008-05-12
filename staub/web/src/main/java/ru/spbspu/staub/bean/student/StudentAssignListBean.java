@@ -63,11 +63,13 @@ public class StudentAssignListBean extends GenericListBean<User> {
         // testEnd default value - current date and time
         testBegin = new Date();
         Calendar testEnd = Calendar.getInstance();
+        testEnd.add(Calendar.DAY_OF_MONTH, 1);
         testEnd.clear(Calendar.HOUR_OF_DAY);
+        testEnd.clear(Calendar.HOUR);
+        testEnd.clear(Calendar.AM_PM);
         testEnd.clear(Calendar.MINUTE);
         testEnd.clear(Calendar.SECOND);
         testEnd.clear(Calendar.MILLISECOND);
-        testEnd.add(Calendar.DAY_OF_MONTH, 1);
         // testBegin default value - end of current day
         this.testEnd = testEnd.getTime();
         fillGroups();

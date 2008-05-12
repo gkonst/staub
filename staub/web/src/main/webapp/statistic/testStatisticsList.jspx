@@ -125,6 +125,18 @@
             </s:fragment>
         </a4j:repeat>
     </rich:column>
+    <rich:column id="col6">
+        <f:facet name="header">
+            #{messages['test.statistics.list.totalAnswers']}
+        </f:facet>
+        #{testStatistics.totalAnswers}
+    </rich:column>
+    <rich:column id="col7">
+        <f:facet name="header">
+            #{messages['test.statistics.list.correctAnswers']}
+        </f:facet>
+        #{testStatistics.correctAnswers}
+    </rich:column>
 </rich:dataTable>
 <h:outputText value="#{messages['common.list.noDataFound']}"
               rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
