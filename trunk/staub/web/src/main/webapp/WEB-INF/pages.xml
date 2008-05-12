@@ -14,10 +14,19 @@
             </rule>
         </navigation>
     </page>
-    <page view-id="/system/loginUser.jspx">
+    <page view-id="/system/loginAdmin.jspx">
         <navigation>
             <rule if="#{identity.loggedIn and s:hasRole('TEST_WRITER')}">
                 <redirect view-id="/test/testList.jspx">
+                    <param name="beanMode" value="VIEW_MODE"/>
+                </redirect>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/system/loginStatistic.jspx">
+        <navigation>
+            <rule if="#{identity.loggedIn and s:hasRole('TEST_WRITER')}">
+                <redirect view-id="/statistic/testTraceList.jspx">
                     <param name="beanMode" value="VIEW_MODE"/>
                 </redirect>
             </rule>
