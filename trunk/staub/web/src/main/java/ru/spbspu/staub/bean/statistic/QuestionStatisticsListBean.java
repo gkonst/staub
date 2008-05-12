@@ -1,13 +1,11 @@
-package ru.spbspu.staub.bean.question;
+package ru.spbspu.staub.bean.statistic;
 
 import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.contexts.Contexts;
 import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.*;
-import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.*;
@@ -15,17 +13,17 @@ import ru.spbspu.staub.service.*;
 import java.util.List;
 
 /**
- * Webbean for manipulating list data of <code>Question</code> entities.
+ * Webbean for manipulating list data of <code>QuestionStatistics</code> entities.
  *
  * @author Konstantin Grigoriev
  */
-@Name("questionListBean")
+@Name("questionStatisticsListBean")
 @Scope(SESSION)
-public class QuestionListBean extends GenericListBean<Question> {
-    private static final long serialVersionUID = 5563120994479387998L;
+public class QuestionStatisticsListBean extends GenericListBean<QuestionStatistics> {
+    private static final long serialVersionUID = 741330532394106365L;
 
     @In
-    private QuestionService questionService;
+    private QuestionStatisticsService questionStatisticsService;
     @In
     private DisciplineService disciplineService;
     @In
@@ -51,7 +49,7 @@ public class QuestionListBean extends GenericListBean<Question> {
      */
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return questionService.findQuestions(formProperties, discipline, category, topic, difficulty, questionId);
+        return questionStatisticsService.find(formProperties, discipline, category, topic, difficulty, questionId);
     }
 
     /**
@@ -67,25 +65,9 @@ public class QuestionListBean extends GenericListBean<Question> {
      * {@inheritDoc}
      */
     @Override
-    public void doDelete() {
-        try {
-            questionService.remove(getSelected());
-            doRefresh();
-        } catch (RemoveException e) {
-            addFacesMessageFromResourceBundle("common.messages.deleteFailed");
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String doCreate() {
-        Contexts.getConversationContext().set(Discipline.class.getName(), discipline);
-        Contexts.getConversationContext().set(Category.class.getName(), category);
-        Contexts.getConversationContext().set(Topic.class.getName(), topic);
-        Contexts.getConversationContext().set(Difficulty.class.getName(), difficulty);
-        return super.doCreate();
+    public void doRefresh() {
+        questionStatisticsService.calculateStatistics();
+        super.doRefresh();
     }
 
     private void fillDisciplineList() {

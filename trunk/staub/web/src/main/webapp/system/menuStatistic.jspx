@@ -13,9 +13,23 @@
     <ul>
         <li>
             <s:link id="testTraceListLink"
-                    value="#{messages['system.menu.statistic.testTraces']}" 
+                    value="#{messages['system.menu.statistic.testTraces']}"
                     view="/statistic/testTraceList.seam">
-                <f:param name="beanMode" value="VIEW_MODE"/>
+                <f:param id="testTraceListLinkBeanModeParam" name="beanMode" value="VIEW_MODE"/>
+            </s:link>
+        </li>
+        <li>
+            <s:link id="testStatisticsListLink"
+                    value="#{messages['system.menu.statistic.testStatistics']}"
+                    view="/statistic/testStatisticsList.seam">
+                <f:param id="testStatisticsListLinkBeanModeParam" name="beanMode" value="VIEW_MODE"/>
+            </s:link>
+        </li>
+        <li>
+            <s:link id="questionStatisticsListLink"
+                    value="#{messages['system.menu.statistic.questionStatistics']}"
+                    view="/statistic/questionStatisticsList.seam">
+                <f:param id="questionsStatisticsListLinkBeanModeParam" name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
     </ul>

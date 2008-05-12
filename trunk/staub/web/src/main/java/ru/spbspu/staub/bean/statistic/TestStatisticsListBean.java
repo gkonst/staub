@@ -1,37 +1,35 @@
-package ru.spbspu.staub.bean.test;
+package ru.spbspu.staub.bean.statistic;
 
 import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.contexts.Contexts;
 import ru.spbspu.staub.bean.GenericListBean;
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Discipline;
-import ru.spbspu.staub.entity.Test;
+import ru.spbspu.staub.entity.TestStatistics;
 import ru.spbspu.staub.entity.Topic;
-import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.CategoryService;
 import ru.spbspu.staub.service.DisciplineService;
-import ru.spbspu.staub.service.TestService;
+import ru.spbspu.staub.service.TestStatisticsService;
 import ru.spbspu.staub.service.TopicService;
 
 import java.util.List;
 
 /**
- * Webbean for manipulating list data of <code>Test</code> entities.
+ * Webbean for manipulating list data of <code>TestStatistics</code> entities.
  *
  * @author Konstantin Grigoriev
  */
-@Name("testListBean")
+@Name("testStatisticsListBean")
 @Scope(SESSION)
-public class TestListBean extends GenericListBean<Test> {
-    private static final long serialVersionUID = 6739840347539258651L;
+public class TestStatisticsListBean extends GenericListBean<TestStatistics> {
+    private static final long serialVersionUID = -5787837250357305849L;
 
     @In
-    private TestService testService;
+    private TestStatisticsService testStatisticsService;
     @In
     private DisciplineService disciplineService;
     @In
@@ -51,7 +49,7 @@ public class TestListBean extends GenericListBean<Test> {
      */
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return testService.findTests(formProperties, discipline, category, topic);
+        return testStatisticsService.findTests(formProperties, discipline, category, topic);
     }
 
     /**
@@ -66,29 +64,9 @@ public class TestListBean extends GenericListBean<Test> {
      * {@inheritDoc}
      */
     @Override
-    public void doDelete() {
-        try {
-            testService.remove(getSelected());
-            doRefresh();
-        } catch (RemoveException e) {
-            addFacesMessageFromResourceBundle("common.messages.deleteFailed");
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String doCreate() {
-        Contexts.getConversationContext().set(Discipline.class.getName(), discipline);
-        Contexts.getConversationContext().set(Category.class.getName(), category);
-        Contexts.getConversationContext().set(Topic.class.getName(), topic);
-        return super.doCreate();
-    }
-
-    public String showStudents() {
-        Contexts.getConversationContext().set(Test.class.getName(), getSelected());
-        return doView("studentAssignList");
+    public void doRefresh() {
+        testStatisticsService.calculateStatistics();
+        super.doRefresh();
     }
 
     public void setDiscipline() {
