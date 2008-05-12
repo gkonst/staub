@@ -53,9 +53,7 @@
                             </dependency>
                         </dependencies>
                         <configuration>
-                            <username>postgres</username>
                             <driver>org.postgresql.Driver</driver>
-                            <url>jdbc:postgresql://${db.url.host}:${db.url.port}/${db.url.name}</url>
                         </configuration>
 
                         <executions>
@@ -68,6 +66,8 @@
                                 <configuration>
                                     <url>jdbc:postgresql://${db.url.host}:${db.url.port}/${db.url.name.maintenance}
                                     </url>
+                                    <username>${db.maintenance.username}</username>
+                                    <password>${db.maintenance.password}</password>
                                     <autocommit>true</autocommit>
                                     <srcFiles>
                                         <srcFile>${project.build.outputDirectory}/drop_database.sql</srcFile>
@@ -85,6 +85,8 @@
                                 <configuration>
                                     <url>jdbc:postgresql://${db.url.host}:${db.url.port}/${db.url.name.maintenance}
                                     </url>
+                                    <username>${db.maintenance.username}</username>
+                                    <password>${db.maintenance.password}</password>
                                     <autocommit>true</autocommit>
                                     <srcFiles>
                                         <srcFile>${project.build.outputDirectory}/create_database.sql</srcFile>
@@ -99,6 +101,9 @@
                                     <goal>execute</goal>
                                 </goals>
                                 <configuration>
+                                    <url>jdbc:postgresql://${db.url.host}:${db.url.port}/${db.url.name}</url>
+                                    <username>${db.maintenance.username}</username>
+                                    <password>${db.maintenance.password}</password>
                                     <srcFiles>
                                         <srcFile>${project.build.outputDirectory}/create_schema.sql</srcFile>
                                     </srcFiles>
@@ -112,8 +117,9 @@
                                     <goal>execute</goal>
                                 </goals>
                                 <configuration>
+                                    <url>jdbc:postgresql://${db.url.host}:${db.url.port}/${db.url.name}</url>
                                     <username>${db.staub.username}</username>
-                                    <username>${db.staub.password}</username>
+                                    <password>${db.staub.password}</password>
                                     <srcFiles>
                                         <srcFile>${project.build.outputDirectory}/create_schema_objects.sql</srcFile>
                                     </srcFiles>
@@ -127,8 +133,9 @@
                                     <goal>execute</goal>
                                 </goals>
                                 <configuration>
+                                    <url>jdbc:postgresql://${db.url.host}:${db.url.port}/${db.url.name}</url>
                                     <username>${db.staub.username}</username>
-                                    <username>${db.staub.password}</username>
+                                    <password>${db.staub.password}</password>
                                     <autocommit>true</autocommit>
                                     <srcFiles>
                                         <srcFile>${project.build.outputDirectory}/test_data.sql</srcFile>
