@@ -26,7 +26,7 @@
     <ui:include src="/controls/genericCreateControl.jspx"/>
     <ui:include src="/controls/genericRefreshControl.jspx"/>
 </a4j:outputPanel>
-<ui:decorate template="../controls/listLayoutControl.jspx">
+<ui:decorate template="/controls/listLayoutControl.jspx">
 <ui:define name="listPageData">
 <rich:dataTable id="testList"
                 value="#{pageBean.dataModel}"

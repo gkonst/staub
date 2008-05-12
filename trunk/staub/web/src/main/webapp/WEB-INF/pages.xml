@@ -274,6 +274,15 @@
         </navigation>
     </page>
 
+    <!-- Statistics pages -->
+
+    <!-- Test Traces -->
+    <page view-id="/statistic/testTraceList.jspx"
+          login-required="true"
+          action="#{testTraceListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+    </page>
+
     <!-- Exceptions -->
     <exception class="org.jboss.seam.security.NotLoggedInException">
         <redirect view-id="/system/main.jspx">
