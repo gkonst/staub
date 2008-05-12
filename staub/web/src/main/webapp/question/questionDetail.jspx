@@ -15,7 +15,7 @@
 <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionDetailBean"-->
 <!--@elvariable id="messages" type="java.util.Map"-->
 <ui:define name="sidebar">
-    <ui:include src="/system/menuPage.jspx"/>
+    <ui:include src="/system/menuAdmin.jspx"/>
 </ui:define>
 <ui:define name="contentTitle">
     #{messages['question.detail.title']}
