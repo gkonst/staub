@@ -28,7 +28,7 @@ public class QuestionStatisticsServiceBean extends GenericServiceBean<QuestionSt
     private static final String INSERT_STATISTICS = "insert into question_statistics " +
             "(fk_question, total_answers, correct_answers, last_update) " +
             "(select qt.fk_question, count(*), sum(cast(qt.correct as integer)), current_timestamp " +
-            "from question_trace qt join question q on qt.fk_question = q.id where qt.finished is not null" +
+            "from question_trace qt join question q on qt.fk_question = q.id where qt.finished is not null " +
             "and q.active = true group by qt.fk_question)";
 
     public QuestionStatistics find(Question question) {
