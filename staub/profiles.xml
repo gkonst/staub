@@ -13,6 +13,8 @@
                 <db.url.name>staubdb</db.url.name>
                 <db.staub.username>staub</db.staub.username>
                 <db.staub.password>staub</db.staub.password>
+                <db.maintenance.username>postgres</db.maintenance.username>
+                <db.maintenance.password>postgres</db.maintenance.password>
                 <!-- Lifecycle properties -->
                 <!--  Update Database or not -->
                 <db.updateDisabled>true</db.updateDisabled>
