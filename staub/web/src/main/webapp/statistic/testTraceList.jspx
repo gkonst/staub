@@ -27,7 +27,7 @@
             </a4j:outputPanel>
             <ui:decorate template="/controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">
-                    <rich:dataTable id="testList"
+                    <rich:dataTable id="testTraceList"
                                     value="#{pageBean.dataModel}"
                                     var="testTrace"
                                     rendered="#{pageBean.dataModel != null}"

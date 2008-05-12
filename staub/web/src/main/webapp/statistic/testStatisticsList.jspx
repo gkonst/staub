@@ -1,0 +1,136 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:st="http://spbspu.ru/staub/taglib">
+<ui:composition template="/template/staub-template.jspx">
+<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.statistic.TestStatisticsListBean"-->
+<!--@elvariable id="messages" type="java.util.Map"-->
+<ui:param name="pageBean" value="#{testStatisticsListBean}"/>
+<ui:define name="sidebar">
+    <ui:include src="/system/menuStatistic.jspx"/>
+</ui:define>
+<ui:define name="contentTitle">
+    #{messages['test.statistics.list.title']}
+</ui:define>
+<ui:define name="contentBody">
+<a4j:form id="contentBodyForm">
+<a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+    <ui:include src="/controls/genericRefreshControl.jspx"/>
+</a4j:outputPanel>
+<ui:decorate template="/controls/listLayoutControl.jspx">
+<ui:define name="listPageData">
+<rich:dataTable id="testStatisticsList"
+                value="#{pageBean.dataModel}"
+                var="testStatistics"
+                rendered="#{pageBean.dataModel != null}"
+                styleClass="dataTable">
+    <rich:column id="col1">
+        <f:facet name="header">#{messages['test.statistics.list.test.name']}</f:facet>
+        #{testStatistics.test.name}
+    </rich:column>
+    <rich:column id="col2">
+        <f:facet name="header">
+            <a4j:outputPanel id="disciplinePanel">
+                #{messages['test.statistics.list.test.category.discipline.name']}
+                <br/>
+                <br/>
+                <h:selectOneMenu id="disciplineSelect"
+                                 value="#{pageBean.discipline}"
+                                 converter="ru.spbspu.staub.ObjectSelectConverter"
+                                 style="width:8em;">
+                    <s:selectItems id="disciplineSelectItems"
+                                   value="#{pageBean.disciplineList}"
+                                   var="discipline"
+                                   label="#{discipline.name}"
+                                   noSelectionLabel="#{messages['test.statistics.list.test.category.discipline.all']}"/>
+                    <a4j:support id="disciplineSelectSupport"
+                                 event="onchange"
+                                 action="#{pageBean.setDiscipline}"
+                                 reRender="contentBodyForm"
+                                 ajaxSingle="true"/>
+                </h:selectOneMenu>
+            </a4j:outputPanel>
+        </f:facet>
+        #{testStatistics.test.category.discipline.name}
+    </rich:column>
+    <rich:column id="col4">
+        <f:facet name="header">
+            <a4j:outputPanel id="categoryPanel">
+                #{messages['test.statistics.list.test.category.name']}
+                <br/>
+                <br/>
+                <h:selectOneMenu id="categorySelect"
+                                 value="#{pageBean.category}"
+                                 disabled="#{pageBean.discipline == null}"
+                                 converter="ru.spbspu.staub.ObjectSelectConverter"
+                                 style="width:8em;">
+                    <s:selectItems id="categorySelectItems"
+                                   value="#{pageBean.categoryList}"
+                                   var="category"
+                                   label="#{category.name}"
+                                   noSelectionLabel="#{messages['test.statistics.list.test.category.all']}"/>
+                    <a4j:support id="categorySelectSupport"
+                                 event="onchange"
+                                 action="#{pageBean.setCategory}"
+                                 reRender="contentBodyForm"
+                                 ajaxSingle="true"/>
+                </h:selectOneMenu>
+            </a4j:outputPanel>
+        </f:facet>
+        #{testStatistics.test.category.name}
+    </rich:column>
+    <rich:column id="col5">
+        <f:facet name="header">
+            <a4j:outputPanel id="topicPanel">
+                #{messages['test.statistics.list.test.topics.name']}
+                <br/>
+                <br/>
+                <h:selectOneMenu id="topicSelect"
+                                 value="#{pageBean.topic}"
+                                 disabled="#{pageBean.category == null}"
+                                 converter="ru.spbspu.staub.ObjectSelectConverter"
+                                 style="width:8em;">
+                    <s:selectItems id="topicSelectItems"
+                                   value="#{pageBean.topicList}"
+                                   var="topic"
+                                   label="#{topic.name}"
+                                   noSelectionLabel="#{messages['test.statistics.list.test.topics.all']}"/>
+                    <a4j:support id="topicSelectSupport"
+                                 event="onchange"
+                                 action="#{pageBean.setTopic}"
+                                 reRender="contentBodyForm"
+                                 ajaxSingle="true"/>
+                </h:selectOneMenu>
+            </a4j:outputPanel>
+        </f:facet>
+        <a4j:repeat id="topicsRepeat"
+                    value="#{st:asList(testStatistics.test.topics)}"
+                    var="topic"
+                    rendered="#{testStatistics.test.topics.size != 0}"
+                    rowKeyVar="topicRowKey">
+            <s:fragment rendered="#{topicRowKey lt 3}">
+                #{topic.name},
+                <br/>
+            </s:fragment>
+            <s:fragment rendered="#{topicRowKey == 3}">
+                ...
+            </s:fragment>
+        </a4j:repeat>
+    </rich:column>
+</rich:dataTable>
+<h:outputText value="#{messages['common.list.noDataFound']}"
+              rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
+</ui:define>
+</ui:decorate>
+</a4j:form>
+</ui:define>
+</ui:composition>
+</html>
