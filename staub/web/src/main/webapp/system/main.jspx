@@ -8,17 +8,22 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="/template/staub-template.jspx">
+    <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:define name="headerStatus"/>
     <ui:define name="sidebar"/>
     <ui:define name="contentBody">
         <ul>
             <li>
                 <h1><s:link view="/system/loginStudent.seam"
-                        value="Пройти тест"/></h1>
+                            value="#{messages['system.main.test']}"/></h1>
             </li>
             <li>
-                <h1><s:link view="/system/loginUser.seam"
-                        value="Администрирование системы"/></h1>
+                <h1><s:link view="/system/loginAdmin.seam"
+                            value="#{messages['system.main.admin']}"/></h1>
+            </li>
+            <li>
+                <h1><s:link view="/system/loginStatistic.seam"
+                            value="#{messages['system.main.statistic']}"/></h1>
             </li>
         </ul>
     </ui:define>

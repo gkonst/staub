@@ -11,6 +11,13 @@
 <ui:composition template="/template/staub-template.jspx">
     <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:define name="headerStatus"/>
+    <ui:define name="sidebar">
+        <ul>
+            <li>
+                <s:link value="#{messages['system.login.main']}" view="/system/main.seam"/>
+            </li>
+        </ul>
+    </ui:define>
     <ui:define name="contentMessage"/>
     <ui:define name="contentBody">
         <rich:spacer height="20em"/>
@@ -21,6 +28,7 @@
                         <td colspan="2" align="center">
                             <rich:spacer height="10"/>
                             <br/>
+
                             <h3>#{messages['system.login.title']}</h3>
                             <br/>
                             <rich:spacer height="5"/>
