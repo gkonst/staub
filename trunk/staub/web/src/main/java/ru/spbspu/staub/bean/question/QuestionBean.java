@@ -103,7 +103,6 @@ public class QuestionBean extends GenericModeBean {
             // not sure
             if (testTimer != null && testTimer.isExpired()) {
                 logger.debug(" test timer expired -> test ended");
-                // TODO implement ask AEL what to do
                 testTraceService.checkPart(testTrace, previousPart != null ? previousPart : currentQuestion.getPart());
                 testTrace = testTraceService.endTest(testTrace, false);
                 addFacesMessage("время теста истекло");

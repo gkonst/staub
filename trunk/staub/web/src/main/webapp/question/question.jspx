@@ -12,22 +12,27 @@
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
     <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:define name="sidebar">
-            <s:fragment id="testTimerFragment"
-                        rendered="#{!pageBean.finished and pageBean.testTimer != null}">
-                <ui:include src="/controls/questionTimerControl.jspx">
-                    <ui:param name="timerId" value="testTimer"/>
-                    <ui:param name="timerModel" value="#{pageBean.testTimer}"/>
-                    <ui:param name="onExpireJsFunction" value="nextQuestion"/>
-                </ui:include>
-            </s:fragment>
-            <s:fragment id="questionTimerFragment"
-                        rendered="#{!pageBean.finished and pageBean.questionTimer != null}">
-                <ui:include src="/controls/questionTimerControl.jspx">
-                    <ui:param name="timerId" value="questionTimer"/>
-                    <ui:param name="timerModel" value="#{pageBean.questionTimer}"/>
-                    <ui:param name="onExpireJsFunction" value="nextQuestion"/>
-                </ui:include>
-            </s:fragment>
+        <s:fragment id="testTimerFragment"
+                    rendered="#{!pageBean.finished and pageBean.testTimer != null}">
+            <h:outputLabel id="testTimerLabel"
+                           value="#{messages['question.solving.timer.test']}"/>
+            <ui:include src="/controls/questionTimerControl.jspx">
+                <ui:param name="timerId" value="testTimer"/>
+                <ui:param name="timerModel" value="#{pageBean.testTimer}"/>
+                <ui:param name="onExpireJsFunction" value="nextQuestion"/>
+            </ui:include>
+        </s:fragment>
+        <br/>
+        <s:fragment id="questionTimerFragment"
+                    rendered="#{!pageBean.finished and pageBean.questionTimer != null}">
+            <h:outputLabel id="questionTimerLabel"
+                           value="#{messages['question.solving.timer.question']}"/>
+            <ui:include src="/controls/questionTimerControl.jspx">
+                <ui:param name="timerId" value="questionTimer"/>
+                <ui:param name="timerModel" value="#{pageBean.questionTimer}"/>
+                <ui:param name="onExpireJsFunction" value="nextQuestion"/>
+            </ui:include>
+        </s:fragment>
     </ui:define>
     <ui:define name="contentTitle">
         #{pageBean.finished ? messages['questionSolving.testFinished'] : pageBean.currentQuestion.name}
@@ -46,7 +51,7 @@
             <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <a4j:commandButton id="nextQuestionButton"
                                    action="#{pageBean.nextQuestion}"
-                                   value="#{messages['questionSolving.nextQuestion']}"
+                                   value="#{messages['question.solving.nextQuestion']}"
                                    styleClass="button"
                                    rendered="#{!pageBean.finished}"
                                    reRender="content, sidebar"
@@ -59,15 +64,13 @@
                                 reRender="content, sidebar">
                     <f:param id="nextQuestionJsFunctionParamBeanMode" name="beanMode" value="VIEW_MODE"/>
                 </a4j:jsFunction>
-                <s:button id="endTestButton"
-                          view="/test/testEnd.seam"
-                          value="#{messages['questionSolving.showResult']}"
-                          styleClass="button"
-                          rendered="#{pageBean.finished}"
-                          propagation="end">
-                    <f:param id="endTestButtonParamModelId" name="modelId" value="#{pageBean.testTrace.id}"/>
-                    <f:param id="endTestButtonParamBeanMode" name="beanMode" value="VIEW_MODE"/>
-                </s:button>
+                <s:link id="testToPassListLink"
+                        view="/test/testToPassList.seam"
+                        value="#{messages['question.solving.toTestToPassList']}"
+                        rendered="#{pageBean.finished}"
+                        propagation="end">
+                    <f:param id="testToPassListLinkParamBeanMode" name="beanMode" value="VIEW_MODE"/>
+                </s:link>
             </a4j:outputPanel>
         </a4j:form>
     </ui:define>
