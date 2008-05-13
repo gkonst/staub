@@ -23,26 +23,43 @@
             <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <ui:include src="/controls/genericSaveControl.jspx"/>
             </a4j:outputPanel>
-            <table class="area detailTable">
-                <tr>
-                    <td align="right">
-                        <strong>#{messages['difficulty.detail.code']}</strong>
-                    </td>
-                    <td>
-                        <h:inputText value="#{pageBean.model.code}"
-                                     disabled="#{pageBean.viewMode}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        <strong>#{messages['difficulty.detail.name']}</strong>
-                    </td>
-                    <td>
-                        <h:inputText value="#{pageBean.model.name}"
-                                     disabled="#{pageBean.viewMode}"/>
-                    </td>
-                </tr>
-            </table>
+            <fieldset class="area">
+                <table>
+                    <tr>
+                        <td>
+                            <h:outputLabel id="difficultyCodeLabel"
+                                           value="#{messages['difficulty.detail.code']}"
+                                           for="difficultyCodeInput"/>
+                        </td>
+                        <td>
+                            <h:inputText id="difficultyCodeInput"
+                                         value="#{pageBean.model.code}"
+                                         disabled="#{pageBean.viewMode}"
+                                         required="true"
+                                         requiredMessage="#{messages['difficulty.detail.required.code']}"
+                                         validator="#{pageBean.validateCode}"
+                                         validatorMessage="#{messages['difficulty.detail.validation.code']}"
+                                         converterMessage="#{messages['difficulty.detail.conversion.code']}"
+                                         styleClass="required"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel id="difficultyNameLabel"
+                                           value="#{messages['difficulty.detail.name']}"
+                                           for="difficultyNameInput"/>
+                        </td>
+                        <td>
+                            <h:inputText id="difficultyNameInput"
+                                         value="#{pageBean.model.name}"
+                                         disabled="#{pageBean.viewMode}"
+                                         required="true"
+                                         requiredMessage="#{messages['difficulty.detail.required.name']}"
+                                         styleClass="required"/>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
         </a4j:form>
     </ui:define>
 </ui:composition>

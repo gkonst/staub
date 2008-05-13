@@ -9,6 +9,11 @@ import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.entity.Group;
 import ru.spbspu.staub.service.GroupService;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
+
 /**
  * Webbean for manipulating detail data of <code>Group</code> entity.
  *
@@ -45,5 +50,11 @@ public class GroupDetailBean extends GenericDetailBean<Group> {
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
         logger.debug("Saving... OK");
+    }
+
+    public void validateName(FacesContext facesContext, UIComponent uiComponent, Object value) {
+        if (!groupService.isNameUnique(String.valueOf(value))) {
+            throw new ValidatorException(new FacesMessage("Group name must be unique"));
+        }
     }
 }

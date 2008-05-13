@@ -36,7 +36,10 @@
                                              value="#{pageBean.model.name}"
                                              disabled="#{pageBean.viewMode}"
                                              required="true"
-                                             requiredMessage="#{messages['group.detail.required.name']}"/>
+                                             requiredMessage="#{messages['group.detail.required.name']}"
+                                             styleClass="required"
+                                             validator="#{pageBean.validateName}"
+                                             validatorMessage="#{messages['group.detail.validation.name']}"/>
                             </td>
                         </tr>
                     </table>
