@@ -35,7 +35,7 @@ public class Discipline implements Serializable {
     }
 
     @Basic
-    @Column(name = "name", length = 256)
+    @Column(name = "name", length = 256, nullable = false)
     public String getName() {
         return name;
     }
