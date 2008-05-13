@@ -24,53 +24,61 @@
                 <ui:include src="/controls/genericSaveControl.jspx"/>
             </a4j:outputPanel>
             <fieldset class="area">
-                    <table>
-                        <tr>
-                            <td>
-                                <h:outputLabel id="nameLabel"
-                                               value="#{messages['student.detail.name']}"
-                                               for="nameInput"/>
-                            </td>
-                            <td>
-                                <h:inputText id="nameInput"
-                                             value="#{pageBean.model.name}"
-                                             disabled="#{pageBean.viewMode}"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h:outputLabel id="codeLabel"
-                                               value="#{messages['student.detail.code']}"
-                                               for="codeInput"/>
-                            </td>
-                            <td>
-                                <h:inputText id="codeInput"
-                                             value="#{pageBean.model.code}"
-                                             disabled="#{pageBean.viewMode}"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h:outputLabel id="groupLabel"
-                                 value="#{messages['student.detail.group']}"
-                                    for="groupSelect"/>
-                            </td>
-                            <td>
-                                <h:selectOneMenu id="groupSelect"
-                                                 value="#{pageBean.model.group}"
-                                                 disabled="#{pageBean.viewMode}"
-                                                 converter="ru.spbspu.staub.ObjectSelectConverter"
-                                                 styleClass="required"
-                                                 required="true"
-                                                 requiredMessage="#{messages['student.detail.required.group']}">
-                                    <s:selectItems id="groupSelectItems"
-                                                   value="#{pageBean.groupList}"
-                                                   var="group"
-                                                   label="#{group.name}"/>
-                                </h:selectOneMenu>
-                            </td>
-                        </tr>
-                    </table>
+                <table>
+                    <tr>
+                        <td>
+                            <h:outputLabel id="nameLabel"
+                                           value="#{messages['student.detail.name']}"
+                                           for="nameInput"/>
+                        </td>
+                        <td>
+                            <h:inputText id="nameInput"
+                                         value="#{pageBean.model.name}"
+                                         disabled="#{pageBean.viewMode}"
+                                         required="true"
+                                         requiredMessage="#{messages['student.detail.required.code']}"
+                                         styleClass="required"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel id="codeLabel"
+                                           value="#{messages['student.detail.code']}"
+                                           for="codeInput"/>
+                        </td>
+                        <td>
+                            <h:inputText id="codeInput"
+                                         value="#{pageBean.model.code}"
+                                         disabled="#{pageBean.viewMode}"
+                                         required="true"
+                                         requiredMessage="#{messages['student.detail.required.code']}"
+                                         styleClass="required"
+                                         validator="#{pageBean.validateCode}"
+                                         validatorMessage="#{messages['student.detail.validation.code']}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel id="groupLabel"
+                                           value="#{messages['student.detail.group']}"
+                                           for="groupSelect"/>
+                        </td>
+                        <td>
+                            <h:selectOneMenu id="groupSelect"
+                                             value="#{pageBean.model.group}"
+                                             disabled="#{pageBean.viewMode}"
+                                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                                             styleClass="required"
+                                             required="true"
+                                             requiredMessage="#{messages['student.detail.required.group']}">
+                                <s:selectItems id="groupSelectItems"
+                                               value="#{pageBean.groupList}"
+                                               var="group"
+                                               label="#{group.name}"/>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                </table>
             </fieldset>
         </a4j:form>
     </ui:define>

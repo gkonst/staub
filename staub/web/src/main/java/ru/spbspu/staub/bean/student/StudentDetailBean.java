@@ -12,6 +12,10 @@ import ru.spbspu.staub.entity.Student;
 import ru.spbspu.staub.service.GroupService;
 import ru.spbspu.staub.service.StudentService;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import java.util.List;
 
 /**
@@ -60,6 +64,12 @@ public class StudentDetailBean extends GenericDetailBean<Student> {
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
         logger.debug("Saving... OK");
+    }
+
+    public void validateCode(FacesContext facesContext, UIComponent uiComponent, Object value) {
+        if(!studentService.isCodeUnique(String.valueOf(value))) {
+            throw new ValidatorException(new FacesMessage("Student code must be unique"));    
+        }
     }
 
     private void fillGroupList() {
