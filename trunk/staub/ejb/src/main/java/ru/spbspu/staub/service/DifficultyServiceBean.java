@@ -7,6 +7,7 @@ import ru.spbspu.staub.exception.RemoveException;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 
 /**
  * Stateless EJB Service for manipulations with <code>Difficulty</code> entity.
@@ -23,6 +24,24 @@ public class DifficultyServiceBean extends GenericServiceBean<Difficulty, Intege
 
     @EJB
     private TestService testService;
+
+    public boolean isCodeUnique(Integer code) {
+        logger.debug("> isCodeUnique(Integer=#0)", code);
+
+        Query q = getEntityManager().createQuery("select count(d) from Difficulty d where d.code = :code");
+        q.setParameter("code", code);
+
+        boolean unique = ((Long) q.getSingleResult() == 0);
+        if (unique) {
+            logger.debug("*  Code is unique.");
+        } else {
+            logger.debug("*  Code is not unique.");
+        }
+
+        logger.debug("< isCodeUnique(Integer)");
+
+        return unique;
+    }
 
     @Override
     public void remove(Difficulty difficulty) throws RemoveException {

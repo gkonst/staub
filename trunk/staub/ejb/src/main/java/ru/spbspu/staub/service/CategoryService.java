@@ -34,4 +34,13 @@ public interface CategoryService extends GenericService<Category, Integer> {
      * @return the table of reults
      */
     FormTable findCategories(FormProperties formProperties, Discipline discipline);
+
+    /**
+     * Checks whether a code is not assigned to any category.
+     *
+     * @param code the code
+     *
+     * @return <code>true</code> if the code is unique; <code>false</code> otherwise
+     */
+    boolean isCodeUnique(String code);
 }

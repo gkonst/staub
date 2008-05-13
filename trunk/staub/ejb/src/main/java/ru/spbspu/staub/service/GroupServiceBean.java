@@ -7,6 +7,7 @@ import ru.spbspu.staub.exception.RemoveException;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 
 /**
  * The <code>GroupServiceBean</code> is a stateless EJB service to manipulate <code>Group</code> entities.
@@ -19,6 +20,24 @@ import javax.ejb.Stateless;
 public class GroupServiceBean extends GenericServiceBean<Group, Integer> implements GroupService {
     @EJB
     private StudentService studentService;
+
+    public boolean isNameUnique(String name) {
+        logger.debug("> isNameUnique(String=#0)", name);
+
+        Query q = getEntityManager().createQuery("select count(g) from Group g where g.name = :name");
+        q.setParameter("name", name);
+
+        boolean unique = ((Long) q.getSingleResult() == 0);
+        if (unique) {
+            logger.debug("*  Name is unique.");
+        } else {
+            logger.debug("*  Name is not unique.");
+        }
+
+        logger.debug("< isNameUnique(String)");
+
+        return unique;
+    }
 
     @Override
     public void remove(Group group) throws RemoveException {

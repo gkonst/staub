@@ -7,6 +7,7 @@ import ru.spbspu.staub.exception.RemoveException;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 
 /**
  * Stateless EJB Service for manipulations with <code>Discipline</code> entity.
@@ -23,6 +24,24 @@ public class DisciplineServiceBean extends GenericServiceBean<Discipline, Intege
 
     @EJB
     private TestService testService;
+
+    public boolean isCodeUnique(String code) {
+        logger.debug("> isCodeUnique(String=#0)", code);
+
+        Query q = getEntityManager().createQuery("select count(d) from Discipline d where d.code = :code");
+        q.setParameter("code", code);
+
+        boolean unique = ((Long) q.getSingleResult() == 0);
+        if (unique) {
+            logger.debug("*  Code is unique.");
+        } else {
+            logger.debug("*  Code is not unique.");
+        }
+
+        logger.debug("< isCodeUnique(String)");
+
+        return unique;
+    }
 
     @Override
     public void remove(Discipline discipline) throws RemoveException {
