@@ -11,5 +11,12 @@ import javax.ejb.Local;
  */
 @Local
 public interface GroupService extends GenericService<Group, Integer> {
-
+    /**
+     * Checks whether a name is not assigned to any group.
+     *
+     * @param name the name
+     *
+     * @return <code>true</code> if the name is unique; <code>false</code> otherwise
+     */
+    boolean isNameUnique(String name);
 }

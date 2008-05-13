@@ -88,7 +88,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
     public Student saveStudent(Student student) {
         logger.debug("> saveStudent(Student=#0)", student);
 
-        student.setActive(true);        
+        student.setActive(true);
         Student result = getEntityManager().merge(student);
 
         logger.debug("< saveStudent(Student)");
@@ -97,9 +97,21 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
     }
 
     public boolean isCodeUnique(String code) {
+        logger.debug("> isCodeUnique(String=#0)", code);
+
         Query q = getEntityManager().createQuery("select count(s) from Student s where s.code = :code");
         q.setParameter("code", code);
-        return ((Long) q.getSingleResult() == 0);
+
+        boolean unique = ((Long) q.getSingleResult() == 0);
+        if (unique) {
+            logger.debug("*  Code is unique.");
+        } else {
+            logger.debug("*  Code is not unique.");
+        }
+
+        logger.debug("< isCodeUnique(String)");
+
+        return unique;
     }
 
     @Override

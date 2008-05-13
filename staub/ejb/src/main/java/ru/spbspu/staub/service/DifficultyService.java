@@ -12,5 +12,12 @@ import javax.ejb.Local;
  */
 @Local
 public interface DifficultyService extends GenericService<Difficulty, Integer> {
-
+    /**
+     * Checks whether a code is not assigned to any difficulty level.
+     *
+     * @param code the code
+     *
+     * @return <code>true</code> if the code is unique; <code>false</code> otherwise
+     */
+    boolean isCodeUnique(Integer code);
 }

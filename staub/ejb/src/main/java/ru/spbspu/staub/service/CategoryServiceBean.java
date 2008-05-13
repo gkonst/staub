@@ -5,15 +5,15 @@ import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Discipline;
 import ru.spbspu.staub.exception.RemoveException;
-import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 /**
  * Stateless EJB Service for manipulations with <code>Category</code> entity.
@@ -59,6 +59,24 @@ public class CategoryServiceBean extends GenericServiceBean<Category, Integer> i
         logger.debug("< findCategories(FormProperties, Discipline)");
 
         return formTable;
+    }
+
+    public boolean isCodeUnique(String code) {
+        logger.debug("> isCodeUnique(String=#0)", code);
+
+        Query q = getEntityManager().createQuery("select count(c) from Category c where c.code = :code");
+        q.setParameter("code", code);
+
+        boolean unique = ((Long) q.getSingleResult() == 0);
+        if (unique) {
+            logger.debug("*  Code is unique.");
+        } else {
+            logger.debug("*  Code is not unique.");
+        }
+
+        logger.debug("< isCodeUnique(String)");
+
+        return unique;
     }
 
     @Override
