@@ -96,6 +96,12 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
         return result;
     }
 
+    public boolean isCodeUnique(String code) {
+        Query q = getEntityManager().createQuery("select count(s) from Student s where s.code = :code");
+        q.setParameter("code", code);
+        return ((Long) q.getSingleResult() == 0);
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Student> findAll() {
