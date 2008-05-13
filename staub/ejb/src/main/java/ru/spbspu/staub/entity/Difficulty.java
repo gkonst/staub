@@ -15,6 +15,10 @@ public class Difficulty implements Serializable {
 
     private Integer id;
 
+    private String name;
+
+    private Integer code;
+
     @Id
     @SequenceGenerator(name = "DifficultyIdGenerator", sequenceName = "seq_difficulty", allocationSize = 1)
     @GeneratedValue(generator = "DifficultyIdGenerator", strategy = GenerationType.SEQUENCE)
@@ -27,8 +31,6 @@ public class Difficulty implements Serializable {
         this.id = id;
     }
 
-    private String name;
-
     @Basic
     @Column(name = "name", length = 256)
     public String getName() {
@@ -39,10 +41,8 @@ public class Difficulty implements Serializable {
         this.name = name;
     }
 
-    private Integer code;
-
     @Basic
-    @Column(name = "code", length = 10)
+    @Column(name = "code", length = 10, nullable = false)
     public Integer getCode() {
         return code;
     }

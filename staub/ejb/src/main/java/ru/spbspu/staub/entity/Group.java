@@ -15,6 +15,8 @@ public class Group implements Serializable {
 
     private Integer id;
 
+    private String name;
+
     @Id
     @SequenceGenerator(name = "GroupIdGenerator", sequenceName = "seq_group", allocationSize = 1)
     @GeneratedValue(generator = "GroupIdGenerator", strategy = GenerationType.SEQUENCE)
@@ -26,8 +28,6 @@ public class Group implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    private String name;
 
     @Basic
     @Column(name = "name", nullable = false, length = 16)
