@@ -38,7 +38,7 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
         Map<String, Object> parameters = new HashMap<String, Object>();
 
         if (questionId != null) {
-            query.append(" where cast(q.id as string) like :questionId");
+            query.append(" where cast(q.id as string) like :questionId and");
             parameters.put("questionId", questionId.toString() + '%');
         } else if (topic != null) {
             query.append(" where q.topic = :topic and");
