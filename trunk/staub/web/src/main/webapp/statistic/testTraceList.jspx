@@ -106,9 +106,7 @@
                             <f:facet name="header">
                                 #{messages['test.trace.list.testPassed']}
                             </f:facet>
-                            <h:selectBooleanCheckbox id="testPassedCheckbox"
-                                                     value="#{testTrace.testPassed}"
-                                                     disabled="true"/>
+                            #{testTrace.testPassed ? messages['test.trace.list.testPassed.true'] : messages['test.trace.list.testPassed.false']}
                         </rich:column>
                     </rich:dataTable>
                     <h:outputText value="#{messages['common.list.noDataFound']}"
