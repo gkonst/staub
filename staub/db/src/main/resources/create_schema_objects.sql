@@ -1,14 +1,14 @@
 -- Tables
 CREATE TABLE role (
    id INTEGER NOT NULL,
-   description CHARACTER VARYING(256),
+   description CHARACTER VARYING(256) NOT NULL,
    PRIMARY KEY (id)
 );
 
 CREATE TABLE discipline (
     id INTEGER NOT NULL,
-    name CHARACTER VARYING(256),
-    code CHARACTER VARYING(8),
+    name CHARACTER VARYING(256) NOT NULL,
+    code CHARACTER VARYING(8) NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT ak_discipline_code UNIQUE (code)
 );
@@ -16,8 +16,8 @@ CREATE TABLE discipline (
 CREATE TABLE category (
     id INTEGER NOT NULL,
     fk_discipline INTEGER NOT NULL,
-    name CHARACTER VARYING(256),
-    code CHARACTER VARYING(8),
+    name CHARACTER VARYING(256) NOT NULL,
+    code CHARACTER VARYING(8) NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT ak_category_code UNIQUE (code),
     CONSTRAINT fk_discipline FOREIGN KEY (fk_discipline) REFERENCES discipline (id)
@@ -26,8 +26,8 @@ CREATE TABLE category (
 CREATE TABLE topic (
     id INTEGER NOT NULL,
     fk_category INTEGER NOT NULL,
-    name CHARACTER VARYING(256),
-    code CHARACTER VARYING(8),
+    name CHARACTER VARYING(256) NOT NULL,
+    code CHARACTER VARYING(8) NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT ak_topic_code UNIQUE (code),
     CONSTRAINT fk_category FOREIGN KEY (fk_category) REFERENCES category (id)
@@ -35,8 +35,8 @@ CREATE TABLE topic (
 
 CREATE TABLE difficulty (
     id INTEGER NOT NULL,
-    name CHARACTER VARYING(256),
-    code INTEGER,
+    name CHARACTER VARYING(256) NOT NULL,
+    code INTEGER NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT ak_difficulty_code UNIQUE (code)
 );

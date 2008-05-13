@@ -15,6 +15,8 @@ public class Role implements Serializable {
 
     private RoleEnum id;
 
+    private String description;
+
     @Id
     @Enumerated
     @Column(name = "id", nullable = false)
@@ -26,10 +28,8 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    private String description;
-
     @Basic
-    @Column(name = "description", length = 256)
+    @Column(name = "description", length = 256, nullable = false)
     public String getDescription() {
         return description;
     }
