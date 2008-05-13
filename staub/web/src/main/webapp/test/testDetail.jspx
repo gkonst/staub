@@ -193,7 +193,8 @@
                         </td>
                         <td>
                             <h:inputText id="difficultyPassScoreInput"
-                                         value="#{testDifficulty.passScore}"/>
+                                         value="#{testDifficulty.passScore}"
+                                         style="width:7em;"/>
                         </td>
                     </tr>
                 </a4j:repeat>
