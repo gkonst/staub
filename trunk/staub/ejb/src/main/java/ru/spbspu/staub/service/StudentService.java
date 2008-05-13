@@ -61,4 +61,13 @@ public interface StudentService extends GenericService<Student, Integer> {
      * @return the modified instance
      */
     Student saveStudent(Student student);
+
+    /**
+     * Checks whether a code is not assigned to any student.
+     *
+     * @param code the code
+     *
+     * @return <code>true</code> if the code is unique; <code>false</code> otherwise
+     */
+    boolean isCodeUnique(String code);
 }
