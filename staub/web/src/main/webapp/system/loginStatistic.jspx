@@ -8,5 +8,7 @@
       xmlns:rich="http://richfaces.org/rich"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
-<ui:include src="loginUser.jspx"/>
+<ui:composition>
+    <ui:include src="loginUser.jspx"/>
+</ui:composition>
 </html>
