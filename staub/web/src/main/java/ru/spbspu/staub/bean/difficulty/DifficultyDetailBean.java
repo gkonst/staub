@@ -9,6 +9,11 @@ import ru.spbspu.staub.bean.GenericDetailBean;
 import ru.spbspu.staub.entity.Difficulty;
 import ru.spbspu.staub.service.DifficultyService;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
+
 /**
  * Webbean for manipulating detail data of <code>Difficulty</code> entity.
  *
@@ -45,6 +50,12 @@ public class DifficultyDetailBean extends GenericDetailBean<Difficulty> {
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
         logger.debug("Saving... OK");
+    }
+
+    public void validateCode(FacesContext facesContext, UIComponent uiComponent, Object value) {
+        if (!difficultyService.isCodeUnique((Integer) value)) {
+            throw new ValidatorException(new FacesMessage("Difficulty code must be unique"));
+        }
     }
 }
 
