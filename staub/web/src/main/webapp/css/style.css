@@ -120,12 +120,6 @@ h3 {
 
 /* Sidebar */
 
-.buttonBox {
-    text-align: center;
-    padding: 5px 0;
-    clear: both;
-}
-
 #sidebar li {
     font-size: small;
     color: #8B7869;
@@ -149,23 +143,6 @@ h3 {
     padding: 0.7em 0.3em;
     vertical-align: middle;
     white-space: nowrap;
-}
-
-.innerDetailTable {
-    width: 100%;
-}
-
-.innerDetailTable td {
-    padding: 0.5em 0;
-    vertical-align: middle;
-    white-space: nowrap;
-}
-
-.loginTable {
-}
-
-.loginTable td {
-    padding: 0.3em 1em;
 }
 
 .questionDefinitionPanel {
