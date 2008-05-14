@@ -21,11 +21,11 @@
     <ui:define name="contentMessage"/>
     <ui:define name="contentBody">
         <rich:spacer height="20em"/>
-        <a4j:form id="loginForm">
-            <div align="center">
-                <table class="area loginTable">
+        <a4j:form id="contentBodyForm">
+            <fieldset style="text-align:center;">
+                <table class="area" style="margin:auto;text-align:left;">
                     <tr>
-                        <td colspan="2" align="center">
+                        <td colspan="4" style="text-align:center;">
                             <rich:spacer height="10"/>
                             <br/>
 
@@ -35,10 +35,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="right">
-                            <strong>#{messages['system.login.username']}</strong>
+                        <td/>
+                        <td>
+                            <h:outputLabel id="usernameLabel"
+                                           value="#{messages['system.login.username']}"
+                                           for="usernameInput"/>
                         </td>
-                        <td align="left">
+                        <td>
                             <a4j:outputPanel id="usernamePanel">
                                 <h:inputText id="usernameInput"
                                              value="#{loginUserBean.username}"
@@ -47,12 +50,16 @@
                                              requiredMessage="#{messages['system.login.required.username']}"/>
                             </a4j:outputPanel>
                         </td>
+                        <td/>
                     </tr>
                     <tr>
-                        <td align="right">
-                            <strong>#{messages['system.login.password']}</strong>
+                        <td/>
+                        <td>
+                            <h:outputLabel id="passwordLabel"
+                                           value="#{messages['system.login.password']}"
+                                           for="passwordInput"/>
                         </td>
-                        <td align="left">
+                        <td>
                             <a4j:outputPanel id="passwordPanel">
                                 <h:inputSecret id="passwordInput"
                                                value="#{loginUserBean.password}"
@@ -61,14 +68,15 @@
                                                requiredMessage="#{messages['system.login.required.password']}"/>
                             </a4j:outputPanel>
                         </td>
+                        <td/>
                     </tr>
                     <tr>
-                        <td colspan="2" align="center">
+                        <td colspan="4" style="text-align:center;">
                             <ui:include src="/controls/genericMessageControl.jspx"/>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" align="center">
+                        <td colspan="4" style="text-align:center;">
                             <a4j:outputPanel id="loginButtonPanel">
                                 <a4j:commandButton id="loginButton" action="#{loginUserBean.login}"
                                                    value="#{messages['system.login.enter']}"
@@ -79,7 +87,7 @@
                         </td>
                     </tr>
                 </table>
-            </div>
+            </fieldset>
         </a4j:form>
     </ui:define>
 </ui:composition>

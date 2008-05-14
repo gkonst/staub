@@ -7,25 +7,22 @@ body {
     font-size: 0.625em;
     line-height: 1.25em;
     color: #362F2D;
-    width: 758px;
+    width: 95em;
     margin-left: auto;
     margin-right: auto;
 }
 #document {
     padding: 0 1px;
     background: #fff url( ../images/bg.gif ) 0 0 repeat-y;
-    font-size: 1.1em;
 }
 
 #header {
-    width: 758px;
     height: 46px;
     background: url( ../images/hdr.bg.gif ) 0 0 repeat-x;
     color: white;
 }
 
 #container {
-    width: 758px;
 }
 
 #sidebar {
@@ -47,6 +44,6 @@ body {
 #footer {
     border-top: 1px solid #C3BBB6;
     background-color: #fff;
-    width: 738px;
+    width: 93em;
     text-align: right;
 }
