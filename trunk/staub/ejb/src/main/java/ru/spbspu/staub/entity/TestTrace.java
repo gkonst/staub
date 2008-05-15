@@ -3,6 +3,7 @@ package ru.spbspu.staub.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * The <code>TestTrace</code> class represents TestTrace entity.
@@ -16,6 +17,22 @@ public class TestTrace implements Serializable {
 
     private Integer id;
 
+    private Date started;
+
+    private Date finished;
+
+    private Test test;
+
+    private Student student;
+
+    private Assignment assignment;
+
+    private Integer score;
+
+    private Boolean testPassed;
+
+    private List<QuestionTrace> questionTraces;
+
     @Id
     @SequenceGenerator(name = "TestTraceIdGenerator", sequenceName = "seq_test_trace", allocationSize = 1)
     @GeneratedValue(generator = "TestTraceIdGenerator", strategy = GenerationType.SEQUENCE)
@@ -28,8 +45,6 @@ public class TestTrace implements Serializable {
         this.id = id;
     }
 
-    private Date started;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "started")
     public Date getStarted() {
@@ -39,8 +54,6 @@ public class TestTrace implements Serializable {
     public void setStarted(Date started) {
         this.started = started;
     }
-
-    private Date finished;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "finished")
@@ -52,8 +65,6 @@ public class TestTrace implements Serializable {
         this.finished = finished;
     }
 
-    private Test test;
-
     @ManyToOne
     @JoinColumn(name = "fk_test", referencedColumnName = "id", nullable = false)
     public Test getTest() {
@@ -63,8 +74,6 @@ public class TestTrace implements Serializable {
     public void setTest(Test test) {
         this.test = test;
     }
-
-    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "fk_student", referencedColumnName = "id", nullable = false)
@@ -76,8 +85,6 @@ public class TestTrace implements Serializable {
         this.student = student;
     }
 
-    private Assignment assignment;
-
     @OneToOne
     @JoinColumn(name = "fk_assignment", referencedColumnName = "id")
     public Assignment getAssignment() {
@@ -87,8 +94,6 @@ public class TestTrace implements Serializable {
     public void setAssignment(Assignment assignment) {
         this.assignment = assignment;
     }
-
-    private Integer score;
 
     @Basic
     @Column(name = "score", length = 10)
@@ -100,8 +105,6 @@ public class TestTrace implements Serializable {
         this.score = score;
     }
 
-    private Boolean testPassed;
-
     @Basic
     @Column(name = "test_passed")
     public Boolean getTestPassed() {
@@ -110,6 +113,15 @@ public class TestTrace implements Serializable {
 
     public void setTestPassed(Boolean testPassed) {
         this.testPassed = testPassed;
+    }
+
+    @OneToMany(mappedBy = "testTrace")
+    public List<QuestionTrace> getQuestionTraces() {
+        return questionTraces;
+    }
+
+    public void setQuestionTraces(List<QuestionTrace> questionTraces) {
+        this.questionTraces = questionTraces;
     }
 
     @Override
@@ -136,6 +148,13 @@ public class TestTrace implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("TestTrace");
         sb.append("{id=").append(id);
+        sb.append(", started=").append(started);
+        sb.append(", finished=").append(finished);
+        sb.append(", test=").append(test);
+        sb.append(", student=").append(student);
+        sb.append(", assignment=").append(assignment);
+        sb.append(", score=").append(score);
+        sb.append(", testPassed=").append(testPassed);
         sb.append('}');
 
         return sb.toString();

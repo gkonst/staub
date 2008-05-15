@@ -10,14 +10,13 @@ import ru.spbspu.staub.model.answer.ElementType;
 import ru.spbspu.staub.model.question.InputType;
 import ru.spbspu.staub.model.question.QuestionType;
 import ru.spbspu.staub.model.question.UserInputType;
+import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.model.list.FormProperties;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import java.math.BigInteger;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +34,21 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
         Query q = getEntityManager().createQuery("select qt.id from QuestionTrace qt where qt.testTrace = :testTrace and qt.finished is null");
         q.setParameter("testTrace", testTrace);
         return q.getResultList();
+    }
+
+    public FormTable find(FormProperties formProperties, TestTrace testTrace) {
+        logger.debug("> find(FormProperties=#0, TestTrace=#1)", formProperties, testTrace);
+
+        String query = "select qt from TestTrace tt join tt.questionTraces qt where tt = :testTrace";
+
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("testTrace", testTrace);
+
+        FormTable formTable = findAll(query, formProperties, parameters);
+
+        logger.debug("< find(FormProperties, TestTrace)");
+
+        return formTable;
     }
 
     public long countQuestionTraces(Question question) {
@@ -119,8 +133,7 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
         }
     }
 
-    private Set<BigInteger> getCorrectAnswers
-            (List<ru.spbspu.staub.model.question.AnswerType> questionAnswers) {
+    private Set<BigInteger> getCorrectAnswers(List<ru.spbspu.staub.model.question.AnswerType> questionAnswers) {
         Set<BigInteger> correctAnswers = new HashSet<BigInteger>();
         for (ru.spbspu.staub.model.question.AnswerType questionAnswer : questionAnswers) {
             if ("true".equals(questionAnswer.getCorrect())) {
