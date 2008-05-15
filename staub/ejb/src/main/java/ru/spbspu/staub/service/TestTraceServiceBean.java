@@ -191,7 +191,7 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
     @SuppressWarnings("unchecked")
     public void processExpiredTestTraces() {
-        Query q = getEntityManager().createQuery("select t from TestTrace t join t.assignment a where t.finished is null and a.testEnd <= :currentDate");
+        Query q = getEntityManager().createQuery("select t from TestTrace t where t.finished is null and t.assignment.testEnd <= :currentDate");
         Date date = new Date();
         q.setParameter("currentDate", date);
 

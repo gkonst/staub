@@ -3,6 +3,8 @@ package ru.spbspu.staub.service;
 import ru.spbspu.staub.entity.Question;
 import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
+import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -25,6 +27,16 @@ public interface QuestionTraceService extends GenericService<QuestionTrace, Inte
      * @return fetched list
      */
     List<Integer> findIdsByTestTraceId(TestTrace testTrace);
+
+    /**
+     * Searches question traces of a specified test trace.
+     *
+     * @param formProperties the form table
+     * @param testTrace      the test trace
+     *
+     * @return the table of results
+     */
+    FormTable find(FormProperties formProperties, TestTrace testTrace);
 
     /**
      * Counts a question traces of a specific question.
