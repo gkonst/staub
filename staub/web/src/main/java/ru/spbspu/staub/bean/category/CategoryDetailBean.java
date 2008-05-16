@@ -12,6 +12,10 @@ import ru.spbspu.staub.entity.Discipline;
 import ru.spbspu.staub.service.CategoryService;
 import ru.spbspu.staub.service.DisciplineService;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import java.util.List;
 
 /**
@@ -68,5 +72,11 @@ public class CategoryDetailBean extends GenericDetailBean<Category> {
 
     public List<Discipline> getDisciplineList() {
         return disciplineList;
+    }
+
+    public void validateCode(FacesContext facesContext, UIComponent uiComponent, Object value) {
+        if (!categoryService.isCodeUnique(String.valueOf(value))) {
+            throw new ValidatorException(new FacesMessage("Category code must be unique"));
+        }
     }
 }
