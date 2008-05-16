@@ -1,6 +1,7 @@
 package ru.spbspu.staub.bean;
 
 import org.jboss.seam.annotations.Logger;
+import org.jboss.seam.core.ResourceBundle;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.faces.Renderer;
 import org.jboss.seam.log.Log;
@@ -43,5 +44,9 @@ public abstract class GenericBean implements Serializable {
      */
     protected HttpServletRequest getRequest() {
         return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+    }
+
+    protected String getBundledString(String key) {
+        return ResourceBundle.instance().getString(key);
     }
 }
