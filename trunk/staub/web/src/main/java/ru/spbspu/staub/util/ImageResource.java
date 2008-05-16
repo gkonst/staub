@@ -27,7 +27,7 @@ import java.io.IOException;
  * @author Konstantin Grigoriev
  */
 @Scope(APPLICATION)
-@Name("myImageResource")
+@Name("ru.spbspu.staub.imageResource")
 @Install(precedence = BUILT_IN)
 @BypassInterceptors
 public class ImageResource extends AbstractResource {
