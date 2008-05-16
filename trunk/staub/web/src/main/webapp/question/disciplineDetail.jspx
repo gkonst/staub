@@ -19,30 +19,46 @@
         #{messages['discipline.detail.title']}
     </ui:define>
     <ui:define name="contentBody">
-        <a4j:form id="disciplineDetailForm">
+        <a4j:form id="contentBodyForm">
             <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <ui:include src="/controls/genericSaveControl.jspx"/>
             </a4j:outputPanel>
-            <table class="area detailTable">
-                <tr>
-                    <td align="right">
-                        <strong>#{messages['discipline.detail.code']}</strong>
-                    </td>
-                    <td>
-                        <h:inputText value="#{pageBean.model.code}"
-                                     disabled="#{pageBean.viewMode}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        <strong>#{messages['discipline.detail.name']}</strong>
-                    </td>
-                    <td>
-                        <h:inputText value="#{pageBean.model.name}"
-                                     disabled="#{pageBean.viewMode}"/>
-                    </td>
-                </tr>
-            </table>
+            <fieldset class="area">
+                <table>
+                    <tr>
+                        <td>
+                            <h:outputLabel id="disciplineCodeLabel"
+                                           value="#{messages['discipline.detail.code']}"
+                                           for="disciplineCodeInput"/>
+                        </td>
+                        <td>
+                            <h:inputText id="disciplineCodeInput"
+                                         value="#{pageBean.model.code}"
+                                         disabled="#{pageBean.viewMode}"
+                                         required="true"
+                                         requiredMessage="#{messages['discipline.detail.required.code']}"
+                                         validator="#{pageBean.validateCode}"
+                                         validatorMessage="#{messages['discipline.detail.validation.code']}"
+                                         styleClass="required"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel id="disciplineNameLabel"
+                                           value="#{messages['discipline.detail.name']}"
+                                           for="disciplineNameInput"/>
+                        </td>
+                        <td>
+                            <h:inputText id="disciplineNameInput"
+                                         value="#{pageBean.model.name}"
+                                         disabled="#{pageBean.viewMode}"
+                                         required="true"
+                                         requiredMessage="#{messages['discipline.detail.required.name']}"
+                                         styleClass="required"/>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
         </a4j:form>
     </ui:define>
 </ui:composition>

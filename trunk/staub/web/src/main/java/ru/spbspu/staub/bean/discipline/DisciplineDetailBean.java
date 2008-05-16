@@ -1,13 +1,18 @@
 package ru.spbspu.staub.bean.discipline;
 
-import ru.spbspu.staub.bean.GenericDetailBean;
-import ru.spbspu.staub.bean.BeanMode;
-import ru.spbspu.staub.entity.Discipline;
-import ru.spbspu.staub.service.DisciplineService;
+import static org.jboss.seam.ScopeType.SESSION;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.In;
-import static org.jboss.seam.ScopeType.SESSION;
+import ru.spbspu.staub.bean.BeanMode;
+import ru.spbspu.staub.bean.GenericDetailBean;
+import ru.spbspu.staub.entity.Discipline;
+import ru.spbspu.staub.service.DisciplineService;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 /**
  * Webbean for manipulating detail data of <code>Discipline</code> entity.
@@ -45,5 +50,11 @@ public class DisciplineDetailBean extends GenericDetailBean<Discipline> {
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
         logger.debug("Saving... OK");
+    }
+
+    public void validateCode(FacesContext facesContext, UIComponent uiComponent, Object value) {
+        if (!disciplineService.isCodeUnique(String.valueOf(value))) {
+            throw new ValidatorException(new FacesMessage("Discipline code must be unique"));
+        }
     }
 }
