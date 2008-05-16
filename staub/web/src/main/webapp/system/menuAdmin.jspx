@@ -12,32 +12,32 @@
 <!--@elvariable id="messages" type="java.util.Map"-->
     <ul>
         <li>
-            <s:link value="#{messages['system.menu.admin.tests']}" view="/test/testList.seam">
+            <s:link value="#{messages['system.menu.admin.tests']}" view="/admin/testList.seam">
                 <f:param name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.admin.questions']}" view="/question/questionList.seam">
+            <s:link value="#{messages['system.menu.admin.questions']}" view="/admin/questionList.seam">
                 <f:param name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.admin.disciplines']}" view="/question/disciplineList.seam">
+            <s:link value="#{messages['system.menu.admin.disciplines']}" view="/admin/disciplineList.seam">
                 <f:param name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.admin.difficulties']}" view="/difficulty/difficultyList.seam">
+            <s:link value="#{messages['system.menu.admin.difficulties']}" view="/admin/difficultyList.seam">
                 <f:param name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.admin.students']}" view="/student/studentList.seam">
+            <s:link value="#{messages['system.menu.admin.students']}" view="/admin/studentList.seam">
                 <f:param name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.admin.groups']}" view="/student/groupList.seam">
+            <s:link value="#{messages['system.menu.admin.groups']}" view="/admin/groupList.seam">
                 <f:param name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
