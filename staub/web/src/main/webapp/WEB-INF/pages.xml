@@ -5,15 +5,6 @@
        login-view-id="/system/main.jspx">
 
     <!-- Common pages -->
-    <page view-id="/system/loginStudent.jspx">
-        <navigation>
-            <rule if="#{identity.loggedIn}">
-                <redirect view-id="/test/testToPassList.jspx">
-                    <param name="beanMode" value="VIEW_MODE"/>
-                </redirect>
-            </rule>
-        </navigation>
-    </page>
     <page view-id="/system/loginAdmin.jspx">
         <navigation>
             <rule if="#{identity.loggedIn and s:hasRole('TEST_WRITER')}">
@@ -23,56 +14,10 @@
             </rule>
         </navigation>
     </page>
-    <page view-id="/system/loginStatistic.jspx">
-        <navigation>
-            <rule if="#{identity.loggedIn and s:hasRole('TEST_WRITER')}">
-                <redirect view-id="/statistic/testTraceList.jspx">
-                    <param name="beanMode" value="VIEW_MODE"/>
-                </redirect>
-            </rule>
-        </navigation>
-    </page>
     <page view-id="*">
         <navigation from-action="#{identity.logout}">
             <redirect view-id="/system/main.jspx"/>
         </navigation>
-    </page>
-
-    <!-- User pages -->
-    <page view-id="/test/testToPassList.jspx"
-          login-required="true"
-          action="#{testToPassListBean.initBean}">
-    </page>
-    <page view-id="/test/testStart.jspx"
-          login-required="true"
-          action="#{testStartBean.initBean}">
-        <navigation>
-            <rule if-outcome="testPrepare">
-                <render view-id="/test/testPrepare.jspx"/>
-            </rule>
-            <rule if-outcome="testListForPass">
-                <render view-id="/test/testToPassList.jspx"/>
-            </rule>
-        </navigation>
-    </page>
-    <page view-id="/question/question.jspx"
-          login-required="true"
-          action="#{questionBean.initBean}">
-        <navigation>
-            <rule if-outcome="testEnd">
-                <redirect view-id="/test/testEnd.jspx"/>
-            </rule>
-        </navigation>
-    </page>
-    <page view-id="/test/testPrepare.jspx"
-          login-required="true">
-        <navigation>
-            <render view-id="/question/question.jspx"/>
-        </navigation>
-    </page>
-    <page view-id="/test/testEnd.jspx"
-          login-required="true"
-          action="#{testEndBean.initBean}">
     </page>
 
     <!-- Administrator pages -->
@@ -272,29 +217,6 @@
                 <render view-id="/student/groupList.jspx"/>
             </rule>
         </navigation>
-    </page>
-
-    <!-- Statistics pages -->
-
-    <!-- Test Traces -->
-    <page view-id="/statistic/testTraceList.jspx"
-          login-required="true"
-          action="#{testTraceListBean.initBean}">
-        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
-    </page>
-
-    <!-- Test Statistics -->
-    <page view-id="/statistic/testStatisticsList.jspx"
-          login-required="true"
-          action="#{testStatisticsListBean.initBean}">
-        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
-    </page>
-
-    <!-- Question Statistics -->
-    <page view-id="/statistic/questionStatisticsList.jspx"
-          login-required="true"
-          action="#{questionStatisticsListBean.initBean}">
-        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
     </page>
 
     <!-- Exceptions -->

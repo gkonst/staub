@@ -7,7 +7,7 @@
             xmlns:navigation="http://jboss.com/products/seam/navigation"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation=
-                "http://jboss.com/products/seam/core http://jboss.com/products/seam/core-2.0.xsd
+                    "http://jboss.com/products/seam/core http://jboss.com/products/seam/core-2.0.xsd
                  http://jboss.com/products/seam/transaction http://jboss.com/products/seam/transaction-2.0.xsd
                  http://jboss.com/products/seam/security http://jboss.com/products/seam/security-2.0.xsd
                  http://jboss.com/products/seam/web http://jboss.com/products/seam/web-2.0.xsd
@@ -21,4 +21,11 @@
                   conversation-id-parameter="cid"/>
 
     <transaction:ejb-transaction/>
+
+    <navigation:pages>
+        <navigation:resources>
+            <value>/WEB-INF/navigation/solving.xml</value>
+            <value>/WEB-INF/navigation/statistic.xml</value>
+        </navigation:resources>
+    </navigation:pages>
 </components>
