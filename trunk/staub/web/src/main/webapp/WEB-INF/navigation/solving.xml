@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages xmlns="http://jboss.com/products/seam/pages"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.0.xsd">
+    <page view-id="/system/loginStudent.jspx">
+        <navigation>
+            <rule if="#{identity.loggedIn}">
+                <redirect view-id="/solving/testToPassList.jspx">
+                    <param name="beanMode" value="VIEW_MODE"/>
+                </redirect>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/solving/testToPassList.jspx"
+          login-required="true"
+          action="#{testToPassListBean.initBean}">
+    </page>
+    <page view-id="/solving/testStart.jspx"
+          login-required="true"
+          action="#{testStartBean.initBean}">
+        <navigation>
+            <rule if-outcome="testPrepare">
+                <render view-id="/solving/testPrepare.jspx"/>
+            </rule>
+            <rule if-outcome="testListForPass">
+                <render view-id="/solving/testToPassList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/solving/question.jspx"
+          login-required="true"
+          action="#{questionBean.initBean}">
+        <navigation>
+            <rule if-outcome="testEnd">
+                <redirect view-id="/solving/testEnd.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/solving/testPrepare.jspx"
+          login-required="true">
+        <navigation>
+            <render view-id="/solving/question.jspx"/>
+        </navigation>
+    </page>
+    <page view-id="/solving/testEnd.jspx"
+          login-required="true"
+          action="#{testEndBean.initBean}">
+    </page>
+</pages>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages xmlns="http://jboss.com/products/seam/pages"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.0.xsd">
+    <page view-id="/system/loginStatistic.jspx">
+        <navigation>
+            <rule if="#{identity.loggedIn and s:hasRole('TEST_WRITER')}">
+                <redirect view-id="/statistic/testTraceList.jspx">
+                    <param name="beanMode" value="VIEW_MODE"/>
+                </redirect>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Test Traces -->
+    <page view-id="/statistic/testTraceList.jspx"
+          login-required="true"
+          action="#{testTraceListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+    </page>
+
+    <!-- Test Statistics -->
+    <page view-id="/statistic/testStatisticsList.jspx"
+          login-required="true"
+          action="#{testStatisticsListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+    </page>
+
+    <!-- Question Statistics -->
+    <page view-id="/statistic/questionStatisticsList.jspx"
+          login-required="true"
+          action="#{questionStatisticsListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+    </page>
+</pages>
