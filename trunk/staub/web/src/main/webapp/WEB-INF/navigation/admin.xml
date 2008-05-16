@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages xmlns="http://jboss.com/products/seam/pages"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.0.xsd">
+
+    <page view-id="/system/loginAdmin.jspx">
+        <navigation>
+            <rule if="#{identity.loggedIn and s:hasRole('TEST_WRITER')}">
+                <redirect view-id="/admin/testList.jspx">
+                    <param name="beanMode" value="VIEW_MODE"/>
+                </redirect>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Tests -->
+    <page view-id="/admin/testList.jspx"
+          login-required="true"
+          action="#{testListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/admin/testDetail.jspx"/>
+            </rule>
+            <rule if-outcome="studentAssignList">
+                <render view-id="/admin/studentAssignList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/admin/testDetail.jspx"
+          login-required="true"
+          action="#{testDetailBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/admin/testList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Questions -->
+    <page view-id="/admin/questionList.jspx"
+          login-required="true"
+          action="#{questionListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/admin/questionDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/admin/questionDetail.jspx"
+          login-required="true"
+          action="#{questionDetailBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/admin/questionList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Disciplines -->
+    <page view-id="/admin/disciplineList.jspx"
+          login-required="true"
+          action="#{disciplineListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/admin/disciplineDetail.jspx"/>
+            </rule>
+            <rule if-outcome="categoryList">
+                <render view-id="/admin/categoryList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/admin/disciplineDetail.jspx"
+          login-required="true"
+          action="#{disciplineDetailBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/admin/disciplineList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Categories -->
+    <page view-id="/admin/categoryList.jspx"
+          login-required="true"
+          action="#{categoryListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/admin/categoryDetail.jspx"/>
+            </rule>
+            <rule if-outcome="topicList">
+                <render view-id="/admin/topicList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/admin/categoryDetail.jspx"
+          login-required="true"
+          action="#{categoryDetailBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/admin/categoryList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Topics -->
+    <page view-id="/admin/topicList.jspx"
+          login-required="true"
+          action="#{topicListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/admin/topicDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/admin/topicDetail.jspx"
+          login-required="true"
+          action="#{topicDetailBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/admin/topicList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Difficulties -->
+    <page view-id="/admin/difficultyList.jspx"
+          login-required="true"
+          action="#{difficultyListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/admin/difficultyDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/admin/difficultyDetail.jspx"
+          login-required="true"
+          action="#{difficultyDetailBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/admin/difficultyList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Students -->
+    <page view-id="/admin/studentList.jspx"
+          login-required="true"
+          action="#{studentListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/admin/studentDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/admin/studentDetail.jspx"
+          login-required="true"
+          action="#{studentDetailBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/admin/studentList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/admin/studentAssignList.jspx"
+          login-required="true"
+          action="#{studentAssignListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="testList">
+                <render view-id="/admin/testList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Groups -->
+    <page view-id="/admin/groupList.jspx"
+          login-required="true"
+          action="#{groupListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="detail">
+                <render view-id="/admin/groupDetail.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+    <page view-id="/admin/groupDetail.jspx"
+          login-required="true"
+          action="#{groupDetailBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <navigation>
+            <rule if-outcome="list">
+                <render view-id="/admin/groupList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+</pages>

@@ -25,6 +25,7 @@
     <navigation:pages>
         <navigation:resources>
             <value>/WEB-INF/navigation/solving.xml</value>
+            <value>/WEB-INF/navigation/admin.xml</value>
             <value>/WEB-INF/navigation/statistic.xml</value>
         </navigation:resources>
     </navigation:pages>
