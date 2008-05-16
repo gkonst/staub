@@ -4,8 +4,9 @@ import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import ru.spbspu.staub.bean.GenericListBean;
+import ru.spbspu.staub.bean.GenericExportableListBean;
 import ru.spbspu.staub.entity.*;
+import ru.spbspu.staub.export.Cell;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.*;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 @Name("questionStatisticsListBean")
 @Scope(SESSION)
-public class QuestionStatisticsListBean extends GenericListBean<QuestionStatistics> {
+public class QuestionStatisticsListBean extends GenericExportableListBean<QuestionStatistics> {
     private static final long serialVersionUID = 741330532394106365L;
 
     @In
@@ -181,5 +182,33 @@ public class QuestionStatisticsListBean extends GenericListBean<QuestionStatisti
 
     public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
+    }
+
+    @Override
+    public String[] getColumns() {
+        return new String[]{"question.id", "question.topic.category.discipline.name", "question.topic.category.name", "question.topic.name", "question.difficulty.name", "totalAnswers", "correctAnswers"};
+    }
+
+    @Override
+    public String getBundlePrefix() {
+        return "question.statistics.list.";
+    }
+
+    @Override
+    protected List<Cell[]> getHeader() {
+        List<Cell[]> header = super.getHeader();
+        if (discipline != null) {
+            header.add(new Cell[]{new Cell(getBundledString("question.statistics.list.question.topic.category.discipline.name")), new Cell(discipline.getName())});
+        }
+        if (category != null) {
+            header.add(new Cell[]{new Cell(getBundledString("question.statistics.list.question.topic.category.name")), new Cell(category.getName())});
+        }
+        if (topic != null) {
+            header.add(new Cell[]{new Cell(getBundledString("question.statistics.list.question.topic.name")), new Cell(topic.getName())});
+        }
+        if (difficulty != null) {
+            header.add(new Cell[]{new Cell(getBundledString("question.statistics.list.question.difficulty.name")), new Cell(difficulty.getName())});
+        }
+        return header;
     }
 }

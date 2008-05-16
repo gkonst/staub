@@ -4,11 +4,12 @@ import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import ru.spbspu.staub.bean.GenericListBean;
+import ru.spbspu.staub.bean.GenericExportableListBean;
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Discipline;
 import ru.spbspu.staub.entity.TestStatistics;
 import ru.spbspu.staub.entity.Topic;
+import ru.spbspu.staub.export.Cell;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.CategoryService;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 @Name("testStatisticsListBean")
 @Scope(SESSION)
-public class TestStatisticsListBean extends GenericListBean<TestStatistics> {
+public class TestStatisticsListBean extends GenericExportableListBean<TestStatistics> {
     private static final long serialVersionUID = -5787837250357305849L;
 
     @In
@@ -140,5 +141,30 @@ public class TestStatisticsListBean extends GenericListBean<TestStatistics> {
 
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
+    }
+
+    @Override
+    public String[] getColumns() {
+        return new String[]{"test.name", "test.category.discipline.name", "test.category.name", "totalAnswers", "correctAnswers"};
+    }
+
+    @Override
+    public String getBundlePrefix() {
+        return "test.statistics.list.";
+    }
+
+    @Override
+    protected List<Cell[]> getHeader() {
+        List<Cell[]> header = super.getHeader();
+        if (discipline != null) {
+            header.add(new Cell[]{new Cell(getBundledString("test.statistics.list.test.category.discipline.name")), new Cell(discipline.getName())});
+        }
+        if (category != null) {
+            header.add(new Cell[]{new Cell(getBundledString("test.statistics.list.test.category.name")), new Cell(category.getName())});
+        }
+        if (topic != null) {
+            header.add(new Cell[]{new Cell(getBundledString("test.statistics.list.test.topics.name")), new Cell(topic.getName())});
+        }
+        return header;
     }
 }

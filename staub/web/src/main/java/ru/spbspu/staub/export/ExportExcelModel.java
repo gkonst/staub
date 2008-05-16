@@ -156,11 +156,11 @@ public class ExportExcelModel {
                     try {
                         value = PropertyUtils.getProperty(row, column.getLabel());
                     } catch (IllegalAccessException e) {
-                        throw new ExportExcelException("error during getting property value", e);
+                        throw new ExportExcelException("error during getting value for property : " + column.getLabel(), e);
                     } catch (InvocationTargetException e) {
-                        throw new ExportExcelException("error during getting property value", e);
+                        throw new ExportExcelException("error during getting value for property : " + column.getLabel(), e);
                     } catch (NoSuchMethodException e) {
-                        throw new ExportExcelException("error during getting property value", e);
+                        throw new ExportExcelException("error during getting value for property : " + column.getLabel(), e);
                     }
                 }
                 if (value == null) {

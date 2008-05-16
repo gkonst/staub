@@ -22,6 +22,7 @@
 <a4j:form id="contentBodyForm">
 <a4j:outputPanel id="contentButtons" styleClass="contentButtons" layout="block">
     <ui:include src="/controls/genericRefreshControl.jspx"/>
+    <ui:include src="/controls/genericExportControl.jspx"/>
 </a4j:outputPanel>
 <ui:decorate template="/controls/listLayoutControl.jspx">
 <ui:define name="listPageData">
@@ -38,7 +39,7 @@
 <rich:column id="col2">
     <f:facet name="header">
         <a4j:outputPanel id="questionIdPanel" style="white-space:nowrap;">
-            #{messages['question.statistics.list.question.code']}
+            #{messages['question.statistics.list.question.id']}
             <br/>
             <br/>
             <h:inputText id="questionIdInput"
