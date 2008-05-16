@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO add descritpion
+ * Generic webbean implementation which used for operates with list data.
+ * Incapsulates paging, one or few row selection.
  *
  * @author Konstantin Grigoriev
  */

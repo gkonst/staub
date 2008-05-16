@@ -13,13 +13,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Export to excel model represantation.
+ * TODO Method call order is important.
  *
  * @author Konstantin Grigoriev
  */
@@ -84,7 +82,7 @@ public class ExportExcelModel {
         logger.debug(" Creating a new workbook...Ok");
     }
 
-    private void setTitle(String title) throws ExportExcelException {
+    public void setTitle(String title) throws ExportExcelException {
         final WritableFont mainHeaderFont = new WritableFont(WritableFont.ARIAL, 12, WritableFont.BOLD, false);
         try {
             logger.debug("   setting title : #0", title);
@@ -97,7 +95,7 @@ public class ExportExcelModel {
 
     public void setHeader(List<Cell[]> headerRows) throws ExportExcelException {
         for (Cell[] headerRow : headerRows) {
-            logger.debug("   adding header row : #0", headerRow);
+            logger.debug("   adding header row : #0", Arrays.toString(headerRow));
             for (int i = 0; i < headerRow.length; i++) {
                 try {
                     sheet.addCell(getWritableCell(headerRow[i], headerRow[i].getValue(), i));
@@ -173,7 +171,7 @@ public class ExportExcelModel {
                     // it to the columnsWidths HashMap instead of current column width
 
                     if ((value.toString()).length() > columnsWidths.get(columnIndex)) {
-                        logger.debug("    correcting width for column : #0 (oldWidth=#1, newWidth=#2)", column.getLabel(), columnsWidths.get(columnIndex), value.toString().length());
+                        logger.debug("    correcting width for column(i=#0, label=#1) oldWidth=#2, newWidth=#3", columnIndex, column.getLabel(), columnsWidths.get(columnIndex), value.toString().length());
                         columnsWidths.put(columnIndex, value.toString().length());
                     }
                 }
