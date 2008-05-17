@@ -2,15 +2,15 @@
 CREATE TABLE role (
    id INTEGER NOT NULL,
    description CHARACTER VARYING(256) NOT NULL,
-   PRIMARY KEY (id)
+   CONSTRAINT pk_role PRIMARY KEY (id)
 );
 
 CREATE TABLE discipline (
     id INTEGER NOT NULL,
     name CHARACTER VARYING(256) NOT NULL,
     code CHARACTER VARYING(8) NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT ak_discipline_code UNIQUE (code)
+    CONSTRAINT pk_discipline PRIMARY KEY (id),
+    CONSTRAINT ak_discipline__code UNIQUE (code)
 );
 
 CREATE TABLE category (
@@ -18,8 +18,8 @@ CREATE TABLE category (
     fk_discipline INTEGER NOT NULL,
     name CHARACTER VARYING(256) NOT NULL,
     code CHARACTER VARYING(8) NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT ak_category_code UNIQUE (code),
+    CONSTRAINT pk_category PRIMARY KEY (id),
+    CONSTRAINT ak_category__code UNIQUE (code),
     CONSTRAINT fk_discipline FOREIGN KEY (fk_discipline) REFERENCES discipline (id)
 );
 
@@ -28,8 +28,8 @@ CREATE TABLE topic (
     fk_category INTEGER NOT NULL,
     name CHARACTER VARYING(256) NOT NULL,
     code CHARACTER VARYING(8) NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT ak_topic_code UNIQUE (code),
+    CONSTRAINT pk_topic PRIMARY KEY (id),
+    CONSTRAINT ak_topic__code UNIQUE (code),
     CONSTRAINT fk_category FOREIGN KEY (fk_category) REFERENCES category (id)
 );
 
@@ -37,8 +37,8 @@ CREATE TABLE difficulty (
     id INTEGER NOT NULL,
     name CHARACTER VARYING(256) NOT NULL,
     code INTEGER NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT ak_difficulty_code UNIQUE (code)
+    CONSTRAINT pk_difficulty PRIMARY KEY (id),
+    CONSTRAINT ak_difficulty__code UNIQUE (code)
 );
 
 CREATE TABLE question (
@@ -120,7 +120,7 @@ CREATE TABLE "user" (
     username CHARACTER VARYING(64) NOT NULL,
     password CHARACTER VARYING(64) NOT NULL,
     CONSTRAINT pk_user PRIMARY KEY (id),
-    CONSTRAINT ak_topic_code UNIQUE (code),
+    CONSTRAINT ak_user__username UNIQUE (username),
     CONSTRAINT fk_role FOREIGN KEY (fk_role) REFERENCES role (id)
 );
 
@@ -128,7 +128,7 @@ CREATE TABLE "group" (
     id INTEGER NOT NULL,
     name CHARACTER VARYING(16) NOT NULL,
     CONSTRAINT pk_group PRIMARY KEY (id),
-    CONSTRAINT ak_group_name UNIQUE (name)
+    CONSTRAINT ak_group__name UNIQUE (name)
 );
 
 CREATE TABLE student (
@@ -138,9 +138,11 @@ CREATE TABLE student (
     code CHARACTER VARYING(16) NOT NULL,
     active BOOLEAN,
     CONSTRAINT pk_student PRIMARY KEY (id),
-    CONSTRAINT ak_student_code UNIQUE (code),
+    CONSTRAINT ak_student__code UNIQUE (code),
     CONSTRAINT fk_group FOREIGN KEY (fk_group) REFERENCES "group" (id)
 );
+
+CREATE INDEX ix_student__started ON student (name);
 
 CREATE TABLE assignment (
     id INTEGER NOT NULL,
@@ -167,6 +169,8 @@ CREATE TABLE test_trace (
     CONSTRAINT fk_student FOREIGN KEY (fk_student) REFERENCES student (id),
     CONSTRAINT fk_assignment FOREIGN KEY (fk_assignment) REFERENCES assignment (id)
 );
+
+CREATE INDEX ix_test_trace__started ON test_trace (started);
 
 CREATE TABLE question_trace (
     id INTEGER NOT NULL,
