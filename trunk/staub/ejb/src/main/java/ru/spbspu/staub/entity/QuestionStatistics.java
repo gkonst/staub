@@ -152,12 +152,18 @@ public class QuestionStatistics implements Serializable {
     }
 
     @Transient
-    public double getK2() {
+    public Double getK2() {
+        if ((n2 + n4) == 0) {
+            return null;
+        }
         return ((double) n2 / (n2 + n4));
     }
 
     @Transient
-    public double getK3() {
+    public Double getK3() {
+        if ((n1 + n3) == 0) {
+            return null;
+        }
         return ((double) n3 / (n1 + n3));
     }
 
