@@ -23,7 +23,7 @@ import java.util.Map;
 @Name("userService")
 @AutoCreate
 @Stateless
-public class UserServiceBean extends GenericServiceBean<User, String> implements UserService {
+public class UserServiceBean extends GenericServiceBean<User, Integer> implements UserService {
     public FormTable find(FormProperties formProperties, RoleEnum role) {
         logger.debug("> find(FormProperties=#0, RoleEnum=#1)", formProperties, role);
 

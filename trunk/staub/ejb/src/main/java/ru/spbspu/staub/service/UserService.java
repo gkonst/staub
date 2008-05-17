@@ -13,7 +13,7 @@ import javax.ejb.Local;
  * @author Konstantin Grigoriev
  */
 @Local
-public interface UserService extends GenericService<User, String> {
+public interface UserService extends GenericService<User, Integer> {
     /**
      * Searches users of a specified group.
      *
