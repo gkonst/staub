@@ -23,7 +23,7 @@
     <ui:define name="contentBody">
         #{messages['test.prepare.message']}
         <s:button id="testPrepareButton"
-                  view="/question/question.seam"
+                  view="/solving/question.seam"
                   propagation="join"
                   style="display:none;">
             <f:param name="beanMode" value="VIEW_MODE"/>

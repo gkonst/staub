@@ -27,6 +27,7 @@
             <value>/WEB-INF/navigation/solving.xml</value>
             <value>/WEB-INF/navigation/admin.xml</value>
             <value>/WEB-INF/navigation/statistic.xml</value>
+            <value>/WEB-INF/pages.xml</value>
         </navigation:resources>
     </navigation:pages>
 </components>

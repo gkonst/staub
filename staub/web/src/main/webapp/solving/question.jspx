@@ -65,7 +65,7 @@
                     <f:param id="nextQuestionJsFunctionParamBeanMode" name="beanMode" value="VIEW_MODE"/>
                 </a4j:jsFunction>
                 <s:link id="testToPassListLink"
-                        view="/test/testToPassList.seam"
+                        view="/solving/testToPassList.seam"
                         value="#{messages['question.solving.toTestToPassList']}"
                         rendered="#{pageBean.finished}"
                         propagation="end">

@@ -8,7 +8,7 @@
       xmlns:rich="http://richfaces.org/rich"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
-<ui:composition template="../template/staub-template.jspx">
+<ui:composition template="/template/staub-template.jspx">
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.test.TestToPassListBean"-->
     <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:param name="pageBean" value="#{testToPassListBean}"/>
@@ -16,7 +16,7 @@
         #{messages['testToPass.list.title']}
     </ui:define>
     <ui:define name="contentBody">
-        <ui:decorate template="../controls/listLayoutControl.jspx">
+        <ui:decorate template="/controls/listLayoutControl.jspx">
             <ui:define name="listPageData">
                 <rich:dataTable id="testList"
                                 value="#{pageBean.dataModel}"
@@ -25,7 +25,7 @@
                                 styleClass="dataTable">
                     <rich:column id="col1">
                         <f:facet name="header">#{messages['testToPass.list.name']}</f:facet>
-                        <s:link id="startTestLink" view="/test/testStart.seam" value="#{assigment.test.name}">
+                        <s:link id="startTestLink" view="/solving/testStart.seam" value="#{assigment.test.name}">
                             <f:param id="startTestParamModelId" name="modelId" value="#{assigment.id}"/>
                             <f:param id="startTestParamBeanMode" name="beanMode" value="VIEW_MODE"/>
                         </s:link>
