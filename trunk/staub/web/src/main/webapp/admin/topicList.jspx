@@ -36,8 +36,11 @@
                                     styleClass="dataTable">
                         <rich:column id="col1">
                             <f:facet name="header">#{messages['topic.list.code']}</f:facet>
-                            <a4j:htmlCommandLink id="editTopicLink"
-                                                 action="#{pageBean.doEdit}" value="#{topic.code}"/>
+                            <s:link id="editTopicLink"
+                                    action="detail" value="#{topic.code}">
+                                <f:param id="idParam" name="modelId" value="#{topic.id}"/>
+                                <f:param id="beanModeParam" name="beanMode" value="EDIT_MODE"/>
+                            </s:link>
                         </rich:column>
                         <rich:column id="col2">
                             <f:facet name="header">#{messages['topic.list.name']}</f:facet>
