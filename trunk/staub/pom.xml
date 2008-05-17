@@ -109,7 +109,7 @@
 
     <properties>
         <!-- Libraries versions -->
-        <seam.version>2.0.2.CR1</seam.version>
+        <seam.version>2.0.2.GA</seam.version>
         <jsf.version>1.2_07</jsf.version>
         <richfaces.version>3.2.0.GA</richfaces.version>
         <!-- Seam properties -->
