@@ -9,38 +9,59 @@
       xmlns:s="http://jboss.com/products/seam/taglib">
 
 <ui:composition>
-<!--@elvariable id="messages" type="java.util.Map"-->
+    <!--@elvariable id="messages" type="java.util.Map"-->
     <ul>
         <li>
-            <s:link value="#{messages['system.menu.admin.tests']}" view="/admin/testList.seam">
-                <f:param name="beanMode" value="VIEW_MODE"/>
+            <s:link id="testLinkLink"
+                    value="#{messages['system.menu.admin.tests']}"
+                    view="/admin/testList.seam">
+                <f:param id="testListLinkBeanModeParam" name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.admin.questions']}" view="/admin/questionList.seam">
-                <f:param name="beanMode" value="VIEW_MODE"/>
+            <s:link id="questionListLink"
+                    value="#{messages['system.menu.admin.questions']}"
+                    view="/admin/questionList.seam">
+                <f:param id="questionListLinkBeanModeParam" name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.admin.disciplines']}" view="/admin/disciplineList.seam">
-                <f:param name="beanMode" value="VIEW_MODE"/>
+            <s:link id="disciplineListLink"
+                    value="#{messages['system.menu.admin.disciplines']}"
+                    view="/admin/disciplineList.seam">
+                <f:param id="disciplineListLinkBeanModeParam" name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.admin.difficulties']}" view="/admin/difficultyList.seam">
-                <f:param name="beanMode" value="VIEW_MODE"/>
+            <s:link id="difficultyListLink"
+                    value="#{messages['system.menu.admin.difficulties']}"
+                    view="/admin/difficultyList.seam">
+                <f:param id="difficultyListLinkBeanModeParam" name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.admin.students']}" view="/admin/studentList.seam">
-                <f:param name="beanMode" value="VIEW_MODE"/>
+            <s:link id="studentListLink"
+                    value="#{messages['system.menu.admin.students']}"
+                    view="/admin/studentList.seam">
+                <f:param id="studentListLinkBeanModeParam" name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
         <li>
-            <s:link value="#{messages['system.menu.admin.groups']}" view="/admin/groupList.seam">
-                <f:param name="beanMode" value="VIEW_MODE"/>
+            <s:link id="groupListLink"
+                    value="#{messages['system.menu.admin.groups']}"
+                    view="/admin/groupList.seam">
+                <f:param id="groupListLinkBeanModeParam" name="beanMode" value="VIEW_MODE"/>
             </s:link>
         </li>
+        <s:fragment id="userFragment" rendered="#{s:hasRole('ADMIN')}">
+            <li>
+                <s:link id="userListLink"
+                        value="#{messages['system.menu.admin.users']}"
+                        view="/admin/userList.seam">
+                    <f:param id="userListLinkBeanModeParam" name="beanMode" value="VIEW_MODE"/>
+                </s:link>
+            </li>
+        </s:fragment>
     </ul>
 </ui:composition>
 </html>

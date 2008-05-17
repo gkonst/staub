@@ -5,7 +5,7 @@
 
     <page view-id="/system/loginStatistic.jspx">
         <navigation>
-            <rule if="#{identity.loggedIn and s:hasRole('TEST_WRITER')}">
+            <rule if="#{identity.loggedIn and (s:hasRole('TEST_WRITER')or s:hasRole('ADMIN'))}">
                 <redirect view-id="/statistic/testTraceList.jspx">
                     <param name="beanMode" value="VIEW_MODE"/>
                 </redirect>
@@ -13,25 +13,36 @@
         </navigation>
     </page>
 
-    <!-- Test Traces -->
+    <!-- Traces -->
     <page view-id="/statistic/testTraceList.jspx"
           login-required="true"
           action="#{testTraceListBean.initBean}">
-        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <restrict>#{s:hasRole('TEST_WRITER') or s:hasRole('ADMIN')}</restrict>
+        <navigation>
+            <rule if-outcome="questionTraceList">
+                <render view-id="/statistic/questionTraceList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <page view-id="/statistic/questionTraceList.jspx"
+          login-required="true"
+          action="#{questionTraceListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER') or s:hasRole('ADMIN')}</restrict>
     </page>
 
     <!-- Test Statistics -->
     <page view-id="/statistic/testStatisticsList.jspx"
           login-required="true"
           action="#{testStatisticsListBean.initBean}">
-        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <restrict>#{s:hasRole('TEST_WRITER') or s:hasRole('ADMIN')}</restrict>
     </page>
 
     <!-- Question Statistics -->
     <page view-id="/statistic/questionStatisticsList.jspx"
           login-required="true"
           action="#{questionStatisticsListBean.initBean}">
-        <restrict>#{s:hasRole('TEST_WRITER')}</restrict>
+        <restrict>#{s:hasRole('TEST_WRITER') or s:hasRole('ADMIN')}</restrict>
     </page>
-    
+
 </pages>

@@ -33,6 +33,14 @@
                 var="testTrace"
                 rendered="#{pageBean.dataModel != null}"
                 styleClass="dataTable">
+<rich:column id="col1" styleClass="columnIcon">
+    <a4j:htmlCommandLink id="questionTraceListLink"
+                         action="#{pageBean.showQuestionTraces}">
+        <h:graphicImage id="questionTraceListLinkImage"
+                        url="/images/icons/icon_detail_view.gif"
+                        alt="#{messages['test.trace.list.showQuestionTraces']}"/>
+    </a4j:htmlCommandLink>
+</rich:column>
 <rich:column id="col2">
     <f:facet name="header">#{messages['test.trace.list.test.name']}</f:facet>
     #{testTrace.test.name}
