@@ -1,0 +1,87 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<ui:composition template="/template/staub-template.jspx">
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.admin.UserDetailBean"-->
+    <!--@elvariable id="messages" type="java.util.Map"-->
+    <ui:param name="pageBean" value="#{userDetailBean}"/>
+    <ui:define name="sidebar">
+        <ui:include src="/system/menuAdmin.jspx"/>
+    </ui:define>
+    <ui:define name="contentTitle">
+        #{messages['user.detail.title']}
+    </ui:define>
+    <ui:define name="contentBody">
+        <a4j:form id="contentBodyForm">
+            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+                <ui:include src="/controls/genericSaveControl.jspx"/>
+            </a4j:outputPanel>
+            <fieldset class="area">
+                <table>
+                    <tr>
+                        <td>
+                            <h:outputLabel id="usernameLabel"
+                                           value="#{messages['user.detail.username']}"
+                                           for="usernameInput"/>
+                        </td>
+                        <td>
+                            <h:inputText id="usernameInput"
+                                         value="#{pageBean.model.username}"
+                                         disabled="#{pageBean.viewMode}"
+                                         required="true"
+                                         requiredMessage="#{messages['user.detail.required.username']}"
+                                         validator="#{pageBean.validateUsername}"
+                                         validatorMessage="#{messages['user.detail.validation.username']}"
+                                         styleClass="required"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel id="roleLabel"
+                                           value="#{messages['user.detail.role']}"
+                                           for="roleSelect"/>
+                        </td>
+                        <td>
+                            <h:selectOneMenu id="roleSelect"
+                                             value="#{pageBean.model.role}"
+                                             disabled="#{pageBean.viewMode}"
+                                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                                             styleClass="required"
+                                             required="true"
+                                             requiredMessage="#{messages['user.detail.required.role']}">
+                                <s:selectItems id="roleSelectItems"
+                                               value="#{pageBean.roleArray}"
+                                               var="role"
+                                               label="#{messages[fn:join('user.detail.role.', role)]}"/>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputLabel id="passwordLabel"
+                                           value="#{messages['user.detail.password']}"
+                                           for="passwordInput"/>
+                        </td>
+                        <td>
+                            <h:inputSecret id="passwordInput"
+                                           value="#{pageBean.model.password}"
+                                           disabled="#{pageBean.viewMode}"
+                                           required="true"
+                                           requiredMessage="#{messages['user.detail.required.password']}"
+                                           styleClass="required"/>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </a4j:form>
+    </ui:define>
+</ui:composition>
+</html>
