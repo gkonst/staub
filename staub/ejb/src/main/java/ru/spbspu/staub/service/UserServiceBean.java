@@ -4,10 +4,9 @@ import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.RoleEnum;
 import ru.spbspu.staub.entity.User;
-import ru.spbspu.staub.entity.Difficulty;
+import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
-import ru.spbspu.staub.exception.RemoveException;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
