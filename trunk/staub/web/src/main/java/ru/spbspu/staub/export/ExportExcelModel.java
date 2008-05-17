@@ -58,7 +58,7 @@ public class ExportExcelModel {
     /**
      * Map which store columns width.
      */
-    private Map<Integer, Integer> columnsWidths = new HashMap<Integer, Integer>();
+    private Map<Integer, Integer> columnsWidths;
 
     private ByteArrayOutputStream res;
 
@@ -79,6 +79,7 @@ public class ExportExcelModel {
         //TODO move datetime pattern to consts
         dateTimeFormat = new DateFormat("dd.MM.yyyy H:mm:ss");
         cellDateTimeFormat = new WritableCellFormat(dateTimeFormat);
+        columnsWidths = new HashMap<Integer, Integer>();
         logger.debug(" Creating a new workbook...Ok");
     }
 
