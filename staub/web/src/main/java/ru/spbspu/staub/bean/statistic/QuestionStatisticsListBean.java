@@ -186,7 +186,7 @@ public class QuestionStatisticsListBean extends GenericExportableListBean<Questi
 
     @Override
     public String[] getColumns() {
-        return new String[]{"question.id", "question.topic.category.discipline.name", "question.topic.category.name", "question.topic.name", "question.difficulty.name", "totalAnswers", "correctAnswers"};
+        return new String[]{"question.id", "question.topic.category.discipline.name", "question.topic.category.name", "question.topic.name", "question.difficulty.name", "totalAnswers", "correctAnswersPercent", "k1", "k2", "k3", "k4"};
     }
 
     @Override

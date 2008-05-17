@@ -134,9 +134,9 @@
     </rich:column>
     <rich:column id="col7">
         <f:facet name="header">
-            #{messages['test.statistics.list.correctAnswers']}
+            #{messages['test.statistics.list.correctAnswersPercent']}
         </f:facet>
-        #{testStatistics.correctAnswers}
+        #{testStatistics.correctAnswersPercent}
     </rich:column>
 </rich:dataTable>
 <h:outputText value="#{messages['common.list.noDataFound']}"
