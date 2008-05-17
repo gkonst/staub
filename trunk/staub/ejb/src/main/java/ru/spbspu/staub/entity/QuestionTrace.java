@@ -25,6 +25,20 @@ public class QuestionTrace implements Serializable {
 
     private Integer id;
 
+    private Date started;
+
+    private Date finished;
+
+    private AnswerType answer;
+
+    private Question question;
+
+    private TestTrace testTrace;
+
+    private Boolean correct;
+
+    private Integer part;
+
     @Id
     @SequenceGenerator(name = "QuestionTraceIdGenerator", sequenceName = "seq_question_trace", allocationSize = 1)
     @GeneratedValue(generator = "QuestionTraceIdGenerator", strategy = GenerationType.SEQUENCE)
@@ -37,8 +51,6 @@ public class QuestionTrace implements Serializable {
         this.id = id;
     }
 
-    private Date started;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "started")
     public Date getStarted() {
@@ -48,8 +60,6 @@ public class QuestionTrace implements Serializable {
     public void setStarted(Date started) {
         this.started = started;
     }
-
-    private Date finished;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "finished")
@@ -61,8 +71,6 @@ public class QuestionTrace implements Serializable {
         this.finished = finished;
     }
 
-    private AnswerType answer;
-
     @Column(name = "answer")
     @Type(type = "answer_type")
     public AnswerType getAnswer() {
@@ -72,8 +80,6 @@ public class QuestionTrace implements Serializable {
     public void setAnswer(AnswerType answer) {
         this.answer = answer;
     }
-
-    private Question question;
 
     @OneToOne
     @JoinColumn(name = "fk_question", referencedColumnName = "id", nullable = false)
@@ -85,8 +91,6 @@ public class QuestionTrace implements Serializable {
         this.question = question;
     }
 
-    private TestTrace testTrace;
-
     @ManyToOne
     @JoinColumn(name = "fk_test_trace", referencedColumnName = "id", nullable = false)
     public TestTrace getTestTrace() {
@@ -96,8 +100,6 @@ public class QuestionTrace implements Serializable {
     public void setTestTrace(TestTrace testTrace) {
         this.testTrace = testTrace;
     }
-
-    private Boolean correct;
 
     @Basic
     @Column(name = "correct")
@@ -109,8 +111,6 @@ public class QuestionTrace implements Serializable {
         this.correct = correct;
     }
 
-    private Integer part;
-
     @Basic
     @Column(name = "part")
     public Integer getPart() {
@@ -119,6 +119,15 @@ public class QuestionTrace implements Serializable {
 
     public void setPart(Integer part) {
         this.part = part;
+    }
+
+    @Transient
+    public long getTotalTime() {
+        if ((started == null) || (finished == null)) {
+            return 0;
+        }
+
+        return ((finished.getTime() - started.getTime()) / 1000);
     }
 
     @Override
