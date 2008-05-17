@@ -4,8 +4,10 @@ import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.entity.RoleEnum;
 import ru.spbspu.staub.entity.User;
+import ru.spbspu.staub.entity.Difficulty;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.exception.RemoveException;
 
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
@@ -91,6 +93,17 @@ public class UserServiceBean extends GenericServiceBean<User, Integer> implement
         logger.debug("< isUsernameUnique(String)");
 
         return unique;
+    }
+
+    @Override
+    public void remove(User user) throws RemoveException {
+        logger.debug("> remove(User=#0)", user);
+
+        User u = getEntityManager().merge(user);
+
+        getEntityManager().remove(u);
+
+        logger.debug("< remove(User=#0)", user);
     }
 
     private String calculateHash(String s) {
