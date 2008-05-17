@@ -60,6 +60,24 @@ public class TopicServiceBean extends GenericServiceBean<Topic, Integer> impleme
         return formTable;
     }
 
+    public boolean isCodeUnique(String code) {
+        logger.debug("> isCodeUnique(String=#0)", code);
+
+        Query q = getEntityManager().createQuery("select count(t) from Topic t where t.code = :code");
+        q.setParameter("code", code);
+
+        boolean unique = ((Long) q.getSingleResult() == 0);
+        if (unique) {
+            logger.debug("*  Code is unique.");
+        } else {
+            logger.debug("*  Code is not unique.");
+        }
+
+        logger.debug("< isCodeUnique(String)");
+
+        return unique;
+    }
+
     @Override
     public void remove(Topic topic) throws RemoveException {
         logger.debug("> remove(Topic=#0)", topic);

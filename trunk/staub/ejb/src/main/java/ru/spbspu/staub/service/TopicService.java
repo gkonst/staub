@@ -33,4 +33,13 @@ public interface TopicService extends GenericService<Topic, Integer> {
      * @return the table of results
      */
     FormTable findTopics(FormProperties formProperties, Category category);
+
+    /**
+     * Checks whether a code is not assigned to any topic.
+     *
+     * @param code the code
+     *
+     * @return <code>true</code> if the code is unique; <code>false</code> otherwise
+     */
+    boolean isCodeUnique(String code);
 }
