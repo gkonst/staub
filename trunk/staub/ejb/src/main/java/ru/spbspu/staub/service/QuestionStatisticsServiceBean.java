@@ -47,6 +47,7 @@ public class QuestionStatisticsServiceBean extends GenericServiceBean<QuestionSt
             "join question q " +
             "on qt.fk_question = q.id " +
             "where q.active = true " +
+            "and qt.correct is not null " +
             "group by qt.fk_question)";
 
     public QuestionStatistics find(Question question) {
