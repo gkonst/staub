@@ -8,7 +8,7 @@ INSERT INTO "user" (id,
      VALUES (nextval('seq_user'),
              0,
              'admin',
-             'admin');
+             'd033e22ae348aeb566fc214aec3585c4da997');
 
 INSERT INTO "user" (id,
                     fk_role,
@@ -17,7 +17,7 @@ INSERT INTO "user" (id,
      VALUES (nextval('seq_user'),
              1,
              'test',
-             'test');
+             'a94a8fe5ccb19ba61c4c873d391e987982fbbd3');
 
 INSERT INTO "group" (id,
                     name)

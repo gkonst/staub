@@ -53,7 +53,7 @@ public class UserServiceBean extends GenericServiceBean<User, String> implements
             Query q = getEntityManager()
                     .createQuery("select u from User u where u.username = :username and u.password = :password");
             q.setParameter("username", username);
-            q.setParameter("password", password);
+            q.setParameter("password", calculateHash(password));
 
             user = (User) q.getSingleResult();
         } catch (NoResultException ex) {
@@ -70,9 +70,13 @@ public class UserServiceBean extends GenericServiceBean<User, String> implements
     }
 
     private String calculateHash(String s) {
+        if (s == null) {
+            return null;
+        }
+
         MessageDigest messageDigest;
         try {
-            messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest = MessageDigest.getInstance("SHA");
         } catch (NoSuchAlgorithmException e) { // Should not happen.
             logger.error("Could not find a message digest algorithm.");
             return null;
@@ -84,7 +88,7 @@ public class UserServiceBean extends GenericServiceBean<User, String> implements
 
         StringBuilder sb = new StringBuilder();
         for (byte b : hash) {
-            sb.append(b);
+            sb.append(String.format("%x", b));
         }
 
         return sb.toString();
