@@ -45,7 +45,7 @@ public class DifficultyServiceBean extends GenericServiceBean<Difficulty, Intege
 
     @Override
     public void remove(Difficulty difficulty) throws RemoveException {
-        logger.debug("> remove(difficulty=#0)", difficulty);
+        logger.debug("> remove(Difficulty=#0)", difficulty);
 
         Difficulty d = getEntityManager().merge(difficulty);
         if ((questionService.countQuestions(d) + testService.countTests(d)) == 0) {
@@ -57,6 +57,6 @@ public class DifficultyServiceBean extends GenericServiceBean<Difficulty, Intege
             throw new RemoveException("Could not remove a difficulty.");
         }
 
-        logger.debug("< remove(difficulty=#0)", difficulty);
+        logger.debug("< remove(Difficulty=#0)", difficulty);
     }
 }

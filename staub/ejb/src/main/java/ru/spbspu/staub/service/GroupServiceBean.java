@@ -41,7 +41,7 @@ public class GroupServiceBean extends GenericServiceBean<Group, Integer> impleme
 
     @Override
     public void remove(Group group) throws RemoveException {
-        logger.debug("> remove(difficulty=#0)", group);
+        logger.debug("> remove(Group=#0)", group);
 
         Group g = getEntityManager().merge(group);
         if ((studentService.countStudents(g)) == 0) {
@@ -53,6 +53,6 @@ public class GroupServiceBean extends GenericServiceBean<Group, Integer> impleme
             throw new RemoveException("Could not remove a group.");
         }
 
-        logger.debug("< remove(group=#0)", group);
+        logger.debug("< remove(Group=#0)", group);
     }
 }
