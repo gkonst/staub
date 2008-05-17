@@ -90,6 +90,9 @@ public abstract class GenericExportableListBean<T extends Serializable> extends 
                 setCurrentPage(i);
                 doExactPage();
                 if (i == 1 && getRowsOnCurrentPage() > 0) {
+                    if(getColumns() == null || getColumns().length == 0) {
+                        throw new ExportExcelException("No columns in getColumns()");
+                    }
                     for (String label : getColumns()) {
                         String title = getBundledString(getBundlePrefix() + label);
                         Class type = PropertyUtils.getPropertyType(formTable.getRows().get(0), label);

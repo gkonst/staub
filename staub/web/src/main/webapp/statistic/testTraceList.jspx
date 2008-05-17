@@ -37,7 +37,7 @@
             <td>
                 <rich:calendar id="beginInput"
                                value="#{pageBean.begin}"
-                               datePattern="dd.MM.yy HH:mm"/>
+                               datePattern="dd.MM.yy"/>
             </td>
             <td>
                 <h:outputLabel id="endLabel"
@@ -47,7 +47,7 @@
             <td>
                 <rich:calendar id="endInput"
                                value="#{pageBean.end}"
-                               datePattern="dd.MM.yy HH:mm"/>
+                               datePattern="dd.MM.yy"/>
             </td>
             <td>
                 <a4j:commandLink id="setStartedLink"

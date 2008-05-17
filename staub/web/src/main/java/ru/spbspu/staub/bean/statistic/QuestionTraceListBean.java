@@ -51,8 +51,8 @@ public class QuestionTraceListBean extends GenericExportableListBean<QuestionTra
         return "question.trace.list.";
     }
 
+    @Override
     public String[] getColumns() {
-        // TODO implement method
-        return new String[0];
+        return new String[]{"question.id", "totalTime", "correct"};
     }
 }
