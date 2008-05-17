@@ -176,25 +176,37 @@
     <f:facet name="header">
         #{messages['question.statistics.list.k1']}
     </f:facet>
-    #{questionStatistics.k1}
+    <h:outputText id="col9Text"
+                  value="#{questionStatistics.k1}">
+        <f:convertNumber maxFractionDigits="2"/>
+    </h:outputText>
 </rich:column>
 <rich:column id="col10">
     <f:facet name="header">
         #{messages['question.statistics.list.k2']}
     </f:facet>
-    #{questionStatistics.k2}
+    <h:outputText id="col10Text"
+                  value="#{questionStatistics.k2}">
+        <f:convertNumber maxFractionDigits="2"/>
+    </h:outputText>
 </rich:column>
 <rich:column id="col11">
     <f:facet name="header">
         #{messages['question.statistics.list.k3']}
     </f:facet>
-    #{questionStatistics.k3}
+    <h:outputText id="col11Text"
+                  value="#{questionStatistics.k3}">
+        <f:convertNumber maxFractionDigits="2"/>
+    </h:outputText>
 </rich:column>
 <rich:column id="col12">
     <f:facet name="header">
         #{messages['question.statistics.list.k4']}
     </f:facet>
-    #{questionStatistics.k4}
+    <h:outputText id="col12Text"
+                  value="#{questionStatistics.k4}">
+        <f:convertNumber maxFractionDigits="2"/>
+    </h:outputText>
 </rich:column>
 </rich:dataTable>
 <h:outputText value="#{messages['common.list.noDataFound']}"
