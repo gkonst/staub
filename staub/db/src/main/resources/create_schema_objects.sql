@@ -142,7 +142,7 @@ CREATE TABLE student (
     CONSTRAINT fk_group FOREIGN KEY (fk_group) REFERENCES "group" (id)
 );
 
-CREATE INDEX ix_student__started ON student (name);
+CREATE INDEX ix_student__name ON student (name);
 
 CREATE TABLE assignment (
     id INTEGER NOT NULL,
