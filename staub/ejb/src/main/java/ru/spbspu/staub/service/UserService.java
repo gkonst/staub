@@ -43,4 +43,13 @@ public interface UserService extends GenericService<User, Integer> {
      * @return the updated entity
      */
     User saveUser(User user, String password);
+
+    /**
+     * Checks whether a username is not registered already.
+     *
+     * @param username the username
+     *
+     * @return <code>true</code> if the username is unique; <code>false</code> otherwise
+     */
+    boolean isUsernameUnique(String username);
 }

@@ -63,10 +63,34 @@ public class UserServiceBean extends GenericServiceBean<User, Integer> implement
     }
 
     public User saveUser(User user, String password) {
+        logger.debug("> saveUser(User=#0, String=#1)", user, ((password != null) ? "*****" : null));
+
         if (password != null) {
             user.setPassword(calculateHash(password));
         }
-        return makePersistent(user);
+        User result = makePersistent(user);
+
+        logger.debug("< saveUser(User=, String)");
+
+        return result;
+    }
+
+    public boolean isUsernameUnique(String username) {
+        logger.debug("> isUsernameUnique(String=#0)", username);
+
+        Query q = getEntityManager().createQuery("select count(u) from User u where u.username = :username");
+        q.setParameter("username", username);
+
+        boolean unique = ((Long) q.getSingleResult() == 0);
+        if (unique) {
+            logger.debug("*  Username is unique.");
+        } else {
+            logger.debug("*  Username is not unique.");
+        }
+
+        logger.debug("< isUsernameUnique(String)");
+
+        return unique;
     }
 
     private String calculateHash(String s) {
