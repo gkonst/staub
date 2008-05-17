@@ -88,7 +88,7 @@ public class UserServiceBean extends GenericServiceBean<User, String> implements
 
         StringBuilder sb = new StringBuilder();
         for (byte b : hash) {
-            sb.append(String.format("%x", b));
+            sb.append(String.format("%02x", b));
         }
 
         return sb.toString();

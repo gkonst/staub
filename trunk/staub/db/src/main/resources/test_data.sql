@@ -8,7 +8,7 @@ INSERT INTO "user" (id,
      VALUES (nextval('seq_user'),
              0,
              'admin',
-             'd033e22ae348aeb566fc214aec3585c4da997');
+             'd033e22ae348aeb5660fc2140aec35850c4da997');
 
 INSERT INTO "user" (id,
                     fk_role,
@@ -17,7 +17,7 @@ INSERT INTO "user" (id,
      VALUES (nextval('seq_user'),
              1,
              'test',
-             'a94a8fe5ccb19ba61c4c873d391e987982fbbd3');
+             'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
 
 INSERT INTO "group" (id,
                     name)
@@ -65,7 +65,7 @@ INSERT INTO student (id,
 INSERT INTO discipline (id,
                         name,
                         code)
-     VALUES (nextval('seq_discipline'), 
+     VALUES (nextval('seq_discipline'),
              'Математика',
              'D0');
 
@@ -73,7 +73,7 @@ INSERT INTO category (id,
                       fk_discipline,
                       name,
                       code)
-     VALUES (nextval('seq_category'), 
+     VALUES (nextval('seq_category'),
 	     currval('seq_discipline'),
              'Дифференциальные уравнения',
              'D1');
@@ -133,7 +133,7 @@ INSERT INTO topic (id,
                    fk_category,
                    name,
                    code)
-     VALUES (nextval('seq_topic'), 
+     VALUES (nextval('seq_topic'),
 	     currval('seq_category'),
              'Линейные дифференциальные уравнения',
              'T0');
@@ -146,7 +146,7 @@ INSERT INTO question (id,
                       active,
                       created,
                       created_by)
-     VALUES (nextval('seq_question'), 
+     VALUES (nextval('seq_question'),
              currval('seq_topic'),
              currval('seq_difficulty'),
              'Question #1',
@@ -175,7 +175,7 @@ INSERT INTO topic (id,
                    fk_category,
                    name,
                    code)
-     VALUES (nextval('seq_topic'), 
+     VALUES (nextval('seq_topic'),
 	     currval('seq_category'),
              'Системы дифференциальных уравнений',
              'T1');
@@ -188,7 +188,7 @@ INSERT INTO question (id,
                       active,
                       created,
                       created_by)
-     VALUES (nextval('seq_question'), 
+     VALUES (nextval('seq_question'),
              currval('seq_topic'),
              currval('seq_difficulty'),
              'Question #2',
