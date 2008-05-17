@@ -1,6 +1,9 @@
 package ru.spbspu.staub.service;
 
+import ru.spbspu.staub.entity.RoleEnum;
 import ru.spbspu.staub.entity.User;
+import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
 
@@ -12,6 +15,16 @@ import javax.ejb.Local;
 @Local
 public interface UserService extends GenericService<User, String> {
     /**
+     * Searches users of a specified group.
+     *
+     * @param formProperties the form properties
+     * @param role           the role
+     *
+     * @return the table of results
+     */
+    FormTable find(FormProperties formProperties, RoleEnum role);
+
+    /**
      * Fetches specific user by username and password.
      *
      * @param username specific user name
@@ -20,4 +33,14 @@ public interface UserService extends GenericService<User, String> {
      * @return fetched user
      */
     User findUserByUserNameAndPassword(String username, String password);
+
+    /**
+     * Saves or updates a user.
+     *
+     * @param user     the user
+     * @param password the unencrypted password if change required
+     *
+     * @return the updated entity
+     */
+    User saveUser(User user, String password);
 }
