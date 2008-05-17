@@ -44,8 +44,11 @@
                         </rich:column>
                         <rich:column id="col2">
                             <f:facet name="header">#{messages['category.list.code']}</f:facet>
-                            <a4j:htmlCommandLink id="editCategoryLink"
-                                                 action="#{pageBean.doEdit}" value="#{category.code}"/>
+                            <s:link id="editCategoryLink"
+                                    action="detail" value="#{category.code}">
+                                <f:param id="idParam" name="modelId" value="#{category.id}"/>
+                                <f:param id="beanModeParam" name="beanMode" value="EDIT_MODE"/>
+                            </s:link>
                         </rich:column>
                         <rich:column id="col3">
                             <f:facet name="header">#{messages['category.list.name']}</f:facet>
