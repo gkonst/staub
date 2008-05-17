@@ -37,6 +37,8 @@
                                          disabled="#{pageBean.viewMode}"
                                          required="true"
                                          requiredMessage="#{messages['topic.detail.required.code']}"
+                                         validator="#{pageBean.validateCode}"
+                                         validatorMessage="#{messages['topic.detail.validation.code']}"
                                          styleClass="required"/>
                         </td>
                     </tr>
