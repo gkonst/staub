@@ -26,6 +26,43 @@
     <ui:include src="/controls/genericRefreshControl.jspx"/>
     <ui:include src="/controls/genericExportControl.jspx"/>
 </a4j:outputPanel>
+<fieldset>
+    <table>
+        <tr>
+            <td>
+                <h:outputLabel id="beginLabel"
+                               value="#{messages['test.trace.list.started.begin']}"
+                               for="beginInput"/>
+            </td>
+            <td>
+                <rich:calendar id="beginInput"
+                               value="#{pageBean.begin}"
+                               datePattern="dd.MM.yy HH:mm"/>
+            </td>
+            <td>
+                <h:outputLabel id="endLabel"
+                               value="#{messages['test.trace.list.started.end']}"
+                               for="endInput"/>
+            </td>
+            <td>
+                <rich:calendar id="endInput"
+                               value="#{pageBean.end}"
+                               datePattern="dd.MM.yy HH:mm"/>
+            </td>
+            <td>
+                <a4j:commandLink id="setStartedLink"
+                                 action="#{pageBean.setStarted}"
+                                 reRender="contentBodyForm"
+                                 ajaxSingle="true"
+                                 process="beginInput, endInput">
+                    <h:graphicImage id="setStartedLinkImage"
+                                    url="/images/icons/icon_save.gif"
+                                    alt="#{messages['common.list.functions.goto']}"/>
+                </a4j:commandLink>
+            </td>
+        </tr>
+    </table>
+</fieldset>
 <ui:decorate template="/controls/listLayoutControl.jspx">
 <ui:define name="listPageData">
 <rich:dataTable id="testTraceList"
@@ -125,7 +162,10 @@
     <f:facet name="header">
         #{messages['test.trace.list.started']}
     </f:facet>
-    #{testTrace.started}
+    <h:outputText id="col6Text"
+                  value="#{testTrace.started}">
+        <s:convertDateTime pattern="dd.MM.yy HH:mm"/>
+    </h:outputText>
 </rich:column>
 <rich:column id="col7">
     <f:facet name="header">

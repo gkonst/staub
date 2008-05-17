@@ -96,6 +96,10 @@ public class TestTraceListBean extends GenericExportableListBean<TestTrace> {
         doRefresh();
     }
 
+    public void setStarted() {
+        doRefresh();
+    }
+
     public List<Discipline> getDisciplineList() {
         return disciplineList;
     }
