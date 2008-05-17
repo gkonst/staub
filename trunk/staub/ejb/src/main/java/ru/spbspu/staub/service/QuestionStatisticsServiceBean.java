@@ -25,11 +25,29 @@ public class QuestionStatisticsServiceBean extends GenericServiceBean<QuestionSt
         implements QuestionStatisticsService {
     private static final String DELETE_STATISTICS = "delete from question_statistics";
 
-    private static final String INSERT_STATISTICS = "insert into question_statistics " +
+/*    private static final String INSERT_STATISTICS = "insert into question_statistics " +
             "(fk_question, total_answers, correct_answers, last_update) " +
             "(select qt.fk_question, count(*), sum(cast(qt.correct as integer)), current_timestamp " +
             "from question_trace qt join question q on qt.fk_question = q.id where qt.finished is not null " +
-            "and q.active = true group by qt.fk_question)";
+            "and q.active = true group by qt.fk_question)";*/
+
+    public static final String INSERT_STATISTICS = "insert into question_statistics " +
+            "(fk_question, total_answers, correct_answers, n1, n2, n3, n4, last_update) " +
+            "(select qt.fk_question, " +
+            "count(*), " +
+            "sum(cast(qt.correct as integer)), " +
+            "sum(cast((tt.test_passed and qt.correct) as integer)), " +
+            "sum(cast((tt.test_passed and not qt.correct) as integer)), " +
+            "sum(cast((not tt.test_passed and qt.correct) as integer)), " +
+            "sum(cast((not tt.test_passed and not qt.correct) as integer)), " +
+            "current_timestamp " +
+            "from question_trace qt " +
+            "join test_trace tt " +
+            "on qt.fk_test_trace = tt.id " +
+            "join question q " +
+            "on qt.fk_question = q.id " +
+            "where q.active = true " +
+            "group by qt.fk_question)";
 
     public QuestionStatistics find(Question question) {
         logger.debug("> find(Question=#0)", question);

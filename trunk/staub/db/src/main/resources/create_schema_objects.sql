@@ -62,6 +62,10 @@ CREATE TABLE question_statistics (
     fk_question INTEGER NOT NULL,
     total_answers INTEGER,
     correct_answers INTEGER,
+    n1 INTEGER,
+    n2 INTEGER,
+    n3 INTEGER,
+    n4 INTEGER,
     last_update TIMESTAMP,
     CONSTRAINT pk_question_statistics PRIMARY KEY (fk_question),
     CONSTRAINT fk_question FOREIGN KEY (fk_question) REFERENCES question (id) ON DELETE CASCADE

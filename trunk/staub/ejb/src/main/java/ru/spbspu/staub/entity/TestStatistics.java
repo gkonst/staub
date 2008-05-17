@@ -1,8 +1,8 @@
 package ru.spbspu.staub.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * The <code>TestStatistics</code> class represents the TestStatistics entity.
@@ -21,7 +21,7 @@ public class TestStatistics implements Serializable {
     private Integer totalAnswers;
 
     private Integer correctAnswers;
-    
+
     private Date lastUpdate;
 
     /**
@@ -91,6 +91,11 @@ public class TestStatistics implements Serializable {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    @Transient
+    public int getCorrectAnswersPercent() {
+        return (int) ((double) correctAnswers / totalAnswers * 100);
     }
 
     @Override

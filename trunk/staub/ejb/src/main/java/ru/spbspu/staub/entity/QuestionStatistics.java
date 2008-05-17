@@ -1,8 +1,8 @@
 package ru.spbspu.staub.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * The <code>QuestionStatistics</code> class represents the QuestionStatistics entity.
@@ -21,7 +21,15 @@ public class QuestionStatistics implements Serializable {
     private Integer totalAnswers;
 
     private Integer correctAnswers;
-    
+
+    private Integer n1;
+
+    private Integer n2;
+
+    private Integer n3;
+
+    private Integer n4;
+
     private Date lastUpdate;
 
     /**
@@ -84,6 +92,46 @@ public class QuestionStatistics implements Serializable {
     }
 
     @Basic
+    @Column(name = "n1", length = 10)
+    public Integer getN1() {
+        return n1;
+    }
+
+    public void setN1(Integer n1) {
+        this.n1 = n1;
+    }
+
+    @Basic
+    @Column(name = "n2", length = 10)
+    public Integer getN2() {
+        return n2;
+    }
+
+    public void setN2(Integer n2) {
+        this.n2 = n2;
+    }
+
+    @Basic
+    @Column(name = "n3", length = 10)
+    public Integer getN3() {
+        return n3;
+    }
+
+    public void setN3(Integer n3) {
+        this.n3 = n3;
+    }
+
+    @Basic
+    @Column(name = "n4", length = 10)
+    public Integer getN4() {
+        return n4;
+    }
+
+    public void setN4(Integer n4) {
+        this.n4 = n4;
+    }
+
+    @Basic
     @Column(name = "last_update")
     public Date getLastUpdate() {
         return lastUpdate;
@@ -91,6 +139,31 @@ public class QuestionStatistics implements Serializable {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    @Transient
+    public int getCorrectAnswersPercent() {
+        return (int) ((double) correctAnswers / totalAnswers * 100);
+    }
+
+    @Transient
+    public double getK1() {
+        return (((double) n1 + n3) / totalAnswers);
+    }
+
+    @Transient
+    public double getK2() {
+        return ((double) n2 / (n2 + n4));
+    }
+
+    @Transient
+    public double getK3() {
+        return ((double) n3 / (n1 + n3));
+    }
+
+    @Transient
+    public double getK4() {
+        return (((double) n1 + n4) / totalAnswers);
     }
 
     @Override
