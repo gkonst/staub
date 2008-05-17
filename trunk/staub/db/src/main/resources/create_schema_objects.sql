@@ -120,6 +120,7 @@ CREATE TABLE "user" (
     username CHARACTER VARYING(64) NOT NULL,
     password CHARACTER VARYING(64) NOT NULL,
     CONSTRAINT pk_user PRIMARY KEY (id),
+    CONSTRAINT ak_topic_code UNIQUE (code),
     CONSTRAINT fk_role FOREIGN KEY (fk_role) REFERENCES role (id)
 );
 

@@ -15,6 +15,12 @@ public class User implements Serializable {
 
     private Integer id;
 
+    private String username;
+
+    private String password;
+
+    private RoleEnum role;
+
     @Id
     @SequenceGenerator(name = "UserIdGenerator", sequenceName = "seq_user", allocationSize = 1)
     @GeneratedValue(generator = "UserIdGenerator", strategy = GenerationType.SEQUENCE)
@@ -27,8 +33,6 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    private String username;
-
     @Basic
     @Column(name = "username", nullable = false, length = 64)
     public String getUsername() {
@@ -39,8 +43,6 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    private String password;
-
     @Basic
     @Column(name = "password", nullable = false, length = 64)
     public String getPassword() {
@@ -50,8 +52,6 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    private RoleEnum role;
 
     @Basic
     @Enumerated
@@ -90,6 +90,7 @@ public class User implements Serializable {
         sb.append("{id=").append(id);
         sb.append(", username='").append(username).append('\'');
         sb.append(", password='").append(password).append('\'');
+        sb.append(", role=").append(role);
         sb.append('}');
 
         return sb.toString();
