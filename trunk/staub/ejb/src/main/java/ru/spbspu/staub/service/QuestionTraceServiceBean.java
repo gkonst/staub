@@ -7,11 +7,11 @@ import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
 import ru.spbspu.staub.model.answer.AnswerType;
 import ru.spbspu.staub.model.answer.ElementType;
+import ru.spbspu.staub.model.list.FormProperties;
+import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.model.question.InputType;
 import ru.spbspu.staub.model.question.QuestionType;
 import ru.spbspu.staub.model.question.UserInputType;
-import ru.spbspu.staub.model.list.FormTable;
-import ru.spbspu.staub.model.list.FormProperties;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, Integer> implements QuestionTraceService {
     @SuppressWarnings("unchecked")
     public List<Integer> findIdsByTestTraceId(TestTrace testTrace) {
-        Query q = getEntityManager().createQuery("select qt.id from QuestionTrace qt where qt.testTrace = :testTrace and qt.finished is null");
+        Query q = getEntityManager().createQuery("select qt.id from QuestionTrace qt where qt.testTrace = :testTrace and qt.finished is null order by qt.part");
         q.setParameter("testTrace", testTrace);
         return q.getResultList();
     }
@@ -39,7 +39,7 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
     public FormTable find(FormProperties formProperties, TestTrace testTrace) {
         logger.debug("> find(FormProperties=#0, TestTrace=#1)", formProperties, testTrace);
 
-        String query = "select qt from TestTrace tt join tt.questionTraces qt where tt = :testTrace";
+        String query = "select qt from TestTrace tt join tt.questionTraces qt where tt = :testTrace order by qt.part";
 
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("testTrace", testTrace);
