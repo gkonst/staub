@@ -145,7 +145,7 @@ public class TestStatisticsListBean extends GenericExportableListBean<TestStatis
 
     @Override
     public String[] getColumns() {
-        return new String[]{"test.name", "test.category.discipline.name", "test.category.name", "totalAnswers", "correctAnswers"};
+        return new String[]{"test.name", "test.category.discipline.name", "test.category.name", "totalAnswers", "correctAnswersPercent"};
     }
 
     @Override

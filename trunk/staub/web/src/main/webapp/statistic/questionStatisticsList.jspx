@@ -168,9 +168,33 @@
 </rich:column>
 <rich:column id="col8">
     <f:facet name="header">
-        #{messages['question.statistics.list.correctAnswers']}
+        #{messages['question.statistics.list.correctAnswersPercent']}
     </f:facet>
-    #{questionStatistics.correctAnswers}
+    #{questionStatistics.correctAnswersPercent}
+</rich:column>
+<rich:column id="col9">
+    <f:facet name="header">
+        #{messages['question.statistics.list.k1']}
+    </f:facet>
+    #{questionStatistics.k1}
+</rich:column>
+<rich:column id="col10">
+    <f:facet name="header">
+        #{messages['question.statistics.list.k2']}
+    </f:facet>
+    #{questionStatistics.k2}
+</rich:column>
+<rich:column id="col11">
+    <f:facet name="header">
+        #{messages['question.statistics.list.k3']}
+    </f:facet>
+    #{questionStatistics.k3}
+</rich:column>
+<rich:column id="col12">
+    <f:facet name="header">
+        #{messages['question.statistics.list.k4']}
+    </f:facet>
+    #{questionStatistics.k4}
 </rich:column>
 </rich:dataTable>
 <h:outputText value="#{messages['common.list.noDataFound']}"
