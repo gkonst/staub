@@ -70,7 +70,7 @@ public class UserServiceBean extends GenericServiceBean<User, Integer> implement
         }
         User result = makePersistent(user);
 
-        logger.debug("< saveUser(User=, String)");
+        logger.debug("< saveUser(User, String)");
 
         return result;
     }
