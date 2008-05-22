@@ -26,7 +26,14 @@ import java.util.Map;
 @AutoCreate
 @Stateless
 public class AssignmentServiceBean extends GenericServiceBean<Assignment, Integer> implements AssignmentService {
-    public FormTable findAssignments(FormProperties formProperties, Student student) {
+    public FormTable find(FormProperties formProperties, Test test) {
+        String query = "select a from Assignment a where a.test = :test";
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("test", test);
+        return findAll(query, formProperties, parameters);
+    }
+
+    public FormTable find(FormProperties formProperties, Student student) {
         String query = "select a from Assignment a where a.student = :student and a.testBegin <= :currentDate and a.testEnd > :currentDate";
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("student", student);
@@ -35,7 +42,7 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
     }
 
     @SuppressWarnings("unchecked")
-    public List<Assignment> findAssignments(Student student) {
+    public List<Assignment> find(Student student) {
         Query q = getEntityManager().createQuery("select a from Assignment a where a.student = :student and a.testBegin <= :currentDate and a.testEnd > :currentDate");
         q.setParameter("student", student);
         q.setParameter("currentDate", new Date());
@@ -83,6 +90,17 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
                 // should not happen
             }
         }
+    }
+
+    @Override
+    public void remove(Assignment assignment) throws RemoveException {
+        logger.debug("> remove(Assignment=#0)", assignment);
+
+        Assignment a = getEntityManager().merge(assignment);
+        getEntityManager().remove(a);
+        logger.debug("*  Assignment removed from a database.");
+
+        logger.debug("< remove(Assignment)");
     }
 
     private void createTestTrace(Assignment assignment) {
