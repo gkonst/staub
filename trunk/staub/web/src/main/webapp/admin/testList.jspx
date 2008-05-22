@@ -42,14 +42,23 @@
                         alt="#{messages['test.list.showStudents']}"/>
     </a4j:htmlCommandLink>
 </rich:column>
-<rich:column id="col2">
+<rich:column id="col2"
+             styleClass="columnIcon">
+    <a4j:htmlCommandLink id="assignmentsListLink"
+                         action="#{pageBean.showAssignments}">
+        <h:graphicImage id="assignmentsListLinkImage"
+                        url="/images/icons/icon_detail_view.gif"
+                        alt="#{messages['test.list.showAssignments']}"/>
+    </a4j:htmlCommandLink>
+</rich:column>
+<rich:column id="col3">
     <f:facet name="header">#{messages['test.list.name']}</f:facet>
     <s:link id="editTestLink" action="detail" value="#{test.name}">
         <f:param id="editTestLinkIdParam" name="modelId" value="#{test.id}"/>
         <f:param id="editTestLinkBeanModeParam" name="beanMode" value="EDIT_MODE"/>
     </s:link>
 </rich:column>
-<rich:column id="col3">
+<rich:column id="col4">
     <f:facet name="header">
         <a4j:outputPanel id="disciplinePanel">
             #{messages['test.list.category.discipline.name']}
@@ -74,7 +83,7 @@
     </f:facet>
     #{test.category.discipline.name}
 </rich:column>
-<rich:column id="col4">
+<rich:column id="col5">
     <f:facet name="header">
         <a4j:outputPanel id="categoryPanel">
             #{messages['test.list.category.name']}
@@ -100,7 +109,7 @@
     </f:facet>
     #{test.category.name}
 </rich:column>
-<rich:column id="col5">
+<rich:column id="col6">
     <f:facet name="header">
         <a4j:outputPanel id="topicPanel">
             #{messages['test.list.topics.name']}
@@ -138,7 +147,7 @@
         </s:fragment>
     </a4j:repeat>
 </rich:column>
-<rich:column id="col6" styleClass="columnIcon">
+<rich:column id="col7" styleClass="columnIcon">
     <a4j:commandButton id="deleteButton"
                        action="#{pageBean.doDelete}"
                        onclick="if (!(confirm('#{messages['common.list.functions.delete.confirm']}'))) return false;"

@@ -61,7 +61,6 @@ public class QuestionBean extends GenericModeBean {
     }
 
     // TODO split method for test initialization and question initialization
-    // TODO translate messages
     // TODO part may be wrong sometimes
     private void initTest() {
         logger.debug(">>> Init question(index=#0) in testTrace(#1)...", questionIndex, testTrace.getId());
@@ -71,7 +70,8 @@ public class QuestionBean extends GenericModeBean {
             questionIds = questionTraceService.findIdsByTestTraceId(testTrace);
             if (questionIds == null || questionIds.size() == 0) {
                 // check for zero count questions
-                addFacesMessage("В тесте не осталось неотвеченных вопросов");
+                // redundant situation
+                addFacesMessageFromResourceBundle("question.solving.zeroQuestions");
                 finished = true;
                 logger.debug("<<< Init question...failed");
                 return;
@@ -93,7 +93,7 @@ public class QuestionBean extends GenericModeBean {
                 if (!testTraceService.checkPart(testTrace, previousPart)) {
                     logger.debug(" part checking failed -> test ended");
                     testTrace = testTraceService.endTest(testTrace, false);
-                    addFacesMessage("Part validation failed");
+                    addFacesMessageFromResourceBundle("question.solving.partFailed");
                     finished = true;
                     logger.debug("<<< Init question...failed");
                     return;
@@ -105,7 +105,7 @@ public class QuestionBean extends GenericModeBean {
                 logger.debug(" test timer expired -> test ended");
                 testTraceService.checkPart(testTrace, previousPart != null ? previousPart : currentQuestion.getPart());
                 testTrace = testTraceService.endTest(testTrace, false);
-                addFacesMessage("время теста истекло");
+                addFacesMessageFromResourceBundle("question.solving.timeExpired");
                 finished = true;
                 logger.debug("<<< Init question...failed");
                 return;
@@ -123,9 +123,8 @@ public class QuestionBean extends GenericModeBean {
             if (questionTimer != null && questionTimer.isExpired()) {
                 logger.debug(" question timer expired -> next question");
                 nextQuestion();
-                // recursive =))
+                // recursive
                 initTest();
-                //addFacesMessage("время вопроса истекло"); TODO ?????????
             }
 
             previousPart = currentQuestion.getPart();
@@ -134,7 +133,7 @@ public class QuestionBean extends GenericModeBean {
             logger.debug(" no questions -> test ended");
             boolean result = testTraceService.checkPart(testTrace, previousPart);
             testTrace = testTraceService.endTest(testTrace, result);
-            addFacesMessage("Вы ответили на все вопросы теста");
+            addFacesMessageFromResourceBundle("question.solving.testFinished");
             finished = true;
 
         }

@@ -35,7 +35,7 @@
         </s:fragment>
     </ui:define>
     <ui:define name="contentTitle">
-        #{pageBean.finished ? messages['questionSolving.testFinished'] : pageBean.currentQuestion.name}
+        #{pageBean.finished ? messages['question.solving.testFinished'] : pageBean.currentQuestion.name}
     </ui:define>
     <ui:define name="contentBody">
         <a4j:form id="questionForm">
