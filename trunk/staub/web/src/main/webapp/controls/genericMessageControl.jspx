@@ -8,7 +8,7 @@
       xmlns:rich="http://richfaces.org/rich">
 
 <ui:composition>
-    <rich:messages id="message" layout="table" styleClass="message" errorClass="errorMessage" fatalClass="fatalMessage"
+    <rich:messages layout="table" styleClass="message" errorClass="errorMessage" fatalClass="fatalMessage"
                    infoClass="infoMessage" warnClass="warningMessage" showDetail="true" showSummary="false"/>
 </ui:composition>
 </html>
