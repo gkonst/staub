@@ -18,6 +18,16 @@ import java.util.List;
 @Local
 public interface AssignmentService extends GenericService<Assignment, Integer> {
     /**
+     * Searches an assignments to a specified test.
+     *
+     * @param formProperties the form properties
+     * @param test           the test
+     *
+     * @return the table of results
+     */
+    FormTable find(FormProperties formProperties, Test test);
+
+    /**
      * Searches an active assignments of a student.
      *
      * @param formProperties the form properties
@@ -25,7 +35,7 @@ public interface AssignmentService extends GenericService<Assignment, Integer> {
      *
      * @return the table of results
      */
-    FormTable findAssignments(FormProperties formProperties, Student student);
+    FormTable find(FormProperties formProperties, Student student);
 
     /**
      * Searches an active assignments of a student.
@@ -34,10 +44,10 @@ public interface AssignmentService extends GenericService<Assignment, Integer> {
      *
      * @return the list of assignments
      */
-    List<Assignment> findAssignments(Student student);
+    List<Assignment> find(Student student);
 
     /**
-     * Counts assignments for a specific test.
+     * Counts assignments to a specific test.
      *
      * @param test the test
      *

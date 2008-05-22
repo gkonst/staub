@@ -30,6 +30,6 @@ public class TestToPassListBean extends GenericListBean<Assignment> {
 
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return assignmentService.findAssignments(formProperties, student);
+        return assignmentService.find(formProperties, student);
     }
 }
