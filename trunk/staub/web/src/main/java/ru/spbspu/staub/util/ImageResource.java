@@ -34,7 +34,7 @@ public class ImageResource extends AbstractResource {
 
     public static final String RESOURCE_PATH = "/loadImage";
 
-    private static final String RESOURCE_DIR_ENV = "resource-directory";
+    private static final String UPLOAD_RESOURCE_DIR_ENV = "upload-resource-directory";
 
     @Override
     public String getResourcePath() {
@@ -88,7 +88,7 @@ public class ImageResource extends AbstractResource {
         try {
             Context iniCtx = new InitialContext();
             Context compEnv = (Context) iniCtx.lookup("java:comp/env");
-            return String.valueOf(compEnv.lookup(RESOURCE_DIR_ENV));
+            return String.valueOf(compEnv.lookup(UPLOAD_RESOURCE_DIR_ENV));
         } catch (NamingException e) {
             throw new IllegalArgumentException(e);
         }

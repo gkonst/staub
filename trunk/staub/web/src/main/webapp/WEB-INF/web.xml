@@ -35,12 +35,17 @@
 
     <context-param>
         <param-name>facelets.DEVELOPMENT</param-name>
-        <param-value>true</param-value>
+        <param-value>false</param-value>
     </context-param>
 
     <context-param>
         <param-name>facelets.LIBRARIES</param-name>
         <param-value>/WEB-INF/staub.taglib.xml</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>org.ajax4jsf.COMPRESS_SCRIPT</param-name>
+        <param-value>true</param-value>
     </context-param>
 
     <context-param>
@@ -59,8 +64,8 @@
     </servlet-mapping>
 
     <env-entry>
-        <env-entry-name>resource-directory</env-entry-name>
+        <env-entry-name>upload-resource-directory</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>/home/kostya/temp/resource</env-entry-value>
+        <env-entry-value>${upload.resource.dir}</env-entry-value>
     </env-entry>
 </web-app>
