@@ -20,6 +20,8 @@
                 <db.updateDisabled>true</db.updateDisabled>
                 <!-- Seam properties -->
                 <debug>true</debug>
+                <!-- Application properties -->
+                <upload.resource.dir>/home/kostya/temp/resource</upload.resource.dir>
             </properties>
         </profile>
     </profiles>
