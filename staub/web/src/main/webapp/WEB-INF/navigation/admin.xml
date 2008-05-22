@@ -25,6 +25,9 @@
             <rule if-outcome="studentAssignList">
                 <render view-id="/admin/studentAssignList.jspx"/>
             </rule>
+            <rule if-outcome="assignmentsList">
+                <render view-id="/admin/assignmentList.jspx"/>
+            </rule>
         </navigation>
     </page>
     <page view-id="/admin/testDetail.jspx"
@@ -33,6 +36,18 @@
         <restrict>#{s:hasRole('TEST_WRITER') or s:hasRole('ADMIN')}</restrict>
         <navigation>
             <rule if-outcome="list">
+                <render view-id="/admin/testList.jspx"/>
+            </rule>
+        </navigation>
+    </page>
+
+    <!-- Assignments -->
+    <page view-id="/admin/assignmentList.jspx"
+          login-required="true"
+          action="#{assignmentListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER') or s:hasRole('ADMIN')}</restrict>
+        <navigation>
+            <rule if-outcome="testList">
                 <render view-id="/admin/testList.jspx"/>
             </rule>
         </navigation>

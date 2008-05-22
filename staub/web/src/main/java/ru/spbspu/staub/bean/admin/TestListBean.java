@@ -91,6 +91,11 @@ public class TestListBean extends GenericListBean<Test> {
         return doView("studentAssignList");
     }
 
+    public String showAssignments() {
+        Contexts.getConversationContext().set(Test.class.getName(), getSelected());
+        return doView("assignmentsList");
+    }
+
     public void setDiscipline() {
         fillCategoryList();
         setCategory(null);
