@@ -11,7 +11,7 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:st="http://spbspu.ru/staub/taglib">
 <ui:composition template="/template/staub-template.jspx">
-<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.test.TestListBean"-->
+<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.admin.TestListBean"-->
 <!--@elvariable id="messages" type="java.util.Map"-->
 <ui:param name="pageBean" value="#{testListBean}"/>
 <ui:define name="sidebar">

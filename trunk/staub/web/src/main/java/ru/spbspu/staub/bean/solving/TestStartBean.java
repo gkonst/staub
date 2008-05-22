@@ -1,4 +1,4 @@
-package ru.spbspu.staub.bean.test;
+package ru.spbspu.staub.bean.solving;
 
 import org.jboss.seam.ScopeType;
 import static org.jboss.seam.ScopeType.SESSION;

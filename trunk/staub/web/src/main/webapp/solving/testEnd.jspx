@@ -10,7 +10,7 @@
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="../template/staub-template.jspx">
     <ui:param name="pageBean" value="#{testEndBean}"/>
-    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.test.TestEndBean"-->
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.solving.TestEndBean"-->
     <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:define name="contentTitle">
         Результаты теста.

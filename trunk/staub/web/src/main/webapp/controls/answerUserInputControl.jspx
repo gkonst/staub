@@ -11,7 +11,7 @@
       xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 <ui:composition>
-    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionDetailBean"-->
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.admin.QuestionDetailBean"-->
     <!--@elvariable id="answerModel" type="ru.spbspu.staub.model.UserInputAnswerWrapper"-->
     <!--@elvariable id="messages" type="java.util.Map"-->
     <table>
