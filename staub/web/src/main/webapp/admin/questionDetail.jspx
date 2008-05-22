@@ -12,7 +12,7 @@
       xmlns:st="http://spbspu.ru/staub/taglib">
 <ui:composition template="/template/staub-template.jspx">
 <ui:param name="pageBean" value="#{questionDetailBean}"/>
-<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionDetailBean"-->
+<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.admin.QuestionDetailBean"-->
 <!--@elvariable id="messages" type="java.util.Map"-->
 <ui:define name="sidebar">
     <ui:include src="/system/menuAdmin.jspx"/>

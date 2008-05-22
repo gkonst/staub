@@ -10,7 +10,7 @@
       xmlns:s="http://jboss.com/products/seam/taglib"
       xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <ui:composition template="/template/staub-template.jspx">
-<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.test.TestDetailBean"-->
+<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.admin.TestDetailBean"-->
 <!--@elvariable id="messages" type="java.util.Map"-->
 <ui:param name="pageBean" value="#{testDetailBean}"/>
 <ui:define name="sidebar">

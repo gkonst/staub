@@ -1,4 +1,4 @@
-package ru.spbspu.staub.bean.test;
+package ru.spbspu.staub.bean.admin;
 
 import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;

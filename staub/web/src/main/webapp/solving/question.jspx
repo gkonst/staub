@@ -9,7 +9,7 @@
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="/template/staub-template.jspx">
     <ui:param name="pageBean" value="#{questionBean}"/>
-    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.solving.QuestionBean"-->
     <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:define name="sidebar">
         <s:fragment id="testTimerFragment"

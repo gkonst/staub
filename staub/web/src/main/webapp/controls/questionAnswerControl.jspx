@@ -9,7 +9,7 @@
       xmlns:s="http://jboss.com/products/seam/taglib">
 
 <ui:composition>
-    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.question.QuestionBean"-->
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.solving.QuestionBean"-->
     <div id="questionAnswerPanel" class="questionAnswerPanel">
         <a4j:outputPanel id="multipleChoicePanel" rendered="#{pageBean.answer.multipleChoice}">
             <h:selectManyCheckbox id="multipleChoiceSelect"
