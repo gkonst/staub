@@ -9,7 +9,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="/template/staub-template.jspx">
-    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.student.GroupDetailBean"-->
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.admin.GroupDetailBean"-->
     <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:param name="pageBean" value="#{groupDetailBean}"/>
     <ui:define name="sidebar">
