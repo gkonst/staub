@@ -15,7 +15,7 @@
         <a4j:status id="splashStatus"
                     onstart="Richfaces.showModalPanel('ajaxLoadingModalBox')"
                     onstop="Richfaces.hideModalPanel('ajaxLoadingModalBox')"/>
-        <rich:modalPanel id="ajaxLoadingModalBox" zindex="2000" autosized="true">
+        <rich:modalPanel id="ajaxLoadingModalBox" zindex="2000" autosized="true" height="16" width="16">
             <h:graphicImage url="/images/spinner.gif"/>
         </rich:modalPanel>
     </ui:define>
@@ -46,7 +46,7 @@
         <s:fragment id="changePasswordFragment" rendered="#{s:hasRole('ADMIN') or s:hasRole('TEST_WRITER')}">
             |<ui:include src="/controls/changePasswordControl.jspx"/>
         </s:fragment>
-        |<s:link id="logout" action="#{identity.logout}" value="#{messages['system.login.exit']}"/>
+        |&#160;<a4j:commandLink id="logout" action="#{identity.logout}" value="#{messages['system.login.exit']}"/>
     </ui:define>
 
     <ui:define name="contentMessage">
