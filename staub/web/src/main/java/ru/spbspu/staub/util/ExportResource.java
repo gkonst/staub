@@ -2,7 +2,7 @@ package ru.spbspu.staub.util;
 
 import static org.jboss.seam.ScopeType.APPLICATION;
 import org.jboss.seam.annotations.Install;
-import static org.jboss.seam.annotations.Install.BUILT_IN;
+import static org.jboss.seam.annotations.Install.FRAMEWORK;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -26,7 +26,7 @@ import java.util.zip.ZipOutputStream;
  */
 @Scope(APPLICATION)
 @Name("ru.spbspu.staub.exportResource")
-@Install(precedence = BUILT_IN)
+@Install(precedence = FRAMEWORK)
 @BypassInterceptors
 public class ExportResource extends AbstractResource {
 
