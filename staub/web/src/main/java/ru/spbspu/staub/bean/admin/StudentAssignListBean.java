@@ -140,4 +140,8 @@ public class StudentAssignListBean extends GenericListBean<User> {
     public void setTestEnd(Date testEnd) {
         this.testEnd = testEnd;
     }
+
+    public Test getTest() {
+        return test;
+    }
 }

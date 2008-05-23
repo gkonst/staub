@@ -18,11 +18,21 @@
     <ui:define name="contentTitle">
         #{messages['category.list.title']}
     </ui:define>
+    <ui:define name="contentSubTitle">
+        <s:fragment id="subTitleFragment" rendered="#{pageBean.discipline != null}">
+            <strong>#{messages['category.list.subTitle.discipline']}</strong>&#160;#{pageBean.discipline.name}
+        </s:fragment>
+    </ui:define>
     <ui:define name="contentBody">
         <a4j:form id="contentBodyForm">
             <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <ui:include src="/controls/genericCreateControl.jspx"/>
                 <ui:include src="/controls/genericRefreshControl.jspx"/>
+                <h:commandButton id="backButton"
+                                 action="#{pageBean.doBack}"
+                                 immediate="true"
+                                 value="#{messages['common.detail.functions.back']}"
+                                 styleClass="button"/>
             </a4j:outputPanel>
             <ui:decorate template="../controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">

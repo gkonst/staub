@@ -18,6 +18,11 @@
 <ui:define name="contentTitle">
     #{messages['student.assign.list.title']}
 </ui:define>
+<ui:define name="contentSubTitle">
+    <s:fragment id="subTitleFragment" rendered="#{pageBean.test != null}">
+        <strong>#{messages['student.assign.list.subTitle.test']}</strong>&#160;#{pageBean.test.name}
+    </s:fragment>
+</ui:define>
 <ui:define name="contentBody">
     <a4j:form id="contentBodyForm">
         <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
