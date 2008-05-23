@@ -16,7 +16,15 @@
         <ui:include src="/system/menuAdmin.jspx"/>
     </ui:define>
     <ui:define name="contentTitle">
-        #{messages['assignment.list.title']}
+        <h:outputText id="titleText"
+                      value="#{messages['assignment.list.title']}"
+                      rendered="#{pageBean.test == null}"/>
+        <h:outputFormat id="titleTextFormatted"
+                        value="#{messages['assignment.list.titleTest']}"
+                        rendered="#{pageBean.test != null}">
+            <f:param id="titleTextFormattedParam"
+                     value="#{pageBean.test.name}"/>
+        </h:outputFormat>
     </ui:define>
     <ui:define name="contentBody">
         <a4j:form id="contentBodyForm">
