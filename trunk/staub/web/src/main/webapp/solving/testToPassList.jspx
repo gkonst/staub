@@ -16,6 +16,7 @@
         #{messages['testToPass.list.title']}
     </ui:define>
     <ui:define name="contentBody">
+        <rich:spacer height="10"/>
         <ui:decorate template="/controls/listLayoutControl.jspx">
             <ui:define name="listPageData">
                 <rich:dataTable id="testList"
@@ -33,7 +34,7 @@
                 </rich:dataTable>
                 <h:outputText id="noDataFoundText"
                               value="#{messages['common.list.noDataFound']}"
-                              rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
+                              rendered="#{pageBean.dataModel.rowCount == 0}"/>
             </ui:define>
         </ui:decorate>
     </ui:define>

@@ -1,6 +1,9 @@
 /* CSS for styling jsf messages component */
 #contentMessage {
-    padding: 0 1.5em 0 1.5em;
+    padding: 0 1em;
+}
+#contentMessage .message{
+    margin: 0 0 0;
 }
 
 .message {
@@ -8,7 +11,7 @@
     border-collapse: collapse;
     border-spacing: 0;
     background-color: #F5F3F1; /*background: #fff url(../images/th.bg.gif) 0 100% repeat-x;*/
-    margin: 0.6em 0 0 0;
+    margin: 0.6em auto 0;
 }
 
 .message td {
