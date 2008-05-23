@@ -46,7 +46,7 @@
         <s:fragment id="changePasswordFragment" rendered="#{s:hasRole('ADMIN') or s:hasRole('TEST_WRITER')}">
             |<ui:include src="/controls/changePasswordControl.jspx"/>
         </s:fragment>
-        |&#160;<a4j:commandLink id="logout" action="#{identity.logout}" value="#{messages['system.login.exit']}"/>
+        |&#160;<s:link id="logout" action="#{identity.logout}" value="#{messages['system.login.exit']}"/>
     </ui:define>
 
     <ui:define name="contentMessage">

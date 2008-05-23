@@ -29,6 +29,8 @@
             <a4j:outputPanel id="content" layout="block">
                 <div id="contentTitle">
                     <h3><ui:insert name="contentTitle"/></h3>
+                    <br/>
+                    <h4><ui:insert name="contentSubTitle"/></h4>
                 </div>
                 <div id="contentMessage">
                     <ui:insert name="contentMessage"/>

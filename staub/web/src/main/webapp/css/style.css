@@ -40,6 +40,11 @@ h3 {
     font-size: 1.6em;
 }
 
+strong {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
 /* General */
 .button {
     color: #fff;
@@ -127,12 +132,12 @@ h3 {
 
 /* Content */
 #contentTitle {
-    padding: 1em;
+    padding: 1em 1em 0;
     vertical-align: middle;
 }
 
 #contentBody {
-    padding: 1em;
+    padding: 0 1em;
 }
 
 .contentButtons {
