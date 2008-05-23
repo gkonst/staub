@@ -65,4 +65,17 @@ public class TopicListBean extends GenericListBean<Topic> {
         Contexts.getConversationContext().set(Category.class.getName(), category);
         return super.doCreate();
     }
+
+    /**
+     * Defines back operation for current bean.
+     *
+     * @return navigation outcome
+     */
+    public String doBack() {
+        return "categoryList";
+    }
+
+    public Category getCategory() {
+        return category;
+    }
 }

@@ -73,4 +73,17 @@ public class CategoryListBean extends GenericListBean<Category> {
         Contexts.getConversationContext().set(Category.class.getName(), getSelected());
         return doView("topicList");
     }
+
+    /**
+     * Defines back operation for current bean.
+     *
+     * @return navigation outcome
+     */
+    public String doBack() {
+        return "disciplineList";
+    }
+
+    public Discipline getDiscipline() {
+        return discipline;
+    }
 }
