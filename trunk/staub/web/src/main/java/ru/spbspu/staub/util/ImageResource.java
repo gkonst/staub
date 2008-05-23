@@ -1,11 +1,10 @@
 package ru.spbspu.staub.util;
 
 import static org.jboss.seam.ScopeType.APPLICATION;
-import org.jboss.seam.annotations.Install;
-import static org.jboss.seam.annotations.Install.BUILT_IN;
-import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.*;
+import static org.jboss.seam.annotations.Install.FRAMEWORK;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
+import org.jboss.seam.log.Log;
 import org.jboss.seam.servlet.ContextualHttpServletRequest;
 import org.jboss.seam.web.AbstractResource;
 
@@ -28,9 +27,13 @@ import java.io.IOException;
  */
 @Scope(APPLICATION)
 @Name("ru.spbspu.staub.imageResource")
-@Install(precedence = BUILT_IN)
+@Install(precedence = FRAMEWORK)
 @BypassInterceptors
+@Startup
 public class ImageResource extends AbstractResource {
+
+    @Logger
+    private Log logger;
 
     public static final String RESOURCE_PATH = "/loadImage";
 
@@ -91,6 +94,16 @@ public class ImageResource extends AbstractResource {
             return String.valueOf(compEnv.lookup(UPLOAD_RESOURCE_DIR_ENV));
         } catch (NamingException e) {
             throw new IllegalArgumentException(e);
+        }
+    }
+
+    @Create
+    public void initResource() {
+        String uploadDir = getResourceDirectory();
+        logger.info("Initializing image resource for directory : #0", uploadDir);
+        File file = new File(getResourceDirectory());
+        if(!file.exists() || !file.isDirectory()) {
+            logger.error("Upload resource directory not found or not a directory");
         }
     }
 }
