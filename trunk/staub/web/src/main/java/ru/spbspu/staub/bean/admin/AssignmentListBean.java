@@ -68,4 +68,8 @@ public class AssignmentListBean extends GenericListBean<Assignment> {
     public String doBack() {
         return "testList";
     }
+
+    public Test getTest() {
+        return test;
+    }
 }
