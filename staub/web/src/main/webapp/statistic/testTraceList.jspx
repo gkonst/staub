@@ -27,29 +27,29 @@
     <ui:include src="/controls/genericExportControl.jspx"/>
 </a4j:outputPanel>
 <fieldset>
-    <table>
+    <table class="detail-table">
         <tr>
-            <td>
+            <td class="detail-cell">
                 <h:outputLabel id="beginLabel"
                                value="#{messages['test.trace.list.started.begin']}"
                                for="beginInput"/>
             </td>
-            <td>
+            <td class="detail-cell">
                 <rich:calendar id="beginInput"
                                value="#{pageBean.begin}"
                                datePattern="dd.MM.yy"/>
             </td>
-            <td>
+            <td class="detail-cell">
                 <h:outputLabel id="endLabel"
                                value="#{messages['test.trace.list.started.end']}"
                                for="endInput"/>
             </td>
-            <td>
+            <td class="detail-cell">
                 <rich:calendar id="endInput"
                                value="#{pageBean.end}"
                                datePattern="dd.MM.yy"/>
             </td>
-            <td>
+            <td class="detail-cell">
                 <a4j:commandLink id="setStartedLink"
                                  action="#{pageBean.setStarted}"
                                  reRender="contentBodyForm"

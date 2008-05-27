@@ -15,13 +15,13 @@
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.admin.QuestionDetailBean"-->
     <!--@elvariable id="answerModel" type="ru.spbspu.staub.model.SingleChoiceAnswerWrapper"-->
     <!--@elvariable id="messages" type="java.util.Map"-->
-    <table>
+    <table class="detail-table">
         <tr>
-            <td>
+            <td class="detail-cell">
                 <h:outputLabel id="answerMultipleChoiceLabel"
                                value="#{messages['question.detail.answerType.MULTIPLE_CHOICE.answers']}"/>
             </td>
-            <td nowrap="nowrap">
+            <td style="white-space:nowrap;" class="detail-cell">
                 <a4j:commandButton id="addMultipleChoiceAnswerButton"
                                    action="#{answerModel.addAnswer}"
                                    reRender="answerMultipleChoicePanel"
@@ -44,7 +44,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td colspan="2" class="detail-cell">
                 <a4j:outputPanel id="answerMultipleChoicePanel">
                     <h:selectManyCheckbox id="correctAnswerMultipleChoice"
                                           layout="pageDirection"
@@ -60,13 +60,13 @@
                                        value="#{answerModel.definition.answer}"
                                        var="temp"/>
                     </h:selectManyCheckbox>
-                    <table cellpadding="0" cellspacing="0" style="margin: 1em 0.2em 0.3em; float:left;">
+                    <table cellpadding="0" cellspacing="0" style="float:left;">
                         <a4j:repeat id="multipleChoiceRepeat"
                                     value="#{answerModel.definition.answer}"
                                     var="answer"
                                     rendered="#{answerModel.multipleChoice}">
                             <tr>
-                                <td style="padding-top: 0.4em;">
+                                <td style="padding-top:0.55em; padding-bottom:0.4em;">
                                     <h:inputText id="choiceValueInput"
                                                  value="#{answer.value}"
                                                  disabled="#{pageBean.viewMode}"/>

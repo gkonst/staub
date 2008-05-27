@@ -26,14 +26,14 @@
 </a4j:outputPanel>
 
 <fieldset class="area">
-<table>
+<table class="detail-table">
 <tr>
-    <td>
+    <td class="detail-cell">
         <h:outputLabel id="testNameLabel"
                        value="#{messages['test.detail.name']}"
                        for="testNameInput"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <h:inputText id="testNameInput"
                      value="#{pageBean.model.name}"
                      disabled="#{pageBean.viewMode}"
@@ -44,12 +44,12 @@
     </td>
 </tr>
 <tr>
-    <td>
+    <td class="detail-cell">
         <h:outputLabel id="testDescLabel"
                        value="#{messages['test.detail.description']}"
                        for="testDescTextarea"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <h:inputTextarea id="testDescTextarea"
                          value="#{pageBean.model.description}"
                          disabled="#{pageBean.viewMode}"
@@ -57,12 +57,12 @@
     </td>
 </tr>
 <tr>
-    <td>
+    <td class="detail-cell">
         <h:outputLabel id="testTimeLimitLabel"
                        value="#{messages['test.detail.timeLimit']}"
                        for="testTimeLimitInput"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <h:inputText id="testTimeLimitInput"
                      value="#{pageBean.model.timeLimit}"
                      disabled="#{pageBean.viewMode}"
@@ -70,12 +70,12 @@
     </td>
 </tr>
 <tr>
-    <td>
+    <td class="detail-cell">
         <h:outputLabel id="disciplineSelectLabel"
                        value="#{messages['test.detail.discipline.name']}"
                        for="disciplineSelect"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <h:selectOneMenu id="disciplineSelect"
                          value="#{pageBean.discipline}"
                          disabled="#{pageBean.viewMode}"
@@ -97,12 +97,12 @@
     </td>
 </tr>
 <tr>
-    <td>
+    <td class="detail-cell">
         <h:outputLabel id="categorySelectLabel"
                        value="#{messages['test.detail.category.name']}"
                        for="categorySelect"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <h:selectOneMenu id="categorySelect"
                          value="#{pageBean.model.category}"
                          disabled="#{pageBean.viewMode or pageBean.discipline == null}"
@@ -124,11 +124,11 @@
     </td>
 </tr>
 <tr>
-    <td style="vertical-align:top">
+    <td style="vertical-align:top" class="detail-cell">
         <h:outputLabel id="topicSelectLabel"
                        value="#{messages['test.detail.topic.name']}"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <a4j:outputPanel id="topicSelectPanel"
                          layout="block"
                          styleClass="area">
@@ -152,22 +152,22 @@
     </td>
 </tr>
 <tr>
-    <td style="vertical-align:top">
+    <td style="vertical-align:top" class="detail-cell">
         <h:outputLabel id="difficultySelectLabel"
                        value="#{messages['test.detail.difficulty.name']}"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <a4j:outputPanel id="difficultySelectPanel"
                          layout="block"
                          styleClass="area">
-            <table>
+            <table class="detail-table">
                 <tr>
                     <td colspan="2"/>
-                    <td>
+                    <td class="detail-cell">
                         <h:outputLabel id="difficultyQuestionsCountLabel"
                                        value="#{messages['test.detail.difficulty.questionsCount']}"/>
                     </td>
-                    <td>
+                    <td class="detail-cell">
                         <h:outputLabel id="difficultyPassScoreLabel"
                                        value="#{messages['test.detail.difficulty.passScore']}"/>
                     </td>
@@ -176,22 +176,22 @@
                             value="#{pageBean.difficultyList}"
                             var="testDifficulty">
                     <tr>
-                        <td>
+                        <td class="detail-cell">
                             <h:selectBooleanCheckbox id="difficultyCheckbox"
                                                      value="#{testDifficulty.selected}"
                                                      styleClass="checkbox"/>
                         </td>
-                        <td>
+                        <td class="detail-cell">
                             <h:outputLabel id="difficultyLabel"
                                            value="#{testDifficulty.difficulty.name}"
                                            for="difficultyCheckbox"
                                            styleClass="simple-label"/>
                         </td>
-                        <td>
-                            <h:inputText id="difficultyQuestionsCountInput"
-                                         value="#{testDifficulty.questionsCount}"/>
+                        <td class="detail-cell">
+                            <rich:inputNumberSpinner id="difficultyQuestionsCountInput"
+                                                     value="#{testDifficulty.questionsCount}"/>
                         </td>
-                        <td>
+                        <td class="detail-cell">
                             <h:inputText id="difficultyPassScoreInput"
                                          value="#{testDifficulty.passScore}"
                                          style="width:7em;"/>
