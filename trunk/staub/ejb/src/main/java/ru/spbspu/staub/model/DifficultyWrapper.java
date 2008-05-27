@@ -54,4 +54,16 @@ public class DifficultyWrapper {
     public void setPassScore(Integer passScore) {
         this.passScore = passScore;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("DifficultyWrapper");
+        sb.append("{difficulty=").append(difficulty);
+        sb.append(", questionsCount=").append(questionsCount);
+        sb.append(", passScore=").append(passScore);
+        sb.append(", selected=").append(selected);
+        sb.append('}');
+        return sb.toString();
+    }
 }
