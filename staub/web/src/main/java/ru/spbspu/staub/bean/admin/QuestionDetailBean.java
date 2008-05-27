@@ -78,6 +78,8 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             setCategory((Category)Contexts.getConversationContext().get(Category.class.getName()));
             getModel().setTopic((Topic)Contexts.getConversationContext().get(Topic.class.getName()));
             getModel().setDifficulty((Difficulty)Contexts.getConversationContext().get(Difficulty.class.getName()));
+            setAnswerType(AnswerWrapper.Type.SINGLE_CHOICE);
+            changeAnswerType();
         } else {
             setModel(questionService.findById(modelId));
             setCategory(getModel().getTopic().getCategory());
@@ -136,6 +138,10 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         logger.debug(">>> Changing answer type...#0", answerType);
         answer = AnswerWrapper.createAnswer(getQuestionDefinition(), getAnswerType());
         if (answer.isChoice()) {
+            ((ChoiceAnswerWrapper)answer).addAnswer();
+            ((ChoiceAnswerWrapper)answer).addAnswer();
+            ((ChoiceAnswerWrapper)answer).addAnswer();
+            ((ChoiceAnswerWrapper)answer).addAnswer();
             ((ChoiceAnswerWrapper)answer).addAnswer();
         }
         logger.debug("<<< Changing answer type...Ok");
