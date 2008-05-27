@@ -192,9 +192,10 @@
                                                      value="#{testDifficulty.questionsCount}"/>
                         </td>
                         <td class="detail-cell">
-                            <h:inputText id="difficultyPassScoreInput"
-                                         value="#{testDifficulty.passScore}"
-                                         style="width:7em;"/>
+                            <rich:inputNumberSlider id="difficultyPassScoreInput"
+                                                    value="#{testDifficulty.passScore}"
+                                                    showInput="false"
+                                                    width="7em"/>
                         </td>
                     </tr>
                 </a4j:repeat>

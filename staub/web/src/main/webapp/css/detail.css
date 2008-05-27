@@ -31,9 +31,11 @@
     text-align: left;
     margin: 1em 0 1em auto;
 }
+fieldset {
+    padding: 1em;
+}
 
 fieldset .detail-table {
-    margin: 1em;
 }
 
 fieldset .detail-table .detail-cell {
