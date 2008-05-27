@@ -24,14 +24,14 @@
                 <ui:include src="/controls/genericSaveControl.jspx"/>
             </a4j:outputPanel>
             <fieldset class="area">
-                <table>
+                <table class="detail-table">
                     <tr>
-                        <td>
+                        <td class="detail-cell">
                             <h:outputLabel id="topicCodeLabel"
                                            value="#{messages['topic.detail.code']}"
                                            for="topicCodeInput"/>
                         </td>
-                        <td>
+                        <td class="detail-cell">
                             <h:inputText id="topicCodeInput"
                                          value="#{pageBean.model.code}"
                                          disabled="#{pageBean.viewMode}"
@@ -43,12 +43,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="detail-cell">
                             <h:outputLabel id="topicNameLabel"
                                            value="#{messages['topic.detail.name']}"
                                            for="topicNameInput"/>
                         </td>
-                        <td>
+                        <td class="detail-cell">
                             <h:inputText id="topicNameInput"
                                          value="#{pageBean.model.name}"
                                          disabled="#{pageBean.viewMode}"
@@ -58,12 +58,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="detail-cell">
                             <h:outputLabel id="disciplineLabel"
                                            value="#{messages['topic.detail.discipline']}"
                                            for="disciplineSelect"/>
                         </td>
-                        <td>
+                        <td class="detail-cell">
                             <h:selectOneMenu id="disciplineSelect"
                                              value="#{pageBean.discipline}"
                                              disabled="#{pageBean.viewMode}"
@@ -84,12 +84,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="detail-cell">
                             <h:outputLabel id="categoryLabel"
                                            value="#{messages['topic.detail.category']}"
                                            for="categorySelect"/>
                         </td>
-                        <td>
+                        <td class="detail-cell">
                             <h:selectOneMenu id="categorySelect"
                                              value="#{pageBean.model.category}"
                                              disabled="#{pageBean.viewMode or pageBean.discipline == null}"

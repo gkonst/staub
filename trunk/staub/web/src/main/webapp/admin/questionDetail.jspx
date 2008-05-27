@@ -28,25 +28,25 @@
 
 <div class="area">
 <fieldset>
-<table>
+<table class="detail-table">
 <tr>
-    <td>
+    <td class="detail-cell">
         <h:outputLabel id="nameLabel"
                        value="#{messages['question.detail.code']}"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <h:inputText id="nameInput"
                      value="#{pageBean.model.id != null ? pageBean.model.id : ''}"
                      disabled="true"/>
     </td>
 </tr>
 <tr>
-    <td>
+    <td class="detail-cell">
         <h:outputLabel id="difficultyLabel"
                        value="#{messages['question.detail.difficulty.name']}"
                        for="difficultySelect"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <h:selectOneMenu id="difficultySelect"
                          value="#{pageBean.model.difficulty}"
                          disabled="#{pageBean.viewMode}"
@@ -63,12 +63,12 @@
     </td>
 </tr>
 <tr>
-    <td>
+    <td class="detail-cell">
         <h:outputLabel id="timeLimitLabel"
                        value="#{messages['question.detail.timeLimit']}"
                        for="timeLimitInput"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <h:inputText id="timeLimitInput"
                      value="#{pageBean.model.timeLimit}"
                      disabled="#{pageBean.viewMode}"
@@ -76,12 +76,12 @@
     </td>
 </tr>
 <tr>
-    <td>
+    <td class="detail-cell">
         <h:outputLabel id="disciplineLabel"
                        value="#{messages['question.detail.discipline.name']}"
                        for="disciplineSelect"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <h:selectOneMenu id="disciplineSelect"
                          value="#{pageBean.discipline}"
                          disabled="#{pageBean.viewMode}"
@@ -103,12 +103,12 @@
     </td>
 </tr>
 <tr>
-    <td>
+    <td class="detail-cell">
         <h:outputLabel id="categoryLabel"
                        value="#{messages['question.detail.category.name']}"
                        for="categorySelect"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <h:selectOneMenu id="categorySelect"
                          value="#{pageBean.category}"
                          disabled="#{pageBean.viewMode or pageBean.discipline == null}"
@@ -130,12 +130,12 @@
     </td>
 </tr>
 <tr>
-    <td>
+    <td class="detail-cell">
         <h:outputLabel id="topicLabel"
                        value="#{messages['question.detail.topic.name']}"
                        for="topicSelect"/>
     </td>
-    <td>
+    <td class="detail-cell">
         <h:selectOneMenu id="topicSelect"
                          value="#{pageBean.model.topic}"
                          disabled="#{pageBean.viewMode or pageBean.category == null}"
@@ -157,14 +157,14 @@
     <ui:include src="/controls/questionDefinitionWikiEditControl.jspx"/>
 </fieldset>
 <fieldset>
-    <table>
+    <table class="detail-table">
         <tr>
-            <td>
+            <td class="detail-cell">
                 <h:outputLabel id="answerTypesLabel"
                                value="#{messages['question.detail.answerType']}"
                                for="answerTypesSelect"/>
             </td>
-            <td>
+            <td class="detail-cell">
                 <h:selectOneMenu id="answerTypesSelect"
                                  value="#{pageBean.answerType}"
                                  converter="ru.spbspu.staub.ObjectSelectConverter"

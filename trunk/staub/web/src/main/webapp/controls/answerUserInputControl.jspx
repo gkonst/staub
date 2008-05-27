@@ -14,14 +14,14 @@
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.admin.QuestionDetailBean"-->
     <!--@elvariable id="answerModel" type="ru.spbspu.staub.model.UserInputAnswerWrapper"-->
     <!--@elvariable id="messages" type="java.util.Map"-->
-    <table>
+    <table class="detail-table">
         <tr>
-            <td>
+            <td class="detail-cell">
                 <h:outputLabel id="answerSubtypeUserInputLabel"
                                value="#{messages['question.detail.answerType.USER_INPUT.subtype']}"
                                for="answerSubtypeUserInputSelect"/>
             </td>
-            <td>
+            <td class="detail-cell">
                 <h:selectOneMenu id="answerSubtypeUserInputSelect"
                                  value="#{answerModel.definition.type}"
                                  converter="ru.spbspu.staub.ObjectSelectConverter"
@@ -41,11 +41,11 @@
             </td>
         </tr>
         <tr>
-            <td>
+            <td class="detail-cell">
                 <h:outputLabel id="correctAnswerUserInputLabel"
-                               value="Правильный ответ"/>
+                               value="#{messages['question.detail.answerType.USER_INPUT.andwer']}"/>
             </td>
-            <td>
+            <td class="detail-cell">
                 <h:inputText id="correctAnswerUserInputInteger"
                              value="#{answerModel.current}"
                              disabled="#{pageBean.viewMode}"

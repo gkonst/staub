@@ -24,14 +24,14 @@
                 <ui:include src="/controls/genericSaveControl.jspx"/>
             </a4j:outputPanel>
             <fieldset class="area">
-                <table>
+                <table class="detail-table">
                     <tr>
-                        <td>
+                        <td class="detail-cell">
                             <h:outputLabel id="nameLabel"
                                            value="#{messages['student.detail.name']}"
                                            for="nameInput"/>
                         </td>
-                        <td>
+                        <td class="detail-cell">
                             <h:inputText id="nameInput"
                                          value="#{pageBean.model.name}"
                                          disabled="#{pageBean.viewMode}"
@@ -41,12 +41,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="detail-cell">
                             <h:outputLabel id="codeLabel"
                                            value="#{messages['student.detail.code']}"
                                            for="codeInput"/>
                         </td>
-                        <td>
+                        <td class="detail-cell">
                             <h:inputText id="codeInput"
                                          value="#{pageBean.model.code}"
                                          disabled="#{pageBean.viewMode}"
@@ -58,12 +58,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="detail-cell">
                             <h:outputLabel id="groupLabel"
                                            value="#{messages['student.detail.group']}"
                                            for="groupSelect"/>
                         </td>
-                        <td>
+                        <td class="detail-cell">
                             <h:selectOneMenu id="groupSelect"
                                              value="#{pageBean.model.group}"
                                              disabled="#{pageBean.viewMode}"

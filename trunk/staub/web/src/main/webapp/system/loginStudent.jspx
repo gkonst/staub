@@ -16,9 +16,9 @@
 <rich:spacer height="20em"/>
 <a4j:form id="contentBodyForm">
 <fieldset style="text-align:center;">
-<table class="area" style="margin:auto;text-align:left;">
+<table class="detail-table area" style="margin:auto;text-align:left;">
     <tr>
-        <td colspan="4" style="text-align:center;">
+        <td colspan="4" style="text-align:center;" class="detail-cell">
             <rich:spacer height="10"/>
             <br/>
 
@@ -28,13 +28,13 @@
         </td>
     </tr>
     <tr>
-        <td/>
-        <td>
+        <td class="detail-cell"/>
+        <td class="detail-cell">
             <h:outputLabel id="groupLabel"
                            value="#{messages['system.loginStudent.group']}"
                            for="groupSelect"/>
         </td>
-        <td>
+        <td class="detail-cell">
             <h:selectOneMenu id="groupSelect"
                              value="#{loginStudentBean.group}"
                              converter="ru.spbspu.staub.ObjectSelectConverter"
@@ -50,16 +50,16 @@
                              reRender="studentSelectPanel, passwordPanel, loginButtonPanel"/>
             </h:selectOneMenu>
         </td>
-        <td/>
+        <td class="detail-cell"/>
     </tr>
     <tr>
-        <td/>
-        <td>
+        <td class="detail-cell"/>
+        <td class="detail-cell">
             <h:outputLabel id="studentLabel"
                            value="#{messages['system.loginStudent.student']}"
                            for="studentSelect"/>
         </td>
-        <td>
+        <td class="detail-cell">
             <a4j:outputPanel id="studentSelectPanel">
                 <h:selectOneMenu id="studentSelect"
                                  value="#{loginStudentBean.selectedStudent}"
@@ -78,16 +78,16 @@
                 </h:selectOneMenu>
             </a4j:outputPanel>
         </td>
-        <td/>
+        <td class="detail-cell"/>
     </tr>
     <tr>
-        <td/>
-        <td>
+        <td class="detail-cell"/>
+        <td class="detail-cell">
             <h:outputLabel id="passwordLabel"
                            value="#{messages['system.loginStudent.password']}"
                            for="passwordInput"/>
         </td>
-        <td>
+        <td class="detail-cell">
             <a4j:outputPanel id="passwordPanel">
                 <h:inputSecret id="passwordInput"
                                value="#{loginStudentBean.password}"
@@ -97,15 +97,15 @@
                                requiredMessage="#{messages['system.loginStudent.required.password']}"/>
             </a4j:outputPanel>
         </td>
-        <td/>
+        <td class="detail-cell"/>
     </tr>
     <tr>
-        <td colspan="4" style="text-align:center;">
+        <td colspan="4" style="text-align:center;" class="detail-cell">
             <ui:include src="/controls/genericMessageControl.jspx"/>
         </td>
     </tr>
     <tr>
-        <td colspan="4" style="text-align:center;">
+        <td colspan="4" style="text-align:center;" class="detail-cell">
             <a4j:outputPanel id="loginButtonPanel">
                 <a4j:commandButton id="loginButton" action="#{loginStudentBean.login}"
                                    value="#{messages['system.loginStudent.enter']}"

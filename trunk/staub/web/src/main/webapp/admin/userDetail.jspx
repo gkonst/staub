@@ -25,14 +25,14 @@
                 <ui:include src="/controls/genericSaveControl.jspx"/>
             </a4j:outputPanel>
             <fieldset class="area">
-                <table>
+                <table class="detail-table">
                     <tr>
-                        <td>
+                        <td class="detail-cell">
                             <h:outputLabel id="usernameLabel"
                                            value="#{messages['user.detail.username']}"
                                            for="usernameInput"/>
                         </td>
-                        <td>
+                        <td class="detail-cell">
                             <h:inputText id="usernameInput"
                                          value="#{pageBean.model.username}"
                                          disabled="#{pageBean.viewMode}"
@@ -44,12 +44,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="detail-cell">
                             <h:outputLabel id="roleLabel"
                                            value="#{messages['user.detail.role']}"
                                            for="roleSelect"/>
                         </td>
-                        <td>
+                        <td class="detail-cell">
                             <h:selectOneMenu id="roleSelect"
                                              value="#{pageBean.model.role}"
                                              disabled="#{pageBean.viewMode}"
@@ -65,12 +65,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="detail-cell">
                             <h:outputLabel id="passwordLabel"
                                            value="#{messages['user.detail.password']}"
                                            for="passwordInput"/>
                         </td>
-                        <td>
+                        <td class="detail-cell">
                             <h:inputSecret id="passwordInput"
                                            value="#{pageBean.model.password}"
                                            disabled="#{pageBean.viewMode}"

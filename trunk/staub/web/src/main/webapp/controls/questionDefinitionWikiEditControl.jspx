@@ -14,7 +14,7 @@
 <ui:composition>
     <!--@elvariable id="messages" type="java.util.Map"-->
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.admin.QuestionDetailBean"-->
-    <table class="fullwidth" cellpadding="0" cellspacing="0">
+    <table class="detail-table fullwidth" cellpadding="0" cellspacing="0">
         <tr>
             <td>
                 <h:outputLabel id="questionDefinitionLabel"

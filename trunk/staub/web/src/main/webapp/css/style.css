@@ -71,7 +71,16 @@ strong {
 .radio {
     border: 0 none;
     border-style: none;
-    margin: 0.4em 0.2em 0;
+}
+
+.radio td {
+    padding: 0.2em 0.3em;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+*html .radio td {
+    padding: 0 0 0.1em 0;
 }
 
 .radio label {
@@ -90,6 +99,16 @@ strong {
     border-style: none;
 }
 
+.checkbox td {
+    padding: 0.2em 0.3em;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+*html .checkbox td {
+    padding: 0 0 0.1em 0;
+}
+
 .checkbox label {
     float: none;
     font-weight: normal;
@@ -98,6 +117,7 @@ strong {
 .checkbox input {
     border: 0 none;
     border-style: none;
+    margin: 0.4em 0.2em 0;
 }
 
 /* Header */

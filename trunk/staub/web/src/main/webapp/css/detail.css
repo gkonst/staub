@@ -32,11 +32,11 @@
     margin: 1em 0 1em auto;
 }
 
-fieldset table {
+fieldset .detail-table {
     margin: 1em;
 }
 
-fieldset table td {
+fieldset .detail-table .detail-cell {
     padding: 0.3em 0.3em;
     vertical-align: middle;
     white-space: nowrap;

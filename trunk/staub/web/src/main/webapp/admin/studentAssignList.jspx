@@ -39,26 +39,26 @@
             <ui:include src="/controls/genericRefreshControl.jspx"/>
         </a4j:outputPanel>
         <fieldset>
-            <table>
+            <table class="detail-table">
                 <tr>
-                    <td>
+                    <td class="detail-cell">
                         <h:outputLabel id="testBeginDateLabel"
                                        value="#{messages['student.assign.list.testBegin']}"
                                        for="testBeginDateInput"/>
                     </td>
-                    <td>
+                    <td class="detail-cell">
                         <rich:calendar id="testBeginDateInput"
                                        value="#{pageBean.testBegin}"
                                        datePattern="dd.MM.yy HH:mm"
                                        required="true"
                                        requiredMessage="#{messages['student.assign.list.required.testBegin']}"/>
                     </td>
-                    <td>
+                    <td class="detail-cell">
                         <h:outputLabel id="testEndDateLabel"
                                        value="#{messages['student.assign.list.testEnd']}"
                                        for="testEndDateInput"/>
                     </td>
-                    <td>
+                    <td class="detail-cell">
                         <rich:calendar id="testEndDateInput"
                                        value="#{pageBean.testEnd}"
                                        datePattern="dd.MM.yy HH:mm"
