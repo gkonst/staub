@@ -17,22 +17,22 @@
     </ui:define>
     <ui:define name="contentBody">
         <fieldset class="area">
-            <table>
+            <table class="detail-table">
                 <tr>
-                    <td>
+                    <td class="detail-cell">
                         <h:outputLabel id="testDescLabel"
                                        value="#{messages['test.start.description']}"/>
                     </td>
-                    <td>
+                    <td class="detail-cell">
                         #{pageBean.model.test.description}
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="detail-cell">
                         <h:outputLabel id="testTimeLimitLabel"
                                        value="#{messages['test.start.timeLimit']}"/>
                     </td>
-                    <td>
+                    <td class="detail-cell">
                         #{pageBean.model.test.timeLimit}
                     </td>
                 </tr>
