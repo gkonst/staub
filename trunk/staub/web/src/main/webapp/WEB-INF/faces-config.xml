@@ -6,11 +6,17 @@
     <application>
         <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
     </application>
-    <lifecycle>
-        <phase-listener>
-            org.jboss.seam.jsf.SeamPhaseListener
-        </phase-listener>
-    </lifecycle>
+    <component>
+        <component-type>ru.spbspu.HtmlSelectBooleanRadio</component-type>
+        <component-class>ru.spbspu.staub.components.html.HtmlSelectBooleanRadio</component-class>
+    </component>
+    <render-kit>
+        <renderer>
+            <component-family>javax.faces.SelectBoolean</component-family>
+            <renderer-type>ru.spbspu.BooleanRadio</renderer-type>
+            <renderer-class>ru.spbspu.staub.components.renderkit.BooleanRadioRenderer</renderer-class>
+        </renderer>
+    </render-kit>
     <validator>
         <validator-id>ru.spbspu.staub.RegexValidator</validator-id>
         <validator-class>ru.spbspu.staub.components.validator.RegexValidator</validator-class>
