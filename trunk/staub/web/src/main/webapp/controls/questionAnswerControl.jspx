@@ -6,30 +6,50 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:s="http://jboss.com/products/seam/taglib">
+      xmlns:s="http://jboss.com/products/seam/taglib"
+      xmlns:st="http://spbspu.ru/staub/taglib">
 
 <ui:composition>
     <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.solving.QuestionBean"-->
     <div id="questionAnswerPanel" class="questionAnswerPanel">
         <a4j:outputPanel id="multipleChoicePanel" rendered="#{pageBean.answer.multipleChoice}">
-            <h:selectManyCheckbox id="multipleChoiceSelect"
-                                  layout="pageDirection"
-                                  value="#{pageBean.answer.current}"
-                                  converter="ru.spbspu.staub.ObjectSelectConverter"
-                                  styleClass="checkbox">
-                <s:selectItems value="#{pageBean.answer.definition.answer}" var="answer"
-                               label="#{answer.value}"/>
-            </h:selectManyCheckbox>
+            <table cellpadding="0" cellspacing="0" class="detail-table">
+                <a4j:repeat id="multipleChoiceRepeat"
+                            value="#{pageBean.answer.definition.answer}"
+                            var="answer">
+                    <tr>
+                        <td class="detail-cell">
+                            <h:selectBooleanCheckbox id="multipleChoiceCheckbox"
+                                                     value="#{pageBean.answer.current[answer.id]}"
+                                                     styleClass="checkbox"/>
+                        </td>
+                        <td class="detail-cell">
+                            <h:outputText id="multipleChoiceValueInput"
+                                          value="#{answer.value}"/>
+                        </td>
+                    </tr>
+                </a4j:repeat>
+            </table>
         </a4j:outputPanel>
         <a4j:outputPanel id="singleChoicePanel" rendered="#{pageBean.answer.singleChoice}">
-            <h:selectOneRadio id="singleChoiceSelect"
-                              layout="pageDirection"
-                              value="#{pageBean.answer.current}"
-                              converter="ru.spbspu.staub.ObjectSelectConverter"
-                              styleClass="radio">
-                <s:selectItems value="#{pageBean.answer.definition.answer}" var="answer"
-                               label="#{answer.value}"/>
-            </h:selectOneRadio>
+            <table cellpadding="0" cellspacing="0" class="detail-table">
+                <a4j:repeat id="singleChoiceRepeat"
+                            value="#{pageBean.answer.definition.answer}"
+                            var="answer">
+                    <tr>
+                        <td class="detail-cell">
+                            <st:selectBooleanRadio id="singleChoiceRadio"
+                                                   value="#{pageBean.answer.current[answer.id]}"
+                                                   group="singleChoiceRadioGroup"
+                                                   styleClass="radio"/>
+                        </td>
+                        <td class="detail-cell">
+                            <h:outputText id="singleChoiceValueInput"
+                                          value="#{answer.value}"/>
+                        </td>
+                    </tr>
+                </a4j:repeat>
+            </table>
         </a4j:outputPanel>
         <a4j:outputPanel id="userInputPanel" rendered="#{pageBean.answer.userInput}">
             <h:inputText id="userInput"

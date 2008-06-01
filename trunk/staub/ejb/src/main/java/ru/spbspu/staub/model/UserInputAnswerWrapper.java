@@ -144,6 +144,15 @@ public class UserInputAnswerWrapper extends AnswerWrapper<UserInputType, String>
      * {@inheritDoc}
      */
     @Override
+    public boolean validate() {
+        // TODO move here validation logic from UI
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public AnswerType getAnswer() {
         AnswerType answerType = new AnswerType();
         answerType.setUserInput(getCurrent());

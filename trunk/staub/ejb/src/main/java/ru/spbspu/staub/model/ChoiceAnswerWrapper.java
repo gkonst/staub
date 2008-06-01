@@ -4,6 +4,8 @@ import ru.spbspu.staub.model.question.AnswerType;
 import ru.spbspu.staub.model.question.ChoiceType;
 
 import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The <code>ChoiceAnswerWrapper</code> class is a holder for answer related data.
@@ -11,9 +13,8 @@ import java.math.BigInteger;
  * Contains common methods for choice aswers.
  *
  * @author Konstantin Grigoriev
- * @param <C> current asnwer class
  */
-public abstract class ChoiceAnswerWrapper<C> extends AnswerWrapper<ChoiceType, C> {
+public abstract class ChoiceAnswerWrapper extends AnswerWrapper<ChoiceType, Map<BigInteger, Boolean>> {
 
     /**
      * Creates new instance of wrapper, not used directly,
@@ -22,6 +23,35 @@ public abstract class ChoiceAnswerWrapper<C> extends AnswerWrapper<ChoiceType, C
      */
     protected ChoiceAnswerWrapper(ChoiceType definition) {
         super(definition);
+        setCurrent(new HashMap<BigInteger, Boolean>());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resolveCorrectAnswer() {
+        for (ru.spbspu.staub.model.question.AnswerType type : getDefinition().getAnswer()) {
+            type.setCorrect(String.valueOf(getCurrent().get(type.getId())));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void determineCorrectAnswer() {
+        for (ru.spbspu.staub.model.question.AnswerType type : getDefinition().getAnswer()) {
+            getCurrent().put(type.getId(), Boolean.valueOf(type.getCorrect()));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean validate() {
+        return !isCurrentEmpty();
     }
 
     /**
@@ -43,5 +73,9 @@ public abstract class ChoiceAnswerWrapper<C> extends AnswerWrapper<ChoiceType, C
             int answerToRemoveId = getDefinition().getAnswer().size() - 1;
             getDefinition().getAnswer().remove(answerToRemoveId);
         }
+    }
+
+    protected boolean isCurrentEmpty() {
+        return !getCurrent().containsValue(Boolean.TRUE);
     }
 }
