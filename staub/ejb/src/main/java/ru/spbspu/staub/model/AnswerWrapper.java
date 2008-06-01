@@ -45,7 +45,6 @@ public abstract class AnswerWrapper<D, C> {
      *
      * @param questionDefinition question definitin in which answer will be created
      * @param type               specific amswer type
-     *
      * @return created answer instance
      */
     public static AnswerWrapper createAnswer(QuestionType questionDefinition, Type type) {
@@ -76,7 +75,6 @@ public abstract class AnswerWrapper<D, C> {
      * Factory method for creating answer on base of question definition.
      *
      * @param questionDefinition filled previously question definition
-     *
      * @return answer instance
      */
     public static AnswerWrapper getAnswer(QuestionType questionDefinition) {
@@ -127,6 +125,13 @@ public abstract class AnswerWrapper<D, C> {
      * Method transfers right answer from definition to current.
      */
     public abstract void determineCorrectAnswer();
+
+    /**
+     * Validates answer before saving(resolving) operation.
+     *
+     * @return ready or not
+     */
+    public abstract boolean validate();
 
     public boolean isChoice() {
         return this instanceof ChoiceAnswerWrapper;

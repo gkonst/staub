@@ -122,12 +122,17 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     @Override
     public void doSave() {
         logger.debug("Saving question...");
+        if(!answer.validate()) {
+            addFacesMessageFromResourceBundle("question.detail.validation." + answer.getType());
+            logger.debug("Saving question...failed");
+            return;
+        }
         answer.resolveCorrectAnswer();
         setModel(questionService.saveQuestion(getModel(), user));
         logger.debug("  Changing bean mode -> #0", BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("question.detail.saveSuccess", getModel().getId());
-        logger.debug("Saving... OK");
+        logger.debug("Saving question...OK");
     }
 
     public AnswerWrapper.Type[] getAnswerTypes() {
