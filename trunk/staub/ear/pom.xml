@@ -45,7 +45,7 @@
                             <groupId>ru.spbspu.staub</groupId>
                             <artifactId>staub-web</artifactId>
                             <contextRoot>/staub</contextRoot>
-                            <unpack>true</unpack>
+                            <unpack>${unpack.ear.modules}</unpack>
                         </webModule>
                         <ejbModule>
                             <groupId>org.jboss.seam</groupId>
@@ -54,7 +54,7 @@
                         <ejbModule>
                             <groupId>ru.spbspu.staub</groupId>
                             <artifactId>staub-ejb</artifactId>
-                            <unpack>true</unpack>
+                            <unpack>${unpack.ear.modules}</unpack>
                         </ejbModule>
                     </modules>
                 </configuration>
