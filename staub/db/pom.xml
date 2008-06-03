@@ -127,6 +127,23 @@
                             </execution>
 
                             <execution>
+                                <id>initial-data</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <configuration>
+                                    <url>jdbc:postgresql://${db.url.host}:${db.url.port}/${db.url.name}</url>
+                                    <username>${db.staub.username}</username>
+                                    <password>${db.staub.password}</password>
+                                    <autocommit>true</autocommit>
+                                    <srcFiles>
+                                        <srcFile>${project.build.outputDirectory}/initial_data.sql</srcFile>
+                                    </srcFiles>
+                                </configuration>
+                            </execution>
+
+                            <execution>
                                 <id>test-data</id>
                                 <phase>process-resources</phase>
                                 <goals>
