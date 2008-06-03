@@ -24,6 +24,32 @@
                 <upload.resource.dir>/home/kostya/temp/resource</upload.resource.dir>
             </properties>
         </profile>
+        <profile>
+            <id>production_props</id>
+            <properties>
+                <!-- JBoss properties -->
+                <jboss.home>D:\java\jboss-4.2.2.GA</jboss.home>
+                <jboss.server>my</jboss.server>
+                <!-- Database properties -->
+                <db.url.host>localhost</db.url.host>
+                <db.url.port>5432</db.url.port>
+                <db.url.name.maintenance>postgres</db.url.name.maintenance>
+                <db.url.name>staubdb</db.url.name>
+                <db.staub.username>staub</db.staub.username>
+                <db.staub.password>staub</db.staub.password>
+                <db.maintenance.username>postgres</db.maintenance.username>
+                <db.maintenance.password>postgres</db.maintenance.password>
+                <!-- Lifecycle properties -->
+                <!--  Update Database or not -->
+                <db.updateDisabled>true</db.updateDisabled>
+                <!--  Unpack submodules in ear or not -->
+                <unpack.ear.modules>false</unpack.ear.modules>
+                <!-- Seam properties -->
+                <debug>false</debug>
+                <!-- Application properties -->
+                <upload.resource.dir>../../data/images</upload.resource.dir>
+            </properties>
+        </profile>
     </profiles>
     <activeProfiles>
         <activeProfile>development_props</activeProfile>
