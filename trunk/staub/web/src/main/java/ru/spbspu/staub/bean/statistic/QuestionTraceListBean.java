@@ -11,6 +11,9 @@ import ru.spbspu.staub.entity.TestTrace;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.QuestionTraceService;
+import ru.spbspu.staub.export.Cell;
+
+import java.util.List;
 
 /**
  * Webbean for manipulating list data of <code>QuestionTrace</code> entities.
@@ -53,6 +56,20 @@ public class QuestionTraceListBean extends GenericExportableListBean<QuestionTra
 
     @Override
     public String[] getColumns() {
-        return new String[]{"question.id", "totalTime", "correct"};
+        return new String[]{"question.id", "question.topic.name", "question.difficulty.name", "totalTime", "correct"};
+    }
+
+    @Override
+    protected List<Cell[]> getHeader() {
+        List<Cell[]> header = super.getHeader();
+        if (testTrace != null) {
+            header.add(new Cell[]{new Cell(getBundledString("question.trace.list.subTitle.test")), new Cell(testTrace.getTest().getName())});
+            header.add(new Cell[]{new Cell(getBundledString("question.trace.list.subTitle.student")), new Cell(testTrace.getStudent().getName())});
+        }
+        return header;
+    }
+
+    public TestTrace getTestTrace() {
+        return testTrace;
     }
 }
