@@ -6,17 +6,11 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.contexts.Contexts;
 import ru.spbspu.staub.bean.GenericExportableListBean;
-import ru.spbspu.staub.entity.Discipline;
-import ru.spbspu.staub.entity.Group;
-import ru.spbspu.staub.entity.Student;
-import ru.spbspu.staub.entity.TestTrace;
+import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.export.Cell;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
-import ru.spbspu.staub.service.DisciplineService;
-import ru.spbspu.staub.service.GroupService;
-import ru.spbspu.staub.service.StudentService;
-import ru.spbspu.staub.service.TestTraceService;
+import ru.spbspu.staub.service.*;
 
 import java.util.Date;
 import java.util.List;
@@ -36,6 +30,8 @@ public class TestTraceListBean extends GenericExportableListBean<TestTrace> {
     @In
     private DisciplineService disciplineService;
     @In
+    private CategoryService categoryService;
+    @In
     private GroupService groupService;
     @In
     private StudentService studentService;
@@ -43,10 +39,12 @@ public class TestTraceListBean extends GenericExportableListBean<TestTrace> {
     private Group group;
     private Student student;
     private Discipline discipline;
+    private Category category;
     private Date begin;
     private Date end;
 
     private List<Discipline> disciplineList;
+    private List<Category> categoryList;
     private List<Group> groupList;
     private List<Student> studentList;
 
@@ -71,6 +69,14 @@ public class TestTraceListBean extends GenericExportableListBean<TestTrace> {
         disciplineList = disciplineService.findAll();
     }
 
+    private void fillCategoryList() {
+        if (discipline != null) {
+            categoryList = categoryService.findCategories(discipline);
+        } else {
+            categoryList = null;
+        }
+    }
+
     private void fillGroupList() {
         groupList = groupService.findAll();
     }
@@ -84,11 +90,18 @@ public class TestTraceListBean extends GenericExportableListBean<TestTrace> {
     }
 
     public void setDiscipline() {
+        fillCategoryList();
+        setCategory(null);
+        doRefresh();
+    }
+
+    public void setCategory() {
         doRefresh();
     }
 
     public void setGroup() {
         fillStudentList();
+        setStudent(null);
         doRefresh();
     }
 
@@ -102,6 +115,10 @@ public class TestTraceListBean extends GenericExportableListBean<TestTrace> {
 
     public List<Discipline> getDisciplineList() {
         return disciplineList;
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryList;
     }
 
     public List<Group> getGroupList() {
@@ -134,6 +151,14 @@ public class TestTraceListBean extends GenericExportableListBean<TestTrace> {
 
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Date getBegin() {
@@ -172,6 +197,9 @@ public class TestTraceListBean extends GenericExportableListBean<TestTrace> {
         List<Cell[]> header = super.getHeader();
         if (discipline != null) {
             header.add(new Cell[]{new Cell(getBundledString("test.trace.list.test.category.discipline.name")), new Cell(discipline.getName())});
+        }
+        if (category != null) {
+            header.add(new Cell[]{new Cell(getBundledString("test.trace.list.test.category.name")), new Cell(category.getName())});
         }
         if (group != null) {
             header.add(new Cell[]{new Cell(getBundledString("test.trace.list.student.group.name")), new Cell(group.getName())});

@@ -109,6 +109,32 @@
 </rich:column>
 <rich:column id="col4">
     <f:facet name="header">
+        <a4j:outputPanel id="categoryPanel">
+            #{messages['test.trace.list.test.category.name']}
+            <br/>
+            <br/>
+            <h:selectOneMenu id="categorySelect"
+                             value="#{pageBean.category}"
+                             disabled="#{pageBean.discipline == null}"
+                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                             style="width:8em;">
+                <s:selectItems id="categorySelectItems"
+                               value="#{pageBean.categoryList}"
+                               var="category"
+                               label="#{category.name}"
+                               noSelectionLabel="#{messages['test.trace.list.test.category.all']}"/>
+                <a4j:support id="categorySelectSupport"
+                             event="onchange"
+                             action="#{pageBean.setCategory}"
+                             reRender="contentBodyForm"
+                             ajaxSingle="true"/>
+            </h:selectOneMenu>
+        </a4j:outputPanel>
+    </f:facet>
+    #{testTrace.test.category.name}
+</rich:column>
+<rich:column id="col5">
+    <f:facet name="header">
         <a4j:outputPanel id="groupPanel">
             #{messages['test.trace.list.student.group.name']}
             <br/>
@@ -132,7 +158,7 @@
     </f:facet>
     #{testTrace.student.group.name}
 </rich:column>
-<rich:column id="col5">
+<rich:column id="col6">
     <f:facet name="header">
         <a4j:outputPanel id="studentPanel">
             #{messages['test.trace.list.student.name']}
@@ -158,22 +184,22 @@
     </f:facet>
     #{testTrace.student.name}
 </rich:column>
-<rich:column id="col6">
+<rich:column id="col7">
     <f:facet name="header">
         #{messages['test.trace.list.started']}
     </f:facet>
-    <h:outputText id="col6Text"
+    <h:outputText id="col7Text"
                   value="#{testTrace.started}">
         <s:convertDateTime pattern="dd.MM.yy HH:mm"/>
     </h:outputText>
 </rich:column>
-<rich:column id="col7">
+<rich:column id="col8">
     <f:facet name="header">
         #{messages['test.trace.list.score']}
     </f:facet>
     #{testTrace.score}
 </rich:column>
-<rich:column id="col8">
+<rich:column id="col9">
     <f:facet name="header">
         #{messages['test.trace.list.testPassed']}
     </f:facet>
