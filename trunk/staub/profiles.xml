@@ -2,6 +2,9 @@
     <profiles>
         <profile>
             <id>development_props</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <properties>
                 <!-- JBoss properties -->
                 <jboss.home>/home/kostya/java/jboss-4.2.2.GA</jboss.home>
@@ -18,6 +21,8 @@
                 <!-- Lifecycle properties -->
                 <!--  Update Database or not -->
                 <db.updateDisabled>true</db.updateDisabled>
+                <!--  Unpack submodules in ear or not -->
+                <unpack.ear.modules>true</unpack.ear.modules>
                 <!-- Seam properties -->
                 <debug>true</debug>
                 <!-- Application properties -->
@@ -26,6 +31,9 @@
         </profile>
         <profile>
             <id>production_props</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <properties>
                 <!-- JBoss properties -->
                 <jboss.home>D:\java\jboss-4.2.2.GA</jboss.home>
