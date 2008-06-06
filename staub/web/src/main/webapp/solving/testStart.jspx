@@ -27,15 +27,17 @@
                         #{pageBean.model.test.description}
                     </td>
                 </tr>
-                <tr>
-                    <td class="detail-cell">
-                        <h:outputLabel id="testTimeLimitLabel"
-                                       value="#{messages['test.start.timeLimit']}"/>
-                    </td>
-                    <td class="detail-cell">
-                        #{pageBean.model.test.timeLimit}
-                    </td>
-                </tr>
+                <s:fragment id="testTimeLimitFragment" rendered="#{pageBean.model.test.timeLimit != null}">
+                    <tr>
+                        <td class="detail-cell">
+                            <h:outputLabel id="testTimeLimitLabel"
+                                           value="#{messages['test.start.timeLimit']}"/>
+                        </td>
+                        <td class="detail-cell">
+                            #{pageBean.model.test.timeLimit}
+                        </td>
+                    </tr>
+                </s:fragment>
             </table>
         </fieldset>
         <a4j:outputPanel id="contentButtons" styleClass="contentButtons">

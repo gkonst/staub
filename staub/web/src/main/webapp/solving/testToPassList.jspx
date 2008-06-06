@@ -13,23 +13,31 @@
     <!--@elvariable id="messages" type="java.util.Map"-->
     <ui:param name="pageBean" value="#{testToPassListBean}"/>
     <ui:define name="contentTitle">
-        #{messages['testToPass.list.title']}
+        #{messages['test.pass.list.title']}
     </ui:define>
     <ui:define name="contentBody">
         <rich:spacer height="10"/>
         <ui:decorate template="/controls/listLayoutControl.jspx">
             <ui:define name="listPageData">
-                <rich:dataTable id="testList"
+                <rich:dataTable id="testPassList"
                                 value="#{pageBean.dataModel}"
-                                var="assigment"
+                                var="assignment"
                                 rendered="#{pageBean.dataModel.rowCount > 0}"
                                 styleClass="dataTable">
                     <rich:column id="col1">
-                        <f:facet name="header">#{messages['testToPass.list.name']}</f:facet>
-                        <s:link id="startTestLink" view="/solving/testStart.seam" value="#{assigment.test.name}">
-                            <f:param id="startTestParamModelId" name="modelId" value="#{assigment.id}"/>
+                        <f:facet name="header">#{messages['test.pass.list.test.name']}</f:facet>
+                        <s:link id="startTestLink" view="/solving/testStart.seam" value="#{assignment.test.name}">
+                            <f:param id="startTestParamModelId" name="modelId" value="#{assignment.id}"/>
                             <f:param id="startTestParamBeanMode" name="beanMode" value="VIEW_MODE"/>
                         </s:link>
+                    </rich:column>
+                    <rich:column id="col2">
+                        <f:facet name="header">#{messages['test.pass.list.test.category.discipline.name']}</f:facet>
+                        #{assignment.test.category.discipline.name}
+                    </rich:column>
+                    <rich:column id="col3">
+                        <f:facet name="header">#{messages['test.pass.list.test.category.name']}</f:facet>
+                        #{assignment.test.category.name}
                     </rich:column>
                 </rich:dataTable>
                 <h:outputText id="noDataFoundText"
