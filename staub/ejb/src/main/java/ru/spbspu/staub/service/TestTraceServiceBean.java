@@ -144,6 +144,8 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
         testTrace.setAssignment(null);
 
+        assignment.setTestTrace(null);
+
         makePersistent(testTrace);
 
         try {
