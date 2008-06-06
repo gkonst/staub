@@ -34,11 +34,6 @@
     <page view-id="/solving/question.jspx"
           login-required="true"
           action="#{questionBean.initBean}">
-        <navigation>
-            <rule if-outcome="testEnd">
-                <redirect view-id="/solving/testEnd.jspx"/>
-            </rule>
-        </navigation>
     </page>
 
     <page view-id="/solving/testPrepare.jspx"
@@ -46,11 +41,6 @@
         <navigation>
             <render view-id="/solving/question.jspx"/>
         </navigation>
-    </page>
-
-    <page view-id="/solving/testEnd.jspx"
-          login-required="true"
-          action="#{testEndBean.initBean}">
     </page>
     
 </pages>

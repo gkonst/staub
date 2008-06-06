@@ -98,10 +98,10 @@ public class ImageResource extends AbstractResource {
     }
 
     @Create
-    public void initResource() {
+    public void initResource() throws IOException {
         String uploadDir = getResourceDirectory();
-        logger.info("Initializing image resource for directory : #0", uploadDir);
         File file = new File(getResourceDirectory());
+        logger.info("Initializing image resource for directory : #0, realPath : #1", uploadDir, file.getCanonicalPath());
         if(!file.exists() || !file.isDirectory()) {
             logger.error("Upload resource directory not found or not a directory");
         }
