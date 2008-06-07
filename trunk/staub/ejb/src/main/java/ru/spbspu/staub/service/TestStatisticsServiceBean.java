@@ -49,7 +49,7 @@ public class TestStatisticsServiceBean extends GenericServiceBean<TestStatistics
         return testStatistics;
     }
 
-    public FormTable findTests(FormProperties formProperties, Discipline discipline, Category category, Topic topic) {
+    public FormTable find(FormProperties formProperties, Discipline discipline, Category category, Topic topic) {
         logger.debug("> find(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3)", formProperties, discipline,
                 category, topic);
 

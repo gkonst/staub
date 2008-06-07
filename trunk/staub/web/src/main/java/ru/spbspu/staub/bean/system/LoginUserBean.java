@@ -36,7 +36,7 @@ public class LoginUserBean extends GenericBean {
 
     public boolean authenticate() {
         logger.debug(">>> Authentinicating user(username=#{identity.username}), password=#{identity.password}");
-        user = userService.findUserByUserNameAndPassword(identity.getUsername(), identity.getPassword());
+        user = userService.find(identity.getUsername(), identity.getPassword());
         if (user != null) {
             logger.debug(" User Role : #0", user.getRole());
             identity.addRole(String.valueOf(user.getRole()));

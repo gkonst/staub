@@ -98,7 +98,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     public void refreshCategories() {
         if (discipline != null) {
-            categoryList = categoryService.findCategories(discipline);
+            categoryList = categoryService.find(discipline);
         } else {
             categoryList = null;
         }
@@ -106,7 +106,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     public void refreshTopics() {
         if (category != null) {
-            topicList = topicService.findTopics(category);
+            topicList = topicService.find(category);
         } else {
             topicList = null;
         }

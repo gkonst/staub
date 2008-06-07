@@ -32,7 +32,7 @@ public interface UserService extends GenericService<User, Integer> {
      *
      * @return fetched user
      */
-    User findUserByUserNameAndPassword(String username, String password);
+    User find(String username, String password);
 
     /**
      * Saves or updates a user.
@@ -42,7 +42,7 @@ public interface UserService extends GenericService<User, Integer> {
      *
      * @return the updated entity
      */
-    User saveUser(User user, String password);
+    User save(User user, String password);
 
     /**
      * Checks whether a username is not registered already.

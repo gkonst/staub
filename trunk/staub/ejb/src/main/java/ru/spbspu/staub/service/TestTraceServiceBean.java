@@ -31,9 +31,9 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     @EJB
     private QuestionTraceService questionTraceService;
 
-    public FormTable findTestTraces(FormProperties formProperties, Group group, Student student, Discipline discipline,
+    public FormTable find(FormProperties formProperties, Group group, Student student, Discipline discipline,
                                     Date begin, Date end) {
-        logger.debug("> findTestTraces(FormProperties=#0, Group=#1, Student=#2, Discipline=#3, Date=#4, Date=#5)",
+        logger.debug("> find(FormProperties=#0, Group=#1, Student=#2, Discipline=#3, Date=#4, Date=#5)",
                 formProperties, group, student, discipline, begin, end);
 
         StringBuilder query = new StringBuilder();
@@ -87,18 +87,18 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
         FormTable formTable = findAll(queryString, formProperties, parameters);
 
-        logger.debug("< findTestTraces(FormProperties, Group, Student, Discipline, Date, Date)");
+        logger.debug("< find(FormProperties, Group, Student, Discipline, Date, Date)");
 
         return formTable;
     }
 
-    public long countTestTraces(Student student) {
+    public long count(Student student) {
         Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.student = :student");
         q.setParameter("student", student);
         return (Long) q.getSingleResult();
     }
 
-    public long countTestTraces(Test test) {
+    public long count(Test test) {
         Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.test = :test");
         q.setParameter("test", test);
         return (Long) q.getSingleResult();

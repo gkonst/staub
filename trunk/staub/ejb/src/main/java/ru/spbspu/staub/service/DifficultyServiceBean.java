@@ -48,7 +48,7 @@ public class DifficultyServiceBean extends GenericServiceBean<Difficulty, Intege
         logger.debug("> remove(Difficulty=#0)", difficulty);
 
         Difficulty d = getEntityManager().merge(difficulty);
-        if ((questionService.countQuestions(d) + testService.countTests(d)) == 0) {
+        if ((questionService.count(d) + testService.count(d)) == 0) {
             logger.debug("*  No related entities found.");
             getEntityManager().remove(d);
             logger.debug("*  Difficulty removed from a database.");

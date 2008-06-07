@@ -23,7 +23,7 @@ public interface CategoryService extends GenericService<Category, Integer> {
      *
      * @return the list of categories
      */
-    List<Category> findCategories(Discipline discipline);
+    List<Category> find(Discipline discipline);
 
     /**
      * Searches categories of a specified discipline.
@@ -33,7 +33,7 @@ public interface CategoryService extends GenericService<Category, Integer> {
      *
      * @return the table of reults
      */
-    FormTable findCategories(FormProperties formProperties, Discipline discipline);
+    FormTable find(FormProperties formProperties, Discipline discipline);
 
     /**
      * Checks whether a code is not assigned to any category.

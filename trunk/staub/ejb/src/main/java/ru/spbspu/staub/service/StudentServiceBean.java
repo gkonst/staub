@@ -46,14 +46,14 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
     }
 
     @SuppressWarnings("unchecked")
-    public List<Student> findStudents(Group group) {
+    public List<Student> find(Group group) {
         Query q = getEntityManager().createQuery("select s from Student s where s.group = :group and s.active = true order by s.name");
         q.setParameter("group", group);
         return q.getResultList();
     }
 
-    public FormTable findStudents(FormProperties formProperties, Group group) {
-        logger.debug("> findStudents(FormProperties=#0, Group=#1)", formProperties, group);
+    public FormTable find(FormProperties formProperties, Group group) {
+        logger.debug("> find(FormProperties=#0, Group=#1)", formProperties, group);
 
         StringBuilder query = new StringBuilder();
         query.append("select s from Student s");
@@ -74,24 +74,24 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
 
         FormTable formTable = findAll(queryString, formProperties, parameters);
 
-        logger.debug("< findStudents(FormProperties, Group)");
+        logger.debug("< find(FormProperties, Group)");
 
         return formTable;
     }
 
-    public long countStudents(Group group) {
+    public long count(Group group) {
         Query q = getEntityManager().createQuery("select count(s) from Student s where s.group = :group");
         q.setParameter("group", group);
         return (Long) q.getSingleResult();
     }
 
-    public Student saveStudent(Student student) {
-        logger.debug("> saveStudent(Student=#0)", student);
+    public Student save(Student student) {
+        logger.debug("> save(Student=#0)", student);
 
         student.setActive(true);
         Student result = getEntityManager().merge(student);
 
-        logger.debug("< saveStudent(Student)");
+        logger.debug("< save(Student)");
 
         return result;
     }
@@ -135,9 +135,9 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
         logger.debug("> remove(Student=#0)", student);
 
         Student s = getEntityManager().merge(student);
-        if (assignmentService.countAssignments(s) == 0) {
+        if (assignmentService.count(s) == 0) {
             logger.debug("*  No related Assignment entities found.");
-            if (testTraceService.countTestTraces(s) == 0) {
+            if (testTraceService.count(s) == 0) {
                 logger.debug("*  No related TestTrace entities found.");
                 getEntityManager().remove(s);
                 logger.debug("*  Student removed from a database.");

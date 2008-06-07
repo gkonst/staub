@@ -72,7 +72,7 @@ public class LoginStudentBean extends GenericBean {
     public void refreshStudents() {
         if (group != null) {
             getFacesMessages().clear();
-            students = studentService.findStudents(group);
+            students = studentService.find(group);
         }
     }
 

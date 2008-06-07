@@ -19,4 +19,6 @@ public interface GroupService extends GenericService<Group, Integer> {
      * @return <code>true</code> if the name is unique; <code>false</code> otherwise
      */
     boolean isNameUnique(String name);
+
+
 }

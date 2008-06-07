@@ -45,7 +45,7 @@ public interface QuestionTraceService extends GenericService<QuestionTrace, Inte
      *
      * @return the number of question traces
      */
-    long countQuestionTraces(Question question);
+    long count(Question question);
 
     /**
      * Sets the "started" field of a trace element. If the field is not <code>null</code> it is keeped unchanged.

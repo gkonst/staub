@@ -62,7 +62,7 @@ public class TestTraceListBean extends GenericExportableListBean<TestTrace> {
      */
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return testTraceService.findTestTraces(formProperties, group, student, discipline, begin, end);
+        return testTraceService.find(formProperties, group, student, discipline, begin, end);
     }
 
     private void fillDisciplineList() {
@@ -71,7 +71,7 @@ public class TestTraceListBean extends GenericExportableListBean<TestTrace> {
 
     private void fillCategoryList() {
         if (discipline != null) {
-            categoryList = categoryService.findCategories(discipline);
+            categoryList = categoryService.find(discipline);
         } else {
             categoryList = null;
         }
@@ -83,7 +83,7 @@ public class TestTraceListBean extends GenericExportableListBean<TestTrace> {
 
     private void fillStudentList() {
         if (group != null) {
-            studentList = studentService.findStudents(group);
+            studentList = studentService.find(group);
         } else {
             studentList = null;
         }
