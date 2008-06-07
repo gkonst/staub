@@ -48,7 +48,7 @@ public class DisciplineServiceBean extends GenericServiceBean<Discipline, Intege
         logger.debug("> remove(Discipline=#0)", discipline);
 
         Discipline d = getEntityManager().merge(discipline);
-        if ((questionService.countQuestions(d) + testService.countTests(d)) == 0) {
+        if ((questionService.count(d) + testService.count(d)) == 0) {
             logger.debug("*  No related entities found.");
             getEntityManager().remove(d);
             logger.debug("*  Discipline removed from a database.");

@@ -30,8 +30,8 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
     @EJB
     private TestTraceService testTraceService;
 
-    public FormTable findTests(FormProperties formProperties, Discipline discipline, Category category, Topic topic) {
-        logger.debug("> findTests(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3)", formProperties, discipline,
+    public FormTable find(FormProperties formProperties, Discipline discipline, Category category, Topic topic) {
+        logger.debug("> find(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3)", formProperties, discipline,
                 category, topic);
 
         StringBuilder query = new StringBuilder();
@@ -59,36 +59,36 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
 
         FormTable formTable = findAll(queryString, formProperties, parameters);
 
-        logger.debug("< findTests(FormProperties, Discipline, Category, Topic)");
+        logger.debug("< find(FormProperties, Discipline, Category, Topic)");
 
         return formTable;
     }
 
-    public long countTests(Category category) {
+    public long count(Category category) {
         Query q = getEntityManager().createQuery("select count(t) from Test t where t.category = :category");
         q.setParameter("category", category);
         return (Long) q.getSingleResult();
     }
 
-    public long countTests(Difficulty difficulty) {
+    public long count(Difficulty difficulty) {
         Query q = getEntityManager().createQuery("select count(t) from Test t join t.difficultyLevels d where d.difficulty = :difficulty");
         q.setParameter("difficulty", difficulty);
         return (Long) q.getSingleResult();
     }
 
-    public long countTests(Discipline discipline) {
+    public long count(Discipline discipline) {
         Query q = getEntityManager().createQuery("select count(t) from Discipline d join d.categories c, Test t where c = t.category and d = :discipline");
         q.setParameter("discipline", discipline);
         return (Long) q.getSingleResult();
     }
 
-    public long countTests(Topic topic) {
+    public long count(Topic topic) {
         Query q = getEntityManager().createQuery("select count(t) from Test t join t.topics tt where tt = :topic");
         q.setParameter("topic", topic);
         return (Long) q.getSingleResult();
     }
 
-    public Test saveTest(Test test, List<DifficultyWrapper> difficulties, User user) {
+    public Test save(Test test, List<DifficultyWrapper> difficulties, User user) {
         validateTest(test);
 
         if (test.getId() == null) {
@@ -147,9 +147,9 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         logger.debug("> remove(Test=#0)", test);
 
         Test t = getEntityManager().merge(test);
-        if (assignmentService.countAssignments(t) == 0) {
+        if (assignmentService.count(t) == 0) {
             logger.debug("*  No related Assignment entities found.");
-            if (testTraceService.countTestTraces(t) == 0) {
+            if (testTraceService.count(t) == 0) {
                 logger.debug("*  No related TestTrace entities found.");
                 removeDifficultyLevels(t);
                 getEntityManager().remove(t);

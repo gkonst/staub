@@ -50,7 +50,7 @@ public class TestStatisticsListBean extends GenericExportableListBean<TestStatis
      */
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return testStatisticsService.findTests(formProperties, discipline, category, topic);
+        return testStatisticsService.find(formProperties, discipline, category, topic);
     }
 
     /**
@@ -93,7 +93,7 @@ public class TestStatisticsListBean extends GenericExportableListBean<TestStatis
 
     private void fillCategoryList() {
         if (discipline != null) {
-            categoryList = categoryService.findCategories(discipline);
+            categoryList = categoryService.find(discipline);
         } else {
             categoryList = null;
         }
@@ -101,7 +101,7 @@ public class TestStatisticsListBean extends GenericExportableListBean<TestStatis
 
     private void fillTopicList() {
         if (category != null) {
-            topicList = topicService.findTopics(category);
+            topicList = topicService.find(category);
         } else {
             topicList = null;
         }

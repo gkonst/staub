@@ -59,7 +59,7 @@ public class StudentDetailBean extends GenericDetailBean<Student> {
     @Override
     public void doSave() {
         logger.debug("Saving student...");
-        setModel(studentService.saveStudent(getModel()));
+        setModel(studentService.save(getModel()));
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");

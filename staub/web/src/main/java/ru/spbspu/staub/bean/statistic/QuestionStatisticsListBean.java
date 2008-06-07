@@ -77,7 +77,7 @@ public class QuestionStatisticsListBean extends GenericExportableListBean<Questi
 
     private void fillCategoryList() {
         if (discipline != null) {
-            categoryList = categoryService.findCategories(discipline);
+            categoryList = categoryService.find(discipline);
         } else {
             categoryList = null;
         }
@@ -85,7 +85,7 @@ public class QuestionStatisticsListBean extends GenericExportableListBean<Questi
 
     private void fillTopicList() {
         if (category != null) {
-            topicList = topicService.findTopics(category);
+            topicList = topicService.find(category);
         } else {
             topicList = null;
         }

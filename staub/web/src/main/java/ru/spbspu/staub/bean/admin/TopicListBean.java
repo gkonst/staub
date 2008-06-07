@@ -44,7 +44,7 @@ public class TopicListBean extends GenericListBean<Topic> {
      */
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return topicService.findTopics(formProperties, category);
+        return topicService.find(formProperties, category);
     }
 
     /**

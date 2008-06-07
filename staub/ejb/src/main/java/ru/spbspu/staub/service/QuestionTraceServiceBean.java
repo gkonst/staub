@@ -51,7 +51,7 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
         return formTable;
     }
 
-    public long countQuestionTraces(Question question) {
+    public long count(Question question) {
         Query q = getEntityManager().createQuery("select count(q) from QuestionTrace q where q.question = :question");
         q.setParameter("question", question);
         return (Long) q.getSingleResult();

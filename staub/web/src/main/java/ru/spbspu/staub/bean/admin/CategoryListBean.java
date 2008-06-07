@@ -33,7 +33,7 @@ public class CategoryListBean extends GenericListBean<Category> {
      */
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return categoryService.findCategories(formProperties, discipline);
+        return categoryService.find(formProperties, discipline);
     }
 
     /**

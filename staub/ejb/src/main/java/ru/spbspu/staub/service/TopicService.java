@@ -22,7 +22,7 @@ public interface TopicService extends GenericService<Topic, Integer> {
      *
      * @return the list of topics
      */
-    List<Topic> findTopics(Category category);
+    List<Topic> find(Category category);
 
     /**
      * Searches topics of a specified category.
@@ -32,7 +32,7 @@ public interface TopicService extends GenericService<Topic, Integer> {
      *
      * @return the table of results
      */
-    FormTable findTopics(FormProperties formProperties, Category category);
+    FormTable find(FormProperties formProperties, Category category);
 
     /**
      * Checks whether a code is not assigned to any topic.

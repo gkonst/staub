@@ -31,14 +31,14 @@ public class TopicServiceBean extends GenericServiceBean<Topic, Integer> impleme
     private TestService testService;
 
     @SuppressWarnings("unchecked")
-    public List<Topic> findTopics(Category category) {
+    public List<Topic> find(Category category) {
         Query q = getEntityManager().createQuery("select t from Topic t where t.category = :category");
         q.setParameter("category", category);
         return q.getResultList();
     }
 
-    public FormTable findTopics(FormProperties formProperties, Category category) {
-        logger.debug("> findTopics(FormProperties=#0, Category=#1)", formProperties, category);
+    public FormTable find(FormProperties formProperties, Category category) {
+        logger.debug("> find(FormProperties=#0, Category=#1)", formProperties, category);
 
         StringBuilder query = new StringBuilder();
         query.append("select t from Topic t");
@@ -55,7 +55,7 @@ public class TopicServiceBean extends GenericServiceBean<Topic, Integer> impleme
 
         FormTable formTable = findAll(queryString, formProperties, parameters);
 
-        logger.debug("< findTopics(FormProperties, Category)");
+        logger.debug("< find(FormProperties, Category)");
 
         return formTable;
     }
@@ -83,7 +83,7 @@ public class TopicServiceBean extends GenericServiceBean<Topic, Integer> impleme
         logger.debug("> remove(Topic=#0)", topic);
 
         Topic t = getEntityManager().merge(topic);
-        if ((questionService.countQuestions(t) + testService.countTests(t)) == 0) {
+        if ((questionService.count(t) + testService.count(t)) == 0) {
             logger.debug("*  No related entities found.");
             getEntityManager().remove(t);
             logger.debug("*  Topic removed from a database.");

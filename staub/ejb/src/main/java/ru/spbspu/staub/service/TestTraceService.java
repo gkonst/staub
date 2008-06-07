@@ -27,7 +27,7 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      *
      * @return the table of results
      */
-    FormTable findTestTraces(FormProperties formProperties, Group group, Student student, Discipline discipline,
+    FormTable find(FormProperties formProperties, Group group, Student student, Discipline discipline,
                              Date begin, Date end);
 
     /**
@@ -37,7 +37,7 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      *
      * @return the number of test traces
      */
-    long countTestTraces(Student student);
+    long count(Student student);
 
     /**
      * Counts test traces of a specific test.
@@ -46,7 +46,7 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
      *
      * @return the number of test traces
      */
-    long countTestTraces(Test test);
+    long count(Test test);
 
     /**
      * Returns a <code>TestTrace</code> instance for a test. Creates if necessary.

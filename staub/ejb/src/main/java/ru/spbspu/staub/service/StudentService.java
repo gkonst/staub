@@ -32,7 +32,7 @@ public interface StudentService extends GenericService<Student, Integer> {
      *
      * @return the search results
      */
-    List<Student> findStudents(Group group);
+    List<Student> find(Group group);
 
     /**
      * Searches a students from the specified group.
@@ -42,7 +42,7 @@ public interface StudentService extends GenericService<Student, Integer> {
      *
      * @return the table of results
      */
-    FormTable findStudents(FormProperties formProperties, Group group);
+    FormTable find(FormProperties formProperties, Group group);
 
     /**
      * Counts students from a specified group.
@@ -51,7 +51,7 @@ public interface StudentService extends GenericService<Student, Integer> {
      *
      * @return the number of sudents
      */
-    long countStudents(Group group);
+    long count(Group group);
 
     /**
      * Saves or updates a student.
@@ -60,7 +60,7 @@ public interface StudentService extends GenericService<Student, Integer> {
      *
      * @return the modified instance
      */
-    Student saveStudent(Student student);
+    Student save(Student student);
 
     /**
      * Checks whether a code is not assigned to any student.

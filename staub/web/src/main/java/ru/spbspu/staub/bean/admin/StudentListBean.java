@@ -40,7 +40,7 @@ public class StudentListBean extends GenericListBean<Student> {
      */
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return studentService.findStudents(formProperties, group);
+        return studentService.find(formProperties, group);
     }
 
     /**

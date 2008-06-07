@@ -110,7 +110,7 @@ public class TestDetailBean extends GenericDetailBean<Test> {
             logger.debug("Saving... failed");
             return;
         }
-        setModel(testService.saveTest(getModel(), difficultyList, user));
+        setModel(testService.save(getModel(), difficultyList, user));
         logger.debug("  Changing bean mode -> #0", BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");
@@ -123,7 +123,7 @@ public class TestDetailBean extends GenericDetailBean<Test> {
 
     public void refreshCategories() {
         if (discipline != null) {
-            categoryList = categoryService.findCategories(discipline);
+            categoryList = categoryService.find(discipline);
         } else {
             categoryList = null;
         }
@@ -138,7 +138,7 @@ public class TestDetailBean extends GenericDetailBean<Test> {
     }
 
     private void fillTopics() {
-        topicList = topicService.findTopics(getModel().getCategory());
+        topicList = topicService.find(getModel().getCategory());
         selectedTopics = new Topic[topicList.size()];
     }
 

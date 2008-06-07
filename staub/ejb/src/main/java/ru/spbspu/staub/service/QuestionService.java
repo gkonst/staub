@@ -26,7 +26,7 @@ public interface QuestionService extends GenericService<Question, Integer> {
      *
      * @return the table of results
      */
-    public FormTable findQuestions(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
+    public FormTable find(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
                                    Difficulty difficulty, Integer questionId);
 
     /**
@@ -36,7 +36,7 @@ public interface QuestionService extends GenericService<Question, Integer> {
      *
      * @return the number of questions
      */
-    long countQuestions(Category category);
+    long count(Category category);
 
     /**
      * Counts questions of a specified difficulty.
@@ -45,7 +45,7 @@ public interface QuestionService extends GenericService<Question, Integer> {
      *
      * @return the number of questions
      */
-    long countQuestions(Difficulty difficulty);
+    long count(Difficulty difficulty);
 
     /**
      * Counts questions of a specified discipline.
@@ -54,7 +54,7 @@ public interface QuestionService extends GenericService<Question, Integer> {
      *
      * @return the number of questions
      */
-    long countQuestions(Discipline discipline);
+    long count(Discipline discipline);
 
     /**
      * Counts questions of a specified topic.
@@ -63,7 +63,7 @@ public interface QuestionService extends GenericService<Question, Integer> {
      *
      * @return the number of questions
      */
-    long countQuestions(Topic topic);
+    long count(Topic topic);
 
     /**
      * Saves question (updates or inserts).

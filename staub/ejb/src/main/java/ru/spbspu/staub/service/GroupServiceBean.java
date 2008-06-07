@@ -44,7 +44,7 @@ public class GroupServiceBean extends GenericServiceBean<Group, Integer> impleme
         logger.debug("> remove(Group=#0)", group);
 
         Group g = getEntityManager().merge(group);
-        if ((studentService.countStudents(g)) == 0) {
+        if ((studentService.count(g)) == 0) {
             logger.debug("*  No related Student entities found.");
             getEntityManager().remove(g);
             logger.debug("*  Group removed from a database.");

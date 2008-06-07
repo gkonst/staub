@@ -26,7 +26,7 @@ public interface TestService extends GenericService<Test, Integer> {
      *
      * @return the table of results
      */
-    public FormTable findTests(FormProperties formProperties, Discipline discipline, Category category, Topic topic);
+    public FormTable find(FormProperties formProperties, Discipline discipline, Category category, Topic topic);
 
     /**
      * Counts tests of a specified category.
@@ -35,7 +35,7 @@ public interface TestService extends GenericService<Test, Integer> {
      *
      * @return the number of tests
      */
-    long countTests(Category category);
+    long count(Category category);
 
     /**
      * Counts tests of a specified difficulty.
@@ -44,7 +44,7 @@ public interface TestService extends GenericService<Test, Integer> {
      *
      * @return the number of tests
      */
-    long countTests(Difficulty difficulty);
+    long count(Difficulty difficulty);
 
     /**
      * Counts tests of a specified discipline.
@@ -53,7 +53,7 @@ public interface TestService extends GenericService<Test, Integer> {
      *
      * @return the number of tests
      */
-    long countTests(Discipline discipline);
+    long count(Discipline discipline);
 
     /**
      * Counts tests of a specified topic.
@@ -62,7 +62,7 @@ public interface TestService extends GenericService<Test, Integer> {
      *
      * @return the number of tests
      */
-    long countTests(Topic topic);
+    long count(Topic topic);
 
     /**
      * Saves test (updates or inserts).
@@ -74,7 +74,7 @@ public interface TestService extends GenericService<Test, Integer> {
      *
      * @return updated test
      */
-    Test saveTest(Test test, List<DifficultyWrapper> difficulties, User user);
+    Test save(Test test, List<DifficultyWrapper> difficulties, User user);
 
     /**
      * Returns a questions count for a test.

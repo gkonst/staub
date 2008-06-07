@@ -48,7 +48,7 @@ public class UserServiceBean extends GenericServiceBean<User, Integer> implement
         return formTable;
     }
 
-    public User findUserByUserNameAndPassword(String username, String password) {
+    public User find(String username, String password) {
         User user = null;
         try {
             Query q = getEntityManager()
@@ -63,15 +63,15 @@ public class UserServiceBean extends GenericServiceBean<User, Integer> implement
         return user;
     }
 
-    public User saveUser(User user, String password) {
-        logger.debug("> saveUser(User=#0, String=#1)", user, ((password != null) ? "*****" : null));
+    public User save(User user, String password) {
+        logger.debug("> save(User=#0, String=#1)", user, ((password != null) ? "*****" : null));
 
         if (password != null) {
             user.setPassword(calculateHash(password));
         }
         User result = makePersistent(user);
 
-        logger.debug("< saveUser(User, String)");
+        logger.debug("< save(User, String)");
 
         return result;
     }

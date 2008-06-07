@@ -53,7 +53,7 @@ public interface AssignmentService extends GenericService<Assignment, Integer> {
      *
      * @return the number of assignments
      */
-    long countAssignments(Test test);
+    long count(Test test);
 
     /**
      * Counts assignments of a student.
@@ -62,7 +62,7 @@ public interface AssignmentService extends GenericService<Assignment, Integer> {
      *
      * @return the number of assignments
      */
-    long countAssignments(Student student);
+    long count(Student student);
 
     /**
      * Assigns students for specific test.

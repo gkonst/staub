@@ -49,13 +49,13 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
         return q.getResultList();
     }
 
-    public long countAssignments(Student student) {
+    public long count(Student student) {
         Query q = getEntityManager().createQuery("select count(a) from Assignment a where a.student = :student");
         q.setParameter("student", student);
         return (Long) q.getSingleResult();
     }
 
-    public long countAssignments(Test test) {
+    public long count(Test test) {
         Query q = getEntityManager().createQuery("select count(a) from Assignment a where a.test = :test");
         q.setParameter("test", test);
         return (Long) q.getSingleResult();

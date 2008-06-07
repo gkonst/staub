@@ -51,7 +51,7 @@ public class UserDetailBean extends GenericDetailBean<User> {
     @Override
     public void doSave() {
         logger.debug("Saving user...");
-        setModel(userService.saveUser(getModel(), getModel().getPassword()));
+        setModel(userService.save(getModel(), getModel().getPassword()));
         logger.debug("  Changing bean mode -> " + BeanMode.VIEW_MODE);
         setBeanMode(BeanMode.VIEW_MODE);
         addFacesMessageFromResourceBundle("common.messages.saveSuccess");

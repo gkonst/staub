@@ -38,7 +38,7 @@ public class ChangePasswordBean extends GenericBean {
             addFacesMessageFromResourceBundle("system.changePassword.validation.confirmPassword");
             logger.debug("Changing password... failed(newPassword=#0,confirmPassword=#1)", newPassword, confirmPassword);
         } else {
-            user = userService.saveUser(user, newPassword);
+            user = userService.save(user, newPassword);
             logger.debug("Changing password... OK");
         }
     }
@@ -48,7 +48,7 @@ public class ChangePasswordBean extends GenericBean {
     }
 
     private boolean checkOldPassword() {
-        User search = userService.findUserByUserNameAndPassword(user.getUsername(), oldPassword);
+        User search = userService.find(user.getUsername(), oldPassword);
         return search != null;
     }
 

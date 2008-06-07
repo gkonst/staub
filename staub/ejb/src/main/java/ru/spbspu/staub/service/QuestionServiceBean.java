@@ -27,9 +27,9 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
     @EJB
     QuestionTraceService questionTraceService;
 
-    public FormTable findQuestions(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
+    public FormTable find(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
                                    Difficulty difficulty, Integer questionId) {
-        logger.debug("> findQuestions(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3, Difficulty=#4, Integer=#5)",
+        logger.debug("> find(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3, Difficulty=#4, Integer=#5)",
                 formProperties, discipline, category, topic, difficulty, questionId);
 
         StringBuilder query = new StringBuilder();
@@ -65,30 +65,30 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
 
         FormTable formTable = findAll(queryString, formProperties, parameters);
 
-        logger.debug("< findQuestions(FormProperties, Discipline, Category, Topic, Difficulty, Integer)");
+        logger.debug("< find(FormProperties, Discipline, Category, Topic, Difficulty, Integer)");
 
         return formTable;
     }
 
-    public long countQuestions(Category category) {
+    public long count(Category category) {
         Query q = getEntityManager().createQuery("select count(q) from Category c join c.topics t, Question q where q.topic = t and c = :category");
         q.setParameter("category", category);
         return (Long) q.getSingleResult();
     }
 
-    public long countQuestions(Difficulty difficulty) {
+    public long count(Difficulty difficulty) {
         Query q = getEntityManager().createQuery("select count(q) from Question q where q.difficulty = :difficulty");
         q.setParameter("difficulty", difficulty);
         return (Long) q.getSingleResult();
     }
 
-    public long countQuestions(Discipline discipline) {
+    public long count(Discipline discipline) {
         Query q = getEntityManager().createQuery("select count(q) from Discipline d join d.categories c join c.topics t, Question q where q.topic = t and d = :discipline");
         q.setParameter("discipline", discipline);
         return (Long) q.getSingleResult();
     }
 
-    public long countQuestions(Topic topic) {
+    public long count(Topic topic) {
         Query q = getEntityManager().createQuery("select count(q) from Question q where q.topic = :topic");
         q.setParameter("topic", topic);
         return (Long) q.getSingleResult();
@@ -127,7 +127,7 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
         logger.debug("> remove(Question=#0)", question);
 
         Question q = getEntityManager().merge(question);
-        if (questionTraceService.countQuestionTraces(q) == 0) {
+        if (questionTraceService.count(q) == 0) {
             logger.debug("*  No related QuestionTrace entities found.");
             getEntityManager().remove(q);
             logger.debug("*  Question removed from a database.");

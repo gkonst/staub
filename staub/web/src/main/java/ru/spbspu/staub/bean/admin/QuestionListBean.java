@@ -51,7 +51,7 @@ public class QuestionListBean extends GenericListBean<Question> {
      */
     @Override
     protected FormTable findObjects(FormProperties formProperties) {
-        return questionService.findQuestions(formProperties, discipline, category, topic, difficulty, questionId);
+        return questionService.find(formProperties, discipline, category, topic, difficulty, questionId);
     }
 
     /**
@@ -94,7 +94,7 @@ public class QuestionListBean extends GenericListBean<Question> {
 
     private void fillCategoryList() {
         if (discipline != null) {
-            categoryList = categoryService.findCategories(discipline);
+            categoryList = categoryService.find(discipline);
         } else {
             categoryList = null;
         }
@@ -102,7 +102,7 @@ public class QuestionListBean extends GenericListBean<Question> {
 
     private void fillTopicList() {
         if (category != null) {
-            topicList = topicService.findTopics(category);
+            topicList = topicService.find(category);
         } else {
             topicList = null;
         }

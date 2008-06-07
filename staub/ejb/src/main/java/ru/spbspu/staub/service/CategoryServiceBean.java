@@ -32,14 +32,14 @@ public class CategoryServiceBean extends GenericServiceBean<Category, Integer> i
     private TestService testService;
 
     @SuppressWarnings("unchecked")
-    public List<Category> findCategories(Discipline discipline) {
+    public List<Category> find(Discipline discipline) {
         Query q = getEntityManager().createQuery("select c from Category c where c.discipline = :discipline");
         q.setParameter("discipline", discipline);
         return q.getResultList();
     }
 
-    public FormTable findCategories(FormProperties formProperties, Discipline discipline) {
-        logger.debug("> findCategories(FormProperties=#0, Discipline=#1)", formProperties, discipline);
+    public FormTable find(FormProperties formProperties, Discipline discipline) {
+        logger.debug("> find(FormProperties=#0, Discipline=#1)", formProperties, discipline);
 
         StringBuilder query = new StringBuilder();
         query.append("select c from Category c");
@@ -56,7 +56,7 @@ public class CategoryServiceBean extends GenericServiceBean<Category, Integer> i
 
         FormTable formTable = findAll(queryString, formProperties, parameters);
 
-        logger.debug("< findCategories(FormProperties, Discipline)");
+        logger.debug("< find(FormProperties, Discipline)");
 
         return formTable;
     }
@@ -84,7 +84,7 @@ public class CategoryServiceBean extends GenericServiceBean<Category, Integer> i
         logger.debug("> remove(Category=#0)", category);
 
         Category c = getEntityManager().merge(category);
-        if ((questionService.countQuestions(c) + testService.countTests(c)) == 0) {
+        if ((questionService.count(c) + testService.count(c)) == 0) {
             logger.debug("*  No related entities found.");
             getEntityManager().remove(c);
             logger.debug("*  Category removed from a database.");

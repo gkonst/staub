@@ -32,7 +32,7 @@ public interface TestStatisticsService extends GenericService<TestStatistics, In
      *
      * @return the table of results
      */
-    public FormTable findTests(FormProperties formProperties, Discipline discipline, Category category, Topic topic);
+    public FormTable find(FormProperties formProperties, Discipline discipline, Category category, Topic topic);
 
     /**
      * Refreshes statistical data for test.
