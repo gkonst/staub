@@ -31,6 +31,13 @@
         <restrict>#{s:hasRole('TEST_WRITER') or s:hasRole('ADMIN')}</restrict>
     </page>
 
+    <!-- Group Statistics -->
+    <page view-id="/statistic/groupStatisticsList.jspx"
+          login-required="true"
+          action="#{groupStatisticsListBean.initBean}">
+        <restrict>#{s:hasRole('TEST_WRITER') or s:hasRole('ADMIN')}</restrict>
+    </page>
+
     <!-- Test Statistics -->
     <page view-id="/statistic/testStatisticsList.jspx"
           login-required="true"
