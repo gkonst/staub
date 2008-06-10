@@ -17,15 +17,15 @@ public class GroupStatistics implements Serializable {
 
     private Test test;
 
-    private int totalAnswers;
+    private long totalAnswers;
 
-    private int correctAnswers;
+    private long correctAnswers;
 
     public GroupStatistics() {
         // do nothing
     }
 
-    public GroupStatistics(Group group, Test test, int totalAnswers, int correctAnswers) {
+    public GroupStatistics(Group group, Test test, long totalAnswers, long correctAnswers) {
         this.group = group;
         this.test = test;
         this.totalAnswers = totalAnswers;
@@ -48,23 +48,23 @@ public class GroupStatistics implements Serializable {
         this.test = test;
     }
 
-    public int getTotalAnswers() {
+    public long getTotalAnswers() {
         return totalAnswers;
     }
 
-    public void setTotalAnswers(int totalAnswers) {
+    public void setTotalAnswers(long totalAnswers) {
         this.totalAnswers = totalAnswers;
     }
 
-    public int getCorrectAnswers() {
+    public long getCorrectAnswers() {
         return correctAnswers;
     }
 
-    public void setCorrectAnswers(int correctAnswers) {
+    public void setCorrectAnswers(long correctAnswers) {
         this.correctAnswers = correctAnswers;
     }
 
-    public int getCorrectAnswersPercent() {
+    public long getCorrectAnswersPercent() {
         return correctAnswers * totalAnswers / 100;
     }
 
