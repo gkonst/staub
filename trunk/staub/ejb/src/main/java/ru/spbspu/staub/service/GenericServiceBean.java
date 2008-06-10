@@ -16,6 +16,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -86,7 +87,6 @@ public abstract class GenericServiceBean<T extends Serializable, ID extends Seri
      * @param queryString     specific query string
      * @param formProperties  form properties for fetching
      * @param queryParameters query parameters
-     *
      * @return result fetch
      */
     protected FormTable findAll(String queryString, FormProperties formProperties, Map<String, Object> queryParameters) {
@@ -95,14 +95,19 @@ public abstract class GenericServiceBean<T extends Serializable, ID extends Seri
         logger.debug(" query parameters : #0", queryParameters);
         FormTable table = new FormTable();
         table.setFullCount(countQuery(queryString, queryParameters));
-        Query query = getEntityManager().createQuery(queryString);
-        for (Map.Entry<String, Object> param : queryParameters.entrySet()) {
-            query.setParameter(param.getKey(), param.getValue());
+        if (table.getFullCount() != 0) {
+            Query query = getEntityManager().createQuery(queryString);
+            for (Map.Entry<String, Object> param : queryParameters.entrySet()) {
+                query.setParameter(param.getKey(), param.getValue());
+            }
+            // TODO implement sort features
+            // TODO implement search features
+            wrapQueryForPaging(query, formProperties.getCurrentPage(), formProperties.getRowsOnPage());
+            table.setRows(query.getResultList());
+        } else {
+            logger.debug(" count query returns 0 -> skipping query");
+            table.setRows(Collections.EMPTY_LIST);
         }
-        // TODO implement sort features
-        // TODO implement search features
-        wrapQueryForPaging(query, formProperties.getCurrentPage(), formProperties.getRowsOnPage());
-        table.setRows(query.getResultList());
         logger.debug("<<< Finding all with paging...Ok(#0 found)", table.getFullCount());
         return table;
     }
@@ -112,7 +117,6 @@ public abstract class GenericServiceBean<T extends Serializable, ID extends Seri
      *
      * @param queryString     current query string
      * @param queryParameters some parameters (search values for example)
-     *
      * @return total rows in table
      */
     private long countQuery(String queryString, Map<String, Object> queryParameters) {
