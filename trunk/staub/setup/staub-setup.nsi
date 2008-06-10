@@ -7,6 +7,7 @@
 !define PRODUCT_WEB_SITE "http://staub.googlecode.com"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
+!define PRODUCT_RUN_URL "http://localhost:8080/staub"
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
@@ -37,18 +38,18 @@
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
-;!insertmacro MUI_PAGE_FINISH
+!insertmacro MUI_PAGE_FINISH
 
 ; Language files
-!insertmacro MUI_LANGUAGE "English"
+;!insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "Russian"
 
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "staub-setup.exe"
-InstallDir "D:\Temp\Staub"
-#InstallDir $PROGRAMFILES\Staub
+;InstallDir "D:\Temp\Staub"
+InstallDir $PROGRAMFILES\Staub
 ShowInstDetails show
 ShowUnInstDetails show
 
@@ -137,8 +138,15 @@ Section "startService" SEC06
   SimpleSC::StartService "StaubASService"
 SectionEnd
 
+Section -AdditionalIcons
+  CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
+  WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_RUN_URL}"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Система Тестирования Знаний.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Удалить.lnk" "$INSTDIR\uninst.exe"
+SectionEnd
+
 Section -Post
-WriteUninstaller "$INSTDIR\uninst.exe"
+  WriteUninstaller "$INSTDIR\uninst.exe"
 SectionEnd
 
 Section Uninstall
@@ -154,6 +162,8 @@ Section Uninstall
   RMDir /r "$INSTDIR\jdk"
   RMDir /r "$INSTDIR\jboss"
   Delete "$INSTDIR\uninst.exe"
+  Delete "$INSTDIR\${PRODUCT_NAME}.url"
+  RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}"
   RMDir "$INSTDIR"
   SetAutoClose true
 SectionEnd
