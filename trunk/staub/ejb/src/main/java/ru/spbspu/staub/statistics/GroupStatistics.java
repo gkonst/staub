@@ -65,7 +65,7 @@ public class GroupStatistics implements Serializable {
     }
 
     public long getCorrectAnswersPercent() {
-        return correctAnswers * totalAnswers / 100;
+        return correctAnswers * 100 / totalAnswers;
     }
 
     @Override
