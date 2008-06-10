@@ -1,0 +1,174 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:s="http://jboss.com/products/seam/taglib"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:st="http://spbspu.ru/staub/taglib">
+<ui:composition template="/template/staub-template.jspx">
+<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.statistic.GroupStatisticsListBean"-->
+<!--@elvariable id="messages" type="java.util.Map"-->
+<ui:param name="pageBean" value="#{groupStatisticsListBean}"/>
+<ui:define name="sidebar">
+    <ui:include src="/system/menuStatistic.jspx"/>
+</ui:define>
+<ui:define name="contentTitle">
+    #{messages['group.statistics.list.title']}
+</ui:define>
+<ui:define name="contentBody">
+<a4j:form id="contentBodyForm">
+<a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+    <ui:include src="/controls/genericRefreshControl.jspx"/>
+    <ui:include src="/controls/genericExportControl.jspx"/>
+</a4j:outputPanel>
+<ui:decorate template="/controls/listLayoutControl.jspx">
+<ui:define name="listPageData">
+<rich:dataTable id="groupStatisticsList"
+                value="#{pageBean.dataModel}"
+                var="groupStatistics"
+                rendered="#{pageBean.dataModel != null}"
+                styleClass="dataTable">
+<rich:column id="col1">
+    <f:facet name="header">
+        <a4j:outputPanel id="groupPanel">
+            #{messages['group.statistics.list.group.name']}
+            <br/>
+            <br/>
+            <h:selectOneMenu id="groupSelect"
+                             value="#{pageBean.group}"
+                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                             style="width:8em;">
+                <s:selectItems id="groupSelectItems"
+                               value="#{pageBean.groupList}"
+                               var="group"
+                               label="#{group.name}"
+                               noSelectionLabel="#{messages['group.statistics.list.group.all']}"/>
+                <a4j:support id="groupSelectSupport"
+                             event="onchange"
+                             action="#{pageBean.setGroup}"
+                             reRender="contentBodyForm"
+                             ajaxSingle="true"/>
+            </h:selectOneMenu>
+        </a4j:outputPanel>
+    </f:facet>
+    #{groupStatistics.group.name}
+</rich:column>
+<rich:column id="col3">
+    <f:facet name="header">#{messages['group.statistics.list.test.name']}</f:facet>
+    #{groupStatistics.test.name}
+</rich:column>
+<rich:column id="col4">
+    <f:facet name="header">
+        <a4j:outputPanel id="disciplinePanel">
+            #{messages['group.statistics.list.test.category.discipline.name']}
+            <br/>
+            <br/>
+            <h:selectOneMenu id="disciplineSelect"
+                             value="#{pageBean.discipline}"
+                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                             style="width:8em;">
+                <s:selectItems id="disciplineSelectItems"
+                               value="#{pageBean.disciplineList}"
+                               var="discipline"
+                               label="#{discipline.name}"
+                               noSelectionLabel="#{messages['group.statistics.list.test.category.discipline.all']}"/>
+                <a4j:support id="disciplineSelectSupport"
+                             event="onchange"
+                             action="#{pageBean.setDiscipline}"
+                             reRender="contentBodyForm"
+                             ajaxSingle="true"/>
+            </h:selectOneMenu>
+        </a4j:outputPanel>
+    </f:facet>
+    #{groupStatistics.test.category.discipline.name}
+</rich:column>
+<rich:column id="col5">
+    <f:facet name="header">
+        <a4j:outputPanel id="categoryPanel">
+            #{messages['group.statistics.list.test.category.name']}
+            <br/>
+            <br/>
+            <h:selectOneMenu id="categorySelect"
+                             value="#{pageBean.category}"
+                             disabled="#{pageBean.discipline == null}"
+                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                             style="width:8em;">
+                <s:selectItems id="categorySelectItems"
+                               value="#{pageBean.categoryList}"
+                               var="category"
+                               label="#{category.name}"
+                               noSelectionLabel="#{messages['group.statistics.list.test.category.all']}"/>
+                <a4j:support id="categorySelectSupport"
+                             event="onchange"
+                             action="#{pageBean.setCategory}"
+                             reRender="contentBodyForm"
+                             ajaxSingle="true"/>
+            </h:selectOneMenu>
+        </a4j:outputPanel>
+    </f:facet>
+    #{groupStatistics.test.category.name}
+</rich:column>
+<rich:column id="col6">
+    <f:facet name="header">
+        <a4j:outputPanel id="topicPanel">
+            #{messages['group.statistics.list.test.topics.name']}
+            <br/>
+            <br/>
+            <h:selectOneMenu id="topicSelect"
+                             value="#{pageBean.topic}"
+                             disabled="#{pageBean.category == null}"
+                             converter="ru.spbspu.staub.ObjectSelectConverter"
+                             style="width:8em;">
+                <s:selectItems id="topicSelectItems"
+                               value="#{pageBean.topicList}"
+                               var="topic"
+                               label="#{topic.name}"
+                               noSelectionLabel="#{messages['group.statistics.list.test.topics.all']}"/>
+                <a4j:support id="topicSelectSupport"
+                             event="onchange"
+                             action="#{pageBean.setTopic}"
+                             reRender="contentBodyForm"
+                             ajaxSingle="true"/>
+            </h:selectOneMenu>
+        </a4j:outputPanel>
+    </f:facet>
+    <a4j:repeat id="topicsRepeat"
+                value="#{st:asList(groupStatistics.test.topics)}"
+                var="topic"
+                rendered="#{groupStatistics.test.topics.size != 0}"
+                rowKeyVar="topicRowKey">
+        <s:fragment rendered="#{topicRowKey lt 3}">
+            #{topic.name},
+            <br/>
+        </s:fragment>
+        <s:fragment rendered="#{topicRowKey == 3}">
+            ...
+        </s:fragment>
+    </a4j:repeat>
+</rich:column>
+<rich:column id="col7">
+    <f:facet name="header">
+        #{messages['group.statistics.list.totalAnswers']}
+    </f:facet>
+    #{groupStatistics.totalAnswers}
+</rich:column>
+<rich:column id="col8">
+    <f:facet name="header">
+        #{messages['group.statistics.list.correctAnswersPercent']}
+    </f:facet>
+    #{groupStatistics.correctAnswersPercent}
+</rich:column>
+</rich:dataTable>
+<h:outputText value="#{messages['common.list.noDataFound']}"
+              rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
+</ui:define>
+</ui:decorate>
+</a4j:form>
+</ui:define>
+</ui:composition>
+</html>

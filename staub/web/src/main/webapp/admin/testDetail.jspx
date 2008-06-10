@@ -160,46 +160,54 @@
         <a4j:outputPanel id="difficultySelectPanel"
                          layout="block"
                          styleClass="area">
-            <table class="detail-table">
-                <tr>
-                    <td colspan="2"/>
-                    <td class="detail-cell">
-                        <h:outputLabel id="difficultyQuestionsCountLabel"
-                                       value="#{messages['test.detail.difficulty.questionsCount']}"/>
-                    </td>
-                    <td class="detail-cell">
-                        <h:outputLabel id="difficultyPassScoreLabel"
-                                       value="#{messages['test.detail.difficulty.passScore']}"/>
-                    </td>
-                </tr>
-                <a4j:repeat id="difficultiesRepeat"
-                            value="#{pageBean.difficultyList}"
-                            var="testDifficulty">
+            <s:fragment id="difficultyListFragment"
+                        rendered="#{pageBean.difficultyList != null and pageBean.difficultyList.size != 0}">
+                <table class="detail-table">
                     <tr>
+                        <td colspan="2"/>
                         <td class="detail-cell">
-                            <h:selectBooleanCheckbox id="difficultyCheckbox"
-                                                     value="#{testDifficulty.selected}"
-                                                     styleClass="checkbox"/>
+                            <h:outputLabel id="difficultyQuestionsCountLabel"
+                                           value="#{messages['test.detail.difficulty.questionsCount']}"/>
                         </td>
                         <td class="detail-cell">
-                            <h:outputLabel id="difficultyLabel"
-                                           value="#{testDifficulty.difficulty.name}"
-                                           for="difficultyCheckbox"
-                                           styleClass="simple-label"/>
-                        </td>
-                        <td class="detail-cell">
-                            <rich:inputNumberSpinner id="difficultyQuestionsCountInput"
-                                                     value="#{testDifficulty.questionsCount}"/>
-                        </td>
-                        <td class="detail-cell">
-                            <rich:inputNumberSlider id="difficultyPassScoreInput"
-                                                    value="#{testDifficulty.passScore}"
-                                                    showInput="false"
-                                                    width="7em"/>
+                            <h:outputLabel id="difficultyPassScoreLabel"
+                                           value="#{messages['test.detail.difficulty.passScore']}"/>
                         </td>
                     </tr>
-                </a4j:repeat>
-            </table>
+                    <a4j:repeat id="difficultiesRepeat"
+                                value="#{pageBean.difficultyList}"
+                                var="testDifficulty">
+                        <tr>
+                            <td class="detail-cell">
+                                <h:selectBooleanCheckbox id="difficultyCheckbox"
+                                                         value="#{testDifficulty.selected}"
+                                                         styleClass="checkbox"/>
+                            </td>
+                            <td class="detail-cell">
+                                <h:outputLabel id="difficultyLabel"
+                                               value="#{testDifficulty.difficulty.name}"
+                                               for="difficultyCheckbox"
+                                               styleClass="simple-label"/>
+                            </td>
+                            <td class="detail-cell">
+                                <rich:inputNumberSpinner id="difficultyQuestionsCountInput"
+                                                         value="#{testDifficulty.questionsCount}"/>
+                            </td>
+                            <td class="detail-cell">
+                                <rich:inputNumberSlider id="difficultyPassScoreInput"
+                                                        value="#{testDifficulty.passScore}"
+                                                        showInput="false"
+                                                        width="7em"/>
+                            </td>
+                        </tr>
+                    </a4j:repeat>
+                </table>
+            </s:fragment>
+            <s:fragment id="emptyDifficultyListFragment"
+                        rendered="#{pageBean.difficultyList == null or pageBean.difficultyList.size == 0}">
+            <h:outputText id="emptyDifficultyListText"
+                          value="#{messages['test.detail.difficulty.empty']}"/>
+            </s:fragment>
         </a4j:outputPanel>
     </td>
 </tr>

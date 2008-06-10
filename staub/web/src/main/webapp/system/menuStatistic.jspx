@@ -19,6 +19,13 @@
             </s:link>
         </li>
         <li>
+            <s:link id="groupStatisticsListLink"
+                    value="#{messages['system.menu.statistic.groupStatistics']}"
+                    view="/statistic/groupStatisticsList.seam">
+                <f:param id="groupStatisticsListLinkBeanModeParam" name="beanMode" value="VIEW_MODE"/>
+            </s:link>
+        </li>
+        <li>
             <s:link id="testStatisticsListLink"
                     value="#{messages['system.menu.statistic.testStatistics']}"
                     view="/statistic/testStatisticsList.seam">
