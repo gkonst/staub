@@ -6,7 +6,7 @@ import org.jboss.seam.annotations.web.RequestParameter;
 import java.io.Serializable;
 
 /**
- * TODO add descritpion
+ * Generic webbean implementation which used for operates with detail(single entity) data.
  *
  * @author Konstantin Grigoriev
  */
@@ -43,9 +43,9 @@ public abstract class GenericDetailBean<T extends Serializable> extends GenericM
     public void initBean() {
         if (isBeanModeDefined()) {
             Integer modelId;
-            if(modelIdFromRequestParameter != null) {
+            if (modelIdFromRequestParameter != null) {
                 modelId = modelIdFromRequestParameter;
-            } else if(modelIdFromRequestAttribute != null) {
+            } else if (modelIdFromRequestAttribute != null) {
                 modelId = modelIdFromRequestAttribute;
             } else {
                 modelId = null;
