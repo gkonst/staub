@@ -154,8 +154,11 @@ public class UserInputAnswerWrapper extends AnswerWrapper<UserInputType, String>
      */
     @Override
     public AnswerType getAnswer() {
-        AnswerType answerType = new AnswerType();
-        answerType.setUserInput(getCurrent());
+        AnswerType answerType = null;
+        if (getCurrent() != null && getCurrent().length() > 0) {
+            answerType = new AnswerType();
+            answerType.setUserInput(getCurrent());
+        }
         return answerType;
     }
 
