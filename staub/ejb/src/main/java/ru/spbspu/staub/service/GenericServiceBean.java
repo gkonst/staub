@@ -10,6 +10,7 @@ import javax.ejb.Remove;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.NoResultException;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
@@ -134,7 +135,15 @@ public abstract class GenericServiceBean<T extends Serializable, ID extends Seri
         for (Map.Entry<String, Object> param : queryParameters.entrySet()) {
             countQuery.setParameter(param.getKey(), param.getValue());
         }
-        long fullCount = (Long) countQuery.getSingleResult();
+        //long fullCount  (Long) countQuery.getSingleResult();
+
+        // Dirty workaround for queries with a group by clause.
+        long fullCount = 0;
+        try {
+            fullCount = (Long) countQuery.getSingleResult();
+        } catch (NoResultException e) {
+            // do nothing
+        }
 
         logger.debug("  count query...#0 rows...OK", fullCount);
         return fullCount;
