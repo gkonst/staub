@@ -67,7 +67,9 @@
                             <f:facet name="header">
                                 #{messages['question.trace.list.totalTime']}
                             </f:facet>
-                            #{questionTrace.totalTime}
+                            <h:outputText id="col5Text"
+                                          value="#{questionTrace.totalTime}"
+                                          converter="ru.spbspu.staub.TimeConverter"/>
                         </rich:column>
                         <rich:column id="col6">
                             <f:facet name="header">

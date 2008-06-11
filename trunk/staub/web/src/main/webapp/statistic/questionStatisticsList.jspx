@@ -32,177 +32,186 @@
                 rowKeyVar="rowKey"
                 rendered="#{pageBean.dataModel != null}"
                 styleClass="dataTable">
+<f:facet name="header">
+<rich:columnGroup id="headerColumnGroup">
+<rich:column id="col1Header" rowspan="2">
+    #{messages['question.statistics.list.question.rowNum']}
+</rich:column>
+<rich:column id="col2Hader" rowspan="2">
+    <a4j:outputPanel id="questionIdPanel" style="white-space:nowrap;">
+        #{messages['question.statistics.list.question.id']}
+        <br/>
+        <br/>
+        <h:inputText id="questionIdInput"
+                     value="#{pageBean.questionId}"
+                     style="margin-bottom:0.5em; margin-right:0.2em; width:2em;"/>
+        <a4j:commandLink id="setQuestionIdLink"
+                         action="#{pageBean.setQuestionId}"
+                         reRender="contentBodyForm"
+                         ajaxSingle="true"
+                         process="questionIdInput">
+            <h:graphicImage id="setQuestionIdLinkImage"
+                            url="/images/icons/icon_save.gif"
+                            alt="#{messages['common.list.functions.goto']}"/>
+        </a4j:commandLink>
+    </a4j:outputPanel>
+</rich:column>
+<rich:column id="col3Header" rowspan="2">
+    <a4j:outputPanel id="disciplinePanel">
+        #{messages['question.statistics.list.question.topic.category.discipline.name']}
+        <br/>
+        <br/>
+        <h:selectOneMenu id="disciplineSelect"
+                         value="#{pageBean.discipline}"
+                         converter="ru.spbspu.staub.ObjectSelectConverter"
+                         style="width:8em;">
+            <s:selectItems id="disciplineSelectItems"
+                           value="#{pageBean.disciplineList}"
+                           var="discipline"
+                           label="#{discipline.name}"
+                           noSelectionLabel="#{messages['question.statistics.list.question.topic.category.discipline.all']}"/>
+            <a4j:support id="disciplineSelectSupport"
+                         event="onchange"
+                         action="#{pageBean.setDiscipline}"
+                         reRender="contentBodyForm"
+                         ajaxSingle="true"/>
+        </h:selectOneMenu>
+    </a4j:outputPanel>
+</rich:column>
+<rich:column id="col4Header" rowspan="2">
+    <a4j:outputPanel id="categoryPanel">
+        #{messages['question.statistics.list.question.topic.category.name']}
+        <br/>
+        <br/>
+        <h:selectOneMenu id="categorySelect"
+                         value="#{pageBean.category}"
+                         disabled="#{pageBean.discipline == null}"
+                         converter="ru.spbspu.staub.ObjectSelectConverter"
+                         style="width:8em;">
+            <s:selectItems id="categorySelectItems"
+                           value="#{pageBean.categoryList}"
+                           var="category"
+                           label="#{category.name}"
+                           noSelectionLabel="#{messages['question.statistics.list.question.topic.category.all']}"/>
+            <a4j:support id="categorySelectSupport"
+                         event="onchange"
+                         action="#{pageBean.setCategory}"
+                         reRender="contentBodyForm"
+                         ajaxSingle="true"/>
+        </h:selectOneMenu>
+    </a4j:outputPanel>
+</rich:column>
+<rich:column id="col5Header" rowspan="2">
+    <a4j:outputPanel id="topicPanel">
+        #{messages['question.statistics.list.question.topic.name']}
+        <br/>
+        <br/>
+        <h:selectOneMenu id="topicSelect"
+                         value="#{pageBean.topic}"
+                         disabled="#{pageBean.category == null}"
+                         converter="ru.spbspu.staub.ObjectSelectConverter"
+                         style="width:8em;">
+            <s:selectItems id="topicSelectItems"
+                           value="#{pageBean.topicList}"
+                           var="topic"
+                           label="#{topic.name}"
+                           noSelectionLabel="#{messages['question.statistics.list.question.topic.all']}"/>
+            <a4j:support id="topicSelectSupport"
+                         event="onchange"
+                         action="#{pageBean.setTopic}"
+                         reRender="contentBodyForm"
+                         ajaxSingle="true"/>
+        </h:selectOneMenu>
+    </a4j:outputPanel>
+</rich:column>
+<rich:column id="col6Header" rowspan="2">
+    <a4j:outputPanel id="difficultyPanel">
+        #{messages['question.statistics.list.question.difficulty.name']}
+        <br/>
+        <br/>
+        <h:selectOneMenu id="difficultySelect"
+                         value="#{pageBean.difficulty}"
+                         converter="ru.spbspu.staub.ObjectSelectConverter"
+                         style="width:8em;">
+            <s:selectItems id="difficultySelectItems"
+                           value="#{pageBean.difficultyList}"
+                           var="difficulty"
+                           label="#{difficulty.name}"
+                           noSelectionLabel="#{messages['question.statistics.list.question.difficulty.all']}"/>
+            <a4j:support id="difficultySelectSupport"
+                         event="onchange"
+                         action="#{pageBean.setDifficulty}"
+                         reRender="contentBodyForm"
+                         ajaxSingle="true"/>
+        </h:selectOneMenu>
+    </a4j:outputPanel>
+</rich:column>
+<rich:column id="col7Header" rowspan="2">
+    #{messages['question.statistics.list.totalAnswers']}
+</rich:column>
+<rich:column id="col8Header" rowspan="2">
+    #{messages['question.statistics.list.correctAnswersPercent']}
+</rich:column>
+<rich:column id="col9-12Header" colspan="4" style="text-align:center;">
+    #{messages['question.statistics.list.k']}
+</rich:column>
+<rich:column id="col9Header" breakBefore="true">
+    #{messages['question.statistics.list.k1']}
+</rich:column>
+<rich:column id="col10Header">
+    #{messages['question.statistics.list.k2']}
+</rich:column>
+<rich:column id="col11Header">
+    #{messages['question.statistics.list.k3']}
+</rich:column>
+<rich:column id="col12Header">
+    #{messages['question.statistics.list.k4']}
+</rich:column>
+</rich:columnGroup>
+</f:facet>
 <rich:column id="col1">
-    <f:facet name="header">#{messages['question.statistics.list.question.rowNum']}</f:facet>
     #{pageBean.rowsOnPage * (pageBean.currentPage - 1) + rowKey + 1}
 </rich:column>
 <rich:column id="col2">
-    <f:facet name="header">
-        <a4j:outputPanel id="questionIdPanel" style="white-space:nowrap;">
-            #{messages['question.statistics.list.question.id']}
-            <br/>
-            <br/>
-            <h:inputText id="questionIdInput"
-                         value="#{pageBean.questionId}"
-                         style="margin-bottom:0.5em; margin-right:0.2em; width:2em;"/>
-            <a4j:commandLink id="setQuestionIdLink"
-                             action="#{pageBean.setQuestionId}"
-                             reRender="contentBodyForm"
-                             ajaxSingle="true"
-                             process="questionIdInput">
-                <h:graphicImage id="setQuestionIdLinkImage"
-                                url="/images/icons/icon_save.gif"
-                                alt="#{messages['common.list.functions.goto']}"/>
-            </a4j:commandLink>
-        </a4j:outputPanel>
-    </f:facet>
     #{questionStatistics.question.id}
 </rich:column>
 <rich:column id="col3">
-    <f:facet name="header">
-        <a4j:outputPanel id="disciplinePanel">
-            #{messages['question.statistics.list.question.topic.category.discipline.name']}
-            <br/>
-            <br/>
-            <h:selectOneMenu id="disciplineSelect"
-                             value="#{pageBean.discipline}"
-                             converter="ru.spbspu.staub.ObjectSelectConverter"
-                             style="width:8em;">
-                <s:selectItems id="disciplineSelectItems"
-                               value="#{pageBean.disciplineList}"
-                               var="discipline"
-                               label="#{discipline.name}"
-                               noSelectionLabel="#{messages['question.statistics.list.question.topic.category.discipline.all']}"/>
-                <a4j:support id="disciplineSelectSupport"
-                             event="onchange"
-                             action="#{pageBean.setDiscipline}"
-                             reRender="contentBodyForm"
-                             ajaxSingle="true"/>
-            </h:selectOneMenu>
-        </a4j:outputPanel>
-    </f:facet>
     #{questionStatistics.question.topic.category.discipline.name}
 </rich:column>
 <rich:column id="col4">
-    <f:facet name="header">
-        <a4j:outputPanel id="categoryPanel">
-            #{messages['question.statistics.list.question.topic.category.name']}
-            <br/>
-            <br/>
-            <h:selectOneMenu id="categorySelect"
-                             value="#{pageBean.category}"
-                             disabled="#{pageBean.discipline == null}"
-                             converter="ru.spbspu.staub.ObjectSelectConverter"
-                             style="width:8em;">
-                <s:selectItems id="categorySelectItems"
-                               value="#{pageBean.categoryList}"
-                               var="category"
-                               label="#{category.name}"
-                               noSelectionLabel="#{messages['question.statistics.list.question.topic.category.all']}"/>
-                <a4j:support id="categorySelectSupport"
-                             event="onchange"
-                             action="#{pageBean.setCategory}"
-                             reRender="contentBodyForm"
-                             ajaxSingle="true"/>
-            </h:selectOneMenu>
-        </a4j:outputPanel>
-    </f:facet>
     #{questionStatistics.question.topic.category.name}
 </rich:column>
 <rich:column id="col5">
-    <f:facet name="header">
-        <a4j:outputPanel id="topicPanel">
-            #{messages['question.statistics.list.question.topic.name']}
-            <br/>
-            <br/>
-            <h:selectOneMenu id="topicSelect"
-                             value="#{pageBean.topic}"
-                             disabled="#{pageBean.category == null}"
-                             converter="ru.spbspu.staub.ObjectSelectConverter"
-                             style="width:8em;">
-                <s:selectItems id="topicSelectItems"
-                               value="#{pageBean.topicList}"
-                               var="topic"
-                               label="#{topic.name}"
-                               noSelectionLabel="#{messages['question.statistics.list.question.topic.all']}"/>
-                <a4j:support id="topicSelectSupport"
-                             event="onchange"
-                             action="#{pageBean.setTopic}"
-                             reRender="contentBodyForm"
-                             ajaxSingle="true"/>
-            </h:selectOneMenu>
-        </a4j:outputPanel>
-    </f:facet>
     #{questionStatistics.question.topic.name}
 </rich:column>
 <rich:column id="col6">
-    <f:facet name="header">
-        <a4j:outputPanel id="difficultyPanel">
-            #{messages['question.statistics.list.question.difficulty.name']}
-            <br/>
-            <br/>
-            <h:selectOneMenu id="difficultySelect"
-                             value="#{pageBean.difficulty}"
-                             converter="ru.spbspu.staub.ObjectSelectConverter"
-                             style="width:8em;">
-                <s:selectItems id="difficultySelectItems"
-                               value="#{pageBean.difficultyList}"
-                               var="difficulty"
-                               label="#{difficulty.name}"
-                               noSelectionLabel="#{messages['question.statistics.list.question.difficulty.all']}"/>
-                <a4j:support id="difficultySelectSupport"
-                             event="onchange"
-                             action="#{pageBean.setDifficulty}"
-                             reRender="contentBodyForm"
-                             ajaxSingle="true"/>
-            </h:selectOneMenu>
-        </a4j:outputPanel>
-    </f:facet>
     #{questionStatistics.question.difficulty.name}
 </rich:column>
 <rich:column id="col7">
-    <f:facet name="header">
-        #{messages['question.statistics.list.totalAnswers']}
-    </f:facet>
     #{questionStatistics.totalAnswers}
 </rich:column>
 <rich:column id="col8">
-    <f:facet name="header">
-        #{messages['question.statistics.list.correctAnswersPercent']}
-    </f:facet>
-    #{questionStatistics.correctAnswersPercent}
+    #{questionStatistics.correctAnswersPercent}%
 </rich:column>
 <rich:column id="col9">
-    <f:facet name="header">
-        #{messages['question.statistics.list.k1']}
-    </f:facet>
     <h:outputText id="col9Text"
                   value="#{questionStatistics.k1}">
         <f:convertNumber maxFractionDigits="2"/>
     </h:outputText>
 </rich:column>
 <rich:column id="col10">
-    <f:facet name="header">
-        #{messages['question.statistics.list.k2']}
-    </f:facet>
     <h:outputText id="col10Text"
                   value="#{questionStatistics.k2}">
         <f:convertNumber maxFractionDigits="2"/>
     </h:outputText>
 </rich:column>
 <rich:column id="col11">
-    <f:facet name="header">
-        #{messages['question.statistics.list.k3']}
-    </f:facet>
     <h:outputText id="col11Text"
                   value="#{questionStatistics.k3}">
         <f:convertNumber maxFractionDigits="2"/>
     </h:outputText>
 </rich:column>
 <rich:column id="col12">
-    <f:facet name="header">
-        #{messages['question.statistics.list.k4']}
-    </f:facet>
     <h:outputText id="col12Text"
                   value="#{questionStatistics.k4}">
         <f:convertNumber maxFractionDigits="2"/>
