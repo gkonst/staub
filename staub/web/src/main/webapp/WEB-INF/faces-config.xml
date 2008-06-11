@@ -25,4 +25,8 @@
         <converter-id>ru.spbspu.staub.ObjectSelectConverter</converter-id>
         <converter-class>ru.spbspu.staub.components.converter.ObjectSelectConverter</converter-class>
     </converter>
+    <converter>
+        <converter-id>ru.spbspu.staub.TimeConverter</converter-id>
+        <converter-class>ru.spbspu.staub.components.converter.TimeConverter</converter-class>
+    </converter>
 </faces-config>
