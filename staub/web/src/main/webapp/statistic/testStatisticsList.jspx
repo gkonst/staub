@@ -136,7 +136,7 @@
         <f:facet name="header">
             #{messages['test.statistics.list.correctAnswersPercent']}
         </f:facet>
-        #{testStatistics.correctAnswersPercent}
+        #{testStatistics.correctAnswersPercent}%
     </rich:column>
 </rich:dataTable>
 <h:outputText value="#{messages['common.list.noDataFound']}"

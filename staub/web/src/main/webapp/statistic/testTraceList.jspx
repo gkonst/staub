@@ -197,7 +197,7 @@
     <f:facet name="header">
         #{messages['test.trace.list.score']}
     </f:facet>
-    #{testTrace.score}
+    #{testTrace.score}%
 </rich:column>
 <rich:column id="col9">
     <f:facet name="header">

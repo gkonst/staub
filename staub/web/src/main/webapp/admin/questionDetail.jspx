@@ -72,7 +72,8 @@
         <h:inputText id="timeLimitInput"
                      value="#{pageBean.model.timeLimit}"
                      disabled="#{pageBean.viewMode}"
-                     style="width:3em;"/>
+                     style="width:3em;"
+                     converter="ru.spbspu.staub.TimeConverter"/>
     </td>
 </tr>
 <tr>

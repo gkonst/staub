@@ -85,6 +85,10 @@ public class GroupStatisticsListBean extends GenericExportableListBean<GroupStat
         doRefresh();
     }
 
+    public void setStarted() {
+        doRefresh();
+    }
+
     private void fillDisciplineList() {
         disciplineList = disciplineService.findAll();
     }

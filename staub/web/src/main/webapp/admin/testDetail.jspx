@@ -66,7 +66,8 @@
         <h:inputText id="testTimeLimitInput"
                      value="#{pageBean.model.timeLimit}"
                      disabled="#{pageBean.viewMode}"
-                     style="width:5em;"/>
+                     style="width:5em;"
+                     converter="ru.spbspu.staub.TimeConverter"/>
     </td>
 </tr>
 <tr>
@@ -181,7 +182,8 @@
                             <td class="detail-cell">
                                 <h:selectBooleanCheckbox id="difficultyCheckbox"
                                                          value="#{testDifficulty.selected}"
-                                                         styleClass="checkbox"/>
+                                                         styleClass="checkbox"
+                                                         disabled="#{pageBean.viewMode}"/>
                             </td>
                             <td class="detail-cell">
                                 <h:outputLabel id="difficultyLabel"
@@ -191,13 +193,15 @@
                             </td>
                             <td class="detail-cell">
                                 <rich:inputNumberSpinner id="difficultyQuestionsCountInput"
-                                                         value="#{testDifficulty.questionsCount}"/>
+                                                         value="#{testDifficulty.questionsCount}"
+                                                         disabled="#{pageBean.viewMode}"/>
                             </td>
                             <td class="detail-cell">
                                 <rich:inputNumberSlider id="difficultyPassScoreInput"
                                                         value="#{testDifficulty.passScore}"
                                                         showInput="false"
-                                                        width="7em"/>
+                                                        width="7em"
+                                                        disabled="#{pageBean.viewMode}"/>
                             </td>
                         </tr>
                     </a4j:repeat>
@@ -205,8 +209,8 @@
             </s:fragment>
             <s:fragment id="emptyDifficultyListFragment"
                         rendered="#{pageBean.difficultyList == null or pageBean.difficultyList.size == 0}">
-            <h:outputText id="emptyDifficultyListText"
-                          value="#{messages['test.detail.difficulty.empty']}"/>
+                <h:outputText id="emptyDifficultyListText"
+                              value="#{messages['test.detail.difficulty.empty']}"/>
             </s:fragment>
         </a4j:outputPanel>
     </td>

@@ -26,6 +26,43 @@
     <ui:include src="/controls/genericRefreshControl.jspx"/>
     <ui:include src="/controls/genericExportControl.jspx"/>
 </a4j:outputPanel>
+<fieldset>
+    <table class="detail-table">
+        <tr>
+            <td class="detail-cell">
+                <h:outputLabel id="beginLabel"
+                               value="#{messages['group.statistics.list.started.begin']}"
+                               for="beginInput"/>
+            </td>
+            <td class="detail-cell">
+                <rich:calendar id="beginInput"
+                               value="#{pageBean.begin}"
+                               datePattern="dd.MM.yy"/>
+            </td>
+            <td class="detail-cell">
+                <h:outputLabel id="endLabel"
+                               value="#{messages['group.statistics.list.started.end']}"
+                               for="endInput"/>
+            </td>
+            <td class="detail-cell">
+                <rich:calendar id="endInput"
+                               value="#{pageBean.end}"
+                               datePattern="dd.MM.yy"/>
+            </td>
+            <td class="detail-cell">
+                <a4j:commandLink id="setStartedLink"
+                                 action="#{pageBean.setStarted}"
+                                 reRender="contentBodyForm"
+                                 ajaxSingle="true"
+                                 process="beginInput, endInput">
+                    <h:graphicImage id="setStartedLinkImage"
+                                    url="/images/icons/icon_save.gif"
+                                    alt="#{messages['common.list.functions.goto']}"/>
+                </a4j:commandLink>
+            </td>
+        </tr>
+    </table>
+</fieldset>
 <ui:decorate template="/controls/listLayoutControl.jspx">
 <ui:define name="listPageData">
 <rich:dataTable id="groupStatisticsList"
@@ -161,7 +198,7 @@
     <f:facet name="header">
         #{messages['group.statistics.list.correctAnswersPercent']}
     </f:facet>
-    #{groupStatistics.correctAnswersPercent}
+    #{groupStatistics.correctAnswersPercent}%
 </rich:column>
 </rich:dataTable>
 <h:outputText value="#{messages['common.list.noDataFound']}"
