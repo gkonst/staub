@@ -1,13 +1,12 @@
 package ru.spbspu.staub.entity;
 
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
 import ru.spbspu.staub.model.answer.AnswerType;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.io.Serializable;
-
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.Parameter;
+import java.util.Date;
 
 /**
  * The <code>QuestionTrace</code> class represents QuestionTrace entity.
@@ -122,12 +121,12 @@ public class QuestionTrace implements Serializable {
     }
 
     @Transient
-    public long getTotalTime() {
+    public int getTotalTime() {
         if ((started == null) || (finished == null)) {
             return 0;
         }
 
-        return ((finished.getTime() - started.getTime()) / 1000);
+        return (int)((finished.getTime() - started.getTime()) / 1000);
     }
 
     @Override
