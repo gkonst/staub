@@ -78,6 +78,8 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
 
     @SuppressWarnings("unchecked")
     public void processExpiredAssignments() {
+        logger.debug("> processExpiredAssignments()");
+
         Query q = getEntityManager().createQuery("select a from Assignment a where a.testEnd <= :currentDate and a.testTrace is null");
         q.setParameter("currentDate", new Date());
 
@@ -90,6 +92,8 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
                 // should not happen
             }
         }
+
+        logger.debug("< processExpiredAssignments()");
     }
 
     @Override
