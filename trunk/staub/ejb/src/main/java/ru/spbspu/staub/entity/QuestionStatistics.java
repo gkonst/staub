@@ -22,6 +22,8 @@ public class QuestionStatistics implements Serializable {
 
     private Integer correctAnswers;
 
+    private Integer correctAnswersPercent;
+
     private Integer n1;
 
     private Integer n2;
@@ -30,26 +32,15 @@ public class QuestionStatistics implements Serializable {
 
     private Integer n4;
 
+    private Double k1;
+
+    private Double k2;
+
+    private Double k3;
+
+    private Double k4;
+
     private Date lastUpdate;
-
-    /**
-     * Constructs a new <code>QuestionStatistics</code> entity.
-     *
-     * @param question       the question
-     * @param totalAnswers   the total answers count
-     * @param correctAnswers the correct answers count
-     */
-    public QuestionStatistics(Question question, Integer totalAnswers, Integer correctAnswers) {
-        fkQuestion = question.getId();
-        this.question = question;
-        this.totalAnswers = totalAnswers;
-        this.correctAnswers = correctAnswers;
-        setLastUpdate(new Date());
-    }
-
-    protected QuestionStatistics() {
-        // do nothing
-    }
 
     @Id
     @Column(name = "fk_question", nullable = false, length = 10)
@@ -89,6 +80,16 @@ public class QuestionStatistics implements Serializable {
 
     public void setCorrectAnswers(Integer correctAnswers) {
         this.correctAnswers = correctAnswers;
+    }
+
+    @Basic
+    @Column(name = "correct_answers_pc", length = 10)
+    public Integer getCorrectAnswersPercent() {
+        return correctAnswersPercent;
+    }
+
+    public void setCorrectAnswersPercent(Integer correctAnswersPercent) {
+        this.correctAnswersPercent = correctAnswersPercent;
     }
 
     @Basic
@@ -132,6 +133,46 @@ public class QuestionStatistics implements Serializable {
     }
 
     @Basic
+    @Column(name = "k1")
+    public Double getK1() {
+        return k1;
+    }
+
+    public void setK1(Double k1) {
+        this.k1 = k1;
+    }
+
+    @Basic
+    @Column(name = "k2")
+    public Double getK2() {
+        return k2;
+    }
+
+    public void setK2(Double k2) {
+        this.k2 = k2;
+    }
+
+    @Basic
+    @Column(name = "k3")
+    public Double getK3() {
+        return k3;
+    }
+
+    public void setK3(Double k3) {
+        this.k3 = k3;
+    }
+
+    @Basic
+    @Column(name = "k4")
+    public Double getK4() {
+        return k4;
+    }
+
+    public void setK4(Double k4) {
+        this.k4 = k4;
+    }
+
+    @Basic
     @Column(name = "last_update")
     public Date getLastUpdate() {
         return lastUpdate;
@@ -139,37 +180,6 @@ public class QuestionStatistics implements Serializable {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
-    }
-
-    @Transient
-    public int getCorrectAnswersPercent() {
-        return (int) ((double) correctAnswers / totalAnswers * 100);
-    }
-
-    @Transient
-    public double getK1() {
-        return (((double) n1 + n3) / totalAnswers);
-    }
-
-    @Transient
-    public Double getK2() {
-        if ((n2 + n4) == 0) {
-            return null;
-        }
-        return ((double) n2 / (n2 + n4));
-    }
-
-    @Transient
-    public Double getK3() {
-        if ((n1 + n3) == 0) {
-            return null;
-        }
-        return ((double) n3 / (n1 + n3));
-    }
-
-    @Transient
-    public double getK4() {
-        return (((double) n1 + n4) / totalAnswers);
     }
 
     @Override
@@ -199,6 +209,15 @@ public class QuestionStatistics implements Serializable {
         sb.append("{question=").append(question);
         sb.append(", totalAnswers=").append(totalAnswers);
         sb.append(", correctAnswers=").append(correctAnswers);
+        sb.append(", correctAnswersPercent=").append(correctAnswersPercent);
+        sb.append(", n1=").append(n1);
+        sb.append(", n2=").append(n2);
+        sb.append(", n3=").append(n3);
+        sb.append(", n4=").append(n4);
+        sb.append(", k1=").append(k1);
+        sb.append(", k2=").append(k2);
+        sb.append(", k3=").append(k3);
+        sb.append(", k4=").append(k4);
         sb.append(", lastUpdate=").append(lastUpdate);
         sb.append('}');
 

@@ -26,10 +26,23 @@ public class TestStatisticsServiceBean extends GenericServiceBean<TestStatistics
         private static final String DELETE_STATISTICS = "delete from test_statistics";
 
     private static final String INSERT_STATISTICS = "insert into test_statistics " +
-            "(fk_test, total_answers, correct_answers, last_update) " +
-            "(select tt.fk_test, count(*), sum(cast(tt.test_passed as integer)), current_timestamp " +
-            "from test_trace tt join test t on tt.fk_test = t.id where tt.finished is not null and t.active = true " +
-            "group by tt.fk_test)";
+            "(fk_test, total_answers, correct_answers, correct_answers_pc, last_update) " +
+            "(select s.fk_test, " +
+            "s.total_answers, " +
+            "s.correct_answers, " +
+            "100 * s.correct_answers / s.total_answers as correct_answers_pc, " +
+            "s.last_update " +
+            "from " +
+            "(select tt.fk_test as fk_test, " +
+            "count(*) as total_answers, " +
+            "sum(cast(tt.test_passed as integer)) as correct_answers, " +
+            "current_timestamp as last_update " +
+            "from test_trace tt " +
+            "join test t " +
+            "on tt.fk_test = t.id " +
+            "where tt.finished is not null " +
+            "and t.active = true " +
+            "group by tt.fk_test) as s))";
 
     public TestStatistics find(Test test) {
         logger.debug("> find(Test=#0)", test);

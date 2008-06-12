@@ -28,6 +28,8 @@ public class QuestionTrace implements Serializable {
 
     private Date finished;
 
+    private Integer totalTime;
+
     private AnswerType answer;
 
     private Question question;
@@ -68,6 +70,16 @@ public class QuestionTrace implements Serializable {
 
     public void setFinished(Date finished) {
         this.finished = finished;
+    }
+
+    @Basic
+    @Column(name = "total_time", length = 10)
+    public Integer getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(Integer totalTime) {
+        this.totalTime = totalTime;
     }
 
     @Column(name = "answer")
@@ -120,15 +132,6 @@ public class QuestionTrace implements Serializable {
         this.part = part;
     }
 
-    @Transient
-    public int getTotalTime() {
-        if ((started == null) || (finished == null)) {
-            return 0;
-        }
-
-        return (int)((finished.getTime() - started.getTime()) / 1000);
-    }
-
     @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {
@@ -153,6 +156,11 @@ public class QuestionTrace implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("QuestionTrace");
         sb.append("{id=").append(id);
+        sb.append(", started=").append(started);
+        sb.append(", finished=").append(finished);
+        sb.append(", totalTime=").append(totalTime);
+        sb.append(", correct=").append(correct);
+        sb.append(", part=").append(part);
         sb.append('}');
 
         return sb.toString();

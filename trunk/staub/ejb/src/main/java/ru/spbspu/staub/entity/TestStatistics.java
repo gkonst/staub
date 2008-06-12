@@ -22,26 +22,9 @@ public class TestStatistics implements Serializable {
 
     private Integer correctAnswers;
 
+    private Integer correctAnswersPercent;
+
     private Date lastUpdate;
-
-    /**
-     * Constructs a new <code>TestStatistics</code> entity.
-     *
-     * @param test           the test
-     * @param totalAnswers   the total answers count
-     * @param correctAnswers the correct answers count
-     */
-    public TestStatistics(Test test, Integer totalAnswers, Integer correctAnswers) {
-        fkTest = test.getId();
-        this.test = test;
-        this.totalAnswers = totalAnswers;
-        this.correctAnswers = correctAnswers;
-        setLastUpdate(new Date());
-    }
-
-    protected TestStatistics() {
-        // do nothing
-    }
 
     @Id
     @Column(name = "fk_test", nullable = false, length = 10)
@@ -84,6 +67,16 @@ public class TestStatistics implements Serializable {
     }
 
     @Basic
+    @Column(name = "correct_answers_pc", length = 10)
+    public Integer getCorrectAnswersPercent() {
+        return correctAnswersPercent;
+    }
+
+    public void setCorrectAnswersPercent(Integer correctAnswersPercent) {
+        this.correctAnswersPercent = correctAnswersPercent;
+    }
+
+     @Basic
     @Column(name = "last_update")
     public Date getLastUpdate() {
         return lastUpdate;
@@ -91,11 +84,6 @@ public class TestStatistics implements Serializable {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
-    }
-
-    @Transient
-    public int getCorrectAnswersPercent() {
-        return (int) ((double) correctAnswers / totalAnswers * 100);
     }
 
     @Override
@@ -125,6 +113,7 @@ public class TestStatistics implements Serializable {
         sb.append("{test=").append(test);
         sb.append(", totalAnswers=").append(totalAnswers);
         sb.append(", correctAnswers=").append(correctAnswers);
+        sb.append(", correctAnswersPercent=").append(correctAnswersPercent);
         sb.append(", lastUpdate=").append(lastUpdate);
         sb.append('}');
 
