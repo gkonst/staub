@@ -19,6 +19,10 @@ public class FormProperties implements Serializable {
      * How many rows to fetch.
      */
     private int rowsOnPage;
+    /**
+     * Sort option.
+     */
+    private SortItem sort;
 
     /**
      * Default constructor.
@@ -40,5 +44,13 @@ public class FormProperties implements Serializable {
 
     public void setRowsOnPage(int rowsOnPage) {
         this.rowsOnPage = rowsOnPage;
+    }
+
+    public SortItem getSort() {
+        return sort;
+    }
+
+    public void setSort(SortItem sort) {
+        this.sort = sort;
     }
 }
