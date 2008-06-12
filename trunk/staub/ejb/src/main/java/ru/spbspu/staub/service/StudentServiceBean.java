@@ -118,7 +118,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
     @SuppressWarnings("unchecked")
     public List<Student> findAll() {
         logger.debug(">>> Finding all(entity=#0)...", Student.class.getName());
-        StringBuilder queryString = new StringBuilder().append("select s from Student s where s.active = true order by s.name");
+        StringBuilder queryString = new StringBuilder().append("select s from Student s where s.active = true");
         List<Student> result = getEntityManager().createQuery(queryString.toString()).getResultList();
         logger.debug("<<< Finding all...Ok(#0 found)", result.size());
         return result;
@@ -126,7 +126,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
 
     @Override
     public FormTable findAll(FormProperties formProperties) {
-        StringBuilder queryString = new StringBuilder().append("select s from Student s where s.active = true order by s.name");
+        StringBuilder queryString = new StringBuilder().append("select s from Student s where s.active = true");
         return findAll(queryString.toString(), formProperties, new HashMap<String, Object>(0));
     }
 
