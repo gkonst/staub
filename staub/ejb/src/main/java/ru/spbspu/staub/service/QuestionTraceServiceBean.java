@@ -67,7 +67,11 @@ public class QuestionTraceServiceBean extends GenericServiceBean<QuestionTrace, 
     }
 
     public QuestionTrace saveAnswer(QuestionTrace questionTrace) {
-        questionTrace.setFinished(new Date());
+        Date finished = new Date();
+        questionTrace.setFinished(finished);
+        Date started = questionTrace.getStarted();
+        questionTrace.setTotalTime((int) (finished.getTime() - started.getTime()) / 1000);
+
         return makePersistent(questionTrace);
     }
 
