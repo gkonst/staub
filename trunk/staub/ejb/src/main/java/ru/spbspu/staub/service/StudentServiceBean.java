@@ -67,7 +67,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
             query.append(" where");
         }
 
-        query.append(" s.active = true order by s.name");
+        query.append(" s.active = true");
 
         String queryString = query.toString();
         logger.debug("*  Query: #0", queryString);
