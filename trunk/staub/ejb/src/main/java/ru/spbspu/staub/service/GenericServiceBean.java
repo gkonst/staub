@@ -5,6 +5,7 @@ import org.jboss.seam.log.Log;
 import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.model.list.SortItem;
 
 import javax.ejb.Remove;
 import javax.persistence.EntityManager;
@@ -96,14 +97,28 @@ public abstract class GenericServiceBean<T extends Serializable, ID extends Seri
         FormTable table = new FormTable();
         table.setFullCount(countQuery(queryString, queryParameters));
         if (table.getFullCount() != 0) {
-            Query query = getEntityManager().createQuery(queryString);
-            for (Map.Entry<String, Object> param : queryParameters.entrySet()) {
-                query.setParameter(param.getKey(), param.getValue());
+            Query q;
+            SortItem sortItem = formProperties.getSort();
+            if (sortItem != null) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(queryString);
+                sb.append(" order by ");
+                sb.append(sortItem.getField());
+                sb.append(' ');
+                if (sortItem.isDesc()) {
+                    sb.append("desc");
+                }
+                q = getEntityManager().createQuery(sb.toString());
+            } else {
+                q = getEntityManager().createQuery(queryString);
             }
-            // TODO implement sort features
+
+            for (Map.Entry<String, Object> param : queryParameters.entrySet()) {
+                q.setParameter(param.getKey(), param.getValue());
+            }
             // TODO implement search features
-            wrapQueryForPaging(query, formProperties.getCurrentPage(), formProperties.getRowsOnPage());
-            table.setRows(query.getResultList());
+            wrapQueryForPaging(q, formProperties.getCurrentPage(), formProperties.getRowsOnPage());
+            table.setRows(q.getResultList());
         } else {
             logger.debug(" count query returns 0 -> skipping query");
             table.setRows(Collections.EMPTY_LIST);
