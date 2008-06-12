@@ -47,7 +47,7 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
 
     @SuppressWarnings("unchecked")
     public List<Student> find(Group group) {
-        Query q = getEntityManager().createQuery("select s from Student s where s.group = :group and s.active = true order by s.name");
+        Query q = getEntityManager().createQuery("select s from Student s where s.group = :group and s.active = true");
         q.setParameter("group", group);
         return q.getResultList();
     }
