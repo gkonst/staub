@@ -193,6 +193,8 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
     @SuppressWarnings("unchecked")
     public void processExpiredTestTraces() {
+        logger.debug("> processExpiredTestTraces()");
+
         Query q = getEntityManager().createQuery("select t from TestTrace t where t.finished is null and t.assignment.testEnd <= :currentDate");
         Date date = new Date();
         q.setParameter("currentDate", date);
@@ -203,6 +205,8 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
                 endTest(testTrace, false);
             }
         }
+
+        logger.debug("< processExpiredTestTraces()");
     }
 
     private TestTrace createTestTrace(Assignment assignment) {
