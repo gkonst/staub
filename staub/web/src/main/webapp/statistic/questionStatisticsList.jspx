@@ -147,25 +147,43 @@
     </a4j:outputPanel>
 </rich:column>
 <rich:column id="col7Header" rowspan="2">
-    #{messages['question.statistics.list.totalAnswers']}
+    <ui:decorate template="/controls/listSortableControl.jspx">
+        <ui:param name="sortColumnName" value="totalAnswers"/>
+        <ui:param name="sortColumnTitle" value="#{messages['question.statistics.list.totalAnswers']}"/>
+    </ui:decorate>
 </rich:column>
 <rich:column id="col8Header" rowspan="2">
-    #{messages['question.statistics.list.correctAnswersPercent']}
+    <ui:decorate template="/controls/listSortableControl.jspx">
+        <ui:param name="sortColumnName" value="correctAnswersPercent"/>
+        <ui:param name="sortColumnTitle" value="#{messages['question.statistics.list.correctAnswersPercent']}"/>
+    </ui:decorate>
 </rich:column>
 <rich:column id="col9-12Header" colspan="4" style="text-align:center;">
     #{messages['question.statistics.list.k']}
 </rich:column>
 <rich:column id="col9Header" breakBefore="true">
-    #{messages['question.statistics.list.k1']}
+    <ui:decorate template="/controls/listSortableControl.jspx">
+        <ui:param name="sortColumnName" value="k1"/>
+        <ui:param name="sortColumnTitle" value="#{messages['question.statistics.list.k1']}"/>
+    </ui:decorate>
 </rich:column>
 <rich:column id="col10Header">
-    #{messages['question.statistics.list.k2']}
+    <ui:decorate template="/controls/listSortableControl.jspx">
+        <ui:param name="sortColumnName" value="k2"/>
+        <ui:param name="sortColumnTitle" value="#{messages['question.statistics.list.k2']}"/>
+    </ui:decorate>
 </rich:column>
 <rich:column id="col11Header">
-    #{messages['question.statistics.list.k3']}
+    <ui:decorate template="/controls/listSortableControl.jspx">
+        <ui:param name="sortColumnName" value="k3"/>
+        <ui:param name="sortColumnTitle" value="#{messages['question.statistics.list.k3']}"/>
+    </ui:decorate>
 </rich:column>
 <rich:column id="col12Header">
-    #{messages['question.statistics.list.k4']}
+    <ui:decorate template="/controls/listSortableControl.jspx">
+        <ui:param name="sortColumnName" value="k4"/>
+        <ui:param name="sortColumnTitle" value="#{messages['question.statistics.list.k4']}"/>
+    </ui:decorate>
 </rich:column>
 </rich:columnGroup>
 </f:facet>
