@@ -1,5 +1,7 @@
 package ru.spbspu.staub.timer;
 
+import org.jboss.seam.annotations.AutoCreate;
+import org.jboss.seam.annotations.Name;
 import ru.spbspu.staub.service.AssignmentService;
 import ru.spbspu.staub.service.TestTraceService;
 
@@ -13,6 +15,8 @@ import java.util.Collection;
  *
  * @author Alexander V. Elagin
  */
+@Name("expiredObjectsProcessor")
+@AutoCreate
 @Stateless
 public class ExpiredObjectsProcessorBean implements ExpiredObjectsProcessor {
     private static final long INTERVAL = 10 * 60 * 1000; // 10 minutes
