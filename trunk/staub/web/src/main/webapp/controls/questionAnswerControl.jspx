@@ -10,17 +10,17 @@
       xmlns:st="http://spbspu.ru/staub/taglib">
 
 <ui:composition>
-    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.solving.QuestionBean"-->
+    <!--@elvariable id="answerModel" type="ru.spbspu.staub.model.AnswerWrapper"-->
     <div id="questionAnswerPanel" class="questionAnswerPanel">
-        <a4j:outputPanel id="multipleChoicePanel" rendered="#{pageBean.answer.multipleChoice}">
+        <a4j:outputPanel id="multipleChoicePanel" rendered="#{answerModel.multipleChoice}">
             <table cellpadding="0" cellspacing="0" class="detail-table">
                 <a4j:repeat id="multipleChoiceRepeat"
-                            value="#{pageBean.answer.definition.answer}"
+                            value="#{answerModel.definition.answer}"
                             var="answer">
                     <tr>
                         <td class="detail-cell">
                             <h:selectBooleanCheckbox id="multipleChoiceCheckbox"
-                                                     value="#{pageBean.answer.current[answer.id]}"
+                                                     value="#{answerModel.current[answer.id]}"
                                                      styleClass="checkbox"/>
                         </td>
                         <td class="detail-cell">
@@ -31,15 +31,15 @@
                 </a4j:repeat>
             </table>
         </a4j:outputPanel>
-        <a4j:outputPanel id="singleChoicePanel" rendered="#{pageBean.answer.singleChoice}">
+        <a4j:outputPanel id="singleChoicePanel" rendered="#{answerModel.singleChoice}">
             <table cellpadding="0" cellspacing="0" class="detail-table">
                 <a4j:repeat id="singleChoiceRepeat"
-                            value="#{pageBean.answer.definition.answer}"
+                            value="#{answerModel.definition.answer}"
                             var="answer">
                     <tr>
                         <td class="detail-cell">
                             <st:selectBooleanRadio id="singleChoiceRadio"
-                                                   value="#{pageBean.answer.current[answer.id]}"
+                                                   value="#{answerModel.current[answer.id]}"
                                                    group="singleChoiceRadioGroup"
                                                    styleClass="radio"/>
                         </td>
@@ -51,9 +51,9 @@
                 </a4j:repeat>
             </table>
         </a4j:outputPanel>
-        <a4j:outputPanel id="userInputPanel" rendered="#{pageBean.answer.userInput}">
+        <a4j:outputPanel id="userInputPanel" rendered="#{answerModel.userInput}">
             <h:inputText id="userInput"
-                         value="#{pageBean.answer.current}"/>
+                         value="#{answerModel.current}"/>
         </a4j:outputPanel>
     </div>
 </ui:composition>

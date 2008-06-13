@@ -59,12 +59,14 @@
         <f:facet name="header">
             #{messages['question.detail.preview.title']}
         </f:facet>
-
-        <div id="questionDefinitionPanel" class="questionDefinitionPanel">
-            <s:formattedText id="previewText"
-                             value="#{pageBean.questionDefinition.description}"/>
-        </div>
-
+        <fieldset>
+            <ui:include src="/controls/questionDefinitionViewControl.jspx">
+                <ui:param name="questionDefinition" value="#{pageBean.questionDefinition}"/>
+            </ui:include>
+            <ui:include src="/controls/questionAnswerControl.jspx">
+                <ui:param name="answerModel" value="#{pageBean.answer}"/>
+            </ui:include>
+        </fieldset>
         <a4j:commandButton id="closePreviewButton"
                            styleClass="button"
                            value="#{messages['question.detail.preview.close']}"
