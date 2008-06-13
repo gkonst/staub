@@ -1,7 +1,9 @@
 package ru.spbspu.staub.timer;
 
 import org.jboss.seam.annotations.AutoCreate;
+import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.log.Log;
 import ru.spbspu.staub.service.AssignmentService;
 import ru.spbspu.staub.service.TestTraceService;
 
@@ -30,22 +32,37 @@ public class ExpiredObjectsProcessorBean implements ExpiredObjectsProcessor {
     @EJB
     private TestTraceService testTraceService;
 
+    @Logger
+    protected Log log;
+
     public void startTimer() {
+        log.debug("> startTimer()");
+
         TimerService timerService = sessionContext.getTimerService();
         timerService.createTimer(0, INTERVAL, null);
+
+        log.debug("< startTimer()");
     }
 
     @SuppressWarnings("unchecked")
     public void stopTimer() {
+        log.debug("> stopTimer()");
+
         TimerService timerService = sessionContext.getTimerService();
         for (Timer timer : (Collection<Timer>) timerService.getTimers()) {
             timer.cancel();
         }
+
+        log.debug("< stopTimer()");
     }
 
     @Timeout
     public void process(Timer timer) {
+        log.debug("> process(Timer=#0)", timer);
+
         assignmentService.processExpiredAssignments();
         testTraceService.processExpiredTestTraces();
+
+        log.debug("> process(Timer)");
     }
 }
