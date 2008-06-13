@@ -40,10 +40,14 @@
     <ui:define name="contentBody">
         <a4j:form id="questionForm">
             <a4j:outputPanel id="questionContentPanel" rendered="#{!pageBean.finished}">
-                <ui:include src="/controls/questionDefinitionViewControl.jspx">
-                    <ui:param name="questionDefinition" value="#{pageBean.currentQuestion.definition}"/>
-                </ui:include>
-                <ui:include src="/controls/questionAnswerControl.jspx"/>
+                <fieldset>
+                    <ui:include src="/controls/questionDefinitionViewControl.jspx">
+                        <ui:param name="questionDefinition" value="#{pageBean.currentQuestion.definition}"/>
+                    </ui:include>
+                    <ui:include src="/controls/questionAnswerControl.jspx">
+                        <ui:param name="answerModel" value="#{pageBean.answer}"/>
+                    </ui:include>
+                </fieldset>
             </a4j:outputPanel>
             <a4j:outputPanel id="noQuestionPanel" rendered="#{pageBean.finished}">
             </a4j:outputPanel>
