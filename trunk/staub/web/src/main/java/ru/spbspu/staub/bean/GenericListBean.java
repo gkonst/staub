@@ -3,6 +3,7 @@ package ru.spbspu.staub.bean;
 import org.jboss.seam.faces.DataModels;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.model.list.SortItem;
 
 import javax.faces.model.DataModel;
 import java.io.Serializable;
@@ -63,6 +64,11 @@ public abstract class GenericListBean<T extends Serializable> extends GenericMod
      * Current page number.
      */
     private int currentPage = 1;
+
+    /**
+     * Sort options.
+     */
+    private SortItem sort;
 
     /**
      * Object representation of the selection data.
@@ -133,16 +139,16 @@ public abstract class GenericListBean<T extends Serializable> extends GenericMod
                 currentPage = pageQuantity;
                 break;
             case EXACT_PAGE:
-                logger.debug("    User defined destination page: " + currentPage);
+                logger.debug("    User defined destination page: #0", currentPage);
                 break;
             case CURRENT_PAGE:
                 logger.debug("    Leaving current page number.");
                 break;
             default:
-                logger.debug("   No action for this direction! Use default " + PageDirection.FIRST_PAGE);
+                logger.debug("   No action for this direction! Use default #0", PageDirection.FIRST_PAGE);
                 currentPage = 1;
         }
-        logger.debug("  Change current page number to " + currentPage);
+        logger.debug("  Change current page number to #0", currentPage);
 
         findPageData();
     }
@@ -157,6 +163,7 @@ public abstract class GenericListBean<T extends Serializable> extends GenericMod
         FormProperties formProperties = new FormProperties();
         formProperties.setCurrentPage(getCurrentPage());
         formProperties.setRowsOnPage(getRowsOnPage());
+        formProperties.setSort(getSort());
         return formProperties;
     }
 
@@ -169,7 +176,7 @@ public abstract class GenericListBean<T extends Serializable> extends GenericMod
         if (currentPage >= 1) {
             startAtRow = (currentPage - 1) * rowsOnPage;
         }
-        logger.debug("  Start row number is : " + startAtRow);
+        logger.debug("  Start row number is : #0", startAtRow);
 
         formTable = findObjects(fillFormProperties());
 
@@ -184,8 +191,9 @@ public abstract class GenericListBean<T extends Serializable> extends GenericMod
         logger.debug("  Define default rows on page...");
         rowsOnPage = DEFAULT_ROWS_ON_PAGE;
         rowsOnCurrentPage = DEFAULT_ROWS_ON_PAGE;
-        logger.debug("    Default rows on page : " + rowsOnPage);
+        logger.debug("    Default rows on page : #0", rowsOnPage);
         selectedMap = new HashMap<Object, Boolean>();
+        sort = null;
         initPage(PageDirection.FIRST_PAGE);
         logger.debug("Retrieve completed successfully!");
     }
@@ -205,7 +213,7 @@ public abstract class GenericListBean<T extends Serializable> extends GenericMod
         logger.debug("Preparing current page for display...");
         logger.debug("  Defining total number of rows...");
         rowsTotal = (int) formTable.getFullCount();
-        logger.debug("    Total number of rows is: " + rowsTotal);
+        logger.debug("    Total number of rows is: #0", rowsTotal);
 
         logger.debug("  Defining number of pages..");
         int quotient = rowsTotal / rowsOnPage;
@@ -215,8 +223,8 @@ public abstract class GenericListBean<T extends Serializable> extends GenericMod
         } else {
             pageQuantity = quotient;
         }
-        logger.debug("    Total page quantity is: " + pageQuantity);
-        logger.debug("    Current page is: " + currentPage);
+        logger.debug("    Total page quantity is: #0", pageQuantity);
+        logger.debug("    Current page is: #0", currentPage);
 
         if (getCurrentPage() > getPageQuantity() && getPageQuantity() > 0) {
             logger.debug("      Autoswitch to PREVIOUS page...");
@@ -239,7 +247,7 @@ public abstract class GenericListBean<T extends Serializable> extends GenericMod
         } else {
             rowsOnCurrentPage = rowsOnPage;
         }
-        logger.debug("    Number of rows on current page is: " + rowsOnCurrentPage);
+        logger.debug("    Number of rows on current page is: #0", rowsOnCurrentPage);
 
     }
 
@@ -299,6 +307,34 @@ public abstract class GenericListBean<T extends Serializable> extends GenericMod
         logger.debug("Refreshing CURRENT page...");
         initPage(PageDirection.CURRENT_PAGE);
         logger.debug("Refreshing CURRENT page... OK");
+    }
+
+    /**
+     * Sorts list data.
+     *
+     * @param field name of field to sort
+     * @return nothing
+     */
+    public String doSort(String field) {
+        logger.debug("Sorting list data...");
+        if (sort == null) {
+            sort = new SortItem(field, SortItem.Order.ASC);
+        } else {
+            if (sort.getField().equals(field)) {
+                if (sort.isAsc()) {
+                    sort = new SortItem(field, SortItem.Order.DESC);
+                } else {
+//                    sort = null;
+                    sort = new SortItem(field, SortItem.Order.ASC);
+                }
+            } else {
+                sort = new SortItem(field, SortItem.Order.ASC);
+            }
+        }
+        logger.debug(" defining #0 sort for field #1", sort.getOrder(), sort.getField());
+        initPage(PageDirection.CURRENT_PAGE);
+        logger.debug("Sorting list data... OK");
+        return null;
     }
 
     /**
@@ -387,5 +423,13 @@ public abstract class GenericListBean<T extends Serializable> extends GenericMod
 
     public void setDataModel(DataModel dataModel) {
         this.dataModel = dataModel;
+    }
+
+    public SortItem getSort() {
+        return sort;
+    }
+
+    public void setSort(SortItem sort) {
+        this.sort = sort;
     }
 }

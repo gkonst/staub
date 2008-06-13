@@ -24,7 +24,7 @@
                 <ui:include src="/controls/genericCreateControl.jspx"/>
                 <ui:include src="/controls/genericRefreshControl.jspx"/>
             </a4j:outputPanel>
-            <ui:decorate template="../controls/listLayoutControl.jspx">
+            <ui:decorate template="/controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">
                     <rich:dataTable id="studentList"
                                     value="#{pageBean.dataModel}"
@@ -32,7 +32,12 @@
                                     rendered="#{pageBean.dataModel != null}"
                                     styleClass="dataTable">
                         <rich:column id="col1">
-                            <f:facet name="header">#{messages['student.list.name']}</f:facet>
+                            <f:facet name="header">
+                                <ui:decorate template="/controls/listSortableControl.jspx">
+                                    <ui:param name="sortColumnName" value="name"/>
+                                    <ui:param name="sortColumnTitle" value="#{messages['student.list.name']}"/>
+                                </ui:decorate>
+                            </f:facet>
                             <s:link id="editStudentLink"
                                     action="detail" value="#{student.name}">
                                 <f:param id="idParam" name="modelId" value="#{student.id}"/>

@@ -186,7 +186,10 @@
 </rich:column>
 <rich:column id="col7">
     <f:facet name="header">
-        #{messages['test.trace.list.started']}
+        <ui:decorate template="/controls/listSortableControl.jspx">
+            <ui:param name="sortColumnName" value="started"/>
+            <ui:param name="sortColumnTitle" value="#{messages['test.trace.list.started']}"/>
+        </ui:decorate>
     </f:facet>
     <h:outputText id="col7Text"
                   value="#{testTrace.started}">
