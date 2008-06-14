@@ -96,7 +96,7 @@ Section "installDB" SEC02
   File "db\script\initial_data.sql"
   
   ExecWait '$INSTDIR\postgresql\bin\initdb.exe -D $INSTDIR\data\db -U postgres --locale=english --encoding=UTF8  --auth=md5 --pwfile=$PLUGINSDIR\db\conf\postgrespw'
-  !insertmacro WriteToFile "$INSTDIR\data\db\pg_hba.conf" "host    all         all         0.0.0.0 0.0.0.0        md5"
+  !insertmacro WriteToFile "$INSTDIR\data\db\pg_hba.conf" "host    all         all         127.0.0.1 255.255.255.255        md5"
   SimpleSC::InstallService "StaubDBService" "Staub :: Database Service" "16" "2" "$INSTDIR\postgresql\bin\pg_ctl.exe runservice -w -N pgsql-8.3 -D $INSTDIR\data\db" "" "" ""
   SimpleSC::StartService "StaubDBService"
   System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("PGPASSWORD", "postgres").r0'
