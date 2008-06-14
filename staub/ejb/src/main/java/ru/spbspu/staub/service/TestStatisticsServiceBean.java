@@ -27,7 +27,7 @@ public class TestStatisticsServiceBean extends GenericServiceBean<TestStatistics
 
     private static final String INSERT_STATISTICS = "insert into test_statistics " +
             "(fk_test, total_answers, correct_answers, correct_answers_pc, last_update) " +
-            "(select s.fk_test, " +
+            "select s.fk_test, " +
             "s.total_answers, " +
             "s.correct_answers, " +
             "100 * s.correct_answers / s.total_answers as correct_answers_pc, " +
@@ -42,7 +42,7 @@ public class TestStatisticsServiceBean extends GenericServiceBean<TestStatistics
             "on tt.fk_test = t.id " +
             "where tt.finished is not null " +
             "and t.active = true " +
-            "group by tt.fk_test) as s))";
+            "group by tt.fk_test) as s";
 
     public TestStatistics find(Test test) {
         logger.debug("> find(Test=#0)", test);
