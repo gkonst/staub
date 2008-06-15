@@ -63,6 +63,6 @@ public class ExpiredObjectsProcessorBean implements ExpiredObjectsProcessor {
         assignmentService.processExpiredAssignments();
         testTraceService.processExpiredTestTraces();
 
-        log.debug("> process(Timer)");
+        log.debug("< process(Timer)");
     }
 }

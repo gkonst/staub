@@ -80,7 +80,8 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
     public void processExpiredAssignments() {
         logger.debug("> processExpiredAssignments()");
 
-        Query q = getEntityManager().createQuery("select a from Assignment a where a.testEnd <= :currentDate and a.testTrace is null");
+//        Query q = getEntityManager().createQuery("select a from Assignment a where a.testEnd <= :currentDate and a.testTrace is null");
+        Query q = getEntityManager().createQuery("select a from Assignment a left join a.testTrace t where a.testEnd <= :currentDate and t is null");
         q.setParameter("currentDate", new Date());
 
         for (Assignment assignment : (List<Assignment>) q.getResultList()) {

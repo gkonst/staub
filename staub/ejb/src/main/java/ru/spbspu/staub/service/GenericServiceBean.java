@@ -157,6 +157,7 @@ public abstract class GenericServiceBean<T extends Serializable, ID extends Seri
 
         // Dirty workaround for queries with a group by clause.
         long fullCount = 0;
+        countQuery.setMaxResults(1);
         try {
             fullCount = (Long) countQuery.getSingleResult();
         } catch (NoResultException e) {
