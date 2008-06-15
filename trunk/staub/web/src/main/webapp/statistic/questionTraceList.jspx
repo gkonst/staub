@@ -32,6 +32,11 @@
             <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
                 <ui:include src="/controls/genericRefreshControl.jspx"/>
                 <ui:include src="/controls/genericExportControl.jspx"/>
+                <h:commandButton id="backButton"
+                                 action="#{pageBean.doBack}"
+                                 immediate="true"
+                                 value="#{messages['common.detail.functions.back']}"
+                                 styleClass="button"/>
             </a4j:outputPanel>
             <ui:decorate template="/controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">
@@ -47,25 +52,41 @@
                         </rich:column>
                         <rich:column id="col2">
                             <f:facet name="header">
-                                #{messages['question.trace.list.question.id']}
+                                <ui:decorate template="/controls/listSortableControl.jspx">
+                                    <ui:param name="sortColumnName" value="question.id"/>
+                                    <ui:param name="sortColumnTitle"
+                                              value="#{messages['question.trace.list.question.id']}"/>
+                                </ui:decorate>
                             </f:facet>
                             #{questionTrace.question.id}
                         </rich:column>
                         <rich:column id="col3">
                             <f:facet name="header">
-                                #{messages['question.trace.list.question.topic.name']}
+                                <ui:decorate template="/controls/listSortableControl.jspx">
+                                    <ui:param name="sortColumnName" value="question.topic.name"/>
+                                    <ui:param name="sortColumnTitle"
+                                              value="#{messages['question.trace.list.question.topic.name']}"/>
+                                </ui:decorate>
                             </f:facet>
                             #{questionTrace.question.topic.name}
                         </rich:column>
                         <rich:column id="col4">
                             <f:facet name="header">
-                                #{messages['question.trace.list.question.difficulty.name']}
+                                <ui:decorate template="/controls/listSortableControl.jspx">
+                                    <ui:param name="sortColumnName" value="question.difficulty.name"/>
+                                    <ui:param name="sortColumnTitle"
+                                              value="#{messages['question.trace.list.question.difficulty.name']}"/>
+                                </ui:decorate>
                             </f:facet>
                             #{questionTrace.question.difficulty.name}
                         </rich:column>
                         <rich:column id="col5">
                             <f:facet name="header">
-                                #{messages['question.trace.list.totalTime']}
+                                <ui:decorate template="/controls/listSortableControl.jspx">
+                                    <ui:param name="sortColumnName" value="totalTime"/>
+                                    <ui:param name="sortColumnTitle"
+                                              value="#{messages['question.trace.list.totalTime']}"/>
+                                </ui:decorate>
                             </f:facet>
                             <h:outputText id="col5Text"
                                           value="#{questionTrace.totalTime}"

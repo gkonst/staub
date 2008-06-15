@@ -35,7 +35,12 @@
                                     rendered="#{pageBean.dataModel.rowCount > 0}"
                                     styleClass="dataTable">
                         <rich:column id="col1">
-                            <f:facet name="header">#{messages['group.list.name']}</f:facet>
+                            <f:facet name="header">
+                                <ui:decorate template="/controls/listSortableControl.jspx">
+                                    <ui:param name="sortColumnName" value="name"/>
+                                    <ui:param name="sortColumnTitle" value="#{messages['group.list.name']}"/>
+                                </ui:decorate>
+                            </f:facet>
                             <s:link id="editGroupLink"
                                     action="detail" value="#{group.name}">
                                 <f:param id="idParam" name="modelId" value="#{group.id}"/>

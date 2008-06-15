@@ -52,7 +52,12 @@
     </a4j:htmlCommandLink>
 </rich:column>
 <rich:column id="col3">
-    <f:facet name="header">#{messages['test.list.name']}</f:facet>
+    <f:facet name="header">
+        <ui:decorate template="/controls/listSortableControl.jspx">
+            <ui:param name="sortColumnName" value="name"/>
+            <ui:param name="sortColumnTitle" value="#{messages['test.list.name']}"/>
+        </ui:decorate>
+    </f:facet>
     <s:link id="editTestLink" action="detail" value="#{test.name}">
         <f:param id="editTestLinkIdParam" name="modelId" value="#{test.id}"/>
         <f:param id="editTestLinkBeanModeParam" name="beanMode" value="EDIT_MODE"/>

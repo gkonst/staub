@@ -39,8 +39,10 @@
 </rich:column>
 <rich:column id="col2Hader" rowspan="2">
     <a4j:outputPanel id="questionIdPanel" style="white-space:nowrap;">
-        #{messages['question.statistics.list.question.id']}
-        <br/>
+        <ui:decorate template="/controls/listSortableControl.jspx">
+            <ui:param name="sortColumnName" value="question.id"/>
+            <ui:param name="sortColumnTitle" value="#{messages['question.statistics.list.question.id']}"/>
+        </ui:decorate>
         <br/>
         <h:inputText id="questionIdInput"
                      value="#{pageBean.questionId}"

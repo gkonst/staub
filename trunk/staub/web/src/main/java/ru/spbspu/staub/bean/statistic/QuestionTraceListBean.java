@@ -8,10 +8,10 @@ import org.jboss.seam.contexts.Contexts;
 import ru.spbspu.staub.bean.GenericExportableListBean;
 import ru.spbspu.staub.entity.QuestionTrace;
 import ru.spbspu.staub.entity.TestTrace;
+import ru.spbspu.staub.export.Cell;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.service.QuestionTraceService;
-import ru.spbspu.staub.export.Cell;
 
 import java.util.List;
 
@@ -71,5 +71,14 @@ public class QuestionTraceListBean extends GenericExportableListBean<QuestionTra
 
     public TestTrace getTestTrace() {
         return testTrace;
+    }
+
+    /**
+     * Defines back operation for current bean.
+     *
+     * @return navigation outcome
+     */
+    public String doBack() {
+        return "testTraceList";
     }
 }
