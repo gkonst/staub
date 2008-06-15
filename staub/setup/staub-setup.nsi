@@ -120,13 +120,13 @@ Section "installAS" SEC04
   SetOutPath "$INSTDIR"
   File /r jboss
   CreateDirectory $INSTDIR\jboss\server\default\log
-  SetOverwrite on
-  File /oname=$INSTDIR\jboss\server\default\lib\postgresql-8.3-603.jdbc3.jar "as\lib\postgresql-8.3-603.jdbc3.jar"
-  File /oname=$INSTDIR\jboss\server\default\conf\jboss-log4j.xml "as\conf\jboss-log4j.xml"
-  SetOverwrite try
-  SetOutPath "$INSTDIR\jboss\bin"
-  File "jboss-native\service.bat"
-  File "jboss-native\jbosssvc.exe"
+;  SetOverwrite on
+;  File /oname=$INSTDIR\jboss\server\default\lib\postgresql-8.3-603.jdbc3.jar "as\lib\postgresql-8.3-603.jdbc3.jar"
+;  File /oname=$INSTDIR\jboss\server\default\conf\jboss-log4j.xml "as\conf\jboss-log4j.xml"
+;  SetOverwrite try
+;  SetOutPath "$INSTDIR\jboss\bin"
+;  File "jboss-native\service.bat"
+;  File "jboss-native\jbosssvc.exe"
   ExecWait '$INSTDIR\jboss\bin\service.bat install'
 SectionEnd
 
