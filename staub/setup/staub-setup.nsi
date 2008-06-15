@@ -83,7 +83,7 @@ FunctionEnd
 Section "installDB" SEC02
   SetOverwrite try
   SetOutPath "$INSTDIR"
-  File /r postgresql
+  File /r /x .svn postgresql
   CreateDirectory $INSTDIR\data\db
   CreateDirectory $INSTDIR\data\images
   CreateDirectory $INSTDIR\installLogs
@@ -95,16 +95,16 @@ Section "installDB" SEC02
   File "db\script\create_schema_objects.sql"
   File "db\script\initial_data.sql"
   
-  ExecWait '$INSTDIR\postgresql\bin\initdb.exe -D $INSTDIR\data\db -U postgres --locale=english --encoding=UTF8  --auth=md5 --pwfile=$PLUGINSDIR\db\conf\postgrespw'
-  !insertmacro WriteToFile "$INSTDIR\data\db\pg_hba.conf" "host    all         all         127.0.0.1 255.255.255.255        md5"
-  SimpleSC::InstallService "StaubDBService" "Staub :: Database Service" "16" "2" "$INSTDIR\postgresql\bin\pg_ctl.exe runservice -w -N pgsql-8.3 -D $INSTDIR\data\db" "" "" ""
+  ExecWait '"$INSTDIR\postgresql\bin\initdb.exe" -D "$INSTDIR\data\db" -U postgres --locale=english --encoding=UTF8  --auth=md5 --pwfile="$PLUGINSDIR\db\conf\postgrespw"'
+  ;!insertmacro WriteToFile "$INSTDIR\data\db\pg_hba.conf" "host    all         all         127.0.0.1 255.255.255.255        md5"
+  SimpleSC::InstallService "StaubDBService" "Staub :: Database Service" "16" "2" '"$INSTDIR\postgresql\bin\pg_ctl.exe" runservice -w -N "StaubDBService" -D "$INSTDIR\data\db\"' "" "" ""
   SimpleSC::StartService "StaubDBService"
   System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("PGPASSWORD", "postgres").r0'
-  ExecWait '$INSTDIR\postgresql\bin\psql.exe -d postgres -U postgres -f $PLUGINSDIR\db\script\create_database.sql -L $INSTDIR\installLogs\create_database.log'
-  ExecWait '$INSTDIR\postgresql\bin\psql.exe -d staubdb -U postgres -f $PLUGINSDIR\db\script\create_schema.sql -L $INSTDIR\installLogs\create_schema.log'
+  ExecWait '"$INSTDIR\postgresql\bin\psql.exe" -d postgres -U postgres -f "$PLUGINSDIR\db\script\create_database.sql" -L "$INSTDIR\installLogs\create_database.log"'
+  ExecWait '"$INSTDIR\postgresql\bin\psql.exe" -d staubdb -U postgres -f "$PLUGINSDIR\db\script\create_schema.sql" -L "$INSTDIR\installLogs\create_schema.log"'
   System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("PGPASSWORD", "staub").r0'
-  ExecWait '$INSTDIR\postgresql\bin\psql.exe -d staubdb -U staub -f $PLUGINSDIR\db\script\create_schema_objects.sql -L $INSTDIR\installLogs\create_schema_objects.log'
-  ExecWait '$INSTDIR\postgresql\bin\psql.exe -d staubdb -U staub -f $PLUGINSDIR\db\script\initial_data.sql -L $INSTDIR\installLogs\initial_data.log'
+  ExecWait '"$INSTDIR\postgresql\bin\psql.exe" -d staubdb -U staub -f "$PLUGINSDIR\db\script\create_schema_objects.sql" -L "$INSTDIR\installLogs\create_schema_objects.log"'
+  ExecWait '"$INSTDIR\postgresql\bin\psql.exe" -d staubdb -U staub -f "$PLUGINSDIR\db\script\initial_data.sql" -L "$INSTDIR\installLogs\initial_data.log"'
 
   ;AccessControl::SetFileOwner "$INSTDIR\postgresql" "staub"
   ;AccessControl::GrantOnFile "$INSTDIR\data\db" "staub" "GenericRead + GenericWrite"
@@ -112,13 +112,13 @@ SectionEnd
 
 Section "installJDK" SEC03
   SetOutPath "$INSTDIR"
-  File /r jdk
+  File /r /x .svn jdk
   ; TODO problem with JAVA_HOME
 SectionEnd
 
 Section "installAS" SEC04
   SetOutPath "$INSTDIR"
-  File /r jboss
+  File /r /x .svn jboss
   CreateDirectory $INSTDIR\jboss\server\default\log
 ;  SetOverwrite on
 ;  File /oname=$INSTDIR\jboss\server\default\lib\postgresql-8.3-603.jdbc3.jar "as\lib\postgresql-8.3-603.jdbc3.jar"
@@ -127,7 +127,7 @@ Section "installAS" SEC04
 ;  SetOutPath "$INSTDIR\jboss\bin"
 ;  File "jboss-native\service.bat"
 ;  File "jboss-native\jbosssvc.exe"
-  ExecWait '$INSTDIR\jboss\bin\service.bat install'
+   ExecWait '"$INSTDIR\jboss\bin\service.bat" install'
 SectionEnd
 
 Section "installApp" SEC05
