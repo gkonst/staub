@@ -15,8 +15,7 @@ import java.util.StringTokenizer;
  * @author Konstantin Grigoriev
  */
 public class TimeConverter implements Converter {
-
-    private static final String TIME_PATTERN = "(?:(?:[01]\\d)|(?:2[0-3]):)?[0-5]\\d:[0-5]\\d";
+    private static final String TIME_PATTERN = "(?:(?:(?:[01]\\d)|(?:2[0-3])):)?[0-5]\\d:[0-5]\\d";
 
     /**
      * {@inheritDoc}
