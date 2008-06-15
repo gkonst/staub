@@ -29,6 +29,11 @@
           login-required="true"
           action="#{questionTraceListBean.initBean}">
         <restrict>#{s:hasRole('TEST_WRITER') or s:hasRole('ADMIN')}</restrict>
+        <navigation>
+            <rule if-outcome="testTraceList">
+                <render view-id="/statistic/testTraceList.jspx"/>
+            </rule>
+        </navigation>
     </page>
 
     <!-- Group Statistics -->

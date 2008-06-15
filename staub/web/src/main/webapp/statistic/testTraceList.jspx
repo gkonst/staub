@@ -79,7 +79,12 @@
     </a4j:htmlCommandLink>
 </rich:column>
 <rich:column id="col2">
-    <f:facet name="header">#{messages['test.trace.list.test.name']}</f:facet>
+    <f:facet name="header">
+        <ui:decorate template="/controls/listSortableControl.jspx">
+            <ui:param name="sortColumnName" value="test.name"/>
+            <ui:param name="sortColumnTitle" value="#{messages['test.trace.list.test.name']}"/>
+        </ui:decorate>
+    </f:facet>
     #{testTrace.test.name}
 </rich:column>
 <rich:column id="col3">

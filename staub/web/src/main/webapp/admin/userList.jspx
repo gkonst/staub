@@ -25,7 +25,7 @@
                 <ui:include src="/controls/genericCreateControl.jspx"/>
                 <ui:include src="/controls/genericRefreshControl.jspx"/>
             </a4j:outputPanel>
-            <ui:decorate template="../controls/listLayoutControl.jspx">
+            <ui:decorate template="/controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">
                     <h:outputText id="notFoundText"
                                   value="#{messages['common.list.noDataFound']}"
@@ -36,7 +36,12 @@
                                     rendered="#{pageBean.dataModel.rowCount > 0}"
                                     styleClass="dataTable">
                         <rich:column id="col1">
-                            <f:facet name="header">#{messages['user.list.username']}</f:facet>
+                            <f:facet name="header">
+                                <ui:decorate template="/controls/listSortableControl.jspx">
+                                    <ui:param name="sortColumnName" value="username"/>
+                                    <ui:param name="sortColumnTitle" value="#{messages['user.list.username']}"/>
+                                </ui:decorate>
+                            </f:facet>
                             <s:link id="editUserLink"
                                     action="detail" value="#{user.username}">
                                 <f:param id="idParam" name="modelId" value="#{user.id}"/>

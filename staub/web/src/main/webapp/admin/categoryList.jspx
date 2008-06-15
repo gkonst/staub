@@ -34,7 +34,7 @@
                                  value="#{messages['common.detail.functions.back']}"
                                  styleClass="button"/>
             </a4j:outputPanel>
-            <ui:decorate template="../controls/listLayoutControl.jspx">
+            <ui:decorate template="/controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">
                     <h:outputText id="notFoundText"
                                   value="#{messages['common.list.noDataFound']}"
@@ -53,7 +53,12 @@
                             </a4j:htmlCommandLink>
                         </rich:column>
                         <rich:column id="col2">
-                            <f:facet name="header">#{messages['category.list.code']}</f:facet>
+                            <f:facet name="header">
+                                <ui:decorate template="/controls/listSortableControl.jspx">
+                                    <ui:param name="sortColumnName" value="code"/>
+                                    <ui:param name="sortColumnTitle" value="#{messages['category.list.code']}"/>
+                                </ui:decorate>
+                            </f:facet>
                             <s:link id="editCategoryLink"
                                     action="detail" value="#{category.code}">
                                 <f:param id="idParam" name="modelId" value="#{category.id}"/>
@@ -61,7 +66,12 @@
                             </s:link>
                         </rich:column>
                         <rich:column id="col3">
-                            <f:facet name="header">#{messages['category.list.name']}</f:facet>
+                            <f:facet name="header">
+                                <ui:decorate template="/controls/listSortableControl.jspx">
+                                    <ui:param name="sortColumnName" value="name"/>
+                                    <ui:param name="sortColumnTitle" value="#{messages['category.list.name']}"/>
+                                </ui:decorate>
+                            </f:facet>
                             #{category.name}
                         </rich:column>
                         <rich:column id="col4">
