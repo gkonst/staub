@@ -195,10 +195,9 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
     public void processExpiredTestTraces() {
         logger.debug("> processExpiredTestTraces()");
 
-        Query q = getEntityManager().createQuery("select t from TestTrace t where t.finished is null and t.assignment.testEnd <= :currentDate");
+        Query q = getEntityManager().createQuery("select t from TestTrace t where t.finished is null");
+        
         Date date = new Date();
-        q.setParameter("currentDate", date);
-
         for (TestTrace testTrace : (List<TestTrace>) q.getResultList()) {
             if ((date.getTime() - testTrace.getStarted().getTime()) >
                     (1000 * testTrace.getTest().getTimeLimit() + EXPIRATION_THRESHOLD)) {
