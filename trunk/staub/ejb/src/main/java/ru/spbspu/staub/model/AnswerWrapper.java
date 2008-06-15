@@ -66,7 +66,7 @@ public abstract class AnswerWrapper<D, C> {
                 questionDefinition.setMultipleChoice(null);
                 break;
             default:
-                throw new IllegalArgumentException("Unrecognized answer type");
+                throw new IllegalArgumentException("Unrecognized answer type : " + type);
         }
         return getAnswer(questionDefinition);
     }
@@ -85,7 +85,7 @@ public abstract class AnswerWrapper<D, C> {
         } else if (questionDefinition.getUserInput() != null) {
             return new UserInputAnswerWrapper(questionDefinition.getUserInput());
         } else {
-            return null;
+            throw new IllegalArgumentException("Unrecognized answer type, questionDefinition : " + questionDefinition);
         }
     }
 
