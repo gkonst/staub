@@ -13,7 +13,7 @@
     <ui:define name="pageScript">
         <script type="text/javascript">
             function onBodyLoad() {
-                setTimeout('document.getElementById(\'testPrepareButton\').click();', 2000);
+                setTimeout('document.getElementById(\'testStartButton\').click();', 2000);
             }
         </script>
     </ui:define>
@@ -22,12 +22,10 @@
     </ui:define>
     <ui:define name="contentBody">
         #{messages['test.prepare.message']}
-        <s:button id="testPrepareButton"
-                  view="/solving/question.seam"
+        <s:button id="testStartButton"
+                  action="#{testStartBean.startTest}"
                   propagation="join"
-                  style="display:none;">
-            <f:param name="beanMode" value="VIEW_MODE"/>
-        </s:button>
+                  style="display:none;"/>
     </ui:define>
 </ui:composition>
 </html>

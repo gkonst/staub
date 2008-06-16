@@ -49,7 +49,7 @@
     <td class="detail-cell">
         <h:selectOneMenu id="difficultySelect"
                          value="#{pageBean.model.difficulty}"
-                         disabled="#{pageBean.viewMode}"
+                         
                          converter="ru.spbspu.staub.ObjectSelectConverter"
                          styleClass="required"
                          required="true"
@@ -222,7 +222,7 @@
                              stopControlLabel="#{messages['question.detail.upload.stop']}">
                 <a4j:support id="fileUploadSupport"
                              event="onuploadcomplete"
-                             reRender="imageUploadModalBox, questionDefinitionTextarea"
+                             reRender="fileUpload, questionDefinitionTextarea"
                              oncomplete="Richfaces.hideModalPanel('imageUploadModalBox');"/>
             </rich:fileUpload>
 

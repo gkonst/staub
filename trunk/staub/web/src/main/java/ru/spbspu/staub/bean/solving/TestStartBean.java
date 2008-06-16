@@ -38,13 +38,16 @@ public class TestStartBean extends GenericDetailBean<Assignment> {
 
     public String prepareTest() {
         testTrace = testTraceService.getTestTrace(getModel());
-        testTrace = testTraceService.startTest(testTrace); // may be moved to startTest()
-        return "testPrepare";
+        if (testTrace != null) {
+            return "testPrepare";
+        } else {
+            addFacesMessageFromResourceBundle("test.start.error.generation");
+            return "testListForPass";
+        }
     }
 
-    // temporarily unused
     public String startTest() {
         testTrace = testTraceService.startTest(testTrace);
-        return "questionDetail";
+        return doView("questionDetail");
     }
 }

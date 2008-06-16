@@ -38,7 +38,13 @@
                                 url="/images/icons/icon_upload.gif"
                                 onclick="Richfaces.showModalPanel('imageUploadModalBox')"
                                 alt="#{messages['common.detail.functions.uploadImage']}"
-                                styleClass="clickable"/>
+                                styleClass="clickable">
+                    <a4j:support id="imageUploadIconSupport"
+                                 event="onclick"
+                                 oncomplete="Richfaces.showModalPanel('imageUploadModalBox')"
+                                 process="questionDefinitionTextarea"
+                                 ajaxSingle="true"/>
+                </h:graphicImage>
             </td>
         </tr>
         <tr>

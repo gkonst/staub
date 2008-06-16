@@ -73,6 +73,7 @@ public class QuestionBean extends GenericModeBean {
                 // redundant situation
                 addFacesMessageFromResourceBundle("question.solving.zeroQuestions");
                 finished = true;
+                testTrace = testTraceService.endTest(testTrace, false);
                 logger.debug("<<< Init question...failed");
                 return;
             }

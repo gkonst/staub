@@ -74,10 +74,10 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         if (isCreateMode()) {
             setModel(new Question());
             setQuestionDefinition(new QuestionType());
-            setDiscipline((Discipline)Contexts.getConversationContext().get(Discipline.class.getName()));
-            setCategory((Category)Contexts.getConversationContext().get(Category.class.getName()));
-            getModel().setTopic((Topic)Contexts.getConversationContext().get(Topic.class.getName()));
-            getModel().setDifficulty((Difficulty)Contexts.getConversationContext().get(Difficulty.class.getName()));
+            setDiscipline((Discipline) Contexts.getConversationContext().get(Discipline.class.getName()));
+            setCategory((Category) Contexts.getConversationContext().get(Category.class.getName()));
+            getModel().setTopic((Topic) Contexts.getConversationContext().get(Topic.class.getName()));
+            getModel().setDifficulty((Difficulty) Contexts.getConversationContext().get(Difficulty.class.getName()));
             setAnswerType(AnswerWrapper.Type.SINGLE_CHOICE);
             changeAnswerType();
         } else {
@@ -122,7 +122,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
     @Override
     public void doSave() {
         logger.debug("Saving question...");
-        if(!answer.validate()) {
+        if (!answer.validate()) {
             addFacesMessageFromResourceBundle("question.detail.validation." + answer.getType());
             logger.debug("Saving question...failed");
             return;
@@ -143,20 +143,22 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         logger.debug(">>> Changing answer type...#0", answerType);
         answer = AnswerWrapper.createAnswer(getQuestionDefinition(), getAnswerType());
         if (answer.isChoice()) {
-            ((ChoiceAnswerWrapper)answer).addAnswer();
-            ((ChoiceAnswerWrapper)answer).addAnswer();
-            ((ChoiceAnswerWrapper)answer).addAnswer();
-            ((ChoiceAnswerWrapper)answer).addAnswer();
-            ((ChoiceAnswerWrapper)answer).addAnswer();
+            ((ChoiceAnswerWrapper) answer).addAnswer();
+            ((ChoiceAnswerWrapper) answer).addAnswer();
+            ((ChoiceAnswerWrapper) answer).addAnswer();
+            ((ChoiceAnswerWrapper) answer).addAnswer();
+            ((ChoiceAnswerWrapper) answer).addAnswer();
         }
         logger.debug("<<< Changing answer type...Ok");
     }
 
     public void fileUploadListener(UploadEvent event) {
         logger.debug(">>> Uploading image...");
-        logger.debug(" fileName : #0", event.getUploadItem().getFileName());
-        String fileName = System.currentTimeMillis() + "_" + event.getUploadItem().getFileName();
-        String filePath = ImageResource.getResourceDirectory() + File.separator + fileName;
+        logger.debug(" fullFileName : #0", event.getUploadItem().getFileName());
+        String fileName = event.getUploadItem().getFileName().substring(event.getUploadItem().getFileName().lastIndexOf(File.separator) + 1);
+        logger.debug(" fileName : #0", fileName);
+        String newFileName = System.currentTimeMillis() + "_" + fileName;
+        String filePath = ImageResource.getResourceDirectory() + File.separator + newFileName;
         logger.debug(" filePath : #0", filePath);
         FileInputStream fi = null;
         FileOutputStream fo = null;
@@ -177,7 +179,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             imageTag.append("/seam/resource");
             imageTag.append(ImageResource.RESOURCE_PATH);
             imageTag.append("/");
-            imageTag.append(fileName);
+            imageTag.append(newFileName);
             imageTag.append("\"/>");
             if (getQuestionDefinition().getDescription() == null) {
                 getQuestionDefinition().setDescription("");

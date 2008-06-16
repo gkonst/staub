@@ -61,7 +61,7 @@ public abstract class GenericModeBean extends GenericBean {
             logger.debug("Defining bean mode... OK");
             return true;
         } else {
-            logger.debug("Bean behaviour not specified -> Using old bean state!");
+            logger.debug("Bean behaviour not specified -> Using old bean state(#0)!", beanMode);
             return false;
         }
     }
