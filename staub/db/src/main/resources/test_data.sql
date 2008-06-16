@@ -1,4 +1,4 @@
-SET CLIENT_ENCODING TO 'UTF-8';
+SET CLIENT_ENCODING TO 'UNICODE';
 INSERT INTO "user" (id,
                     fk_role,
                     username,
@@ -14,7 +14,7 @@ INSERT INTO student (id,
                      code,
                      active)
      VALUES (nextval('seq_student'),
-             currval('seq_group'),
+             16,
              'Иванов Иван Иванович',
              '87654351',
              true);
@@ -25,15 +25,10 @@ INSERT INTO student (id,
                      code,
                      active)
      VALUES (nextval('seq_student'),
-             currval('seq_group'),
+             16,
              'Петров Петр Петрович',
              '87654352',
              true);
-
-INSERT INTO "group" (id,
-                    name)
-     VALUES (nextval('seq_group'),
-             '6082/2');
 
 INSERT INTO student (id,
                      fk_group,
@@ -41,7 +36,7 @@ INSERT INTO student (id,
                      code,
                      active)
      VALUES (nextval('seq_student'),
-             currval('seq_group'),
+             17,
              'Сидоров Сидор Сидорович',
              '87654353',
              true);
@@ -95,7 +90,7 @@ INSERT INTO test_difficulty (fk_test,
                              questions_count,
                              pass_score)
      VALUES (currval('seq_test'),
-             currval('seq_difficulty'),
+             1,
              5,
              100);
 
@@ -118,7 +113,7 @@ INSERT INTO question (id,
                       created_by)
      VALUES (nextval('seq_question'),
              currval('seq_topic'),
-             currval('seq_difficulty'),
+             1,
              'Question #1',
              '<?xml version="1.0" encoding="UTF-8"?><question xmlns="http://staub.spbspu.ru/Question"><description>How many fingers does the average homo sapiens have? (Choose one.)</description><single-choice><answer id="1" correct="true">5</answer><answer id="2">10</answer><answer id="3">15</answer><answer id="4">20</answer></single-choice></question>',
              true,
@@ -130,7 +125,7 @@ INSERT INTO test_difficulty (fk_test,
                              questions_count,
                              pass_score)
      VALUES (currval('seq_test'),
-             currval('seq_difficulty'),
+             2,
              10,
              75);
 
@@ -153,7 +148,7 @@ INSERT INTO question (id,
                       created_by)
      VALUES (nextval('seq_question'),
              currval('seq_topic'),
-             currval('seq_difficulty'),
+             2,
              'Question #2',
              '<?xml version="1.0" encoding="UTF-8"?><ques:question xmlns:ques="http://staub.spbspu.ru/Question"><ques:description>How many days are in February? (Choose multiple.)</ques:description><ques:multiple-choice><ques:answer id="1" correct="true">28</ques:answer><ques:answer id="2" correct="true">29</ques:answer><ques:answer id="3">30</ques:answer><ques:answer id="4">31</ques:answer></ques:multiple-choice></ques:question>',
              true,
