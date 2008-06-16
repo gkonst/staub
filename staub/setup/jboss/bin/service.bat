@@ -17,9 +17,9 @@ REM
 REM VERSION, VERSION_MAJOR and VERSION_MINOR are populated
 REM during the build with ant filter.
 REM
-set SVCNAME=JBAS50SVC
-set SVCDISP=JBoss Application Server 5.0
-set SVCDESC=JBoss Application Server 5.0.0 GA/Platform: Windows x86
+set SVCNAME=StaubASService
+set SVCDISP=Staub :: Application Server Service
+set SVCDESC=
 set NOPAUSE=Y
 
 REM Suppress killing service on logoff event
@@ -52,7 +52,7 @@ if errorlevel 6 echo Unknown service mode for %SVCDISP%
 goto cmdEnd
 
 :cmdInstall
-jbosssvc.exe -imwdc %SVCNAME% "%DIRNAME%" "%SVCDISP%" "%SVCDESC%" service.bat
+jbosssvc.exe -iwdc %SVCNAME% "%DIRNAME%" "%SVCDISP%" "%SVCDESC%" service.bat
 if not errorlevel 0 goto errExplain
 echo Service %SVCDISP% installed
 goto cmdEnd
@@ -71,18 +71,18 @@ if not errorlevel 1 (
   goto cmdEnd
 )
 echo Y > .r.lock
-jbosssvc.exe -p 1 "Starting %SVCDISP%" > run.log
-call run.bat < .r.lock >> run.log 2>&1
-jbosssvc.exe -p 1 "Shutdown %SVCDISP% service" >> run.log
+jbosssvc.exe -p 1 "Starting %SVCDISP%" > ..\server\default\log\run.log
+call run.bat < .r.lock >> ..\server\default\log\run.log 2>&1
+jbosssvc.exe -p 1 "Shutdown %SVCDISP% service" >> ..\server\default\log\run.log
 del .r.lock
 goto cmdEnd
 
 :cmdStop
 REM Executed on service stop
 echo Y > .s.lock
-jbosssvc.exe -p 1 "Shutting down %SVCDISP%" > shutdown.log
-call shutdown -S < .s.lock >> shutdown.log 2>&1
-jbosssvc.exe -p 1 "Shutdown %SVCDISP% service" >> shutdown.log
+jbosssvc.exe -p 1 "Shutting down %SVCDISP%" > ..\server\default\log\shutdown.log
+call shutdown -S -u=admin -p=admin < .s.lock >> ..\server\default\log\shutdown.log 2>&1
+jbosssvc.exe -p 1 "Shutdown %SVCDISP% service" >> ..\server\default\log\shutdown.log
 del .s.lock
 goto cmdEnd
 
@@ -90,8 +90,8 @@ goto cmdEnd
 REM Executed manually from command line
 REM Note: We can only stop and start
 echo Y > .s.lock
-jbosssvc.exe -p 1 "Shutting down %SVCDISP%" >> shutdown.log
-call shutdown -S < .s.lock >> shutdown.log 2>&1
+jbosssvc.exe -p 1 "Shutting down %SVCDISP%" >> ..\server\default\log\shutdown.log
+call shutdown -S -u=admin -p=admin < .s.lock >> ..\server\default\log\shutdown.log 2>&1
 del .s.lock
 :waitRun
 REM Delete lock file
@@ -100,9 +100,9 @@ REM Wait one second if lock file exist
 jbosssvc.exe -s 1
 if exist ".r.lock" goto waitRun
 echo Y > .r.lock
-jbosssvc.exe -p 1 "Restarting %SVCDISP%" >> run.log
-call run.bat < .r.lock >> run.log 2>&1
-jbosssvc.exe -p 1 "Shutdown %SVCDISP% service" >> run.log
+jbosssvc.exe -p 1 "Restarting %SVCDISP%" >> ..\server\default\log\run.log
+call run.bat < .r.lock >> ..\server\default\log\run.log 2>&1
+jbosssvc.exe -p 1 "Shutdown %SVCDISP% service" >> ..\server\default\log\run.log
 del .r.lock
 goto cmdEnd
 
