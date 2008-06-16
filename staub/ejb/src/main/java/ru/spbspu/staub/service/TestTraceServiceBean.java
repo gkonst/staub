@@ -106,6 +106,8 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
     @SuppressWarnings("unchecked")
     public TestTrace getTestTrace(Assignment assignment) {
+        logger.debug("> getTestTrace(Assignment=#0)", assignment);
+
         Query q = getEntityManager().createQuery("select t from TestTrace t where t.assignment = :assignment");
         q.setParameter("assignment", assignment);
 
@@ -117,8 +119,31 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         }
 
         if (testTrace == null) {
+            logger.debug("* TestTrace was not found.");
+
             testTrace = createTestTrace(assignment);
+
+            logger.debug("* New TestTrace created.");
         }
+
+        if (getCount(testTrace) == 0) {
+            logger.debug("* TestTrace contains no elements.");
+
+            endTest(testTrace, false);
+            try {
+                remove(testTrace);
+            } catch (RemoveException e) {
+                // should not happen
+            }
+
+            logger.debug("* TestTrace removed.");
+
+            testTrace = null;
+        }
+
+        logger.debug("* Result: #0", testTrace);
+
+        logger.debug("< getTestTrace(Assignment)");
 
         return testTrace;
     }
