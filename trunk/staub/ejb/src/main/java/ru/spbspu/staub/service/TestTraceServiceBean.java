@@ -132,8 +132,13 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
 
     public TestTrace endTest(TestTrace testTrace, boolean passed) {
         long questionsCount = getCount(testTrace);
-        long correctCount = getCorrectCount(testTrace);
-        int score = (int) (correctCount * 100 / questionsCount);
+        int score;
+        if (questionsCount > 0) {
+            long correctCount = getCorrectCount(testTrace);
+            score = (int) (correctCount * 100 / questionsCount);            
+        } else {
+            score = 0;
+        }
         testTrace.setScore(score);
 
         testTrace.setTestPassed(passed);
