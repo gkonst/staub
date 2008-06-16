@@ -1,3 +1,4 @@
+SET CLIENT_ENCODING TO 'UTF-8';
 INSERT INTO "user" (id,
                     fk_role,
                     username,
