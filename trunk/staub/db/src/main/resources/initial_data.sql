@@ -9,3 +9,95 @@ INSERT INTO "user" (id,
              0,
              'admin',
              'd033e22ae348aeb5660fc2140aec35850c4da997');
+
+INSERT INTO difficulty (id,
+                        name,
+                        code)
+     VALUES (nextval('seq_difficulty'),
+             'Низкая сложность',
+             0);
+INSERT INTO difficulty (id,
+                        name,
+                        code)
+     VALUES (nextval('seq_difficulty'),
+             'Средняя сложность',
+             1);
+INSERT INTO difficulty (id,
+                        name,
+                        code)
+     VALUES (nextval('seq_difficulty'),
+             'Высокая сложность',
+             2);
+
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '1082/1');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '1082/2');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '1082/3');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '2082/1');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '2082/2');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '2082/3');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '3082/1');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '3082/2');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '3082/3');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '4082/1');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '4082/2');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '4082/3');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '5082/1');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '5082/2');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '5082/3');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '6082/1');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '6082/2');
+INSERT INTO "group" (id,
+                    name)
+     VALUES (nextval('seq_group'),
+             '6082/3');

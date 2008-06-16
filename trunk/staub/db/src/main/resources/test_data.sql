@@ -8,11 +8,6 @@ INSERT INTO "user" (id,
              'test',
              'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
 
-INSERT INTO "group" (id,
-                    name)
-     VALUES (nextval('seq_group'),
-             '6082/1');
-
 INSERT INTO student (id,
                      fk_group,
                      name,
@@ -95,20 +90,6 @@ INSERT INTO assignment (id,
              'today',
              'tomorrow');
 
-INSERT INTO difficulty (id,
-                        name,
-                        code)
-     VALUES (nextval('seq_difficulty'),
-             'Низкая сложность',
-             0);
-
-INSERT INTO difficulty (id,
-                        name,
-                        code)
-     VALUES (nextval('seq_difficulty'),
-             'Стандартная сложность',
-             1);
-
 INSERT INTO test_difficulty (fk_test,
                              fk_difficulty,
                              questions_count,
@@ -143,13 +124,6 @@ INSERT INTO question (id,
              true,
              current_date,
              'Generation Script');
-
-INSERT INTO difficulty (id,
-                        name,
-                        code)
-     VALUES (nextval('seq_difficulty'),
-             'Высокая сложность',
-             2);
 
 INSERT INTO test_difficulty (fk_test,
                              fk_difficulty,
