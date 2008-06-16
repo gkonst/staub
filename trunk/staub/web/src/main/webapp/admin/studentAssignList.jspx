@@ -82,7 +82,7 @@
                     <h:selectBooleanCheckbox id="selectedCheckbox"
                                              value="#{pageBean.selectedMap[student.id]}">
                         <a4j:support id="selectedCheckboxSupport"
-                                     event="onchange"
+                                     event="onclick"
                                      ajaxSingle="true"
                                      reRender="assignButton"/>
                     </h:selectBooleanCheckbox>

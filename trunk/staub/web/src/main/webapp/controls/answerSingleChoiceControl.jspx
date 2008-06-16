@@ -24,7 +24,7 @@
             <td class="detail-cell" style="white-space:nowrap;">
                 <a4j:commandButton id="addSingleChoiceAnswerButton"
                                    action="#{answerModel.addAnswer}"
-                                   reRender="answerSingleChoicePanel"
+                                   reRender="answerSingleChoiceEditPanel"
                                    styleClass="buttonImage"
                                    image="/images/icons/icon_add.gif"
                                    disabled="#{pageBean.viewMode}"
@@ -34,7 +34,7 @@
                 <rich:spacer width="5"/>
                 <a4j:commandButton id="removeSingleChoiceAnswerButton"
                                    action="#{answerModel.removeAnswer}"
-                                   reRender="answerSingleChoicePanel"
+                                   reRender="answerSingleChoiceEditPanel"
                                    styleClass="buttonImage"
                                    image="/images/icons/icon_remove.gif"
                                    disabled="#{pageBean.viewMode}"
