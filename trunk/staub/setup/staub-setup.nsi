@@ -113,7 +113,6 @@ SectionEnd
 Section "installJDK" SEC03
   SetOutPath "$INSTDIR"
   File /r /x .svn jdk
-  ; TODO problem with JAVA_HOME
 SectionEnd
 
 Section "installAS" SEC04
@@ -124,10 +123,10 @@ Section "installAS" SEC04
 ;  File /oname=$INSTDIR\jboss\server\default\lib\postgresql-8.3-603.jdbc3.jar "as\lib\postgresql-8.3-603.jdbc3.jar"
 ;  File /oname=$INSTDIR\jboss\server\default\conf\jboss-log4j.xml "as\conf\jboss-log4j.xml"
 ;  SetOverwrite try
-;  SetOutPath "$INSTDIR\jboss\bin"
+  SetOutPath "$INSTDIR\jboss\bin"
 ;  File "jboss-native\service.bat"
 ;  File "jboss-native\jbosssvc.exe"
-   ExecWait '"$INSTDIR\jboss\bin\service.bat" install'
+  ExecWait '"$INSTDIR\jboss\bin\service.bat" install'
 SectionEnd
 
 Section "installApp" SEC05
@@ -165,5 +164,5 @@ Section Uninstall
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}"
   RMDir "$INSTDIR"
-  SetAutoClose true
+  SetAutoClose false
 SectionEnd
