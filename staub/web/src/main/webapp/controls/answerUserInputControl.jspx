@@ -35,7 +35,7 @@
                                    label="#{messages[fn:join(fn:join(fn:join('question.detail.answerType.', pageBean.answer.type), '.'), subtype)]}"/>
                     <a4j:support id="answerSubtypeSelectSupport"
                                  event="onchange"
-                                 reRender="correctAnswerPanel"
+                                 reRender="answerPanel"
                                  ajaxSingle="true"/>
                 </h:selectOneMenu>
             </td>
