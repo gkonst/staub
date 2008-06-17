@@ -34,7 +34,9 @@
                                            value="#{messages['test.start.timeLimit']}"/>
                         </td>
                         <td class="detail-cell">
-                            #{pageBean.model.test.timeLimit}
+                            <h:outputText id="testTimeLimitText"
+                                          value="#{pageBean.model.test.timeLimit}"
+                                          converter="ru.spbspu.staub.TimeConverter"/>
                         </td>
                     </tr>
                 </s:fragment>

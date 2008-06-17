@@ -75,7 +75,8 @@ public class CategoryDetailBean extends GenericDetailBean<Category> {
     }
 
     public void validateCode(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        if (!categoryService.isCodeUnique(String.valueOf(value))) {
+        if ((isCreateMode() && !categoryService.isCodeUnique(String.valueOf(value))) ||
+                (isEditMode() && !getModel().getCode().equals(value) && !categoryService.isCodeUnique(String.valueOf(value)))) {
             throw new ValidatorException(new FacesMessage("Category code must be unique"));
         }
     }

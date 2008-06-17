@@ -67,8 +67,9 @@ public class StudentDetailBean extends GenericDetailBean<Student> {
     }
 
     public void validateCode(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        if(!studentService.isCodeUnique(String.valueOf(value))) {
-            throw new ValidatorException(new FacesMessage("Student code must be unique"));    
+        if ((isCreateMode() && !studentService.isCodeUnique(String.valueOf(value))) ||
+                (isEditMode() && !getModel().getCode().equals(value) && !studentService.isCodeUnique(String.valueOf(value)))) {
+            throw new ValidatorException(new FacesMessage("Student code must be unique"));
         }
     }
 

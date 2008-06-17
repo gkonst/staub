@@ -53,7 +53,8 @@ public class GroupDetailBean extends GenericDetailBean<Group> {
     }
 
     public void validateName(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        if (!groupService.isNameUnique(String.valueOf(value))) {
+        if ((isCreateMode() && !groupService.isNameUnique(String.valueOf(value))) ||
+                (isEditMode() && !getModel().getName().equals(value) && !groupService.isNameUnique(String.valueOf(value)))) {
             throw new ValidatorException(new FacesMessage("Group name must be unique"));
         }
     }

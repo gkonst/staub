@@ -107,7 +107,8 @@ public class TopicDetailBean extends GenericDetailBean<Topic> {
     }
 
     public void validateCode(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        if (!topicService.isCodeUnique(String.valueOf(value))) {
+        if ((isCreateMode() && !topicService.isCodeUnique(String.valueOf(value))) ||
+                (isEditMode() && !getModel().getCode().equals(value) && !topicService.isCodeUnique(String.valueOf(value)))) {
             throw new ValidatorException(new FacesMessage("Topic code must be unique"));
         }
     }
