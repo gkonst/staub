@@ -2,9 +2,7 @@
 #contentMessage {
     padding: 0 1em;
 }
-*html #contentMessage {
-    padding: 0.5em 1em 0;
-}
+
 #contentMessage .message{
     margin: 0 0 0;
 }

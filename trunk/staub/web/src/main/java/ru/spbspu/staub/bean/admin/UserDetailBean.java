@@ -59,7 +59,8 @@ public class UserDetailBean extends GenericDetailBean<User> {
     }
 
     public void validateUsername(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        if(!userService.isUsernameUnique(String.valueOf(value))) {
+        if ((isCreateMode() && !userService.isUsernameUnique(String.valueOf(value))) ||
+                (isEditMode() && !getModel().getUsername().equals(value) && !userService.isUsernameUnique(String.valueOf(value)))) {
             throw new ValidatorException(new FacesMessage("User name must be unique"));
         }
     }

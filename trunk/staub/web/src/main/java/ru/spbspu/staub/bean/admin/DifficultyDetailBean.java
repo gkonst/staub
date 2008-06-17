@@ -53,7 +53,8 @@ public class DifficultyDetailBean extends GenericDetailBean<Difficulty> {
     }
 
     public void validateCode(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        if (!difficultyService.isCodeUnique((Integer) value)) {
+        if ((isCreateMode() && !difficultyService.isCodeUnique((Integer) value)) ||
+                (isEditMode() && !getModel().getCode().equals(value) && !difficultyService.isCodeUnique((Integer) value))) {
             throw new ValidatorException(new FacesMessage("Difficulty code must be unique"));
         }
     }

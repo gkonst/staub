@@ -53,7 +53,8 @@ public class DisciplineDetailBean extends GenericDetailBean<Discipline> {
     }
 
     public void validateCode(FacesContext facesContext, UIComponent uiComponent, Object value) {
-        if (!disciplineService.isCodeUnique(String.valueOf(value))) {
+        if ((isCreateMode() && !disciplineService.isCodeUnique(String.valueOf(value))) ||
+                (isEditMode() && !getModel().getCode().equals(value) && !disciplineService.isCodeUnique(String.valueOf(value)))) {
             throw new ValidatorException(new FacesMessage("Discipline code must be unique"));
         }
     }

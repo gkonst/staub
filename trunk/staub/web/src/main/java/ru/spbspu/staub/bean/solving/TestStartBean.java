@@ -42,7 +42,7 @@ public class TestStartBean extends GenericDetailBean<Assignment> {
             return "testPrepare";
         } else {
             addFacesMessageFromResourceBundle("test.start.error.generation");
-            return "testListForPass";
+            return doRefresh("testListForPass");
         }
     }
 
