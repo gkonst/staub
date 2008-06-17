@@ -20,6 +20,8 @@ REM
 set SVCNAME=StaubASService
 set SVCDISP=Staub :: Application Server Service
 set SVCDESC=
+set JBOSS_CONF=default
+set JBOSS_HOST=0.0.0.0
 set NOPAUSE=Y
 
 REM Suppress killing service on logoff event
@@ -72,7 +74,7 @@ if not errorlevel 1 (
 )
 echo Y > .r.lock
 jbosssvc.exe -p 1 "Starting %SVCDISP%" > ..\server\default\log\run.log
-call run.bat < .r.lock >> ..\server\default\log\run.log 2>&1
+call run.bat -c %JBOSS_CONF% -b %JBOSS_HOST% < .r.lock >> ..\server\default\log\run.log 2>&1
 jbosssvc.exe -p 1 "Shutdown %SVCDISP% service" >> ..\server\default\log\run.log
 del .r.lock
 goto cmdEnd
@@ -101,7 +103,7 @@ jbosssvc.exe -s 1
 if exist ".r.lock" goto waitRun
 echo Y > .r.lock
 jbosssvc.exe -p 1 "Restarting %SVCDISP%" >> ..\server\default\log\run.log
-call run.bat < .r.lock >> ..\server\default\log\run.log 2>&1
+call run.bat -c %JBOSS_CONF% -b %JBOSS_HOST% < .r.lock >> ..\server\default\log\run.log 2>&1
 jbosssvc.exe -p 1 "Shutdown %SVCDISP% service" >> ..\server\default\log\run.log
 del .r.lock
 goto cmdEnd
