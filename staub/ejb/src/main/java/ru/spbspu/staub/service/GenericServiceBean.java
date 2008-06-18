@@ -107,7 +107,9 @@ public abstract class GenericServiceBean<T extends Serializable, ID extends Seri
                 if (sortItem.isDesc()) {
                     sb.append(" desc");
                 }
-                q = getEntityManager().createQuery(sb.toString());
+                String modifiedQueryString = sb.toString();
+                logger.debug(" modified query string : #0", modifiedQueryString);
+                q = getEntityManager().createQuery(modifiedQueryString);
             } else {
                 q = getEntityManager().createQuery(queryString);
             }
