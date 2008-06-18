@@ -81,7 +81,7 @@
 <rich:column id="col2">
     <f:facet name="header">
         <ui:decorate template="/controls/listSortableControl.jspx">
-            <ui:param name="sortColumnName" value="test.name"/>
+            <ui:param name="sortColumnName" value="t.test.name"/>
             <ui:param name="sortColumnTitle" value="#{messages['test.trace.list.test.name']}"/>
         </ui:decorate>
     </f:facet>
@@ -192,7 +192,7 @@
 <rich:column id="col7">
     <f:facet name="header">
         <ui:decorate template="/controls/listSortableControl.jspx">
-            <ui:param name="sortColumnName" value="started"/>
+            <ui:param name="sortColumnName" value="t.started"/>
             <ui:param name="sortColumnTitle" value="#{messages['test.trace.list.started']}"/>
         </ui:decorate>
     </f:facet>
