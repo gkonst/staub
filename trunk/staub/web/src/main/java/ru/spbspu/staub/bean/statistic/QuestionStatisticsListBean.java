@@ -100,24 +100,24 @@ public class QuestionStatisticsListBean extends GenericExportableListBean<Questi
         setCategory(null);
         setTopic(null);
         setQuestionId(null);
-        doRefresh();
+        super.doRefresh();
     }
 
     public void setCategory() {
         fillTopicList();
         setTopic(null);
         setQuestionId(null);
-        doRefresh();
+        super.doRefresh();
     }
 
     public void setTopic() {
         setQuestionId(null);
-        doRefresh();
+        super.doRefresh();
     }
 
     public void setDifficulty() {
         setQuestionId(null);
-        doRefresh();
+        super.doRefresh();
     }
 
     public void setQuestionId() {
@@ -125,7 +125,7 @@ public class QuestionStatisticsListBean extends GenericExportableListBean<Questi
         setCategory(null);
         setTopic(null);
         setDifficulty(null);
-        doRefresh();
+        super.doRefresh();
     }
 
     public List<Discipline> getDisciplineList() {
