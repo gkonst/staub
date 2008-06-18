@@ -74,17 +74,17 @@ public class TestStatisticsListBean extends GenericExportableListBean<TestStatis
         fillCategoryList();
         setCategory(null);
         setTopic(null);
-        doRefresh();
+        super.doRefresh();
     }
 
     public void setCategory() {
         fillTopicList();
         setTopic(null);
-        doRefresh();
+        super.doRefresh();
     }
 
     public void setTopic() {
-        doRefresh();
+        super.doRefresh();
     }
 
     private void fillDisciplineList() {
