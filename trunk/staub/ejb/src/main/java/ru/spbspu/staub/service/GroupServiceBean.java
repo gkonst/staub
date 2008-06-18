@@ -59,7 +59,7 @@ public class GroupServiceBean extends GenericServiceBean<Group, Integer> impleme
         Map<String, Object> parameters = new HashMap<String, Object>();
 
         if (topic != null) {
-            query.append(" join t.test.topics tc");
+            query.append(" join t.topics tc");
         } else if (discipline != null) {
             query.append(", Discipline d join d.categories c");
         }
