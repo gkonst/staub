@@ -34,7 +34,7 @@
                         <rich:column id="col1">
                             <f:facet name="header">
                                 <ui:decorate template="/controls/listSortableControl.jspx">
-                                    <ui:param name="sortColumnName" value="name"/>
+                                    <ui:param name="sortColumnName" value="s.name"/>
                                     <ui:param name="sortColumnTitle" value="#{messages['student.list.name']}"/>
                                 </ui:decorate>
                             </f:facet>

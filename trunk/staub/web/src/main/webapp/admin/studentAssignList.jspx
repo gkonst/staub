@@ -70,12 +70,10 @@
 </fieldset>
 <ui:decorate template="/controls/listLayoutControl.jspx">
     <ui:define name="listPageData">
-        <h:outputText value="#{messages['common.list.noDataFound']}"
-                      rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
         <rich:dataTable id="userAssignList"
                         value="#{pageBean.dataModel}"
                         var="student"
-                        rendered="#{pageBean.dataModel.rowCount > 0}"
+                        rendered="#{pageBean.dataModel != null}"
                         styleClass="dataTable">
             <rich:column id="col1">
                 <a4j:region id="selectedCheckboxRegion">
@@ -91,7 +89,7 @@
             <rich:column id="col2">
                 <f:facet name="header">
                     <ui:decorate template="/controls/listSortableControl.jspx">
-                        <ui:param name="sortColumnName" value="name"/>
+                        <ui:param name="sortColumnName" value="s.name"/>
                         <ui:param name="sortColumnTitle" value="#{messages['student.assign.list.name']}"/>
                     </ui:decorate>
                 </f:facet>
@@ -123,6 +121,8 @@
                 #{student.group.name}
             </rich:column>
         </rich:dataTable>
+        <h:outputText value="#{messages['common.list.noDataFound']}"
+                      rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
     </ui:define>
 </ui:decorate>
 </a4j:form>
