@@ -27,18 +27,15 @@
             </a4j:outputPanel>
             <ui:decorate template="/controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">
-                    <h:outputText id="notFoundText"
-                                  value="#{messages['common.list.noDataFound']}"
-                                  rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
                     <rich:dataTable id="userList"
                                     value="#{pageBean.dataModel}"
                                     var="user"
-                                    rendered="#{pageBean.dataModel.rowCount > 0}"
+                                    rendered="#{pageBean.dataModel != null}"
                                     styleClass="dataTable">
                         <rich:column id="col1">
                             <f:facet name="header">
                                 <ui:decorate template="/controls/listSortableControl.jspx">
-                                    <ui:param name="sortColumnName" value="username"/>
+                                    <ui:param name="sortColumnName" value="u.username"/>
                                     <ui:param name="sortColumnTitle" value="#{messages['user.list.username']}"/>
                                 </ui:decorate>
                             </f:facet>
@@ -82,6 +79,9 @@
                                                reRender="contentBodyForm"/>
                         </rich:column>
                     </rich:dataTable>
+                    <h:outputText id="notFoundText"
+                                  value="#{messages['common.list.noDataFound']}"
+                                  rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
                 </ui:define>
             </ui:decorate>
         </a4j:form>

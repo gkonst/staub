@@ -38,18 +38,15 @@
             </a4j:outputPanel>
             <ui:decorate template="/controls/listLayoutControl.jspx">
                 <ui:define name="listPageData">
-                    <h:outputText id="notFoundText"
-                                  value="#{messages['common.list.noDataFound']}"
-                                  rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
                     <rich:dataTable id="topicList"
                                     value="#{pageBean.dataModel}"
                                     var="topic"
-                                    rendered="#{pageBean.dataModel.rowCount > 0}"
+                                    rendered="#{pageBean.dataModel != null}"
                                     styleClass="dataTable">
                         <rich:column id="col1">
                             <f:facet name="header">
                                 <ui:decorate template="/controls/listSortableControl.jspx">
-                                    <ui:param name="sortColumnName" value="code"/>
+                                    <ui:param name="sortColumnName" value="t.code"/>
                                     <ui:param name="sortColumnTitle" value="#{messages['topic.list.code']}"/>
                                 </ui:decorate>
                             </f:facet>
@@ -62,7 +59,7 @@
                         <rich:column id="col2">
                             <f:facet name="header">
                                 <ui:decorate template="/controls/listSortableControl.jspx">
-                                    <ui:param name="sortColumnName" value="name"/>
+                                    <ui:param name="sortColumnName" value="t.name"/>
                                     <ui:param name="sortColumnTitle" value="#{messages['topic.list.name']}"/>
                                 </ui:decorate>
                             </f:facet>
@@ -85,6 +82,9 @@
                                                reRender="contentBodyForm"/>
                         </rich:column>
                     </rich:dataTable>
+                    <h:outputText id="notFoundText"
+                                  value="#{messages['common.list.noDataFound']}"
+                                  rendered="#{pageBean.dataModel == null or pageBean.dataModel.rowCount == 0}"/>
                 </ui:define>
             </ui:decorate>
         </a4j:form>

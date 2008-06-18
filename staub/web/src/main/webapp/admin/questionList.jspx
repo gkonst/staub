@@ -40,7 +40,7 @@
     <f:facet name="header">
         <a4j:outputPanel id="questionIdPanel" style="white-space:nowrap;">
             <ui:decorate template="/controls/listSortableControl.jspx">
-                <ui:param name="sortColumnName" value="id"/>
+                <ui:param name="sortColumnName" value="q.id"/>
                 <ui:param name="sortColumnTitle" value="#{messages['question.list.code']}"/>
             </ui:decorate>
             <br/>
