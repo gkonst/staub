@@ -20,33 +20,37 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
- * Seam component for exporting byte data from session to file (as attachment to response).
+ * Seam component for dowmnloading byte data from session to file (as attachment to response).
  *
  * @author Konstantin Grigoriev
  */
 @Scope(APPLICATION)
-@Name("ru.spbspu.staub.exportResource")
+@Name("ru.spbspu.staub.downloadResource")
 @Install(precedence = FRAMEWORK)
 @BypassInterceptors
-public class ExportResource extends AbstractResource {
+public class DownloadResource extends AbstractResource {
 
     @Logger
     private Log logger;
 
-    public static final String RESOURCE_PATH = "/export";
+    public static final String RESOURCE_PATH = "/download";
 
     /**
-     * Http Session key for storing data to export.
+     * Http Session key for storing data to download.
      */
-    public static final String SESSION_KEY = "STAUB-EXPORT-DATA";
+    public static final String SESSION_KEY = "STAUB-DOWNLOAD-DATA";
     /**
-     * Http Session key for storing file name to export data.
+     * Http Session key for storing file name to download data.
      */
-    public static final String FILENAME_KEY = "STAUB-EXPORT-FILENAME";
+    public static final String FILENAME_KEY = "STAUB-DOWNLOAD-FILENAME";
     /**
-     * Http Session key for storing content type of export data.
+     * Http Session key for storing content type of download data.
      */
-    public static final String CONTENT_TYPE_KEY = "STAUB-EXPORT-CONTENT-TYPE";
+    public static final String CONTENT_TYPE_KEY = "STAUB-DOWNLOAD-CONTENT-TYPE";
+    /**
+     * Http Session key for storing compress flag, which shows need to compress data or not.
+     */
+    public static final String COMPRESS_KEY = "STAUB-DOWNLOAD-COMPRESS";
 
     /**
      * Defines supported content types.
@@ -107,46 +111,48 @@ public class ExportResource extends AbstractResource {
     }
 
     private void doWork(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        logger.debug("getting attribute from request...");
+        logger.debug("Downloading resource...");
         String contentTypeName = request.getParameter(CONTENT_TYPE_KEY);
         ContentType contentType = ContentType.valueOf(contentTypeName);
         logger.debug("  content type is: " + contentType);
-        response.setContentType(contentType.getRealContentType());
-        logger.debug("getting attribute from session...");
         String filename = (String) Contexts.getSessionContext().get(FILENAME_KEY);
         logger.debug("  file name is: " + filename);
 
-        byte[] exportData = (byte[]) Contexts.getSessionContext().get(SESSION_KEY);
+        byte[] downloadData = (byte[]) Contexts.getSessionContext().get(SESSION_KEY);
 
-        logger.debug("  export data is: " + String.valueOf(exportData));
+        logger.debug("  download data is: " + String.valueOf(downloadData));
 
-        if (exportData == null) {
-            logger.error("export failed, data is null");
+        if (downloadData == null) {
+            logger.error("download failed, data is null");
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         } else {
 
             logger.debug(" writing to output stream... ");
 
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + makeUTF8Filename(filename + contentType.getFileExtension()) + "\"");
+            boolean compress = Boolean.valueOf(request.getParameter(COMPRESS_KEY));
 
-            if (ContentType.ZIP.equals(contentType)) {
+            if (compress) {
+                logger.debug(" zip flag setted -> using compression");
+                response.setContentType(ContentType.ZIP.getRealContentType());
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + makeUTF8Filename(filename + ContentType.ZIP.getFileExtension()) + "\"");
                 ZipOutputStream stream = new ZipOutputStream(response.getOutputStream());
-                stream.putNextEntry(new ZipEntry(makeUTF8Filename(filename)));
-                stream.write(exportData);
+                stream.putNextEntry(new ZipEntry(makeUTF8Filename(filename + contentType.getFileExtension())));
+                stream.write(downloadData);
                 stream.close();
             } else {
-                response.setContentLength(exportData.length);
-                response.getOutputStream().write(exportData);
+                response.setContentType(contentType.getRealContentType());
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + makeUTF8Filename(filename + contentType.getFileExtension()) + "\"");
+                response.setContentLength(downloadData.length);
+                response.getOutputStream().write(downloadData);
             }
 
             response.flushBuffer();
             response.getOutputStream().flush();
             response.getOutputStream().close();
-
-            logger.debug(" export finished ");
-
             Contexts.getSessionContext().set(SESSION_KEY, null);
             Contexts.getSessionContext().set(FILENAME_KEY, null);
+
+            logger.debug("Downloading resource...Ok");
         }
     }
 

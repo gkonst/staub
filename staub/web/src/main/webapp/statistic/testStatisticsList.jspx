@@ -24,7 +24,7 @@
 <a4j:form id="contentBodyForm">
 <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
     <ui:include src="/controls/genericRefreshControl.jspx"/>
-    <ui:include src="/controls/genericExportControl.jspx"/>
+    <ui:include src="/controls/genericExportExcelControl.jspx"/>
 </a4j:outputPanel>
 <ui:decorate template="/controls/listLayoutControl.jspx">
 <ui:define name="listPageData">
