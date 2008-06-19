@@ -6,7 +6,7 @@ import ru.spbspu.staub.export.Cell;
 import ru.spbspu.staub.export.Column;
 import ru.spbspu.staub.export.ExportExcelException;
 import ru.spbspu.staub.export.ExportExcelModel;
-import ru.spbspu.staub.util.ExportResource;
+import ru.spbspu.staub.util.DownloadResource;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -105,8 +105,8 @@ public abstract class GenericExportableListBean<T extends Serializable> extends 
 
             byte[] data = exportExcelModel.getData();
 
-            Contexts.getSessionContext().set(ExportResource.SESSION_KEY, data);
-            Contexts.getSessionContext().set(ExportResource.FILENAME_KEY, getFilename());
+            Contexts.getSessionContext().set(DownloadResource.SESSION_KEY, data);
+            Contexts.getSessionContext().set(DownloadResource.FILENAME_KEY, getFilename());
             logger.debug("Export data...Ok");
         } catch (InvocationTargetException e) {
             throw new ExportExcelException("error during getting column type", e);
@@ -124,8 +124,8 @@ public abstract class GenericExportableListBean<T extends Serializable> extends 
      * Cancels export, clears session attributes.
      */
     public void doCancelExport() {
-        Contexts.getSessionContext().set(ExportResource.SESSION_KEY, null);
-        Contexts.getSessionContext().set(ExportResource.FILENAME_KEY, null);
+        Contexts.getSessionContext().set(DownloadResource.SESSION_KEY, null);
+        Contexts.getSessionContext().set(DownloadResource.FILENAME_KEY, null);
     }
 
 }

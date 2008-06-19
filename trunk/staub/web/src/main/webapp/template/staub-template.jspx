@@ -31,6 +31,7 @@
         <a4j:loadStyle src="/css/message.css"/>
         <a4j:loadStyle src="/css/list.css"/>
         <a4j:loadStyle src="/css/detail.css"/>
+        <ui:insert name="pageStyle"/>
     </ui:define>
 
     <ui:define name="title">
