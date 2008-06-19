@@ -36,10 +36,10 @@ public class QuestionStatisticsServiceBean extends GenericServiceBean<QuestionSt
             "s.n2, " +
             "s.n3, " +
             "s.n4, " +
-            "(s.n1 + s.n3) / s.total_answers as k1, " +
-            "case when (s.n2 + s.n4) = 0 then null else s.n2 / (s.n2 + s.n4) end as k2, " +
-            "case when (s.n1 + s.n3) = 0 then null else s.n3 / (s.n1 + s.n3) end as k3, " +
-            "(s.n1 + s.n4) / s.total_answers as k4, " +
+            "cast((s.n1 + s.n3) as float) / s.total_answers as k1, " +
+            "case when (s.n2 + s.n4) = 0 then null else cast(s.n2 as float) / (s.n2 + s.n4) end as k2, " +
+            "case when (s.n1 + s.n3) = 0 then null else cast(s.n3 as float) / (s.n1 + s.n3) end as k3, " +
+            "cast((s.n1 + s.n4) as float) / s.total_answers as k4, " +
             "s.last_update " +
             "from " +
             "(select qt.fk_question as fk_question, " +
