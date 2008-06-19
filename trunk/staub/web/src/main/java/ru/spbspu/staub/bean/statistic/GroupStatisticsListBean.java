@@ -179,7 +179,7 @@ public class GroupStatisticsListBean extends GenericExportableListBean<GroupStat
 
     @Override
     public String[] getColumns() {
-        return new String[]{"test.name", "test.category.discipline.name", "test.category.name", "totalAnswers", "correctAnswersPercent"};
+        return new String[]{"group.name", "test.name", "test.category.discipline.name", "test.category.name", "totalAnswers", "correctAnswersPercent"};
     }
 
     @Override
