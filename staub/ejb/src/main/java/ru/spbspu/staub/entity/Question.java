@@ -25,6 +25,26 @@ public class Question implements Serializable {
 
     private Integer id;
 
+    private Difficulty difficulty;
+
+    private String name;
+
+    private Integer timeLimit;
+
+    private QuestionType definition;
+
+    private Boolean active;
+
+    private Topic topic;
+
+    private Date created;
+
+    private String createdBy;
+
+    private Date modified;
+
+    private String modifiedBy;
+
     @Id
     @SequenceGenerator(name = "QuestionIdGenerator", sequenceName = "seq_question", allocationSize = 1)
     @GeneratedValue(generator = "QuestionIdGenerator", strategy = GenerationType.SEQUENCE)
@@ -37,8 +57,6 @@ public class Question implements Serializable {
         this.id = id;
     }
 
-    private Difficulty difficulty;
-
     @ManyToOne
     @JoinColumn(name = "fk_difficulty", referencedColumnName = "id", nullable = false)
     public Difficulty getDifficulty() {
@@ -48,8 +66,6 @@ public class Question implements Serializable {
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
-
-    private String name;
 
     @Basic
     @Column(name = "name", length = 256)
@@ -61,8 +77,6 @@ public class Question implements Serializable {
         this.name = name;
     }
 
-    private Integer timeLimit;
-
     @Basic
     @Column(name = "time_limit", length = 10)
     public Integer getTimeLimit() {
@@ -72,8 +86,6 @@ public class Question implements Serializable {
     public void setTimeLimit(Integer timeLimit) {
         this.timeLimit = timeLimit;
     }
-
-    private QuestionType definition;
 
     @Column(name = "definition")
     @Type(type = "question_type")
@@ -85,8 +97,6 @@ public class Question implements Serializable {
         this.definition = definition;
     }
 
-    private Boolean active;
-
     @Basic
     @Column(name = "active", length = 1)
     public Boolean getActive() {
@@ -96,8 +106,6 @@ public class Question implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
-
-    private Topic topic;
 
     @OneToOne
     @JoinColumn(name = "fk_topic", referencedColumnName = "id", nullable = false)
@@ -109,8 +117,6 @@ public class Question implements Serializable {
         this.topic = topic;
     }
 
-    private Date created;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created", nullable = false)
     public Date getCreated() {
@@ -120,8 +126,6 @@ public class Question implements Serializable {
     public void setCreated(Date created) {
         this.created = created;
     }
-
-    private String createdBy;
 
     @Basic
     @Column(name = "created_by", length = 64, nullable = false)
@@ -133,8 +137,6 @@ public class Question implements Serializable {
         this.createdBy = createdBy;
     }
 
-    private Date modified;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modified")
     public Date getModified() {
@@ -144,8 +146,6 @@ public class Question implements Serializable {
     public void setModified(Date modified) {
         this.modified = modified;
     }
-
-    private String modifiedBy;
 
     @Basic
     @Column(name = "modified_by", length = 64)

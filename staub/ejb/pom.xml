@@ -57,6 +57,18 @@
                             <staleFile>${project.build.directory}/generated-sources/jaxb/.staleFlagAnswer</staleFile>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>questionData.xsd</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>ru.spbspu.staub.data.question</packageName>
+                            <schemaFiles>questionData.xsd</schemaFiles>
+                            <clearOutputDir>false</clearOutputDir>
+                            <staleFile>${project.build.directory}/generated-sources/jaxb/.staleFlagQuestionData</staleFile>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

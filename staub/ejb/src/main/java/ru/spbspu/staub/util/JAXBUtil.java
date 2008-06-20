@@ -2,6 +2,7 @@ package ru.spbspu.staub.util;
 
 import org.jboss.seam.log.Log;
 import org.jboss.seam.log.Logging;
+import ru.spbspu.staub.data.question.QuestionDataType;
 import ru.spbspu.staub.model.answer.AnswerType;
 import ru.spbspu.staub.model.question.QuestionType;
 
@@ -30,6 +31,7 @@ public final class JAXBUtil {
         HashMap<Class, QName> map = new HashMap<Class, QName>();
         map.put(QuestionType.class, new QName("http://staub.spbspu.ru/Question", "question"));
         map.put(AnswerType.class, new QName("http://staub.spbspu.ru/Answer", "answer"));
+        map.put(QuestionDataType.class, new QName("http://staub.spbspu.ru/QuestionData", "questionData"));
         QNAME_MAP = Collections.unmodifiableMap(map);
     }
 

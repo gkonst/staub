@@ -2,6 +2,7 @@ package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
+import ru.spbspu.staub.data.question.TopicDataType;
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Topic;
 import ru.spbspu.staub.exception.RemoveException;
@@ -10,6 +11,7 @@ import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
@@ -78,6 +80,51 @@ public class TopicServiceBean extends GenericServiceBean<Topic, Integer> impleme
         return unique;
     }
 
+    public Topic importTopic(TopicDataType topicData, Category category) {
+        logger.debug("> importTopic(TopicDataType=#0, Category=#1)", topicData, category);
+
+        String code = topicData.getCode();
+        Topic result = findByCategoryAndCode(category, code);
+        if (result == null) {
+            logger.debug("*  Topic with the given category and code values was not found.");
+
+            Topic topic = new Topic();
+            topic.setCode(code);
+            topic.setName(topicData.getName());
+            topic.setCategory(category);
+
+            result = makePersistent(topic);
+        }
+
+        logger.debug("*  Result: #0", result);
+        logger.debug("< importTopic(TopicDataType, Category)");
+
+        return result;
+    }
+
+    public TopicDataType exportTopic(Integer id) {
+        logger.debug("> exportTopic(Integer=#0)", id);
+
+        Topic topic = null;
+        try {
+            topic = getEntityManager().find(Topic.class, id);
+        } catch (NoResultException e) {
+            // do nothing
+        }
+
+        TopicDataType result = null;
+        if (topic != null) {
+            result = new TopicDataType();
+            result.setCode(topic.getCode());
+            result.setName(topic.getName());
+        }
+
+        logger.debug("*  Result: #0", result);
+        logger.debug("< exportTopic(Integer)");
+
+        return result;
+    }
+
     @Override
     public void remove(Topic topic) throws RemoveException {
         logger.debug("> remove(Topic=#0)", topic);
@@ -93,5 +140,21 @@ public class TopicServiceBean extends GenericServiceBean<Topic, Integer> impleme
         }
 
         logger.debug("< remove(Topic)");
+    }
+
+    private Topic findByCategoryAndCode(Category category, String code) {
+        Topic topic = null;
+
+        Query q = getEntityManager().createQuery("select t from Topic t where t.category = :category and t.code = :code");
+        q.setParameter("category", category);
+        q.setParameter("code", code);
+
+        try {
+            topic = (Topic) q.getSingleResult();
+        } catch (NoResultException e) {
+            // do nothing
+        }
+
+        return topic;
     }
 }
