@@ -1,5 +1,6 @@
 package ru.spbspu.staub.service;
 
+import ru.spbspu.staub.data.question.CategoryDataType;
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Discipline;
 import ru.spbspu.staub.model.list.FormProperties;
@@ -43,4 +44,23 @@ public interface CategoryService extends GenericService<Category, Integer> {
      * @return <code>true</code> if the code is unique; <code>false</code> otherwise
      */
     boolean isCodeUnique(String code);
+
+    /**
+     * Imports a category.
+     *
+     * @param categoryData the data to import
+     * @param discipline   the parent entity
+     *
+     * @return the target entity
+     */
+    Category importCategory(CategoryDataType categoryData, Discipline discipline);
+
+    /**
+     * Exports a category.
+     *
+     * @param id the identification number
+     *
+     * @return the exported data
+     */
+    CategoryDataType exportCategory(Integer id);
 }

@@ -1,5 +1,6 @@
 package ru.spbspu.staub.service;
 
+import ru.spbspu.staub.data.question.TopicDataType;
 import ru.spbspu.staub.entity.Category;
 import ru.spbspu.staub.entity.Topic;
 import ru.spbspu.staub.model.list.FormProperties;
@@ -42,4 +43,23 @@ public interface TopicService extends GenericService<Topic, Integer> {
      * @return <code>true</code> if the code is unique; <code>false</code> otherwise
      */
     boolean isCodeUnique(String code);
+
+    /**
+     * Imports a topic.
+     *
+     * @param topicData the data to import
+     * @param category  the parent entity
+     *
+     * @return the target entity
+     */
+    Topic importTopic(TopicDataType topicData, Category category);
+
+    /**
+     * Exports a topic.
+     *
+     * @param id the identification number
+     *
+     * @return the exported data
+     */
+    TopicDataType exportTopic(Integer id);
 }

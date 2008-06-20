@@ -1,10 +1,12 @@
 package ru.spbspu.staub.service;
 
+import ru.spbspu.staub.data.question.QuestionDataType;
 import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
+import javax.xml.bind.JAXBException;
 
 /**
  * Local Interface for <code>QuestionServiceBean</code> Stateless EJB.
@@ -27,7 +29,7 @@ public interface QuestionService extends GenericService<Question, Integer> {
      * @return the table of results
      */
     public FormTable find(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
-                                   Difficulty difficulty, Integer questionId);
+                          Difficulty difficulty, Integer questionId);
 
     /**
      * Counts questions of a specified category.
@@ -75,4 +77,27 @@ public interface QuestionService extends GenericService<Question, Integer> {
      * @return updated question
      */
     Question saveQuestion(Question question, User user);
+
+    /**
+     * Imports a question.
+     *
+     * @param questionData the data to import
+     * @param user         the user
+     *
+     * @return the target entity
+     *
+     * @throws JAXBException if an exception occurs during an XML document processing.
+     */
+    Question importQuestion(QuestionDataType questionData, User user) throws JAXBException;
+
+    /**
+     * Exports a question.
+     *
+     * @param id the identification number
+     *
+     * @return the exported data
+     *
+     * @throws JAXBException if an exception occurs during an XML document processing.
+     */
+    QuestionDataType exportQuestion(Integer id)  throws JAXBException;
 }

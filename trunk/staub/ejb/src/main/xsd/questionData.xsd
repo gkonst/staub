@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:q="http://staub.spbspu.ru/QuestionData"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           targetNamespace="http://staub.spbspu.ru/QuestionData"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           jaxb:version="2.0">
+   <xs:annotation>
+        <xs:appinfo>
+            <jaxb:globalBindings>
+                <jaxb:serializable uid="-1"/>
+            </jaxb:globalBindings>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:element name="question-data" type="q:question-data-type"/>
+    <xs:complexType name="question-data-type">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="time-limit" type="xs:int"/>
+            <xs:element name="definition" type="xs:string"/>
+            <xs:element name="discipline-data" type="q:discipline-data-type"/>
+            <xs:element name="category-data" type="q:category-data-type"/>
+            <xs:element name="topic-data" type="q:topic-data-type"/>
+            <xs:element name="difficulty-data" type="q:difficulty-data-type"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="discipline-data-type">
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="category-data-type">
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="topic-data-type">
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="difficulty-data-type">
+        <xs:sequence>
+            <xs:element name="code" type="xs:int"/>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

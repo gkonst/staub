@@ -2,13 +2,20 @@ package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.util.Base64;
+import ru.spbspu.staub.data.question.QuestionDataType;
 import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
+import ru.spbspu.staub.model.question.QuestionType;
+import ru.spbspu.staub.util.JAXBUtil;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.xml.bind.JAXBException;
+import java.io.ByteArrayInputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,12 +30,21 @@ import java.util.Map;
 @Name("questionService")
 @AutoCreate
 @Stateless
+/*@EJBs(value = {
+@EJB(name = "ejb/DisciplineService", beanInterface = DisciplineService.class, beanName = "DisciplineServiceBean"),
+@EJB(name = "ejb/CategoryService", beanInterface = CategoryService.class, beanName = "CategoryServiceBean"),
+@EJB(name = "ejb/TopicService", beanInterface = TopicService.class, beanName = "TopicServiceBean"),
+@EJB(name = "ejb/DifficultyService", beanInterface = DifficultyService.class, beanName = "DifficultyServiceBean")})*/
 public class QuestionServiceBean extends GenericServiceBean<Question, Integer> implements QuestionService {
     @EJB
-    QuestionTraceService questionTraceService;
+    private QuestionTraceService questionTraceService;
+
+/*    @Resource
+    private javax.ejb.SessionContext ejbContext;*/
+
 
     public FormTable find(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
-                                   Difficulty difficulty, Integer questionId) {
+                          Difficulty difficulty, Integer questionId) {
         logger.debug("> find(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3, Difficulty=#4, Integer=#5)",
                 formProperties, discipline, category, topic, difficulty, questionId);
 
@@ -106,6 +122,87 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
         return makePersistent(question);
     }
 
+    public Question importQuestion(QuestionDataType questionData, User user) throws JAXBException {
+        logger.debug("> importQuestion(QuestionDataType=#0, User=#1)", questionData, user);
+
+/*        Difficulty difficulty = getDifficultyService().importDifficulty(questionData.getDifficultyData());
+        Discipline discipline = getDisciplineService().importDiscipline(questionData.getDisciplineData());
+        Category category = getCategoryService().importCategory(questionData.getCategoryData(), discipline);
+        Topic topic = getTopicService().importTopic(questionData.getTopicData(), category);*/
+
+        Question question = new Question();
+/*        question.setDifficulty(difficulty);
+        question.setTopic(topic);*/
+        question.setName(questionData.getName());
+        question.setTimeLimit(questionData.getTimeLimit());
+
+        QuestionType qt = null;
+        String definition = questionData.getDefinition();
+        if ((definition != null) && (definition.length() > 0)) {
+            byte[] bytes = Base64.decode(definition);
+            ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
+            qt = JAXBUtil.parseXml(QuestionType.class, stream);
+        }
+        question.setDefinition(qt);
+
+        Question result = saveQuestion(question, user);
+
+        logger.debug("*  Result: #0", result);
+        logger.debug("< importQuestion(QuestionDataType, User)");
+
+        return result;
+    }
+
+    public QuestionDataType exportQuestion(Integer id) throws JAXBException {
+        logger.debug("> exportQuestion(Integer=#0)", id);
+
+        Question question = null;
+        try {
+            question = getEntityManager().find(Question.class, id);
+        } catch (NoResultException e) {
+            // do nothing
+        }
+
+        QuestionDataType result = null;
+        if (question != null) {
+            result = new QuestionDataType();
+
+/*            Topic topic = question.getTopic();
+            TopicDataType topicData = getTopicService().exportTopic(topic.getId());
+            result.setTopicData(topicData);
+
+            Category category = topic.getCategory();
+            CategoryDataType categoryData = getCategoryService().exportCategory(category.getId());
+            result.setCategoryData(categoryData);
+
+            Discipline discipline = category.getDiscipline();
+            DisciplineDataType disciplineData = getDisciplineService().exportDiscipline(discipline.getId());
+            result.setDisciplineData(disciplineData);
+
+            Difficulty difficulty = question.getDifficulty();
+            DifficultyDataType difficultyData = getDifficultyService().exportDifficulty(difficulty.getId());
+            result.setDifficultyData(difficultyData);*/
+
+            result.setName(question.getName());
+
+            result.setTimeLimit(question.getTimeLimit());
+
+            QuestionType qt = question.getDefinition();
+            if (qt != null) {
+                byte[] bytes = JAXBUtil.createXml(qt);
+                String definition = Base64.encodeBytes(bytes);
+                result.setDefinition(definition);
+            } else {
+                result.setDefinition("");
+            }
+        }
+
+        logger.debug("*  Result: #0", result);
+        logger.debug("< exportQuestion(Integer)");
+
+        return result;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Question> findAll() {
@@ -140,4 +237,20 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
 
         logger.debug("< remove(Question)");
     }
+
+/*    private DisciplineService getDisciplineService() {
+        return (DisciplineService) ejbContext.lookup("ejb/DisciplineService");
+    }
+
+    private CategoryService getCategoryService() {
+        return (CategoryService) ejbContext.lookup("ejb/CategoryService");
+    }
+
+    private TopicService getTopicService() {
+        return (TopicService) ejbContext.lookup("ejb/TopicService");
+    }
+
+    private DifficultyService getDifficultyService() {
+        return (DifficultyService) ejbContext.lookup("ejb/DifficultyService");
+    }*/
 }
