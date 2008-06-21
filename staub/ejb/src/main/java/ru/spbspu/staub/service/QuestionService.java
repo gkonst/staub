@@ -1,12 +1,14 @@
 package ru.spbspu.staub.service;
 
-import ru.spbspu.staub.data.question.QuestionDataType;
 import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
 import javax.ejb.Local;
 import javax.xml.bind.JAXBException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Local Interface for <code>QuestionServiceBean</code> Stateless EJB.
@@ -45,23 +47,23 @@ public interface QuestionService extends GenericService<Question, Integer> {
     /**
      * Imports a question.
      *
-     * @param questionData the data to import
-     * @param user         the user
+     * @param inputStream the data to import
+     * @param user        the user
      *
      * @return the target entity
      *
      * @throws JAXBException if an exception occurs during an XML document processing.
      */
-    Question importQuestion(QuestionDataType questionData, User user) throws JAXBException;
+    Question importQuestion(InputStream inputStream, User user) throws JAXBException;
 
     /**
      * Exports a question.
      *
-     * @param id the identification number
-     *
-     * @return the exported data
+     * @param id           the identification number
+     * @param outputStream the output stream
      *
      * @throws JAXBException if an exception occurs during an XML document processing.
+     * @throws IOException   if an exception occurs during an IO operation.
      */
-    QuestionDataType exportQuestion(Integer id) throws JAXBException;
+    void exportQuestion(Integer id, OutputStream outputStream) throws JAXBException, IOException;
 }

@@ -15,6 +15,9 @@ import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.xml.bind.JAXBException;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -100,19 +103,25 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
         return makePersistent(question);
     }
 
-    public Question importQuestion(QuestionDataType questionData, User user) throws JAXBException {
-        logger.debug("> importQuestion(QuestionDataType=#0, User=#1)", questionData, user);
+    public Question importQuestion(InputStream inputStream, User user) throws JAXBException {
+        logger.debug("> importQuestion(InputStream=#0, User=#1)", inputStream, user);
 
-/*        Difficulty difficulty = getDifficultyService().importDifficulty(questionData.getDifficultyData());
-        Discipline discipline = getDisciplineService().importDiscipline(questionData.getDisciplineData());
-        Category category = getCategoryService().importCategory(questionData.getCategoryData(), discipline);
-        Topic topic = getTopicService().importTopic(questionData.getTopicData(), category);*/
+        QuestionDataType questionData = JAXBUtil.parseXml(QuestionDataType.class, inputStream);
+
+        Difficulty difficulty = difficultyService.importDifficulty(questionData.getDifficultyData());
+        Discipline discipline = disciplineService.importDiscipline(questionData.getDisciplineData());
+        Category category = categoryService.importCategory(questionData.getCategoryData(), discipline);
+        Topic topic = topicService.importTopic(questionData.getTopicData(), category);
 
         Question question = new Question();
-/*        question.setDifficulty(difficulty);
-        question.setTopic(topic);*/
+        question.setDifficulty(difficulty);
+        question.setTopic(topic);
         question.setName(questionData.getName());
-        question.setTimeLimit(questionData.getTimeLimit());
+
+        int limit = questionData.getTimeLimit();
+        if (limit != -1) {
+            question.setTimeLimit(limit);
+        }
 
         QuestionType qt = null;
         String definition = questionData.getDefinition();
@@ -126,13 +135,13 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
         Question result = saveQuestion(question, user);
 
         logger.debug("*  Result: #0", result);
-        logger.debug("< importQuestion(QuestionDataType, User)");
+        logger.debug("< importQuestion(InputStream, User)");
 
         return result;
     }
 
-    public QuestionDataType exportQuestion(Integer id) throws JAXBException {
-        logger.debug("> exportQuestion(Integer=#0)", id);
+    public void exportQuestion(Integer id, OutputStream outputStream) throws JAXBException, IOException {
+        logger.debug("> exportQuestion(Integer=#0, OutputStream=#1)", id, outputStream);
 
         Question question = null;
         try {
@@ -141,44 +150,48 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
             // do nothing
         }
 
-        QuestionDataType result = null;
         if (question != null) {
-            result = new QuestionDataType();
+            QuestionDataType questionData = new QuestionDataType();
 
             Topic topic = question.getTopic();
             TopicDataType topicData = topicService.exportTopic(topic.getId());
-            result.setTopicData(topicData);
+            questionData.setTopicData(topicData);
 
             Category category = topic.getCategory();
             CategoryDataType categoryData = categoryService.exportCategory(category.getId());
-            result.setCategoryData(categoryData);
+            questionData.setCategoryData(categoryData);
 
             Discipline discipline = category.getDiscipline();
             DisciplineDataType disciplineData = disciplineService.exportDiscipline(discipline.getId());
-            result.setDisciplineData(disciplineData);
+            questionData.setDisciplineData(disciplineData);
 
             Difficulty difficulty = question.getDifficulty();
             DifficultyDataType difficultyData = difficultyService.exportDifficulty(difficulty.getId());
-            result.setDifficultyData(difficultyData);
+            questionData.setDifficultyData(difficultyData);
 
-            result.setName(question.getName());
+            questionData.setName(question.getName());
 
-            result.setTimeLimit(question.getTimeLimit());
+            Integer timeLimit = question.getTimeLimit();
+            if (timeLimit != null) {
+                questionData.setTimeLimit(timeLimit);
+            } else {
+                questionData.setTimeLimit(-1);
+            }
 
             QuestionType qt = question.getDefinition();
             if (qt != null) {
                 byte[] bytes = JAXBUtil.createXml(qt);
                 String definition = Base64.encodeBytes(bytes);
-                result.setDefinition(definition);
+                questionData.setDefinition(definition);
             } else {
-                result.setDefinition("");
+                questionData.setDefinition("");
             }
+
+            byte[] bytes = JAXBUtil.createXml(questionData);
+            outputStream.write(bytes);
         }
 
-        logger.debug("*  Result: #0", result);
-        logger.debug("< exportQuestion(Integer)");
-
-        return result;
+        logger.debug("< exportQuestion(Integer, OutputStream)");
     }
 
     @Override
