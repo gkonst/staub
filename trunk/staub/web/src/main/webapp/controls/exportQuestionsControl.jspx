@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+<ui:composition>
+    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.admin.QuestionListBean"-->
+    <!--@elvariable id="messages" type="java.util.Map"-->
+    <a4j:commandButton id="exportXMLLink"
+                       action="#{pageBean.doExportQuestions}"
+                       oncomplete="if(typeof data == 'undefined' || data == null) { Richfaces.showModalPanel('downloadQuestionsBox',{width:350, top:200}); }"
+                       data="#{facesContext.maximumSeverity}"
+                       value="#{messages['question.list.exportQuestions']}"
+                       styleClass="button"/>
+    <rich:modalPanel id="downloadQuestionsBox" minHeight="100" minWidth="300"
+                     height="100" width="350" zindex="2000">
+        <f:facet name="header">
+            #{messages['system.export.title']}
+        </f:facet>
+        <f:facet name="controls">
+            <a4j:region id="cancelDownloadQuestionsRegion">
+                <a4j:commandLink id="cancelDownloadQuestionsLink"
+                                 action="#{pageBean.doCancelExport}"
+                                 oncomplete="Richfaces.hideModalPanel('downloadQuestionsBox')">
+                    <h:graphicImage id="cancelDownloadQuestionsImage"
+                                    value="/images/icons/icon_close.gif"
+                                    styleClass="clickable"
+                                    alt="#{messages['common.detail.functions.cancel']}"/>
+                </a4j:commandLink>
+            </a4j:region>
+        </f:facet>
+
+        <div align="center">
+            #{messages['system.export.info']}
+        </div>
+        <br/>
+        <br/>
+
+        <div align="center">
+            <h:outputLink id="downloadZipExportQuestionsLink"
+                          value="#{facesContext.externalContext.requestContextPath}/seam/resource/download"
+                          onclick="Richfaces.hideModalPanel('downloadQuestionsBox');">
+                #{messages['system.download.getAsZIP']}
+                <f:param name="STAUB-DOWNLOAD-CONTENT-TYPE" value="ZIP"/>
+            </h:outputLink>
+        </div>
+        <br/>
+    </rich:modalPanel>
+</ui:composition>
+</html>
