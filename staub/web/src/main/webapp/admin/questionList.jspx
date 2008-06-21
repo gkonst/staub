@@ -23,6 +23,12 @@
 <a4j:outputPanel id="contentButtons" styleClass="contentButtons" layout="block">
     <ui:include src="/controls/genericCreateControl.jspx"/>
     <ui:include src="/controls/genericRefreshControl.jspx"/>
+    <ui:include src="/controls/exportQuestionsControl.jspx"/>
+    <a4j:commandButton id="importQuestionsLink"
+                       ajaxSingle="true"
+                       onclick="Richfaces.showModalPanel('importQuestionsBox'); return false;"
+                       value="#{messages['question.list.importQuestions']}"
+                       styleClass="button"/>
 </a4j:outputPanel>
 <ui:decorate template="/controls/listLayoutControl.jspx">
 <ui:define name="listPageData">
@@ -180,6 +186,52 @@
 </ui:define>
 </ui:decorate>
 </a4j:form>
+<rich:modalPanel id="importQuestionsBox" zindex="1000" autosized="true">
+    <f:facet name="header">
+        #{messages['question.list.upload.title']}
+    </f:facet>
+    <h:form>
+        <a4j:region id="importQuestionsRegion">
+            <rich:fileUpload id="importQuestionsUpload"
+                             fileUploadListener="#{pageBean.doUploadQuestions}"
+                             addControlLabel="#{messages['system.upload.add']}"
+                             uploadControlLabel="#{messages['system.upload.upload']}"
+                             cancelEntryControlLabel="#{messages['system.upload.cancel']}"
+                             clearControlLabel="#{messages['system.upload.clear']}"
+                             clearAllControlLabel="#{messages['system.upload.clearAll']}"
+                             stopControlLabel="#{messages['system.upload.stop']}"
+                             progressLabel="#{messages['system.upload.progress']}"
+                             transferErrorLabel="#{messages['system.upload.error']}"
+                             doneLabel="#{messages['system.upload.done']}"
+                             stopEntryControlLabel="#{messages['system.upload.stop']}"
+                             ajaxSingle="true">
+                <a4j:support id="importQuestionsUploadSupport"
+                             reRender="importButton"
+                             event="onuploadcomplete"
+                             ignoreDupResponses="true"
+                             ajaxSingle="true"
+                             immediate="true"
+                             bypassUpdates="true"/>
+            </rich:fileUpload>
+        </a4j:region>
+        <a4j:commandButton id="importButton"
+                           styleClass="button"
+                           value="#{messages['question.list.upload.import']}"
+                           oncomplete="Richfaces.hideModalPanel('importQuestionsBox');"
+                           action="#{pageBean.doImportQuestions}"
+                           reRender="content"
+                           immediate="true"
+                           bypassUpdates="true"
+                           disabled="#{!pageBean.readyForImport}"/>
+        <a4j:region id="cancelImportRegion">
+            <a4j:commandButton id="cancelImportButton"
+                               styleClass="button"
+                               value="#{messages['common.detail.functions.cancel']}"
+                               reRender="importQuestionsBox"
+                               oncomplete="Richfaces.hideModalPanel('importQuestionsBox');"/>
+        </a4j:region>
+    </h:form>
+</rich:modalPanel>
 </ui:define>
 </ui:composition>
 </html>

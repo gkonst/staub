@@ -4,6 +4,7 @@ import static org.jboss.seam.ScopeType.SESSION;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.Synchronized;
 import org.jboss.seam.contexts.Contexts;
 import org.richfaces.event.UploadEvent;
 import ru.spbspu.staub.bean.BeanMode;
@@ -18,6 +19,7 @@ import ru.spbspu.staub.service.*;
 import ru.spbspu.staub.util.ImageResource;
 
 import java.io.*;
+import java.nio.channels.FileChannel;
 import java.util.List;
 
 /**
@@ -27,6 +29,7 @@ import java.util.List;
  */
 @Name("questionDetailBean")
 @Scope(SESSION)
+@Synchronized(timeout = 10000)
 public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     private static final long serialVersionUID = -458598915895087232L;
@@ -61,6 +64,9 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     private Discipline discipline;
     private Category category;
+
+    private File uploadedFile;
+    private String uploadedFileName;
 
     /**
      * {@inheritDoc}
@@ -154,25 +160,32 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
 
     public void doUploadImage(UploadEvent event) {
         logger.debug(">>> Uploading image...");
-        logger.debug(" fullFileName : #0", event.getUploadItem().getFileName());
-        String fileName = event.getUploadItem().getFileName().substring(event.getUploadItem().getFileName().lastIndexOf(File.separator) + 1);
+        uploadedFile = event.getUploadItem().getFile();
+        uploadedFileName = event.getUploadItem().getFileName();
+        logger.debug("<<< Uploading image...Ok");
+    }
+
+    public void doInsertImage() {
+        logger.debug(">>> Inserting image...");
+        logger.debug(" fullFileName : #0", uploadedFileName);
+        String fileName = uploadedFileName.substring(uploadedFileName.lastIndexOf(File.separator) + 1);
         logger.debug(" fileName : #0", fileName);
         String newFileName = System.currentTimeMillis() + "_" + fileName;
         String filePath = ImageResource.getResourceDirectory() + File.separator + newFileName;
         logger.debug(" filePath : #0", filePath);
-        FileInputStream fi = null;
-        FileOutputStream fo = null;
         try {
             File file = new File(filePath);
             file.createNewFile();
-            fi = new FileInputStream(event.getUploadItem().getFile());
-            fo = new FileOutputStream(file);
-            byte[] buf = new byte[100];
-            int size;
-            while ((size = fi.read(buf)) > 0) {
-                fo.write(buf, 0, size);
+            FileChannel srcChannel = null;
+            FileChannel dstChannel = null;
+            try {
+                srcChannel = new FileInputStream(uploadedFile).getChannel();
+                dstChannel = new FileOutputStream(file).getChannel();
+                dstChannel.transferFrom(srcChannel, 0, srcChannel.size());
+            } finally {
+                closeChannel(srcChannel);
+                closeChannel(dstChannel);
             }
-            fo.flush();
             StringBuilder imageTag = new StringBuilder();
             imageTag.append("<img src=\"");
             imageTag.append(getRequest().getContextPath());
@@ -187,21 +200,25 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             getQuestionDefinition().setDescription(getQuestionDefinition().getDescription() + imageTag);
         } catch (IOException e) {
             logger.error("Error during saving image file", e);
-        } finally {
-            closeStream(fi);
-            closeStream(fo);
         }
-        logger.debug("<<< Uploading image...Ok");
+        uploadedFile = null;
+        uploadedFileName = null;
+        logger.debug("<<< Inserting image...Ok");
     }
 
-    private void closeStream(Closeable stream) {
-        if (stream != null) {
+    private void closeChannel(Closeable channel) {
+        if (channel != null) {
             try {
-                stream.close();
+                channel.close();
+
             } catch (IOException e) {
-                logger.error("error during stream closing", e);
+                logger.error("error during channel closing", e);
             }
         }
+    }
+
+    public boolean isReadyForInsert() {
+        return uploadedFile != null && uploadedFileName != null;
     }
 
     public List<Discipline> getDisciplineList() {

@@ -210,26 +210,46 @@
     <f:facet name="header">
         #{messages['question.detail.upload.title']}
     </f:facet>
-    <a4j:region id="fileUploadRegion">
-        <h:form id="fileUploadForm">
-            <rich:fileUpload id="fileUpload"
+    <a4j:region id="imageUploadRegion">
+        <h:form id="imageUploadForm">
+            <rich:fileUpload id="imageUpload"
                              fileUploadListener="#{pageBean.doUploadImage}"
-                             addControlLabel="#{messages['question.detail.upload.add']}"
-                             uploadControlLabel="#{messages['question.detail.upload.upload']}"
-                             cancelEntryControlLabel="#{messages['question.detail.upload.cancel']}"
-                             clearControlLabel="#{messages['question.detail.upload.clear']}"
-                             clearAllControlLabel="#{messages['question.detail.upload.clearAll']}"
-                             stopControlLabel="#{messages['question.detail.upload.stop']}">
-                <a4j:support id="fileUploadSupport"
+                             addControlLabel="#{messages['system.upload.add']}"
+                             uploadControlLabel="#{messages['system.upload.upload']}"
+                             cancelEntryControlLabel="#{messages['system.upload.cancel']}"
+                             clearControlLabel="#{messages['system.upload.clear']}"
+                             clearAllControlLabel="#{messages['system.upload.clearAll']}"
+                             stopControlLabel="#{messages['system.upload.stop']}"
+                             progressLabel="#{messages['system.upload.progress']}"
+                             transferErrorLabel="#{messages['system.upload.error']}"
+                             doneLabel="#{messages['system.upload.done']}"
+                             stopEntryControlLabel="#{messages['system.upload.stop']}"
+                             ajaxSingle="true">
+                <a4j:support id="imageUploadSupport"
+                             reRender="insertImageButton"
                              event="onuploadcomplete"
-                             reRender="fileUpload, questionDefinitionTextarea"
-                             oncomplete="Richfaces.hideModalPanel('imageUploadBox');"/>
+                             ignoreDupResponses="true"
+                             ajaxSingle="true"
+                             immediate="true"
+                             bypassUpdates="true"/>
             </rich:fileUpload>
 
-            <a4j:commandButton id="cancelUploadButton"
+            <a4j:commandButton id="insertImageButton"
                                styleClass="button"
-                               value="#{messages['question.detail.upload.cancel']}"
-                               onclick="Richfaces.hideModalPanel('imageUploadBox'); return false;"/>
+                               value="#{messages['question.detail.upload.insert']}"
+                               action="#{pageBean.doInsertImage}"
+                               oncomplete="Richfaces.hideModalPanel('imageUploadBox');"
+                               immediate="true"
+                               reRender="imageUpload, questionDefinitionTextarea"
+                               bypassUpdates="true"
+                               disabled="#{!pageBean.readyForInsert}"/>
+            <a4j:region id="cancelInsertImageRegion">
+                <a4j:commandButton id="cancelInsertImageButton"
+                                   styleClass="button"
+                                   value="#{messages['common.detail.functions.cancel']}"
+                                   oncomplete="Richfaces.hideModalPanel('imageUploadBox');"
+                                   reRender="imageUpload"/>
+            </a4j:region>
         </h:form>
     </a4j:region>
 </rich:modalPanel>
