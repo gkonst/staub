@@ -9,6 +9,7 @@ import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.model.question.QuestionType;
 import ru.spbspu.staub.util.JAXBUtil;
+import ru.spbspu.staub.util.NonClosableInputStream;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -106,7 +107,8 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
     public Question importQuestion(InputStream inputStream, User user) throws JAXBException {
         logger.debug("> importQuestion(InputStream=#0, User=#1)", inputStream, user);
 
-        QuestionDataType questionData = JAXBUtil.parseXml(QuestionDataType.class, inputStream);
+        QuestionDataType questionData = JAXBUtil.parseXml(QuestionDataType.class,
+                new NonClosableInputStream(inputStream));
 
         Difficulty difficulty = difficultyService.importDifficulty(questionData.getDifficultyData());
         Discipline discipline = disciplineService.importDiscipline(questionData.getDisciplineData());
