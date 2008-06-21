@@ -36,14 +36,14 @@
                 </h:graphicImage>
                 <h:graphicImage id="imageUploadIcon"
                                 url="/images/icons/icon_upload.gif"
-                                onclick="Richfaces.showModalPanel('imageUploadModalBox')"
                                 alt="#{messages['common.detail.functions.uploadImage']}"
                                 styleClass="clickable">
                     <a4j:support id="imageUploadIconSupport"
                                  event="onclick"
-                                 oncomplete="Richfaces.showModalPanel('imageUploadModalBox')"
+                                 oncomplete="Richfaces.showModalPanel('imageUploadBox')"
                                  process="questionDefinitionTextarea"
-                                 ajaxSingle="true"/>
+                                 ajaxSingle="true"
+                                 rendered="#{!pageBean.viewMode}"/>
                 </h:graphicImage>
             </td>
         </tr>

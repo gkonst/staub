@@ -49,7 +49,7 @@
     <td class="detail-cell">
         <h:selectOneMenu id="difficultySelect"
                          value="#{pageBean.model.difficulty}"
-                         
+                         disabled="#{pageBean.viewMode}"
                          converter="ru.spbspu.staub.ObjectSelectConverter"
                          styleClass="required"
                          required="true"
@@ -206,14 +206,14 @@
 </fieldset>
 </div>
 </a4j:form>
-<rich:modalPanel id="imageUploadModalBox" zindex="1000" autosized="true">
+<rich:modalPanel id="imageUploadBox" zindex="1000" autosized="true">
     <f:facet name="header">
         #{messages['question.detail.upload.title']}
     </f:facet>
     <a4j:region id="fileUploadRegion">
         <h:form id="fileUploadForm">
             <rich:fileUpload id="fileUpload"
-                             fileUploadListener="#{pageBean.fileUploadListener}"
+                             fileUploadListener="#{pageBean.doUploadImage}"
                              addControlLabel="#{messages['question.detail.upload.add']}"
                              uploadControlLabel="#{messages['question.detail.upload.upload']}"
                              cancelEntryControlLabel="#{messages['question.detail.upload.cancel']}"
@@ -223,13 +223,13 @@
                 <a4j:support id="fileUploadSupport"
                              event="onuploadcomplete"
                              reRender="fileUpload, questionDefinitionTextarea"
-                             oncomplete="Richfaces.hideModalPanel('imageUploadModalBox');"/>
+                             oncomplete="Richfaces.hideModalPanel('imageUploadBox');"/>
             </rich:fileUpload>
 
             <a4j:commandButton id="cancelUploadButton"
                                styleClass="button"
                                value="#{messages['question.detail.upload.cancel']}"
-                               onclick="Richfaces.hideModalPanel('imageUploadModalBox'); return false;"/>
+                               onclick="Richfaces.hideModalPanel('imageUploadBox'); return false;"/>
         </h:form>
     </a4j:region>
 </rich:modalPanel>
