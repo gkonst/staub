@@ -31,24 +31,6 @@ public interface TestTraceService extends GenericService<TestTrace, Integer> {
                              Date begin, Date end);
 
     /**
-     * Counts test traces of a specific student.
-     *
-     * @param student the student
-     *
-     * @return the number of test traces
-     */
-    long count(Student student);
-
-    /**
-     * Counts test traces of a specific test.
-     *
-     * @param test the test
-     *
-     * @return the number of test traces
-     */
-    long count(Test test);
-
-    /**
      * Returns a <code>TestTrace</code> instance for a test. Creates if necessary.
      *
      * @param assignment the assignment

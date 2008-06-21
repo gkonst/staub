@@ -32,42 +32,6 @@ public interface QuestionService extends GenericService<Question, Integer> {
                           Difficulty difficulty, Integer questionId);
 
     /**
-     * Counts questions of a specified category.
-     *
-     * @param category the category
-     *
-     * @return the number of questions
-     */
-    long count(Category category);
-
-    /**
-     * Counts questions of a specified difficulty.
-     *
-     * @param difficulty the difficulty
-     *
-     * @return the number of questions
-     */
-    long count(Difficulty difficulty);
-
-    /**
-     * Counts questions of a specified discipline.
-     *
-     * @param discipline the discipline
-     *
-     * @return the number of questions
-     */
-    long count(Discipline discipline);
-
-    /**
-     * Counts questions of a specified topic.
-     *
-     * @param topic the topic
-     *
-     * @return the number of questions
-     */
-    long count(Topic topic);
-
-    /**
      * Saves question (updates or inserts).
      * Also updates neede audit fields(created, createdBy, etc.)
      *
@@ -99,5 +63,5 @@ public interface QuestionService extends GenericService<Question, Integer> {
      *
      * @throws JAXBException if an exception occurs during an XML document processing.
      */
-    QuestionDataType exportQuestion(Integer id)  throws JAXBException;
+    QuestionDataType exportQuestion(Integer id) throws JAXBException;
 }

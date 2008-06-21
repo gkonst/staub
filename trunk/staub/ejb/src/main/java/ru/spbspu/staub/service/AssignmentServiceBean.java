@@ -49,18 +49,6 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
         return q.getResultList();
     }
 
-    public long count(Student student) {
-        Query q = getEntityManager().createQuery("select count(a) from Assignment a where a.student = :student");
-        q.setParameter("student", student);
-        return (Long) q.getSingleResult();
-    }
-
-    public long count(Test test) {
-        Query q = getEntityManager().createQuery("select count(a) from Assignment a where a.test = :test");
-        q.setParameter("test", test);
-        return (Long) q.getSingleResult();
-    }
-
     public void assignTest(Integer testId, List<Integer> studentIds, Date testBegin, Date testEnd) {
         Test test = getEntityManager().find(Test.class, testId);
         for (Integer studentId : studentIds) {
@@ -80,7 +68,6 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
     public void processExpiredAssignments() {
         logger.debug("> processExpiredAssignments()");
 
-//        Query q = getEntityManager().createQuery("select a from Assignment a where a.testEnd <= :currentDate and a.testTrace is null");
         Query q = getEntityManager().createQuery("select a from Assignment a left join a.testTrace t where a.testEnd <= :currentDate and t is null");
         q.setParameter("currentDate", new Date());
 

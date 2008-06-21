@@ -29,42 +29,6 @@ public interface TestService extends GenericService<Test, Integer> {
     public FormTable find(FormProperties formProperties, Discipline discipline, Category category, Topic topic);
 
     /**
-     * Counts tests of a specified category.
-     *
-     * @param category the category
-     *
-     * @return the number of tests
-     */
-    long count(Category category);
-
-    /**
-     * Counts tests of a specified difficulty.
-     *
-     * @param difficulty the difficulty
-     *
-     * @return the number of tests
-     */
-    long count(Difficulty difficulty);
-
-    /**
-     * Counts tests of a specified discipline.
-     *
-     * @param discipline the discipline
-     *
-     * @return the number of tests
-     */
-    long count(Discipline discipline);
-
-    /**
-     * Counts tests of a specified topic.
-     *
-     * @param topic the topic
-     *
-     * @return the number of tests
-     */
-    long count(Topic topic);
-
-    /**
      * Saves test (updates or inserts).
      * Also updates neede audit fields(created, createdBy, etc.)
      *

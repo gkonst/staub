@@ -3,7 +3,7 @@ package ru.spbspu.staub.service;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.util.Base64;
-import ru.spbspu.staub.data.question.QuestionDataType;
+import ru.spbspu.staub.data.question.*;
 import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
@@ -13,7 +13,6 @@ import ru.spbspu.staub.util.JAXBUtil;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import javax.xml.bind.JAXBException;
 import java.io.ByteArrayInputStream;
 import java.util.Date;
@@ -30,18 +29,21 @@ import java.util.Map;
 @Name("questionService")
 @AutoCreate
 @Stateless
-/*@EJBs(value = {
-@EJB(name = "ejb/DisciplineService", beanInterface = DisciplineService.class, beanName = "DisciplineServiceBean"),
-@EJB(name = "ejb/CategoryService", beanInterface = CategoryService.class, beanName = "CategoryServiceBean"),
-@EJB(name = "ejb/TopicService", beanInterface = TopicService.class, beanName = "TopicServiceBean"),
-@EJB(name = "ejb/DifficultyService", beanInterface = DifficultyService.class, beanName = "DifficultyServiceBean")})*/
 public class QuestionServiceBean extends GenericServiceBean<Question, Integer> implements QuestionService {
     @EJB
     private QuestionTraceService questionTraceService;
 
-/*    @Resource
-    private javax.ejb.SessionContext ejbContext;*/
+    @EJB
+    private DisciplineService disciplineService;
 
+    @EJB
+    private CategoryService categoryService;
+
+    @EJB
+    private TopicService topicService;
+
+    @EJB
+    private DifficultyService difficultyService;
 
     public FormTable find(FormProperties formProperties, Discipline discipline, Category category, Topic topic,
                           Difficulty difficulty, Integer questionId) {
@@ -84,30 +86,6 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
         logger.debug("< find(FormProperties, Discipline, Category, Topic, Difficulty, Integer)");
 
         return formTable;
-    }
-
-    public long count(Category category) {
-        Query q = getEntityManager().createQuery("select count(q) from Category c join c.topics t, Question q where q.topic = t and c = :category");
-        q.setParameter("category", category);
-        return (Long) q.getSingleResult();
-    }
-
-    public long count(Difficulty difficulty) {
-        Query q = getEntityManager().createQuery("select count(q) from Question q where q.difficulty = :difficulty");
-        q.setParameter("difficulty", difficulty);
-        return (Long) q.getSingleResult();
-    }
-
-    public long count(Discipline discipline) {
-        Query q = getEntityManager().createQuery("select count(q) from Discipline d join d.categories c join c.topics t, Question q where q.topic = t and d = :discipline");
-        q.setParameter("discipline", discipline);
-        return (Long) q.getSingleResult();
-    }
-
-    public long count(Topic topic) {
-        Query q = getEntityManager().createQuery("select count(q) from Question q where q.topic = :topic");
-        q.setParameter("topic", topic);
-        return (Long) q.getSingleResult();
     }
 
     public Question saveQuestion(Question question, User user) {
@@ -167,21 +145,21 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
         if (question != null) {
             result = new QuestionDataType();
 
-/*            Topic topic = question.getTopic();
-            TopicDataType topicData = getTopicService().exportTopic(topic.getId());
+            Topic topic = question.getTopic();
+            TopicDataType topicData = topicService.exportTopic(topic.getId());
             result.setTopicData(topicData);
 
             Category category = topic.getCategory();
-            CategoryDataType categoryData = getCategoryService().exportCategory(category.getId());
+            CategoryDataType categoryData = categoryService.exportCategory(category.getId());
             result.setCategoryData(categoryData);
 
             Discipline discipline = category.getDiscipline();
-            DisciplineDataType disciplineData = getDisciplineService().exportDiscipline(discipline.getId());
+            DisciplineDataType disciplineData = disciplineService.exportDiscipline(discipline.getId());
             result.setDisciplineData(disciplineData);
 
             Difficulty difficulty = question.getDifficulty();
-            DifficultyDataType difficultyData = getDifficultyService().exportDifficulty(difficulty.getId());
-            result.setDifficultyData(difficultyData);*/
+            DifficultyDataType difficultyData = difficultyService.exportDifficulty(difficulty.getId());
+            result.setDifficultyData(difficultyData);
 
             result.setName(question.getName());
 
@@ -237,20 +215,4 @@ public class QuestionServiceBean extends GenericServiceBean<Question, Integer> i
 
         logger.debug("< remove(Question)");
     }
-
-/*    private DisciplineService getDisciplineService() {
-        return (DisciplineService) ejbContext.lookup("ejb/DisciplineService");
-    }
-
-    private CategoryService getCategoryService() {
-        return (CategoryService) ejbContext.lookup("ejb/CategoryService");
-    }
-
-    private TopicService getTopicService() {
-        return (TopicService) ejbContext.lookup("ejb/TopicService");
-    }
-
-    private DifficultyService getDifficultyService() {
-        return (DifficultyService) ejbContext.lookup("ejb/DifficultyService");
-    }*/
 }

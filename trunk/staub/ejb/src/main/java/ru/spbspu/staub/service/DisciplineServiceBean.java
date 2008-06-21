@@ -6,7 +6,6 @@ import ru.spbspu.staub.data.question.DisciplineDataType;
 import ru.spbspu.staub.entity.Discipline;
 import ru.spbspu.staub.exception.RemoveException;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -21,12 +20,6 @@ import javax.persistence.Query;
 @AutoCreate
 @Stateless
 public class DisciplineServiceBean extends GenericServiceBean<Discipline, Integer> implements DisciplineService {
-    @EJB
-    private QuestionService questionService;
-
-    @EJB
-    private TestService testService;
-
     public boolean isCodeUnique(String code) {
         logger.debug("> isCodeUnique(String=#0)", code);
 
@@ -94,7 +87,7 @@ public class DisciplineServiceBean extends GenericServiceBean<Discipline, Intege
         logger.debug("> remove(Discipline=#0)", discipline);
 
         Discipline d = getEntityManager().merge(discipline);
-        if ((questionService.count(d) + testService.count(d)) == 0) {
+        if ((countQuestions(d) + countTests(d)) == 0) {
             logger.debug("*  No related entities found.");
             getEntityManager().remove(d);
             logger.debug("*  Discipline removed from a database.");
@@ -119,5 +112,17 @@ public class DisciplineServiceBean extends GenericServiceBean<Discipline, Intege
         }
 
         return discipline;
+    }
+
+    private long countQuestions(Discipline discipline) {
+        Query q = getEntityManager().createQuery("select count(q) from Discipline d join d.categories c join c.topics t, Question q where q.topic = t and d = :discipline");
+        q.setParameter("discipline", discipline);
+        return (Long) q.getSingleResult();
+    }
+
+    private long countTests(Discipline discipline) {
+        Query q = getEntityManager().createQuery("select count(t) from Discipline d join d.categories c, Test t where c = t.category and d = :discipline");
+        q.setParameter("discipline", discipline);
+        return (Long) q.getSingleResult();
     }
 }
