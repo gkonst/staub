@@ -9,7 +9,6 @@ import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -26,12 +25,6 @@ import java.util.Map;
 @AutoCreate
 @Stateless
 public class TopicServiceBean extends GenericServiceBean<Topic, Integer> implements TopicService {
-    @EJB
-    private QuestionService questionService;
-
-    @EJB
-    private TestService testService;
-
     @SuppressWarnings("unchecked")
     public List<Topic> find(Category category) {
         Query q = getEntityManager().createQuery("select t from Topic t where t.category = :category");
@@ -130,7 +123,7 @@ public class TopicServiceBean extends GenericServiceBean<Topic, Integer> impleme
         logger.debug("> remove(Topic=#0)", topic);
 
         Topic t = getEntityManager().merge(topic);
-        if ((questionService.count(t) + testService.count(t)) == 0) {
+        if ((countQuestions(t) + countTests(t)) == 0) {
             logger.debug("*  No related entities found.");
             getEntityManager().remove(t);
             logger.debug("*  Topic removed from a database.");
@@ -156,5 +149,17 @@ public class TopicServiceBean extends GenericServiceBean<Topic, Integer> impleme
         }
 
         return topic;
+    }
+
+    private long countQuestions(Topic topic) {
+        Query q = getEntityManager().createQuery("select count(q) from Question q where q.topic = :topic");
+        q.setParameter("topic", topic);
+        return (Long) q.getSingleResult();
+    }
+
+    private long countTests(Topic topic) {
+        Query q = getEntityManager().createQuery("select count(t) from Test t join t.topics tt where tt = :topic");
+        q.setParameter("topic", topic);
+        return (Long) q.getSingleResult();
     }
 }

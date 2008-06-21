@@ -8,7 +8,6 @@ import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -25,12 +24,6 @@ import java.util.Map;
 @AutoCreate
 @Stateless
 public class StudentServiceBean extends GenericServiceBean<Student, Integer> implements StudentService {
-    @EJB
-    private AssignmentService assignmentService;
-
-    @EJB
-    private TestTraceService testTraceService;
-
     public Student findByNameAndCode(String name, String code) {
         Student student = null;
         try {
@@ -135,9 +128,9 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
         logger.debug("> remove(Student=#0)", student);
 
         Student s = getEntityManager().merge(student);
-        if (assignmentService.count(s) == 0) {
+        if (countAssignments(s) == 0) {
             logger.debug("*  No related Assignment entities found.");
-            if (testTraceService.count(s) == 0) {
+            if (countStudents(s) == 0) {
                 logger.debug("*  No related TestTrace entities found.");
                 getEntityManager().remove(s);
                 logger.debug("*  Student removed from a database.");
@@ -153,5 +146,17 @@ public class StudentServiceBean extends GenericServiceBean<Student, Integer> imp
         }
 
         logger.debug("< remove(Student)");
+    }
+
+    private long countAssignments(Student student) {
+        Query q = getEntityManager().createQuery("select count(a) from Assignment a where a.student = :student");
+        q.setParameter("student", student);
+        return (Long) q.getSingleResult();
+    }
+
+    private long countStudents(Student student) {
+        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.student = :student");
+        q.setParameter("student", student);
+        return (Long) q.getSingleResult();
     }
 }

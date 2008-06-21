@@ -9,7 +9,6 @@ import ru.spbspu.staub.exception.RemoveException;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -27,12 +26,6 @@ import java.util.Map;
 @AutoCreate
 @Stateless
 public class CategoryServiceBean extends GenericServiceBean<Category, Integer> implements CategoryService {
-    @EJB
-    private QuestionService questionService;
-
-    @EJB
-    private TestService testService;
-
     @SuppressWarnings("unchecked")
     public List<Category> find(Discipline discipline) {
         Query q = getEntityManager().createQuery("select c from Category c where c.discipline = :discipline");
@@ -131,7 +124,7 @@ public class CategoryServiceBean extends GenericServiceBean<Category, Integer> i
         logger.debug("> remove(Category=#0)", category);
 
         Category c = getEntityManager().merge(category);
-        if ((questionService.count(c) + testService.count(c)) == 0) {
+        if ((countQuestions(c) + countTests(c)) == 0) {
             logger.debug("*  No related entities found.");
             getEntityManager().remove(c);
             logger.debug("*  Category removed from a database.");
@@ -158,4 +151,17 @@ public class CategoryServiceBean extends GenericServiceBean<Category, Integer> i
 
         return category;
     }
+
+    private long countQuestions(Category category) {
+        Query q = getEntityManager().createQuery("select count(q) from Category c join c.topics t, Question q where q.topic = t and c = :category");
+        q.setParameter("category", category);
+        return (Long) q.getSingleResult();
+    }
+
+    private long countTests(Category category) {
+        Query q = getEntityManager().createQuery("select count(t) from Test t where t.category = :category");
+        q.setParameter("category", category);
+        return (Long) q.getSingleResult();
+    }
+
 }

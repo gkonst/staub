@@ -8,7 +8,6 @@ import ru.spbspu.staub.model.DifficultyWrapper;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import java.text.MessageFormat;
@@ -24,12 +23,6 @@ import java.util.*;
 @AutoCreate
 @Stateless
 public class TestServiceBean extends GenericServiceBean<Test, Integer> implements TestService {
-    @EJB
-    private AssignmentService assignmentService;
-
-    @EJB
-    private TestTraceService testTraceService;
-
     public FormTable find(FormProperties formProperties, Discipline discipline, Category category, Topic topic) {
         logger.debug("> find(FormProperties=#0, Discipline=#1, Category=#2, Topic=#3)", formProperties, discipline,
                 category, topic);
@@ -62,30 +55,6 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         logger.debug("< find(FormProperties, Discipline, Category, Topic)");
 
         return formTable;
-    }
-
-    public long count(Category category) {
-        Query q = getEntityManager().createQuery("select count(t) from Test t where t.category = :category");
-        q.setParameter("category", category);
-        return (Long) q.getSingleResult();
-    }
-
-    public long count(Difficulty difficulty) {
-        Query q = getEntityManager().createQuery("select count(t) from Test t join t.difficultyLevels d where d.difficulty = :difficulty");
-        q.setParameter("difficulty", difficulty);
-        return (Long) q.getSingleResult();
-    }
-
-    public long count(Discipline discipline) {
-        Query q = getEntityManager().createQuery("select count(t) from Discipline d join d.categories c, Test t where c = t.category and d = :discipline");
-        q.setParameter("discipline", discipline);
-        return (Long) q.getSingleResult();
-    }
-
-    public long count(Topic topic) {
-        Query q = getEntityManager().createQuery("select count(t) from Test t join t.topics tt where tt = :topic");
-        q.setParameter("topic", topic);
-        return (Long) q.getSingleResult();
     }
 
     public Test save(Test test, List<DifficultyWrapper> difficulties, User user) {
@@ -147,9 +116,9 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
         logger.debug("> remove(Test=#0)", test);
 
         Test t = getEntityManager().merge(test);
-        if (assignmentService.count(t) == 0) {
+        if (countAssignments(t) == 0) {
             logger.debug("*  No related Assignment entities found.");
-            if (testTraceService.count(t) == 0) {
+            if (countTestTraces(t) == 0) {
                 logger.debug("*  No related TestTrace entities found.");
                 removeDifficultyLevels(t);
                 getEntityManager().remove(t);
@@ -183,5 +152,17 @@ public class TestServiceBean extends GenericServiceBean<Test, Integer> implement
             iter.remove();
             getEntityManager().remove(getEntityManager().merge(testDifficulty));
         }
+    }
+
+    private long countAssignments(Test test) {
+        Query q = getEntityManager().createQuery("select count(a) from Assignment a where a.test = :test");
+        q.setParameter("test", test);
+        return (Long) q.getSingleResult();
+    }
+
+    private long countTestTraces(Test test) {
+        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.test = :test");
+        q.setParameter("test", test);
+        return (Long) q.getSingleResult();
     }
 }

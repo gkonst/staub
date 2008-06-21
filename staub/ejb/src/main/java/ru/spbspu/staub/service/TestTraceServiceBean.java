@@ -92,18 +92,6 @@ public class TestTraceServiceBean extends GenericServiceBean<TestTrace, Integer>
         return formTable;
     }
 
-    public long count(Student student) {
-        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.student = :student");
-        q.setParameter("student", student);
-        return (Long) q.getSingleResult();
-    }
-
-    public long count(Test test) {
-        Query q = getEntityManager().createQuery("select count(t) from TestTrace t where t.test = :test");
-        q.setParameter("test", test);
-        return (Long) q.getSingleResult();
-    }
-
     @SuppressWarnings("unchecked")
     public TestTrace getTestTrace(Assignment assignment) {
         logger.debug("> getTestTrace(Assignment=#0)", assignment);

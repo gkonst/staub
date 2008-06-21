@@ -6,7 +6,6 @@ import ru.spbspu.staub.data.question.DifficultyDataType;
 import ru.spbspu.staub.entity.Difficulty;
 import ru.spbspu.staub.exception.RemoveException;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -21,12 +20,6 @@ import javax.persistence.Query;
 @AutoCreate
 @Stateless
 public class DifficultyServiceBean extends GenericServiceBean<Difficulty, Integer> implements DifficultyService {
-    @EJB
-    private QuestionService questionService;
-
-    @EJB
-    private TestService testService;
-
     public boolean isCodeUnique(Integer code) {
         logger.debug("> isCodeUnique(Integer=#0)", code);
 
@@ -94,7 +87,7 @@ public class DifficultyServiceBean extends GenericServiceBean<Difficulty, Intege
         logger.debug("> remove(Difficulty=#0)", difficulty);
 
         Difficulty d = getEntityManager().merge(difficulty);
-        if ((questionService.count(d) + testService.count(d)) == 0) {
+        if ((countQuestions(d) + countTests(d)) == 0) {
             logger.debug("*  No related entities found.");
             getEntityManager().remove(d);
             logger.debug("*  Difficulty removed from a database.");
@@ -119,5 +112,17 @@ public class DifficultyServiceBean extends GenericServiceBean<Difficulty, Intege
         }
 
         return difficulty;
+    }
+
+    private long countQuestions(Difficulty difficulty) {
+        Query q = getEntityManager().createQuery("select count(q) from Question q where q.difficulty = :difficulty");
+        q.setParameter("difficulty", difficulty);
+        return (Long) q.getSingleResult();
+    }
+
+    private long countTests(Difficulty difficulty) {
+        Query q = getEntityManager().createQuery("select count(t) from Test t join t.difficultyLevels d where d.difficulty = :difficulty");
+        q.setParameter("difficulty", difficulty);
+        return (Long) q.getSingleResult();
     }
 }
