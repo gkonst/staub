@@ -152,7 +152,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
         logger.debug("<<< Changing answer type...Ok");
     }
 
-    public void fileUploadListener(UploadEvent event) {
+    public void doUploadImage(UploadEvent event) {
         logger.debug(">>> Uploading image...");
         logger.debug(" fullFileName : #0", event.getUploadItem().getFileName());
         String fileName = event.getUploadItem().getFileName().substring(event.getUploadItem().getFileName().lastIndexOf(File.separator) + 1);
@@ -185,10 +185,8 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
                 getQuestionDefinition().setDescription("");
             }
             getQuestionDefinition().setDescription(getQuestionDefinition().getDescription() + imageTag);
-        } catch (FileNotFoundException e) {
-            logger.error("", e);
         } catch (IOException e) {
-            logger.error("", e);
+            logger.error("Error during saving image file", e);
         } finally {
             closeStream(fi);
             closeStream(fo);
@@ -201,7 +199,7 @@ public class QuestionDetailBean extends GenericDetailBean<Question> {
             try {
                 stream.close();
             } catch (IOException e) {
-                logger.error("error suring stream closing", e);
+                logger.error("error during stream closing", e);
             }
         }
     }
