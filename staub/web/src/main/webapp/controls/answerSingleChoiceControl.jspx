@@ -53,14 +53,14 @@
                                     rendered="#{answerModel.singleChoice}">
                             <tr>
                                 <td class="detail-cell">
-                                    <st:selectBooleanRadio id="singleChoiceRadio"
-                                                           group="singleChoiceRadioGroup"
+                                    <st:selectBooleanRadio id="singleChoiceEditRadio"
+                                                           group="singleChoiceEditRadioGroup"
                                                            value="#{answerModel.current[answer.id]}"
                                                            disabled="#{pageBean.viewMode}"
                                                            styleClass="radio"/>
                                 </td>
                                 <td class="detail-cell">
-                                    <h:inputText id="choiceValueInput"
+                                    <h:inputText id="singleChoiceValueEditInput"
                                                  value="#{answer.value}"
                                                  disabled="#{pageBean.viewMode}"/>
                                 </td>
