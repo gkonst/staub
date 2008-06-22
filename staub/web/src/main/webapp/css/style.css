@@ -173,8 +173,6 @@ strong {
     border-spacing: 0;
     border: 1px solid #D2C9C4;
     overflow: auto;
-    overflow-y: auto;
-    overflow-x: hidden;
     display: block;
     height: 300px;
     padding: 1em;
