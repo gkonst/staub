@@ -8,7 +8,7 @@ CREATE TABLE role (
 CREATE TABLE discipline (
     id INTEGER NOT NULL,
     name CHARACTER VARYING(256) NOT NULL,
-    code CHARACTER VARYING(8) NOT NULL,
+    code CHARACTER VARYING(16) NOT NULL,
     CONSTRAINT pk_discipline PRIMARY KEY (id),
     CONSTRAINT ak_discipline__code UNIQUE (code)
 );
@@ -17,7 +17,7 @@ CREATE TABLE category (
     id INTEGER NOT NULL,
     fk_discipline INTEGER NOT NULL,
     name CHARACTER VARYING(256) NOT NULL,
-    code CHARACTER VARYING(8) NOT NULL,
+    code CHARACTER VARYING(16) NOT NULL,
     CONSTRAINT pk_category PRIMARY KEY (id),
     CONSTRAINT ak_category__code UNIQUE (code),
     CONSTRAINT fk_discipline FOREIGN KEY (fk_discipline) REFERENCES discipline (id)
@@ -27,7 +27,7 @@ CREATE TABLE topic (
     id INTEGER NOT NULL,
     fk_category INTEGER NOT NULL,
     name CHARACTER VARYING(256) NOT NULL,
-    code CHARACTER VARYING(8) NOT NULL,
+    code CHARACTER VARYING(16) NOT NULL,
     CONSTRAINT pk_topic PRIMARY KEY (id),
     CONSTRAINT ak_topic__code UNIQUE (code),
     CONSTRAINT fk_category FOREIGN KEY (fk_category) REFERENCES category (id)

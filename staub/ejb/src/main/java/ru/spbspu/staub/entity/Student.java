@@ -15,6 +15,14 @@ public class Student implements Serializable {
     
     private Integer id;
 
+    private String name;
+
+    private String code;
+
+    private Group group;
+
+    private Boolean active;
+
     @Id
     @SequenceGenerator(name = "StudentIdGenerator", sequenceName = "seq_student", allocationSize = 1)
     @GeneratedValue(generator = "StudentIdGenerator", strategy = GenerationType.SEQUENCE)
@@ -27,8 +35,6 @@ public class Student implements Serializable {
         this.id = id;
     }
 
-    private String name;
-
     @Basic
     @Column(name = "name", nullable = false, length = 256)
     public String getName() {
@@ -38,8 +44,6 @@ public class Student implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    private String code;
 
     @Basic
     @Column(name = "code", nullable = false, length = 16)
@@ -51,8 +55,6 @@ public class Student implements Serializable {
         this.code = code;
     }
 
-    private Group group;
-
     @ManyToOne
     @JoinColumn(name = "fk_group", referencedColumnName = "id", nullable = false)
     public Group getGroup() {
@@ -62,8 +64,6 @@ public class Student implements Serializable {
     public void setGroup(Group group) {
         this.group = group;
     }
-
-    private Boolean active;
 
     @Basic
     @Column(name = "active", length = 1)

@@ -16,6 +16,16 @@ public class Assignment implements Serializable {
 
     private Integer id;
 
+    private Student student;
+
+    private Test test;
+
+    private TestTrace testTrace;
+
+    private Date testBegin;
+
+    private Date testEnd;
+
     @Id
     @SequenceGenerator(name = "AssignmentIdGenerator", sequenceName = "seq_assignment", allocationSize = 1)
     @GeneratedValue(generator = "AssignmentIdGenerator", strategy = GenerationType.SEQUENCE)
@@ -28,9 +38,6 @@ public class Assignment implements Serializable {
         this.id = id;
     }
 
-
-    private Student student;
-
     @OneToOne
     @JoinColumn(name = "fk_student", referencedColumnName = "id", nullable = false)
     public Student getStudent() {
@@ -40,8 +47,6 @@ public class Assignment implements Serializable {
     public void setStudent(Student student) {
         this.student = student;
     }
-
-    private Test test;
 
     @OneToOne
     @JoinColumn(name = "fk_test", referencedColumnName = "id", nullable = false)
@@ -53,8 +58,6 @@ public class Assignment implements Serializable {
         this.test = test;
     }
 
-    private TestTrace testTrace;
-
     @OneToOne(mappedBy = "assignment")
     public TestTrace getTestTrace() {
         return testTrace;
@@ -63,8 +66,6 @@ public class Assignment implements Serializable {
     public void setTestTrace(TestTrace testTrace) {
         this.testTrace = testTrace;
     }
-
-    private Date testBegin;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "test_begin")
@@ -75,8 +76,6 @@ public class Assignment implements Serializable {
     public void setTestBegin(Date testBegin) {
         this.testBegin = testBegin;
     }
-
-    private Date testEnd;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "test_end")

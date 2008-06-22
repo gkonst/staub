@@ -47,7 +47,7 @@ public class Category implements Serializable {
     }
 
     @Basic
-    @Column(name = "code", length = 8, nullable = false)
+    @Column(name = "code", length = 16, nullable = false)
     public String getCode() {
         return code;
     }

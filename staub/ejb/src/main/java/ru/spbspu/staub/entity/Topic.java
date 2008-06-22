@@ -44,7 +44,7 @@ public class Topic implements Serializable {
     }
 
     @Basic
-    @Column(name = "code", length = 10, nullable = false)
+    @Column(name = "code", length = 16, nullable = false)
     public String getCode() {
         return code;
     }
