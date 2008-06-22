@@ -37,7 +37,8 @@
                                          disabled="#{pageBean.viewMode}"
                                          required="true"
                                          requiredMessage="#{messages['student.detail.required.code']}"
-                                         styleClass="required"/>
+                                         styleClass="required"
+                                         maxlength="256"/>
                         </td>
                     </tr>
                     <tr>
@@ -54,7 +55,8 @@
                                          requiredMessage="#{messages['student.detail.required.code']}"
                                          styleClass="required"
                                          validator="#{pageBean.validateCode}"
-                                         validatorMessage="#{messages['student.detail.validation.code']}"/>
+                                         validatorMessage="#{messages['student.detail.validation.code']}"
+                                         maxlength="16"/>
                         </td>
                     </tr>
                     <tr>

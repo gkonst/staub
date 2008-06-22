@@ -40,7 +40,8 @@
                      style="width:99%;"
                      required="true"
                      styleClass="required"
-                     requiredMessage="#{messages['test.detail.required.name']}"/>
+                     requiredMessage="#{messages['test.detail.required.name']}"
+                     maxlength="256"/>
     </td>
 </tr>
 <tr>
