@@ -27,10 +27,15 @@
 <a4j:form id="contentBodyForm">
 <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
     <a4j:commandButton id="assignButton" action="#{pageBean.assign}"
-                       value="#{messages['common.list.functions.assignSelected']}"
+                       value="#{messages['student.assign.list.assignSelected']}"
                        reRender="content"
                        styleClass="button"
                        disabled="#{pageBean.selectedItems.size == 0}"/>
+    <a4j:commandButton id="assignGroupButton" action="#{pageBean.assignGroup}"
+                       value="#{messages['student.assign.list.assignGroup']}"
+                       reRender="content"
+                       styleClass="button"
+                       disabled="#{pageBean.group == null}"/>
     <h:commandButton id="backButton"
                      action="#{pageBean.doBack}"
                      immediate="true"

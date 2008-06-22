@@ -96,6 +96,20 @@ public class StudentAssignListBean extends GenericListBean<User> {
         logger.debug("<<< Assigning students...Ok");
     }
 
+    public void assignGroup() {
+        logger.debug(">>> Assigning group...");
+        if(testBegin.after(testEnd)) {
+            addFacesMessageFromResourceBundle("student.assign.list.validation.dates");
+            logger.debug("<<< Assigning students...failed");
+            return;
+        }
+        if(group != null) {
+                 assignmentService.assignTest(test.getId(), group.getId(), testBegin, testEnd);   
+        }
+        addFacesMessageFromResourceBundle("student.assign.list.assignSuccess");
+        logger.debug("<<< Assigning group...Ok");
+    }
+
     /**
      * Defines back operation for current bean.
      *
