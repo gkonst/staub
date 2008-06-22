@@ -47,7 +47,17 @@ public interface AssignmentService extends GenericService<Assignment, Integer> {
     List<Assignment> find(Student student);
 
     /**
-     * Assigns students for specific test.
+     * Assign a group for a specific test.
+     *
+     * @param testId    the test identification number
+     * @param groupId   the group identification number
+     * @param testBegin the test begin
+     * @param testEnd   the test end
+     */
+    void assignTest(Integer testId, Integer groupId, Date testBegin, Date testEnd);
+
+    /**
+     * Assigns students for a specific test.
      *
      * @param testId     specific test identifier
      * @param studentIds list or students identifiers
