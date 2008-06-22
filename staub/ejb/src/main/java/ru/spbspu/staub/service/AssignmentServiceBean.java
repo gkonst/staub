@@ -2,10 +2,7 @@ package ru.spbspu.staub.service;
 
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
-import ru.spbspu.staub.entity.Assignment;
-import ru.spbspu.staub.entity.Student;
-import ru.spbspu.staub.entity.Test;
-import ru.spbspu.staub.entity.TestTrace;
+import ru.spbspu.staub.entity.*;
 import ru.spbspu.staub.model.list.FormProperties;
 import ru.spbspu.staub.model.list.FormTable;
 import ru.spbspu.staub.exception.RemoveException;
@@ -47,6 +44,18 @@ public class AssignmentServiceBean extends GenericServiceBean<Assignment, Intege
         q.setParameter("student", student);
         q.setParameter("currentDate", new Date());
         return q.getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void assignTest(Integer testId, Integer groupId, Date testBegin, Date testEnd) {
+        logger.debug("> assignTest(Integer=#0, Integer=#1, Date=#2, Date=#3)", testId, groupId, testBegin, testEnd);
+
+        Query q = getEntityManager().createQuery("select s.id from Student s where s.group.id = :groupId");
+        q.setParameter("groupId", groupId);
+        List<Integer> studentIds = q.getResultList();
+        assignTest(testId, studentIds, testBegin, testEnd);
+
+        logger.debug("< assignTest(Integer, Integer, Date, Date)");
     }
 
     public void assignTest(Integer testId, List<Integer> studentIds, Date testBegin, Date testEnd) {
