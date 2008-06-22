@@ -55,7 +55,8 @@
                                          disabled="#{pageBean.viewMode}"
                                          required="true"
                                          requiredMessage="#{messages['difficulty.detail.required.name']}"
-                                         styleClass="required"/>
+                                         styleClass="required"
+                                         maxlength="256"/>
                         </td>
                     </tr>
                 </table>
