@@ -9,106 +9,107 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:s="http://jboss.com/products/seam/taglib">
 <ui:composition template="/template/staub-template.jspx">
-    <!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.admin.TopicDetailBean"-->
-    <!--@elvariable id="messages" type="java.util.Map"-->
-    <ui:param name="pageBean" value="#{topicDetailBean}"/>
-    <ui:define name="sidebar">
-        <ui:include src="/system/menuAdmin.jspx"/>
-    </ui:define>
-    <ui:define name="contentTitle">
-        #{messages['topic.detail.title']}
-    </ui:define>
-    <ui:define name="contentBody">
-        <a4j:form id="contentBodyForm">
-            <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
-                <ui:include src="/controls/genericSaveControl.jspx"/>
-            </a4j:outputPanel>
-            <fieldset class="area">
-                <table class="detail-table">
-                    <tr>
-                        <td class="detail-cell">
-                            <h:outputLabel id="topicCodeLabel"
-                                           value="#{messages['topic.detail.code']}"
-                                           for="topicCodeInput"/>
-                        </td>
-                        <td class="detail-cell">
-                            <h:inputText id="topicCodeInput"
-                                         value="#{pageBean.model.code}"
+<!--@elvariable id="pageBean" type="ru.spbspu.staub.bean.admin.TopicDetailBean"-->
+<!--@elvariable id="messages" type="java.util.Map"-->
+<ui:param name="pageBean" value="#{topicDetailBean}"/>
+<ui:define name="sidebar">
+    <ui:include src="/system/menuAdmin.jspx"/>
+</ui:define>
+<ui:define name="contentTitle">
+    #{messages['topic.detail.title']}
+</ui:define>
+<ui:define name="contentBody">
+    <a4j:form id="contentBodyForm">
+        <a4j:outputPanel id="contentButtons" styleClass="contentButtons">
+            <ui:include src="/controls/genericSaveControl.jspx"/>
+        </a4j:outputPanel>
+        <fieldset class="area">
+            <table class="detail-table">
+                <tr>
+                    <td class="detail-cell">
+                        <h:outputLabel id="topicCodeLabel"
+                                       value="#{messages['topic.detail.code']}"
+                                       for="topicCodeInput"/>
+                    </td>
+                    <td class="detail-cell">
+                        <h:inputText id="topicCodeInput"
+                                     value="#{pageBean.model.code}"
+                                     disabled="#{pageBean.viewMode}"
+                                     required="true"
+                                     requiredMessage="#{messages['topic.detail.required.code']}"
+                                     validator="#{pageBean.validateCode}"
+                                     validatorMessage="#{messages['topic.detail.validation.code']}"
+                                     styleClass="required"
+                                     maxlength="16"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="detail-cell">
+                        <h:outputLabel id="topicNameLabel"
+                                       value="#{messages['topic.detail.name']}"
+                                       for="topicNameInput"/>
+                    </td>
+                    <td class="detail-cell">
+                        <h:inputText id="topicNameInput"
+                                     value="#{pageBean.model.name}"
+                                     disabled="#{pageBean.viewMode}"
+                                     required="true"
+                                     requiredMessage="#{messages['topic.detail.required.name']}"
+                                     styleClass="required"
+                                     maxlength="256"
+                                     style="width:20em;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="detail-cell">
+                        <h:outputLabel id="disciplineLabel"
+                                       value="#{messages['topic.detail.discipline']}"
+                                       for="disciplineSelect"/>
+                    </td>
+                    <td class="detail-cell">
+                        <h:selectOneMenu id="disciplineSelect"
+                                         value="#{pageBean.discipline}"
                                          disabled="#{pageBean.viewMode}"
-                                         required="true"
-                                         requiredMessage="#{messages['topic.detail.required.code']}"
-                                         validator="#{pageBean.validateCode}"
-                                         validatorMessage="#{messages['topic.detail.validation.code']}"
+                                         converter="ru.spbspu.staub.ObjectSelectConverter"
                                          styleClass="required"
-                                         maxlength="16"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="detail-cell">
-                            <h:outputLabel id="topicNameLabel"
-                                           value="#{messages['topic.detail.name']}"
-                                           for="topicNameInput"/>
-                        </td>
-                        <td class="detail-cell">
-                            <h:inputText id="topicNameInput"
-                                         value="#{pageBean.model.name}"
-                                         disabled="#{pageBean.viewMode}"
                                          required="true"
-                                         requiredMessage="#{messages['topic.detail.required.name']}"
+                                         requiredMessage="#{messages['topic.detail.required.discipline']}">
+                            <s:selectItems id="disciplineSelectItems"
+                                           value="#{pageBean.disciplineList}"
+                                           var="discipline"
+                                           label="#{discipline.name}"/>
+                            <a4j:support id="disciplineSelectSupport"
+                                         event="onchange"
+                                         action="#{pageBean.refreshCategories}"
+                                         reRender="categorySelect"
+                                         ajaxSingle="true"/>
+                        </h:selectOneMenu>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="detail-cell">
+                        <h:outputLabel id="categoryLabel"
+                                       value="#{messages['topic.detail.category']}"
+                                       for="categorySelect"/>
+                    </td>
+                    <td class="detail-cell">
+                        <h:selectOneMenu id="categorySelect"
+                                         value="#{pageBean.model.category}"
+                                         disabled="#{pageBean.viewMode or pageBean.discipline == null}"
+                                         converter="ru.spbspu.staub.ObjectSelectConverter"
                                          styleClass="required"
-                                         maxlength="256"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="detail-cell">
-                            <h:outputLabel id="disciplineLabel"
-                                           value="#{messages['topic.detail.discipline']}"
-                                           for="disciplineSelect"/>
-                        </td>
-                        <td class="detail-cell">
-                            <h:selectOneMenu id="disciplineSelect"
-                                             value="#{pageBean.discipline}"
-                                             disabled="#{pageBean.viewMode}"
-                                             converter="ru.spbspu.staub.ObjectSelectConverter"
-                                             styleClass="required"
-                                             required="true"
-                                             requiredMessage="#{messages['topic.detail.required.discipline']}">
-                                <s:selectItems id="disciplineSelectItems"
-                                               value="#{pageBean.disciplineList}"
-                                               var="discipline"
-                                               label="#{discipline.name}"/>
-                                <a4j:support id="disciplineSelectSupport"
-                                             event="onchange"
-                                             action="#{pageBean.refreshCategories}"
-                                             reRender="categorySelect"
-                                             ajaxSingle="true"/>
-                            </h:selectOneMenu>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="detail-cell">
-                            <h:outputLabel id="categoryLabel"
-                                           value="#{messages['topic.detail.category']}"
-                                           for="categorySelect"/>
-                        </td>
-                        <td class="detail-cell">
-                            <h:selectOneMenu id="categorySelect"
-                                             value="#{pageBean.model.category}"
-                                             disabled="#{pageBean.viewMode or pageBean.discipline == null}"
-                                             converter="ru.spbspu.staub.ObjectSelectConverter"
-                                             styleClass="required"
-                                             required="true"
-                                             requiredMessage="#{messages['topic.detail.required.category']}">
-                                <s:selectItems id="categorySelectItems"
-                                               value="#{pageBean.categoryList}"
-                                               var="category"
-                                               label="#{category.name}"/>
-                            </h:selectOneMenu>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-        </a4j:form>
-    </ui:define>
+                                         required="true"
+                                         requiredMessage="#{messages['topic.detail.required.category']}">
+                            <s:selectItems id="categorySelectItems"
+                                           value="#{pageBean.categoryList}"
+                                           var="category"
+                                           label="#{category.name}"/>
+                        </h:selectOneMenu>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </a4j:form>
+</ui:define>
 </ui:composition>
 </html>
