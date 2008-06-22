@@ -17,6 +17,28 @@ public class Test implements Serializable {
 
     private Integer id;
 
+    private String name;
+
+    private String description;
+
+    private Integer timeLimit;
+
+    private Boolean active;
+
+    private Category category;
+
+    private Set<Topic> topics;
+
+    private Set<TestDifficulty> difficultyLevels;
+
+    private Date created;
+
+    private String createdBy;
+
+    private Date modified;
+
+    private String modifiedBy;
+
     @Id
     @SequenceGenerator(name = "TestIdGenerator", sequenceName = "seq_test", allocationSize = 1)
     @GeneratedValue(generator = "TestIdGenerator", strategy = GenerationType.SEQUENCE)
@@ -29,8 +51,6 @@ public class Test implements Serializable {
         this.id = id;
     }
 
-    private String name;
-
     @Basic
     @Column(name = "name", length = 256, nullable = false)
     public String getName() {
@@ -40,8 +60,6 @@ public class Test implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    private String description;
 
     @Basic
     @Lob
@@ -54,8 +72,6 @@ public class Test implements Serializable {
         this.description = description;
     }
 
-    private Integer timeLimit;
-
     @Basic
     @Column(name = "time_limit", length = 10)
     public Integer getTimeLimit() {
@@ -65,8 +81,6 @@ public class Test implements Serializable {
     public void setTimeLimit(Integer timeLimit) {
         this.timeLimit = timeLimit;
     }
-
-    private Boolean active;
 
     @Basic
     @Column(name = "active", length = 1)
@@ -78,8 +92,6 @@ public class Test implements Serializable {
         this.active = active;
     }
 
-    private Category category;
-
     @OneToOne
     @JoinColumn(name = "fk_category", referencedColumnName = "id", nullable = false)
     public Category getCategory() {
@@ -89,8 +101,6 @@ public class Test implements Serializable {
     public void setCategory(Category category) {
         this.category = category;
     }
-
-    private Set<Topic> topics;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(schema = "staub", name = "test_topic",
@@ -104,8 +114,6 @@ public class Test implements Serializable {
         this.topics = topics;
     }
 
-    private Set<TestDifficulty> difficultyLevels;
-
     @OneToMany(mappedBy = "test", fetch = FetchType.EAGER)
     @org.hibernate.annotations.Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
     public Set<TestDifficulty> getDifficultyLevels() {
@@ -115,8 +123,6 @@ public class Test implements Serializable {
     public void setDifficultyLevels(Set<TestDifficulty> difficultyLevels) {
         this.difficultyLevels = difficultyLevels;
     }
-
-    private Date created;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created", nullable = false)
@@ -128,8 +134,6 @@ public class Test implements Serializable {
         this.created = created;
     }
 
-    private String createdBy;
-
     @Basic
     @Column(name = "created_by", length = 64, nullable = false)
     public String getCreatedBy() {
@@ -140,8 +144,6 @@ public class Test implements Serializable {
         this.createdBy = createdBy;
     }
 
-    private Date modified;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modified")
     public Date getModified() {
@@ -151,8 +153,6 @@ public class Test implements Serializable {
     public void setModified(Date modified) {
         this.modified = modified;
     }
-
-    private String modifiedBy;
 
     @Basic
     @Column(name = "modified_by", length = 64)
