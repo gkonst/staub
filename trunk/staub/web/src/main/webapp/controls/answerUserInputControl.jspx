@@ -52,7 +52,8 @@
                              rendered="#{answerModel.userInput and answerModel.integer}"
                              required="true"
                              requiredMessage="#{messages['question.detail.required.correctUserInput']}"
-                             validatorMessage="#{messages['question.detail.validation.USER_INPUT.INTEGER']}">
+                             validatorMessage="#{messages['question.detail.validation.USER_INPUT.INTEGER']}"
+                             style="width:40em;">
                     <st:validateRegex regex="#{pageBean.getUserInputRegex('INTEGER')}"/>
                 </h:inputText>
                 <h:inputText id="correctAnswerUserInputReal"
@@ -61,7 +62,8 @@
                              rendered="#{answerModel.userInput and answerModel.real}"
                              required="true"
                              requiredMessage="#{messages['question.detail.required.correctUserInput']}"
-                             validatorMessage="#{messages['question.detail.validation.USER_INPUT.REAL']}">
+                             validatorMessage="#{messages['question.detail.validation.USER_INPUT.REAL']}"
+                             style="width:40em;">
                     <st:validateRegex regex="#{pageBean.getUserInputRegex('REAL')}"/>
                 </h:inputText>
                 <h:inputText id="correctAnswerUserInputComplex"
@@ -70,7 +72,8 @@
                              rendered="#{answerModel.userInput and answerModel.complex}"
                              required="true"
                              requiredMessage="#{messages['question.detail.required.correctUserInput']}"
-                             validatorMessage="#{messages['question.detail.validation.USER_INPUT.COMPLEX']}">
+                             validatorMessage="#{messages['question.detail.validation.USER_INPUT.COMPLEX']}"
+                             style="width:40em;">
                     <st:validateRegex regex="#{pageBean.getUserInputRegex('COMPLEX')}"/>
                 </h:inputText>
                 <h:inputText id="correctAnswerUserInputString"
@@ -78,7 +81,8 @@
                              disabled="#{pageBean.viewMode}"
                              rendered="#{answerModel.userInput and answerModel.string}"
                              required="true"
-                             requiredMessage="#{messages['question.detail.required.correctUserInput']}">
+                             requiredMessage="#{messages['question.detail.required.correctUserInput']}"
+                             style="width:40em;">
                 </h:inputText>
             </td>
         </tr>

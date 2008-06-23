@@ -31,7 +31,7 @@
                                  event="onclick"
                                  reRender="previewModalBox"
                                  oncomplete="Richfaces.showModalPanel('previewModalBox')"
-                                 process="questionDefinitionTextarea"
+                                 process="questionDefinitionTextarea, answerPanel"
                                  ajaxSingle="true"/>
                 </h:graphicImage>
                 <h:graphicImage id="imageUploadIcon"

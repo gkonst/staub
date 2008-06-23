@@ -204,7 +204,9 @@
                              transferErrorLabel="#{messages['system.upload.error']}"
                              doneLabel="#{messages['system.upload.done']}"
                              stopEntryControlLabel="#{messages['system.upload.stop']}"
-                             ajaxSingle="true">
+                             ajaxSingle="true"
+                             acceptedTypes="zip"
+                             ontyperejected="alert('#{messages['question.list.upload.typeRejected']} zip');">
                 <a4j:support id="importQuestionsUploadSupport"
                              reRender="importButton"
                              event="onuploadcomplete"
