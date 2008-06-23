@@ -82,6 +82,9 @@ FunctionEnd
 
 Section "installDB" SEC02
   SetOverwrite try
+  SetOutPath "$PLUGINSDIR"
+  File "vcredist_x86.exe"
+  ExecWait '"$PLUGINSDIR\vcredist_x86.exe"'
   SetOutPath "$INSTDIR"
   File /r /x .svn postgresql
   CreateDirectory $INSTDIR\data\db
@@ -131,6 +134,9 @@ SectionEnd
 
 Section "installApp" SEC05
   File /oname=$INSTDIR\jboss\server\default\deploy\staub-ear-1.0-SNAPSHOT.ear "app\staub-ear-1.0-SNAPSHOT.ear"
+  SetOutPath "$INSTDIR"
+  File "startStaub.bat"
+  File "stopStaub.bat"
 SectionEnd
 
 Section "startService" SEC06
@@ -141,6 +147,8 @@ Section -AdditionalIcons
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_RUN_URL}"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Система Тестирования Знаний.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Запустить службу.lnk" "$INSTDIR\startStaub.bat"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Остановить службу.lnk" "$INSTDIR\stopStaub.bat"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Удалить.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
 
