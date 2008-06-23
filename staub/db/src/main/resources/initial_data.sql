@@ -28,6 +28,37 @@ INSERT INTO difficulty (id,
      VALUES (nextval('seq_difficulty'),
              'Высокая сложность',
              2);
+             
+INSERT INTO discipline (id,
+                        name,
+                        code)
+     VALUES (nextval('seq_discipline'),
+             'Математика',
+             'ЕН.Ф.1');
+INSERT INTO discipline (id,
+                        name,
+                        code)
+     VALUES (nextval('seq_discipline'),
+             'Информатика',
+             'ЕН.Ф.2');
+INSERT INTO discipline (id,
+                        name,
+                        code)
+     VALUES (nextval('seq_discipline'),
+             'Физика',
+             'ЕН.Ф.3');
+INSERT INTO discipline (id,
+                        name,
+                        code)
+     VALUES (nextval('seq_discipline'),
+             'Вычислительная математика',
+             'ЕН.Ф.6');
+INSERT INTO discipline (id,
+                        name,
+                        code)
+     VALUES (nextval('seq_discipline'),
+             'Математическая физика',
+             'ЕН.Р.01');
 
 INSERT INTO "group" (id,
                     name)
