@@ -11,7 +11,6 @@ import javax.ejb.Remove;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.NoResultException;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
@@ -31,9 +30,9 @@ public abstract class GenericServiceBean<T extends Serializable, ID extends Seri
 
     private static final Pattern FROM_PATTERN = Pattern.compile("(^|\\s)(from)\\s", Pattern.CASE_INSENSITIVE);
     private static final Pattern ORDER_PATTERN = Pattern.compile("\\s(order)(\\s)+by\\s", Pattern.CASE_INSENSITIVE);
-    private static final Pattern WHERE_PATTERN = Pattern.compile("\\s(where)\\s", Pattern.CASE_INSENSITIVE);
-
-    private static final Pattern ORDER_CLAUSE_PATTERN = Pattern.compile("^[\\w\\.,\\s]*$");
+//    private static final Pattern WHERE_PATTERN = Pattern.compile("\\s(where)\\s", Pattern.CASE_INSENSITIVE);
+    private static final Pattern GROUP_PATTERN = Pattern.compile("\\s(group)(\\s)+by\\s", Pattern.CASE_INSENSITIVE);
+//    private static final Pattern ORDER_CLAUSE_PATTERN = Pattern.compile("^[\\w\\.,\\s]*$");
 
     private Class<T> entityClass;
 
@@ -135,6 +134,7 @@ public abstract class GenericServiceBean<T extends Serializable, ID extends Seri
      * @param queryParameters some parameters (search values for example)
      * @return total rows in table
      */
+    @SuppressWarnings("unchecked")
     private long countQuery(String queryString, Map<String, Object> queryParameters) {
         logger.debug("  count query...");
 
@@ -155,15 +155,17 @@ public abstract class GenericServiceBean<T extends Serializable, ID extends Seri
         for (Map.Entry<String, Object> param : queryParameters.entrySet()) {
             countQuery.setParameter(param.getKey(), param.getValue());
         }
-        //long fullCount  (Long) countQuery.getSingleResult();
 
-        // Dirty workaround for queries with a group by clause.
-        long fullCount = 0;
-        countQuery.setMaxResults(1);
-        try {
+        Matcher groupMatcher = GROUP_PATTERN.matcher(countQueryString);
+        boolean groupFound = groupMatcher.find();
+
+        long fullCount;
+        if (!groupFound) {
             fullCount = (Long) countQuery.getSingleResult();
-        } catch (NoResultException e) {
-            // do nothing
+        } else {
+            // Subqueries are not supported. No better solution exists.
+            List<Long> rows = countQuery.getResultList();
+            fullCount = rows.size();
         }
 
         logger.debug("  count query...#0 rows...OK", fullCount);
