@@ -137,6 +137,7 @@ Section "installApp" SEC05
   SetOutPath "$INSTDIR"
   File "startStaub.bat"
   File "stopStaub.bat"
+  File "reference.pdf"
 SectionEnd
 
 Section "startService" SEC06
@@ -149,6 +150,7 @@ Section -AdditionalIcons
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Система Тестирования Знаний.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Запустить службу.lnk" "$INSTDIR\startStaub.bat"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Остановить службу.lnk" "$INSTDIR\stopStaub.bat"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Руководство пользователя.lnk" "$INSTDIR\reference.pdf"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Удалить.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
 
