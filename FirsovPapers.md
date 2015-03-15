@@ -1,0 +1,1 @@
+[ТЗ](http://docs.google.com/View?docid=dhjkzv34_2dc2669cw)  - типа оочень краткое ТЗ.
